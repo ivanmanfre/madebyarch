@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Melon Sandbox on YouTube: a coverage and creator audit</title>
+<meta name="description" content="How Melon Sandbox is covered on YouTube, and the creators Playducky should be working with. Read from the YouTube Data API, 27 August 2026."/>
+<meta name="robots" content="noindex, nofollow"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#000F41;--cobalt:#3562FF;--lime:#F2FF82;--white:#FFFFFF;--plate:#EDEDED;
+--ink:#000F41;--sup:#666666;--sup2:#666666;--hair:rgba(0,15,65,.14);--ease:cubic-bezier(.58,.21,.25,1)}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;max-width:100%;overflow-x:hidden}
+body{background:var(--navy);color:var(--ink);font-family:"DM Sans",Arial,Helvetica,sans-serif;
+font-size:17px;line-height:1.5;font-weight:500;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1400px;margin:0 auto;padding:0 14px}
+a{color:inherit;text-decoration:none;border-bottom:1px solid rgba(0,15,65,.28)}
+a:hover{color:var(--cobalt);border-bottom-color:var(--cobalt)}
+img{display:block;max-width:100%;height:auto}
+h1,h2,h3{margin:0;text-transform:uppercase;font-weight:600;letter-spacing:-.04em;line-height:.8}
+p{margin:0}
+button,summary{font:inherit;color:inherit}
+.num{font-weight:700;letter-spacing:-.05em;line-height:.76;font-feature-settings:"tnum" 1;font-variant-numeric:tabular-nums}
+.arw{width:1em;height:.62em;flex:0 0 auto;vertical-align:baseline;display:inline-block}
+/* ---- reveal ---- */
+.rv{opacity:0;transform:translateY(30px);transition:opacity .75s var(--ease) var(--d,0ms),transform .75s var(--ease) var(--d,0ms)}
+.rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}}
+/* ---- mast / foot pills ---- */
+.mast{padding-top:14px}
+.mast .grid,.foot .grid{display:flex;align-items:center;justify-content:space-between;gap:16px;
+background:var(--lime);border-radius:35px;padding:21px 40px;flex-wrap:wrap}
+.logo{border-bottom:none;display:block} .wordmark{width:92px;height:auto;display:block}
+.stamp,.foot span{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--navy)}
+/* ---- beats ---- */
+.beat{padding:0}
+.card{background:var(--white);border-radius:35px;margin:14px 0;padding:64px 60px;
+min-height:min(92vh,1000px);display:flex;flex-direction:column;justify-content:space-between;gap:40px}
+.beat-head{display:flex;align-items:flex-start;gap:22px;flex-wrap:wrap}
+.snum{font-size:12px;font-weight:700;letter-spacing:.14em;color:var(--cobalt);padding-top:.5em}
+.beat-head h2{font-size:clamp(38px,6vw,90px);font-weight:600;line-height:.8;letter-spacing:-.04em;flex:1;min-width:min(100%,280px)}
+.lede{font-size:19px;color:var(--sup);max-width:56ch;margin-top:18px}
+/* ---- folio (running head) + FIG caption register: 12px w700 caps ---- */
+.folio{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;
+border-top:1px solid var(--hair);padding-top:13px;margin-bottom:34px;
+font-size:12px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;line-height:1}
+.folio .fn{color:var(--cobalt)}
+.folio .fk{color:var(--ink)}
+.folio .fr{margin-left:auto;color:var(--sup2);text-align:right}
+.gapbeat .folio{border-top-color:rgba(255,255,255,.34)}
+.gapbeat .folio .fn{color:var(--lime)}
+.gapbeat .folio .fk{color:#fff}
+.gapbeat .folio .fr{color:rgba(255,255,255,.66)}
+.cap{font-size:12.5px;color:var(--sup2);max-width:88ch;line-height:1.5}
+.cap a{border-bottom-color:rgba(0,15,65,.2)}
+.fig{display:inline-block;margin-right:9px;font-size:11px;font-weight:700;letter-spacing:.13em;
+text-transform:uppercase;color:var(--cobalt)}
+.gapbeat .cap{color:rgba(255,255,255,.72);max-width:78ch}
+.gapbeat .cap a{color:#fff;border-bottom-color:rgba(255,255,255,.4)}
+.gapbeat .cap a:hover{color:var(--lime);border-bottom-color:var(--lime)}
+.gapbeat .fig{color:var(--lime)}
+/* ---- hero ---- */
+.hero{margin:14px 0 0;color:#fff}
+.stage{position:relative;border-radius:35px;overflow:hidden;background:#000F41;
+height:clamp(320px,40vh,540px);display:flex;align-items:flex-end}
+.stage picture,.stage img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.stage img{filter:saturate(.9);object-position:50% 26%}
+.veil{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,15,65,.74) 0%,rgba(0,15,65,.24) 30%,rgba(0,15,65,.58) 62%,rgba(0,15,65,.95) 100%)}
+.stage-in{position:relative;padding:40px;width:100%}
+.kicker{position:absolute;top:40px;left:40px;right:40px;font-size:12px;font-weight:700;
+letter-spacing:.14em;text-transform:uppercase;color:var(--lime)}
+.stamp-num{font-size:clamp(58px,11.4vw,172px);color:var(--lime)}
+.stamp-lab{font-size:clamp(12px,1.1vw,15px);font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+color:#fff;margin-top:10px;max-width:44ch}
+h1{font-size:clamp(38px,6.6vw,96px);color:#fff;margin:28px 0 0}
+.hero-dek{margin-top:24px;font-size:19px;color:rgba(255,255,255,.74);max-width:52ch}
+.hero-src{margin-top:12px;font-size:12.5px;color:rgba(255,255,255,.55);max-width:70ch}
+.hero-src a{color:rgba(255,255,255,.8);border-bottom-color:rgba(255,255,255,.3)}
+.hero-src a:hover{color:var(--lime);border-bottom-color:var(--lime)}
+/* hero stat ledger: three findings, plain-language labels, on screen one */
+.finds{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin:24px 0 0;
+border-top:1px solid rgba(255,255,255,.32)}
+.find{padding:20px 30px 0 0;border-left:1px solid rgba(255,255,255,.18);padding-left:30px}
+.find:first-child{border-left:0;padding-left:0}
+.find .n{display:block;font-size:clamp(34px,3.9vw,56px);color:#fff}
+.find:first-child .n{color:var(--lime)}
+.find .l{display:block;margin-top:12px;font-size:12px;font-weight:700;letter-spacing:.08em;
+text-transform:uppercase;color:rgba(255,255,255,.72);line-height:1.4;max-width:26ch}
+/* ---- 01 volume ---- */
+.poster{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;padding:20px 0}
+.poster .num{font-size:clamp(110px,25vw,380px)}
+.poster .unit{font-size:clamp(26px,4.4vw,74px);font-weight:600;letter-spacing:-.04em;text-transform:uppercase;line-height:.9;margin-top:6px}
+.poster .sub{margin-top:26px;font-size:18px;color:var(--sup);max-width:52ch}
+.tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.tiles>div{background:var(--plate);border-radius:25px;padding:28px 26px}
+.tiles b{display:block;font-size:clamp(28px,3.2vw,48px);font-weight:700;letter-spacing:-.04em;line-height:1}
+.tiles span{display:block;margin-top:12px;font-size:11px;font-weight:700;letter-spacing:.08em;
+text-transform:uppercase;color:var(--sup2);line-height:1.5}
+.tiles a{border-bottom:none} .tiles a:hover b{color:var(--cobalt)}
+/* ---- 02 scatter ---- */
+.plotwrap{position:relative}
+.plotscroll{overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;scrollbar-width:thin;padding:6px 30px 34px 54px}
+.plot{position:relative;height:clamp(380px,42vw,540px);background:var(--plate);border-radius:25px;
+margin:6px 0 0;padding:0}
+.gx{position:absolute;top:0;bottom:0;width:1px;background:rgba(0,15,65,.09)}
+.gx i,.gy i{position:absolute;font-style:normal;font-size:11px;font-weight:700;letter-spacing:.06em;color:var(--sup2)}
+.gx i{bottom:-24px;left:0;transform:translateX(-50%)}
+.gy{position:absolute;left:0;right:0;height:1px;background:rgba(0,15,65,.09)}
+.gy i{left:-8px;top:-7px;transform:translateX(-100%)}
+.diag{position:absolute;inset:0;width:100%;height:100%}
+.diaglab{position:absolute;left:46%;bottom:47%;font-size:11px;font-weight:700;letter-spacing:.04em;
+color:var(--sup2);transform:rotate(-34deg);transform-origin:left center;white-space:nowrap}
+.dot{position:absolute;transform:translate(-50%,50%);background:none;border:0;padding:0;cursor:pointer;
+width:56px;height:56px;border-radius:50%;transition:transform .4s var(--ease)}
+.dot img{width:56px;height:56px;border-radius:50%;border:3px solid var(--navy);background:#fff}
+.dot-hot img{border-color:var(--cobalt);box-shadow:0 0 0 6px rgba(53,98,255,.18)}
+.dot:hover,.dot:focus-visible{transform:translate(-50%,50%) scale(1.12);outline:none;z-index:6}
+.dot[aria-expanded="true"] img{border-color:var(--cobalt)}
+.dot[aria-expanded="true"]{z-index:7}
+.dlab{position:absolute;left:50%;transform:translateX(-50%);white-space:nowrap;font-size:10.5px;
+font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--sup);pointer-events:none}
+.lab-down .dlab{top:60px} .lab-up .dlab{bottom:60px}
+.lab-left .dlab{right:62px;left:auto;transform:none;top:20px}
+.lab-right .dlab{left:62px;transform:none;top:20px}
+.dot:hover .dlab,.dot[aria-expanded="true"] .dlab{color:var(--cobalt)}
+.ownmark{position:absolute;width:22px;height:22px;transform:translate(-50%,50%);border:3px solid var(--navy);background:#fff}
+.ownlab{position:absolute;transform:translate(-100%,50%);padding-right:20px;white-space:nowrap;font-size:10.5px;
+font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--sup)}
+.axl{display:flex;justify-content:space-between;gap:20px;margin-top:34px;font-size:11px;font-weight:700;
+letter-spacing:.08em;text-transform:uppercase;color:var(--sup2)}
+.swipe{display:none;font-size:11px;font-weight:700;letter-spacing:.1em;color:var(--sup2);margin-top:10px}
+.chans{margin-top:8px}
+.chan{background:var(--plate);border-radius:25px;padding:30px 32px;margin-top:12px}
+.chan-hot{background:#EDEDED;outline:2px solid var(--cobalt);outline-offset:-2px}
+.chan-h{display:flex;gap:16px;align-items:center}
+.chan-h img{width:64px;height:64px;border-radius:50%}
+.chan-h>div:nth-child(2){flex:1;min-width:0}
+.chan h3{font-size:22px;font-weight:700;letter-spacing:-.02em;line-height:1.05;text-transform:none;overflow-wrap:anywhere}
+.meta{margin-top:5px;font-size:12.5px;color:var(--sup2);text-transform:none;font-weight:500}
+.chan-n{text-align:right;font-size:24px;font-weight:700;letter-spacing:-.03em;white-space:nowrap;line-height:1}
+.chan-n i{display:block;font-style:normal;font-size:10px;font-weight:700;letter-spacing:.06em;
+text-transform:uppercase;color:var(--sup2);margin-top:6px}
+.vrow{display:flex;gap:16px;justify-content:space-between;align-items:baseline;padding:12px 0;
+border-top:1px solid var(--hair);font-size:14.5px;margin-top:14px}
+.vrow+.vrow{margin-top:0}
+.vrow a{flex:1;min-width:0;overflow-wrap:anywhere;border-bottom:none;text-decoration:underline;text-decoration-color:rgba(0,15,65,.22);text-underline-offset:4px}
+.vrow a:hover{text-decoration-color:var(--cobalt)}
+.vnum{white-space:nowrap;font-weight:700;text-align:right}
+.vnum i{display:block;font-style:normal;font-size:11px;font-weight:500;color:var(--sup2);margin-top:3px}
+.chan-line{margin-top:16px;font-size:15px;line-height:1.5;color:var(--sup)}
+.chan footer{margin-top:18px;display:flex;flex-wrap:wrap;gap:8px}
+.tag{font-size:10.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--navy);
+background:var(--white);border:1px solid var(--hair);padding:9px 15px;border-radius:40px;white-space:nowrap}
+.tag-paid{background:var(--lime);border-color:var(--lime)}
+a.tag-acc{background:var(--cobalt);border-color:var(--cobalt);color:#fff;border-bottom:1px solid var(--cobalt)}
+a.tag-acc:hover{background:var(--navy);border-color:var(--navy);color:var(--lime)}
+.callout{background:var(--cobalt);color:#fff;border-radius:25px;padding:34px 36px;margin-top:12px}
+.callout b{display:block;font-size:clamp(20px,2.4vw,34px);font-weight:600;letter-spacing:-.03em;
+line-height:.95;text-transform:uppercase;max-width:24ch}
+.callout span{display:block;margin-top:14px;font-size:13px;color:rgba(255,255,255,.82);max-width:70ch}
+/* ---- 03 gap (full bleed cobalt) ---- */
+.gapbeat{background:var(--cobalt);color:#fff;margin:14px 0;padding:96px 0 88px}
+.gapbeat h2,.gapbeat h3{color:#fff}
+.gapbeat .snum{color:var(--lime)}
+/* head-to-head ledger, staged inside the cobalt scoreboard */
+.tape{margin-top:44px;background:rgba(255,255,255,.12);border-radius:25px;padding:28px 34px}
+.taperow{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,auto) minmax(0,1fr);gap:18px;
+align-items:center;padding:16px 0;border-bottom:1px solid rgba(255,255,255,.22)}
+.taperow:last-child{border-bottom:0;padding-bottom:0}
+.taphead{padding-top:2px}
+.taphead .side{display:flex;gap:14px;align-items:center;min-width:0}
+.taphead .side img{width:54px;height:54px;border-radius:50%;flex:0 0 auto;border:2px solid rgba(255,255,255,.55)}
+.taphead .side.r{flex-direction:row-reverse;text-align:right}
+.taphead b{display:block;font-size:16px;font-weight:700;letter-spacing:-.01em;text-transform:uppercase;
+line-height:1.05;overflow-wrap:anywhere}
+.taphead i{display:block;font-style:normal;margin-top:5px;font-size:10.5px;font-weight:700;
+letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.72)}
+.vs{font-size:12px;font-weight:700;letter-spacing:.16em;color:var(--lime);text-align:center}
+.taperow .a,.taperow .b{font-size:clamp(20px,2.5vw,34px);font-weight:700;letter-spacing:-.04em;line-height:.95;
+font-variant-numeric:tabular-nums}
+.taperow .b{text-align:right}
+.taperow .m{font-size:10.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+color:rgba(255,255,255,.8);text-align:center;white-space:nowrap}
+.tape a{color:#fff;border-bottom-color:rgba(255,255,255,.32)}
+.tape a:hover{color:var(--lime);border-bottom-color:var(--lime)}
+.board{margin-top:48px;display:flex;flex-direction:column;gap:26px}
+.brow{display:block}
+.blab{display:flex;justify-content:space-between;gap:20px;align-items:baseline;
+font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.78)}
+.bval{white-space:nowrap;color:#fff}
+.btrack{margin-top:12px;height:clamp(64px,7.6vw,108px);background:rgba(255,255,255,.14);border-radius:6px;
+display:flex;overflow:hidden}
+.bfill{width:0;transition:width 1.15s var(--ease) var(--d,0ms);position:relative;overflow:hidden;flex:0 0 auto}
+.in .bfill,.brow.in .bfill{width:var(--w)}
+@media (prefers-reduced-motion:reduce){.bfill{width:var(--w);transition:none}}
+.bfill-w{background:#fff}
+.inbar{position:absolute;left:0;top:0;bottom:0;width:13.2%;overflow:hidden;border-right:3px solid var(--lime)}
+.inbar picture,.inbar img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.bfill picture,.bfill img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.bfill-img{outline:2px solid var(--lime);outline-offset:-2px}
+.bfill-2{opacity:.82}
+.bnote{margin-top:10px;font-size:13px;color:rgba(255,255,255,.7);max-width:78ch}
+.bnote a{color:#fff;border-bottom-color:rgba(255,255,255,.4)}
+.bnote a:hover{color:var(--lime);border-bottom-color:var(--lime)}
+.gapchip{margin-top:52px;background:var(--lime);color:var(--navy);border-radius:35px;padding:44px 48px;
+display:flex;align-items:center;gap:40px;flex-wrap:wrap}
+.gapchip .n{font-size:clamp(58px,9vw,140px)}
+.gapchip p{flex:1;min-width:min(100%,280px);font-size:clamp(18px,2vw,28px);font-weight:600;
+letter-spacing:-.02em;line-height:1.05;text-transform:uppercase}
+.gapchip a{border-bottom-color:rgba(0,15,65,.35)}
+.gapstats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:12px}
+.gapstats div{background:rgba(255,255,255,.12);border-radius:25px;padding:26px}
+.gapstats b{display:block;font-size:clamp(24px,2.6vw,38px);font-weight:700;letter-spacing:-.04em;line-height:1}
+.gapstats span{display:block;margin-top:10px;font-size:11px;font-weight:700;letter-spacing:.08em;
+text-transform:uppercase;color:rgba(255,255,255,.7);line-height:1.5}
+.gapstats a{color:#fff;border-bottom-color:rgba(255,255,255,.4)}
+/* ---- 04 mosaic ---- */
+.split{display:flex;gap:48px;align-items:flex-start;flex-wrap:wrap}
+.split .poster{flex:0 0 auto;min-width:min(100%,360px)}
+.dual{display:flex;gap:56px;flex-wrap:wrap;align-items:flex-end}
+.dual>div{min-width:min(100%,240px)}
+.dual .num{font-size:clamp(66px,11vw,168px)}
+.dual .l{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--sup2);margin-top:12px}
+/* view-proportional mosaic: every tile is a square, its AREA is that video's
+   share of the 141,851 sample views. 36 views renders at 36 views' worth of ink. */
+.mos{position:relative;width:100%;aspect-ratio:1248.5/571}
+.mtile{position:absolute;left:calc(var(--l)*1%);top:calc(var(--t)*1%);
+width:calc(var(--s)*1%);height:calc(var(--sy)*1%);
+border-radius:10px;overflow:hidden;border-bottom:none;background:var(--plate);display:block}
+.mtile picture,.mtile img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.tvz{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,15,65,.02) 38%,rgba(0,15,65,.86))}
+.mtile img{transition:transform .6s var(--ease)}
+.mtile:hover img{transform:scale(1.05)}
+.mtile:hover{outline:2px solid var(--cobalt);outline-offset:2px}
+.mtile .tv{position:absolute;left:12px;right:10px;bottom:24px;font-size:14px;font-weight:700;
+letter-spacing:-.03em;color:#fff;line-height:1;font-variant-numeric:tabular-nums}
+.mtile .tc{position:absolute;left:12px;bottom:10px;right:10px;font-size:9.5px;font-weight:700;letter-spacing:.07em;
+text-transform:uppercase;color:rgba(255,255,255,.7);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.g1{border-radius:18px}
+.g1 .tv{font-size:clamp(22px,2.7vw,42px);bottom:32px;letter-spacing:-.045em}
+.g1 .tc{font-size:11px;bottom:14px}
+.g2 .tv{font-size:clamp(13px,1.5vw,21px);bottom:26px}
+.g3 .tv{font-size:clamp(11px,1.05vw,15px);bottom:22px}
+.g3 .tc{font-size:9px;bottom:8px}
+.g4 .tv,.g4 .tc{display:none}
+.g4{border-radius:6px}
+.bbar{display:flex;height:56px;border-radius:12px;overflow:hidden;margin-top:12px;background:var(--plate)}
+.seg{width:0;transition:width 1s var(--ease)} .bbar.in .seg{width:var(--w)}
+@media (prefers-reduced-motion:reduce){.seg{width:var(--w);transition:none}}
+.b1{background:var(--cobalt)} .b2{background:var(--navy)} .b3{background:#F2FF82}
+.b4{background:#666666} .b5{background:#EDEDED}
+.bkeys{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin-top:14px}
+.bk i{display:block;width:24px;height:6px;border-radius:3px}
+/* b5 swatch is #EDEDED on a light plate: hairline keeps the key readable */
+.bk i.b5{box-shadow:inset 0 0 0 1px #666666}
+.bk b{display:block;margin-top:10px;font-size:13.5px;font-weight:700}
+.bk span{display:block;margin-top:3px;font-size:12px;color:var(--sup2)}
+details.all{margin-top:34px;border-top:1px solid var(--hair)}
+details.all>summary{cursor:pointer;list-style:none;padding:22px 0 0;font-size:12px;font-weight:700;
+letter-spacing:.12em;text-transform:uppercase;color:var(--cobalt)}
+details.all>summary::-webkit-details-marker{display:none}
+details.all>summary::after{content:" +"} details.all[open]>summary::after{content:" \2212"}
+table{width:100%;border-collapse:collapse;margin-top:20px;font-size:14.5px;table-layout:fixed}
+th{text-align:left;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--sup2);
+font-weight:700;padding:0 12px 10px 0;border-bottom:1px solid var(--hair)}
+td{padding:12px 12px 12px 0;border-bottom:1px solid var(--hair);vertical-align:baseline}
+td a{overflow-wrap:anywhere}
+td.n{font-weight:700;white-space:nowrap} td.ch{color:var(--sup2);font-size:13.5px}
+td.dt{color:var(--sup2);font-size:13px;white-space:nowrap;text-align:right}
+/* ---- 05 roster ---- */
+.picks{display:flex;flex-direction:column}
+.pick{border-top:1px solid var(--hair)}
+.pick:last-child{border-bottom:1px solid var(--hair)}
+.pick>summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:26px;padding:26px 0;
+transition:background .35s var(--ease)}
+.pick>summary::-webkit-details-marker{display:none}
+.pick>summary:hover{background:var(--plate)}
+.pno{font-size:clamp(34px,4vw,58px);font-weight:700;letter-spacing:-.05em;line-height:.8;color:var(--cobalt);flex:0 0 auto}
+.pick img{width:64px;height:64px;border-radius:50%;flex:0 0 auto}
+.pid{flex:0 0 auto;width:min(30vw,250px)}
+.pid b{display:block;font-size:20px;font-weight:700;letter-spacing:-.02em;line-height:1.1;overflow-wrap:anywhere}
+.pid i{display:block;font-style:normal;margin-top:5px;font-size:11.5px;font-weight:700;letter-spacing:.06em;
+text-transform:uppercase;color:var(--sup2)}
+.pstat{display:block;font-style:normal;margin-top:6px;font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--cobalt)}
+.pbig{flex:0 0 auto;width:170px;font-size:clamp(30px,3.6vw,54px);font-weight:700;letter-spacing:-.04em;line-height:.85;text-align:right}
+.pbig-low{color:var(--sup2)}
+.pbig i{display:block;font-style:normal;font-size:10px;font-weight:700;letter-spacing:.08em;
+text-transform:uppercase;color:var(--sup2);margin-top:8px;text-align:right}
+.pline{flex:1;min-width:0;font-size:15px;color:var(--sup);line-height:1.4}
+.pmore{flex:0 0 auto;font-size:12px;font-weight:700;letter-spacing:.1em;color:var(--navy);
+background:var(--lime);border:1px solid var(--lime);border-radius:40px;padding:11px 20px;line-height:1;
+transition:background .3s var(--ease),border-color .3s var(--ease),color .3s var(--ease)}
+.pick[open] .pmore{background:var(--cobalt);border-color:var(--cobalt);color:#fff}
+.pbody{padding:6px 0 34px}
+.pstats{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.pstats>div{background:var(--plate);border-radius:20px;padding:20px 24px}
+.pstats b{display:block;font-size:26px;font-weight:700;letter-spacing:-.03em;line-height:1}
+.pstats span{display:block;margin-top:8px;font-size:10.5px;font-weight:700;letter-spacing:.08em;
+text-transform:uppercase;color:var(--sup2)}
+.pstats>div:last-child{background:none;padding:0}
+/* ---- close ---- */
+.close{background:var(--cobalt);border-radius:35px;margin:14px 0;padding:84px 60px;color:#fff;
+display:flex;gap:60px;align-items:center;flex-wrap:wrap}
+.close .who{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;gap:4px}
+.close .who img{width:236px;height:236px;border-radius:50%;border:6px solid var(--lime);margin-bottom:14px}
+.nm{font-size:15px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.rl{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.65)}
+.pitch{flex:1;min-width:min(100%,340px)}
+.cta-var{display:none}
+body.cta-1 .cta-v1,body.cta-2 .cta-v2,body.cta-3 .cta-v3{display:block}
+.close h2{color:#fff;font-size:clamp(34px,5.4vw,82px);max-width:15ch}
+.close p{margin-top:24px;font-size:19px;line-height:1.45;color:rgba(255,255,255,.92);max-width:46ch}
+.cta-btn{display:inline-block;margin-top:36px;background:var(--lime);color:var(--navy);font-weight:700;
+font-size:16px;letter-spacing:.03em;text-transform:uppercase;padding:28px 48px;border-radius:80px;
+border-bottom:none;transition:background .3s var(--ease),color .3s var(--ease)}
+.cta-btn:hover{background:#fff;color:var(--navy);border-bottom:none}
+.arch{margin-top:34px;font-size:12.5px;color:rgba(255,255,255,.6);max-width:60ch}
+.arch a{color:rgba(255,255,255,.85);border-bottom-color:rgba(255,255,255,.35)}
+/* ---- method + foot ---- */
+.how{margin:14px 0;background:rgba(255,255,255,.06);border-radius:25px;color:rgba(255,255,255,.62);font-size:12.5px}
+.how summary{cursor:pointer;padding:20px 32px;font-size:11px;font-weight:700;letter-spacing:.12em;
+text-transform:uppercase;color:rgba(255,255,255,.85)}
+.how .inner{padding:0 32px 26px}
+.how ul{margin:8px 0 0;padding-left:18px;line-height:1.6;overflow-wrap:anywhere}
+.how li{margin-bottom:8px}
+.how .caveat{margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,.14);color:rgba(255,255,255,.5)}
+.how a{color:#fff}
+.foot{margin:14px 0;padding-bottom:26px}
+/* ---- responsive ---- */
+@media (max-width:1100px){
+ .card{padding:52px 40px}
+ .pid{width:min(34vw,210px)} .pbig{width:130px} .pline{display:none}
+}
+@media (max-width:860px){
+ .card{padding:40px 26px;min-height:0;gap:34px;border-radius:28px}
+ .gapbeat{padding:64px 0 60px}
+ .finds{grid-template-columns:minmax(0,1fr)}
+ .find{display:flex;align-items:baseline;justify-content:space-between;gap:20px;
+  border-left:0;padding:16px 0;border-bottom:1px solid rgba(255,255,255,.18)}
+ .find:first-child{padding-left:0} .find:last-child{border-bottom:0}
+ .find .n{flex:0 0 auto;order:2;font-size:34px}
+ .find .l{margin-top:0;flex:1;max-width:none;line-height:1.35}
+ .tiles{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .gapstats{grid-template-columns:minmax(0,1fr)}
+ .bkeys{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .plotscroll .plot{min-width:700px}
+ .swipe{display:block}
+ .mos{aspect-ratio:322.2/390.4}
+ .mtile{left:calc(var(--ml)*1%);top:calc(var(--mt)*1%);width:calc(var(--ms)*1%);height:calc(var(--msy)*1%)}
+ .g1 .tv{font-size:22px;bottom:26px} .g1 .tc{font-size:9.5px;bottom:10px}
+ .g2 .tv{font-size:12px;bottom:9px} .g2 .tc{display:none}
+ .g3 .tv,.g3 .tc{display:none}
+ /* roster: one grid at 390, the reach multiple never wraps */
+ .pick>summary{display:grid;grid-template-columns:auto 56px minmax(0,1fr);
+  grid-template-areas:"pno pav pid" "pbg pbg pbg";column-gap:14px;row-gap:12px;padding:22px 0;align-items:center}
+ .pno{grid-area:pno} .pick>summary>picture{grid-area:pav;display:block}
+ .pick img{width:56px;height:56px}
+ .pid{grid-area:pid;width:auto}
+ .pbig{grid-area:pbg;width:auto;display:flex;align-items:baseline;gap:12px;text-align:left;
+  border-top:1px solid var(--hair);padding-top:11px}
+ .pbig i{text-align:left;margin-top:0}
+ .pmore{display:none}
+ .taperow{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:4px 12px;padding:14px 0}
+ .taperow .m{grid-column:1/-1;order:-1;text-align:left;white-space:normal;margin-bottom:2px}
+ .taphead .vs{grid-column:1/-1;order:-1;text-align:left}
+ .taphead .side.r{flex-direction:row;text-align:left}
+ .taphead .side img{width:44px;height:44px}
+ .tape{padding:22px 20px}
+ .pstats>div{padding:16px 18px} .pstats b{font-size:20px}
+ .close{padding:48px 26px;gap:34px} .close .who{margin:0 auto}
+ .close .who img{width:168px;height:168px}
+ .mast .grid,.foot .grid{padding:16px 22px;border-radius:24px}
+ .stage{height:clamp(360px,58vh,520px)} .stage-in,.kicker{padding:24px}
+ .kicker{top:24px;left:24px;right:24px}
+ td.ch,td.dt{display:none}
+ .dual{gap:28px}
+}
+@media (max-width:560px){
+ body{font-size:16px} .wrap{padding:0 10px}
+ .card{padding:32px 20px} .how summary{padding:18px 22px} .how .inner{padding:0 22px 22px}
+ .chan{padding:24px 20px} .chan-h{flex-wrap:wrap} .chan-n{text-align:left}
+ .callout{padding:26px 22px} .gapchip{padding:30px 24px;gap:20px}
+ .axl{flex-direction:column;gap:6px}
+}
+</style>
+<noscript><style>.rv{opacity:1;transform:none}.bfill{width:var(--w)}.seg{width:var(--w)}</style></noscript>
+</head>
+<body class="cta-1">
+
+<div class="mast"><div class="wrap"><div class="grid">
+<a class="logo" href="https://arch.agency/"><svg class="wordmark" viewBox="0 0 83 22" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ARCH."><path d="M12.9221 21.6938H16.6558L8.3093 0L0 21.6938H3.75839L4.64875 19.2654L11.9792 19.268L12.9221 21.6938ZM5.78611 16.2115C6.62793 13.7814 7.46899 11.3512 8.31107 8.92062L10.8443 16.218C9.15867 16.2163 7.47251 16.2137 5.78636 16.2112L5.78611 16.2115ZM30.5568 21.6938H34.6761L29.0098 12.544C29.0098 12.544 32.8828 11.7136 33.4664 8.05251C33.4664 8.05251 34.9666 1.00467 26.6508 0.585655H19.6557V4.1403L22.9621 9.37225V9.39451H19.6557V21.6938H23.1532V12.9158H25.1538L25.1555 12.9193H25.1598L30.5568 21.69Z" fill="#000F41"/><path d="M23.1533 12.9154V21.6934H23.1651V12.9187H25.1556L25.1539 12.9154H23.1533ZM53.1342 5.87189L55.6028 3.39297C55.6028 3.39297 52.9616 0.29249 48.2774 0.282122C48.2774 0.282122 42.6322 -0.0516709 39.4643 4.8604C39.4643 4.8604 35.5148 11.0942 39.4643 17.3802C39.4643 17.3802 42.2084 21.9913 48.1074 21.9913C48.1074 21.9913 52.2488 22.315 55.6028 18.926L53.1136 16.4099C53.1136 16.4099 51.3552 18.4597 48.3453 18.4693C48.3453 18.4693 41.6228 18.6736 41.2959 11.3441C41.2959 11.3441 40.8635 3.63598 48.7105 3.84991C48.7098 3.84991 51.1716 3.86964 53.1342 5.87189ZM71.9986 0.585317V9.34764H63.3301V0.585317H59.8293V21.6934H63.3301V12.8717H71.9986V21.6934H75.4861V0.585317H71.9986ZM81.12 21.8909C82.1583 21.8909 83.0001 21.0403 83.0001 19.9906C83.0001 18.9412 82.1583 18.0905 81.12 18.0905C80.0818 18.0905 79.2402 18.9412 79.2402 19.9906C79.2402 21.04 80.0818 21.8909 81.12 21.8909Z" fill="#000F41"/></svg></a>
+<div class="stamp">Prepared for Playducky &middot; 27 August 2026</div>
+</div></div></div>
+
+<main>
+
+<!-- ======================= HERO ======================= -->
+<section class="beat hero"><div class="wrap">
+<div class="stage rv">
+<picture><source srcset="assets/thumbs/Ml6o4Ey6Lco.webp" type="image/webp"><img src="assets/thumbs/Ml6o4Ey6Lco.jpg" alt="Vedid, How to make headcrab in Melon Sandbox #melonsanbox #shorts" width="800" height="450" fetchpriority="high" sizes="100vw" class=""></picture>
+<div class="veil"></div>
+<div class="kicker">Melon Sandbox &middot; YouTube coverage &amp; creator audit</div>
+<div class="stage-in">
+<div class="stamp-num num" data-count="2750943">2,750,943</div>
+<div class="stamp-lab">Views on one creator&rsquo;s how-to short</div>
+</div>
+</div>
+<h1 class="rv">52,073 uploads a week<br>by YouTube&rsquo;s count.<br>269 from the official channel, ever.</h1>
+<div class="finds">
+<div class="find rv"><span class="n num" data-count="58744600">58,744,600</span><span class="l">views across 277 sampled videos in 30 days</span></div>
+<div class="find rv" style="--d:110ms"><span class="n num" data-count="106">106</span><span class="l">channels posting about the game in that sample</span></div>
+<div class="find rv" style="--d:220ms"><span class="n num" data-count="12.1" data-dec="1" data-suffix="%">12.1%</span><span class="l">of those views went to videos about other players&rsquo; work</span></div>
+</div>
+<p class="hero-src rv">Source: <a href="https://www.youtube.com/watch?v=Ml6o4Ey6Lco">Vedid, 11 Aug 2026</a>.</p>
+</div></section>
+
+<!-- ======================= 01 VOLUME ======================= -->
+<section class="beat" id="volume"><div class="wrap"><div class="card">
+<div class="folio"><span class="fn">01</span><span class="fk">Volume</span></div>
+<div class="beat-head"><span class="snum">01</span><h2>How much<br>of it there is</h2></div>
+<div class="poster">
+<div class="num rv" data-count="52073">52,073</div>
+<div class="unit rv" style="--d:80ms">Melon Sandbox uploads in the last 7 days</div>
+<p class="sub rv" style="--d:160ms">YouTube&rsquo;s 30-day filter reports 106,552. The official channel has published 269 videos since it opened in 2021.</p>
+</div>
+<div>
+<div class="tiles">
+<div class="rv"><a href="https://www.youtube.com/results?search_query=melon+sandbox&amp;sp=EgIIAg%3D%3D"><b class="num" data-count="8527">8,527</b></a><span>last 24 hours</span></div>
+<div class="rv" style="--d:80ms"><a href="https://www.youtube.com/results?search_query=melon+sandbox&amp;sp=EgIIAw%3D%3D"><b class="num" data-count="52073">52,073</b></a><span>last 7 days</span></div>
+<div class="rv" style="--d:160ms"><a href="https://www.youtube.com/results?search_query=melon+sandbox&amp;sp=EgIIBA%3D%3D"><b class="num" data-count="106552">106,552</b></a><span>last 30 days</span></div>
+<div class="rv" style="--d:240ms"><a href="https://www.youtube.com/results?search_query=melon+sandbox&amp;sp=EgIIBA%3D%3D"><b>58,744,600</b></a><span>views on the 277-video sample</span></div>
+</div>
+<p class="cap" style="margin-top:22px">Sample: <a href="https://www.youtube.com/results?search_query=melon+sandbox&amp;sp=EgIIBA%3D%3D">277 videos, 106 channels, 58,744,600 views</a>. Both of the game&rsquo;s names were searched; Melon Playground results are the same title.</p>
+</div>
+</div></div></section>
+
+<!-- ======================= 02 WHO ======================= -->
+<section class="beat" id="who"><div class="wrap"><div class="card">
+<div class="folio"><span class="fn">02</span><span class="fk">Current coverage</span><span class="fr">Ten channels</span></div>
+<div class="beat-head"><span class="snum">02</span><h2>Who covers<br>it today</h2></div>
+<div>
+<p class="lede" style="margin-top:0">Above the dashed line, a channel&rsquo;s biggest sampled video out-drew its subscriber count. The open square is Melon Sandbox&rsquo;s own channel; tap a face for receipts.</p>
+<div class="plotwrap rv">
+<div class="plotscroll"><div class="plot"><span class="gx" style="left:0%"><i>10K</i></span><span class="gx" style="left:33.33%"><i>100K</i></span><span class="gx" style="left:66.67%"><i>1M</i></span><span class="gx" style="left:100%"><i>10M</i></span><span class="gy" style="bottom:0%"><i>10K</i></span><span class="gy" style="bottom:33.33%"><i>100K</i></span><span class="gy" style="bottom:66.67%"><i>1M</i></span><span class="gy" style="bottom:100%"><i>10M</i></span><svg class="diag" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="100" x2="100" y2="0" stroke="#666666" stroke-width="1" stroke-dasharray="4 5" vector-effect="non-scaling-stroke" opacity=".55"/></svg><button class="dot dot-hot lab-up" style="left:54.78%;bottom:81.32%" type="button" data-ch="vedid" aria-expanded="false" aria-controls="ch-vedid"><picture><source srcset="assets/avatars/vedid.webp" type="image/webp"><img src="assets/avatars/vedid.jpg" alt="Vedid" width="64" height="64" loading="lazy" decoding="async"></picture><span class="dlab">Vedid</span></button><button class="dot lab-up" style="left:39.49%;bottom:82.06%" type="button" data-ch="corn" aria-expanded="false" aria-controls="ch-corn"><picture><source srcset="assets/avatars/improvedcorn.webp" type="image/webp"><img src="assets/avatars/improvedcorn.jpg" alt="Improved Corn" width="64" height="64" loading="lazy" decoding="async"></picture><span class="dlab">Improved Corn</span></button><button class="dot lab-left" style="left:47.44%;bottom:69.98%" type="button" data-ch="zendi" aria-expanded="false" aria-controls="ch-zendi"><picture><source srcset="assets/avatars/gameswithzen.webp" type="image/webp"><img src="assets/avatars/gameswithzen.jpg" alt="Zendi" width="64" height="64" loading="lazy" decoding="async"></picture><span class="dlab">Zendi</span></button><button class="dot lab-down" style="left:70.13%;bottom:65.80%" type="button" data-ch="skull" aria-expanded="false" aria-controls="ch-skull"><picture><source srcset="assets/avatars/shortswithskull.webp" type="image/webp"><img src="assets/avatars/shortswithskull.jpg" alt="GamingWithSkull" width="64" height="64" loading="lazy" decoding="async"></picture><span class="dlab">GamingWithSkull</span></button><button class="dot lab-up" style="left:62.37%;bottom:76.49%" type="button" data-ch="yoggami" aria-expanded="false" aria-controls="ch-yoggami"><picture><source srcset="assets/avatars/yoggami.webp" type="image/webp"><img src="assets/avatars/yoggami.jpg" alt="Yoggami" width="64" height="64" loading="lazy" decoding="async"></picture><span class="dlab">Yoggami</span></button><button class="dot lab-right" style="left:52.85%;bottom:64.76%" type="button" data-ch="melfy" aria-expanded="false" aria-controls="ch-melfy"><picture><source srcset="assets/avatars/melfyyyy.webp" type="image/webp"><img src="assets/avatars/melfyyyy.jpg" alt="Melfy" width="64" height="64" loading="lazy" decoding="async"></picture><span class="dlab">Melfy</span></button><button class="dot lab-up" style="left:30.32%;bottom:66.92%" type="button" data-ch="melonworld" aria-expanded="false" aria-controls="ch-melonworld"><picture><source srcset="assets/avatars/playmelonworld.webp" type="image/webp"><img src="assets/avatars/playmelonworld.jpg" alt="Melon World" width="64" height="64" loading="lazy" decoding="async"></picture><span class="dlab">Melon World</span></button><button class="dot lab-right" style="left:32.77%;bottom:60.53%" type="button" data-ch="shadowz" aria-expanded="false" aria-controls="ch-shadowz"><picture><source srcset="assets/avatars/itsshadowzzz.webp" type="image/webp"><img src="assets/avatars/itsshadowzzz.jpg" alt="Shadowz" width="64" height="64" loading="lazy" decoding="async"></picture><span class="dlab">Shadowz</span></button><button class="dot lab-down" style="left:34.58%;bottom:55.92%" type="button" data-ch="buckaroo" aria-expanded="false" aria-controls="ch-buckaroo"><picture><source srcset="assets/avatars/thebigbuck36.webp" type="image/webp"><img src="assets/avatars/thebigbuck36.jpg" alt="Buckaroo" width="64" height="64" loading="lazy" decoding="async"></picture><span class="dlab">Buckaroo</span></button><button class="dot lab-down" style="left:21.38%;bottom:55.89%" type="button" data-ch="ebs" aria-expanded="false" aria-controls="ch-ebs"><picture><source srcset="assets/avatars/ebs_playground.webp" type="image/webp"><img src="assets/avatars/ebs_playground.jpg" alt="EbsPlayground" width="64" height="64" loading="lazy" decoding="async"></picture><span class="dlab">EbsPlayground</span></button><span class="ownmark" style="left:73.38%;bottom:73.56%" aria-hidden="true"></span><span class="ownlab" style="left:73.38%;bottom:73.56%">Official</span><span class="diaglab">one view per subscriber</span></div></div>
+<div class="axl"><span>subscribers <svg class="arw" viewBox="0 0 20 12" fill="none" aria-hidden="true"><path d="M0 6h17M12.5 1L18 6l-5.5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="square"/></svg></span><span>vertical: biggest sampled video, views</span></div>
+<p class="swipe">SWIPE THE CHART <svg class="arw" viewBox="0 0 20 12" fill="none" aria-hidden="true"><path d="M0 6h17M12.5 1L18 6l-5.5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="square"/></svg></p>
+<p class="cap" style="margin-top:16px">Source: <a href="https://www.youtube.com/results?search_query=melon+sandbox&amp;sp=EgIIBA%3D%3D">the 30-day sample</a>, read through the YouTube Data API on 27 August 2026. Both axes log.</p>
+</div>
+<div class="chans" id="chans"><article class="chan chan-hot" id="ch-vedid">
+<header class="chan-h"><picture><source srcset="assets/avatars/vedid.webp" type="image/webp"><img src="assets/avatars/vedid.jpg" alt="Vedid" width="72" height="72" loading="lazy" decoding="async"></picture><div><h3>Vedid</h3>
+<p class="meta"><a href="https://www.youtube.com/@vedid/about">@vedid</a> &middot; Guides</p></div>
+<div class="chan-n">440K<i>subscribers</i></div></header>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=Ml6o4Ey6Lco">How to make headcrab in Melon Sandbox #melonsanbox #shorts</a><span class="vnum">2,750,943<i>11 Aug 2026</i></span></div><div class="vrow"><a href="https://www.youtube.com/watch?v=IahM-yXD_UQ">How to make a Pumpkin with a cannon leg in Melon Sandbox #melonsanbox #shorts</a><span class="vnum">2,579,890<i>2 Aug 2026</i></span></div><p class="chan-line">The how-to lane is his. Nine of the fifteen uploads he put up in the window teach one build.</p><footer><span class="tag ">189,176,310 lifetime views</span><span class="tag ">no paid promotion found</span></footer></article><article class="chan" id="ch-corn">
+<header class="chan-h"><picture><source srcset="assets/avatars/improvedcorn.webp" type="image/webp"><img src="assets/avatars/improvedcorn.jpg" alt="Improved Corn" width="72" height="72" loading="lazy" decoding="async"></picture><div><h3>Improved Corn</h3>
+<p class="meta"><a href="https://www.youtube.com/@improvedcorn/about">@improvedcorn</a> &middot; Animation and edits</p></div>
+<div class="chan-n">153K<i>subscribers</i></div></header>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=vgF2PF4YPhw">Dai dai dai kirai | Melon playground #animation #alightmotion #shorts #trending #memes #trend #fyp</a><span class="vnum">2,896,540<i>4 Aug 2026</i></span></div><p class="chan-line">One upload in the window, and it is the biggest video in the sample.</p><footer><span class="tag ">67,738,086 lifetime views</span><span class="tag ">no paid promotion found</span></footer></article><article class="chan" id="ch-zendi">
+<header class="chan-h"><picture><source srcset="assets/avatars/gameswithzen.webp" type="image/webp"><img src="assets/avatars/gameswithzen.jpg" alt="Zendi" width="72" height="72" loading="lazy" decoding="async"></picture><div><h3>Zendi</h3>
+<p class="meta"><a href="https://www.youtube.com/@gameswithzen/about">@gameswithzen</a> &middot; Creator spotlights</p></div>
+<div class="chan-n">265K<i>subscribers</i></div></header>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=lBLlsIelheM">I Found the Weirdest Melon Sandbox Creator...</a><span class="vnum">1,256,952<i>2 Aug 2026</i></span></div><div class="vrow"><a href="https://www.youtube.com/watch?v=cAC1omQF3SI">Melon Sandbox Maps You Should Try</a><span class="vnum">1,040,655<i>29 Jul 2026</i></span></div><p class="chan-line">Runs the community as a beat. Fifteen of eighteen sampled uploads are about another player&rsquo;s work.</p><footer><span class="tag ">94,374,803 lifetime views</span><span class="tag ">no paid promotion found</span></footer></article><article class="chan" id="ch-skull">
+<header class="chan-h"><picture><source srcset="assets/avatars/shortswithskull.webp" type="image/webp"><img src="assets/avatars/shortswithskull.jpg" alt="GamingWithSkull" width="72" height="72" loading="lazy" decoding="async"></picture><div><h3>GamingWithSkull</h3>
+<p class="meta"><a href="https://www.youtube.com/@shortswithskull/about">@shortswithskull</a> &middot; Sandbox experiments</p></div>
+<div class="chan-n">1.27M<i>subscribers</i></div></header>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=CsM51q6ghLk">Testing Flag Myths in Melon Sandbox</a><span class="vnum">942,073<i>5 Aug 2026</i></span></div><div class="vrow"><a href="https://www.youtube.com/watch?v=MeiFhStYCR4">This Melon Sandbox Mod Shouldn’t Be Possible</a><span class="vnum">802,292<i>13 Aug 2026</i></span></div><p class="chan-line">The largest audience covering the game, and the only card here drawing under one view per subscriber.</p><footer><span class="tag ">419,869,236 lifetime views</span><span class="tag ">no paid promotion found</span></footer></article><article class="chan" id="ch-yoggami">
+<header class="chan-h"><picture><source srcset="assets/avatars/yoggami.webp" type="image/webp"><img src="assets/avatars/yoggami.jpg" alt="Yoggami" width="72" height="72" loading="lazy" decoding="async"></picture><div><h3>Yoggami</h3>
+<p class="meta"><a href="https://www.youtube.com/@yoggami/about">@yoggami</a> &middot; Animation and edits</p></div>
+<div class="chan-n">743K<i>subscribers</i></div></header>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=sTItJNX6F94">Melon Sandbox | Temu verity</a><span class="vnum">1,971,528<i>1 Aug 2026</i></span></div><div class="vrow"><a href="https://www.youtube.com/watch?v=EEgjVFeZq-g">Melon Sandbox | All i want is you</a><span class="vnum">774,980<i>24 Aug 2026</i></span></div><p class="chan-line">Character edits are the lane here. Both ledger receipts are built from the game&rsquo;s characters.</p><footer><span class="tag ">373,479,721 lifetime views</span><span class="tag ">no paid promotion found</span></footer></article><article class="chan" id="ch-melfy">
+<header class="chan-h"><picture><source srcset="assets/avatars/melfyyyy.webp" type="image/webp"><img src="assets/avatars/melfyyyy.jpg" alt="Melfy" width="72" height="72" loading="lazy" decoding="async"></picture><div><h3>Melfy</h3>
+<p class="meta"><a href="https://www.youtube.com/@melfyyyy/about">@melfyyyy</a> &middot; Update coverage</p></div>
+<div class="chan-n">385K<i>subscribers</i></div></header>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=3GGUZdHcJfQ">ALL NEW SECRET ACHIEVEMENTS in Melon Playground Sandbox</a><span class="vnum">876,507<i>3 Aug 2026</i></span></div><p class="chan-line">Three of four sampled uploads are update coverage.</p><footer><span class="tag ">145,983,617 lifetime views</span><span class="tag ">no paid promotion found</span></footer></article><article class="chan" id="ch-melonworld">
+<header class="chan-h"><picture><source srcset="assets/avatars/playmelonworld.webp" type="image/webp"><img src="assets/avatars/playmelonworld.jpg" alt="Melon World" width="72" height="72" loading="lazy" decoding="async"></picture><div><h3>Melon World</h3>
+<p class="meta"><a href="https://www.youtube.com/@playmelonworld/about">@playmelonworld</a> &middot; Guides</p></div>
+<div class="chan-n">81.2K<i>subscribers</i></div></header>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=L-MWsb3ijDE">How to get ALL the items FROM A GIFT in Melon Playground!? #melonplaygroundupdate #mods</a><span class="vnum">1,017,740<i>8 Aug 2026</i></span></div><div class="vrow"><a href="https://www.youtube.com/watch?v=fiEdlR68LrY">You definitely didn't KNOW these FACTS about Update 37.0! #melonplaygroundupdate #mods</a><span class="vnum">580,526<i>9 Aug 2026</i></span></div><p class="chan-line">The best reach multiple on the page: 1,017,740 views from 81.2K subscribers.</p><footer><span class="tag ">14,360,627 lifetime views</span><span class="tag ">no paid promotion found</span></footer></article><article class="chan" id="ch-shadowz">
+<header class="chan-h"><picture><source srcset="assets/avatars/itsshadowzzz.webp" type="image/webp"><img src="assets/avatars/itsshadowzzz.jpg" alt="Shadowz" width="72" height="72" loading="lazy" decoding="async"></picture><div><h3>Shadowz</h3>
+<p class="meta"><a href="https://www.youtube.com/@itsshadowzzz/about">@itsshadowzzz</a> &middot; Mod showcases</p></div>
+<div class="chan-n">96.2K<i>subscribers</i></div></header>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=P2h1vyLFcWo">New Verity Mod in Melon Sandbox! #shorts #gaming #melonsanbox</a><span class="vnum">654,483<i>5 Aug 2026</i></span></div><div class="vrow"><a href="https://www.youtube.com/watch?v=bXffoaYDXWM">Free Mods in Melon Sandbox Workshop Pt.12 #shorts #gaming #melonsanbox</a><span class="vnum">551,367<i>18 Aug 2026</i></span></div><p class="chan-line">Six sampled uploads, six mod showcases, on a numbered Workshop run.</p><footer><span class="tag ">66,481,367 lifetime views</span><span class="tag ">no paid promotion found</span></footer></article><article class="chan" id="ch-buckaroo">
+<header class="chan-h"><picture><source srcset="assets/avatars/thebigbuck36.webp" type="image/webp"><img src="assets/avatars/thebigbuck36.jpg" alt="Buckaroo" width="72" height="72" loading="lazy" decoding="async"></picture><div><h3>Buckaroo</h3>
+<p class="meta"><a href="https://www.youtube.com/@thebigbuck36/about">@thebigbuck36</a> &middot; Sandbox experiments</p></div>
+<div class="chan-n">109K<i>subscribers</i></div></header>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=vldu8nGxuPs">Melon Sandbox School Boy Runaway...</a><span class="vnum">476,109<i>30 Jul 2026</i></span></div><p class="chan-line">Seventeen sampled uploads, most of them episodes of one story.</p><footer><span class="tag ">24,201,099 lifetime views</span><span class="tag ">no paid promotion found</span></footer></article><article class="chan" id="ch-ebs">
+<header class="chan-h"><picture><source srcset="assets/avatars/ebs_playground.webp" type="image/webp"><img src="assets/avatars/ebs_playground.jpg" alt="EbsPlayground" width="72" height="72" loading="lazy" decoding="async"></picture><div><h3>EbsPlayground</h3>
+<p class="meta"><a href="https://www.youtube.com/@ebs_playground/about">@ebs_playground</a> &middot; Guides</p></div>
+<div class="chan-n">43.8K<i>subscribers</i></div></header>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=7lZqzlq9_Wc">These 10 Melcoins Mods in Melon Sanbox Are Worth It! 🤯 #melonsanbox #shorts</a><span class="vnum">475,095<i>1 Aug 2026</i></span></div><div class="vrow"><a href="https://www.youtube.com/watch?v=LgUEEBh9xiw">How to Make a Working Zipline in Melon Sanbox! 🚡 #melonsanbox #shorts</a><span class="vnum">438,596<i>11 Aug 2026</i></span></div><p class="chan-line">Forty-three thousand subscribers, two shorts past 438,596 views. Not on the roster; both landed inside this window.</p><footer><span class="tag ">3,963,412 lifetime views</span><span class="tag ">no paid promotion found</span></footer></article></div>
+<div class="callout rv"><b>One paid-promotion flag across the whole sample</b>
+<span>Of the 277 videos read, one carries the API&rsquo;s paid-product-placement flag, and its channel is not among the ten above. The flag is what an uploader declares, so treat it as a floor.</span></div>
+</div>
+</div></div></section>
+
+<!-- ======================= 03 GAP ======================= -->
+<section class="beat gapbeat" id="gap"><div class="wrap">
+<div class="folio"><span class="fn">03</span><span class="fk">The gap</span><span class="fr">Official presence</span></div>
+<div class="beat-head"><span class="snum">03</span><h2>The official channel<br>is outdrawn<br>on its own game.</h2></div>
+
+<div class="tape rv">
+<div class="taperow taphead">
+<div class="side"><picture><source srcset="assets/avatars/melon_sandboxofficial.webp" type="image/webp"><img src="assets/avatars/melon_sandboxofficial.jpg" alt="Melon Sandbox Official" width="54" height="54" loading="lazy" decoding="async"></picture><div><b>Melon Sandbox Official</b><i>The channel behind the game</i></div></div>
+<div class="vs">VS</div>
+<div class="side r"><picture><source srcset="assets/avatars/vedid.webp" type="image/webp"><img src="assets/avatars/vedid.jpg" alt="Vedid" width="54" height="54" loading="lazy" decoding="async"></picture><div><b>Vedid</b><i>One creator, outside the building</i></div></div>
+</div>
+<div class="taperow"><span class="a"><a href="https://www.youtube.com/@melon_sandboxofficial/about">1.59M</a></span><span class="m">Subscribers</span><span class="b"><a href="https://www.youtube.com/@vedid/about">440K</a></span></div>
+<div class="taperow"><span class="a"><a href="https://www.youtube.com/@melon_sandboxofficial/about">198,033,965</a></span><span class="m">Lifetime channel views</span><span class="b"><a href="https://www.youtube.com/@vedid/about">189,176,310</a></span></div>
+<div class="taperow"><span class="a">5</span><span class="m">Uploads in the 30-day sample</span><span class="b">15</span></div>
+<div class="taperow"><span class="a"><a href="https://www.youtube.com/watch?v=PWn4JR3XB8U">1,609,776</a></span><span class="m">Biggest video in the sample</span><span class="b"><a href="https://www.youtube.com/watch?v=Ml6o4Ey6Lco">2,750,943</a></span></div>
+</div>
+
+<div class="board">
+<div class="brow rv"><div class="blab"><span>The other 104 channels &middot; 30 days</span><span class="bval">44,300,874 views</span></div>
+<div class="btrack"><span class="bfill bfill-w" style="--w:100%"></span></div></div>
+
+<div class="brow rv"><div class="blab"><span>Vedid &middot; 15 uploads &middot; one creator</span><span class="bval">12,295,700 views</span></div>
+<div class="btrack"><span class="bfill bfill-img" style="--w:27.75%;--d:180ms"><picture><source srcset="assets/thumbs/Ml6o4Ey6Lco.webp" type="image/webp"><img src="assets/thumbs/Ml6o4Ey6Lco.jpg" alt="Vedid, how to make headcrab in Melon Sandbox" width="800" height="450" loading="lazy" decoding="async" class=""></picture></span></div></div>
+
+<div class="brow rv"><div class="blab"><span>Melon Sandbox Official &middot; 5 uploads &middot; the game&rsquo;s own channel</span><span class="bval">2,148,026 views</span></div>
+<div class="btrack"><span class="bfill bfill-w" style="--w:4.85%;--d:260ms"></span></div>
+<p class="bnote">The handle <a href="https://www.youtube.com/@melon_sandboxofficial">@melon_sandboxofficial</a> resolves through the API to this channel, so handle control is settled. Who owns it is not something the API can answer, and this page states only what the channel shows.</p></div>
+</div>
+<p class="cap" style="margin-top:20px">Sources: <a href="https://www.youtube.com/@melon_sandboxofficial">the official channel page</a>, <a href="https://www.youtube.com/@vedid">Vedid&rsquo;s channel page</a>, <a href="https://www.youtube.com/results?search_query=melon+sandbox&amp;sp=EgIIBA%3D%3D">the 30-day sample</a>.</p>
+
+<div class="gapchip rv"><span class="n num" data-count="12295700">12,295,700</span>
+<p>views in 30 days from <a href="https://www.youtube.com/@vedid">one creator with 440K subscribers</a>. The official channel, at 1.59M, took 2,148,026 in the same window.</p></div>
+
+<div class="gapstats">
+<div class="rv"><b><a href="https://www.youtube.com/@melon_sandboxofficial">269</a></b><span>videos from the official channel since 2021</span></div>
+<div class="rv" style="--d:100ms"><b><a href="https://www.youtube.com/results?search_query=melon+sandbox&amp;sp=EgIIBA%3D%3D">3.7%</a></b><span>of the sampled 30-day views came from it</span></div>
+<div class="rv" style="--d:200ms"><b><a href="https://www.youtube.com/results?search_query=melon+sandbox&amp;sp=EgIIAw%3D%3D">52,073</a></b><span>uploads about the game in the last 7 days, by YouTube&rsquo;s count</span></div>
+</div>
+</div></section>
+
+<!-- ======================= 04 SENTIMENT ======================= -->
+<section class="beat" id="sentiment"><div class="wrap"><div class="card">
+<div class="folio"><span class="fn">04</span><span class="fk">Where the attention goes</span><span class="fr">29 July to 27 August 2026</span></div>
+<div class="beat-head"><span class="snum">04</span><h2>18 videos about other<br>players&rsquo; work took<br>12.1% of the views.</h2></div>
+<div class="dual">
+<div class="rv"><div class="num" data-count="12.1" data-dec="1" data-suffix="%">12.1%</div><div class="l">of the views</div></div>
+<div class="rv" style="--d:120ms"><div class="num" data-count="6.5" data-dec="1" data-suffix="%">6.5%</div><div class="l">of the videos</div></div>
+<p class="lede" style="margin-top:0;flex:1">They are 6.5% of the sample and the best-watched beat in it per upload. Guides take the largest share overall at 31.2%; criticism is two videos and 0.2%.</p>
+</div>
+<div class="mos">
+<a class="mtile g1 rv" style="--l:0.000;--t:0.000;--s:25.217;--sy:51.289;--ml:0.000;--mt:0.000;--ms:35.206;--msy:36.736" href="https://www.youtube.com/watch?v=vgF2PF4YPhw"><picture><source srcset="assets/thumbs/vgF2PF4YPhw.webp" type="image/webp"><img src="assets/thumbs/vgF2PF4YPhw.jpg" alt="Dai dai dai kirai | Melon playground #animation #alightmotion #shorts #trending #memes #trend #fyp" width="800" height="450" loading="lazy" decoding="async"></picture><span class="tvz"></span><span class="tv">2,896,540</span><span class="tc">Improved Corn</span></a>
+<a class="mtile g1 rv" style="--l:0.000;--t:51.289;--s:25.217;--sy:48.711;--ml:35.206;--mt:0.000;--ms:33.436;--msy:36.736" href="https://www.youtube.com/watch?v=Ml6o4Ey6Lco"><picture><source srcset="assets/thumbs/Ml6o4Ey6Lco.webp" type="image/webp"><img src="assets/thumbs/Ml6o4Ey6Lco.jpg" alt="How to make headcrab in Melon Sandbox #melonsanbox #shorts" width="800" height="450" loading="lazy" decoding="async"></picture><span class="tvz"></span><span class="tv">2,750,943</span><span class="tc">Vedid</span></a>
+<a class="mtile g1 rv" style="--l:25.217;--t:0.000;--s:20.644;--sy:55.802;--ml:68.643;--mt:0.000;--ms:31.357;--msy:36.736" href="https://www.youtube.com/watch?v=IahM-yXD_UQ"><picture><source srcset="assets/thumbs/IahM-yXD_UQ.webp" type="image/webp"><img src="assets/thumbs/IahM-yXD_UQ.jpg" alt="How to make a Pumpkin with a cannon leg in Melon Sandbox #melonsanbox #shorts" width="800" height="450" loading="lazy" decoding="async"></picture><span class="tvz"></span><span class="tv">2,579,890</span><span class="tc">Vedid</span></a>
+<a class="mtile g1 rv" style="--l:25.217;--t:55.802;--s:20.644;--sy:44.198;--ml:0.000;--mt:36.736;--ms:28.337;--msy:32.198" href="https://www.youtube.com/watch?v=wMlXNZXuBi8"><picture><source srcset="assets/thumbs/wMlXNZXuBi8.webp" type="image/webp"><img src="assets/thumbs/wMlXNZXuBi8.jpg" alt="Update 37.0 is already out in Melon Sandbox #melonsanbox #shorts" width="800" height="450" loading="lazy" decoding="async"></picture><span class="tvz"></span><span class="tv">2,043,421</span><span class="tc">Vedid</span></a>
+<a class="mtile g2 rv" style="--l:45.860;--t:0.000;--s:15.991;--sy:55.051;--ml:0.000;--mt:68.935;--ms:28.337;--msy:31.065" href="https://www.youtube.com/watch?v=sTItJNX6F94"><picture><source srcset="assets/thumbs/sTItJNX6F94.webp" type="image/webp"><img src="assets/thumbs/sTItJNX6F94.jpg" alt="Melon Sandbox | Temu verity" width="800" height="450" loading="lazy" decoding="async"></picture><span class="tvz"></span><span class="tv">1,971,528</span><span class="tc">Yoggami</span></a>
+<a class="mtile g2 rv" style="--l:45.860;--t:55.051;--s:15.991;--sy:44.949;--ml:28.337;--mt:36.736;--ms:36.639;--msy:19.618" href="https://www.youtube.com/watch?v=PWn4JR3XB8U"><picture><source srcset="assets/thumbs/PWn4JR3XB8U.webp" type="image/webp"><img src="assets/thumbs/PWn4JR3XB8U.jpg" alt="What will happen?" width="800" height="450" loading="lazy" decoding="async"></picture><span class="tvz"></span><span class="tv">1,609,776</span><span class="tc">Melon Sandbox Official</span></a>
+<a class="mtile g2 rv" style="--l:61.851;--t:0.000;--s:20.997;--sy:32.723;--ml:64.976;--mt:36.736;--ms:35.024;--msy:19.618" href="https://www.youtube.com/watch?v=B6TIAEixHgU"><picture><source srcset="assets/thumbs/B6TIAEixHgU.webp" type="image/webp"><img src="assets/thumbs/B6TIAEixHgU.jpg" alt="How to GET the MONSTER CAKE in Melon Playground!? #mods #melonsanbox" width="800" height="450" loading="lazy" decoding="async"></picture><span class="tvz"></span><span class="tv">1,538,816</span><span class="tc">Richard USA</span></a>
+<a class="mtile g2 rv" style="--l:82.849;--t:0.000;--s:17.151;--sy:32.723;--ml:28.337;--mt:56.354;--ms:23.505;--msy:23.877" href="https://www.youtube.com/watch?v=lBLlsIelheM"><picture><source srcset="assets/thumbs/lBLlsIelheM.webp" type="image/webp"><img src="assets/thumbs/lBLlsIelheM.jpg" alt="I Found the Weirdest Melon Sandbox Creator..." width="800" height="450" loading="lazy" decoding="async"></picture><span class="tvz"></span><span class="tv">1,256,952</span><span class="tc">Zendi</span></a>
+<a class="mtile g3 rv" style="--l:61.851;--t:32.723;--s:13.661;--sy:34.013;--ml:28.337;--mt:80.232;--ms:23.505;--msy:19.768" href="https://www.youtube.com/watch?v=cAC1omQF3SI"><picture><source srcset="assets/thumbs/cAC1omQF3SI.webp" type="image/webp"><img src="assets/thumbs/cAC1omQF3SI.jpg" alt="Melon Sandbox Maps You Should Try" width="800" height="450" loading="lazy" decoding="async"></picture><span class="tvz"></span><span class="tv">1,040,655</span><span class="tc">Zendi</span></a>
+<a class="mtile g3 rv" style="--l:61.851;--t:66.736;--s:13.661;--sy:33.264;--ml:51.843;--mt:56.354;--ms:24.305;--msy:18.697" href="https://www.youtube.com/watch?v=L-MWsb3ijDE"><picture><source srcset="assets/thumbs/L-MWsb3ijDE.webp" type="image/webp"><img src="assets/thumbs/L-MWsb3ijDE.jpg" alt="How to get ALL the items FROM A GIFT in Melon Playground!? #melonplaygroundupdate #mods" width="800" height="450" loading="lazy" decoding="async"></picture><span class="tvz"></span><span class="tv">1,017,740</span><span class="tc">Melon World</span></a>
+<a class="mtile g3 rv" style="--l:75.513;--t:32.723;--s:12.601;--sy:35.390;--ml:76.148;--mt:56.354;--ms:23.852;--msy:18.697" href="https://www.youtube.com/watch?v=wTXuNcmT7hg"><picture><source srcset="assets/thumbs/wTXuNcmT7hg.webp" type="image/webp"><img src="assets/thumbs/wTXuNcmT7hg.jpg" alt="How to make the NPC Cake Spider in Melon Sandbox #melonsanbox #shorts" width="800" height="450" loading="lazy" decoding="async"></picture><span class="tvz"></span><span class="tv">998,755</span><span class="tc">Vedid</span></a>
+<a class="mtile g3 rv" style="--l:88.114;--t:32.723;--s:11.886;--sy:35.390;--ml:51.843;--mt:75.051;--ms:16.860;--msy:24.949" href="https://www.youtube.com/watch?v=CsM51q6ghLk"><picture><source srcset="assets/thumbs/CsM51q6ghLk.webp" type="image/webp"><img src="assets/thumbs/CsM51q6ghLk.jpg" alt="Testing Flag Myths in Melon Sandbox" width="800" height="450" loading="lazy" decoding="async"></picture><span class="tvz"></span><span class="tv">942,073</span><span class="tc">GamingWithSkull</span></a>
+<a class="mtile g3 rv" style="--l:75.513;--t:68.113;--s:12.274;--sy:31.887;--ml:68.703;--mt:75.051;--ms:15.687;--msy:24.949" href="https://www.youtube.com/watch?v=3GGUZdHcJfQ"><picture><source srcset="assets/thumbs/3GGUZdHcJfQ.webp" type="image/webp"><img src="assets/thumbs/3GGUZdHcJfQ.jpg" alt="ALL NEW SECRET ACHIEVEMENTS in Melon Playground Sandbox" width="800" height="450" loading="lazy" decoding="async"></picture><span class="tvz"></span><span class="tv">876,507</span><span class="tc">Melfy</span></a>
+<a class="mtile g3 rv" style="--l:87.786;--t:68.113;--s:12.214;--sy:31.887;--ml:84.390;--mt:75.051;--ms:15.610;--msy:24.949" href="https://www.youtube.com/watch?v=D2CEos6KLQ4"><picture><source srcset="assets/thumbs/D2CEos6KLQ4.webp" type="image/webp"><img src="assets/thumbs/D2CEos6KLQ4.jpg" alt="How to get secret spider in Melon Sandbox #melonsanbox #shorts" width="800" height="450" loading="lazy" decoding="async"></picture><span class="tvz"></span><span class="tv">872,224</span><span class="tc">Vedid</span></a>
+</div>
+<p class="cap" style="margin-top:16px">Squares sized by share of the fourteen&rsquo;s combined 22,395,820 views: six guides, two creator spotlights, two update videos, two edits, one myth test and one short from the game&rsquo;s own channel.</p>
+<div>
+<div class="bbar rv"><span class="seg b1" style="--w:31.18%"></span><span class="seg b2" style="--w:21.33%"></span><span class="seg b3" style="--w:17.45%"></span><span class="seg b4" style="--w:16.69%"></span><span class="seg b5" style="--w:13.35%"></span></div><div class="bkeys"><div class="bk"><i class="b1"></i><b>Guides</b><span>59 videos &middot; 18,315,837 views</span></div><div class="bk"><i class="b2"></i><b>Mods and modders</b><span>62 videos &middot; 12,531,130 views</span></div><div class="bk"><i class="b3"></i><b>Update coverage and the rest</b><span>51 videos &middot; 10,252,049 views</span></div><div class="bk"><i class="b4"></i><b>Animation and skits</b><span>47 videos &middot; 9,804,112 views</span></div><div class="bk"><i class="b5"></i><b>Sandbox experiments</b><span>58 videos &middot; 7,841,472 views</span></div></div>
+<p class="cap" style="margin-top:18px">All 277 sampled videos, classified by title and channel. A second pass re-read a 56-video slice without seeing the first, and disagreed on 2 of them.</p>
+<details class="all"><summary>See all 14</summary>
+<table><colgroup><col style="width:14%"><col style="width:49%"><col style="width:23%"><col style="width:14%"></colgroup><thead><tr><th>Views</th><th>Video</th><th>Channel</th><th>Posted</th></tr></thead><tbody><tr><td class="n">2,896,540</td><td><a href="https://www.youtube.com/watch?v=vgF2PF4YPhw">Dai dai dai kirai | Melon playground #animation #alightmotion #shorts #trending #memes #trend #fyp</a></td><td class="ch">Improved Corn</td><td class="dt">4 Aug 2026</td></tr><tr><td class="n">2,750,943</td><td><a href="https://www.youtube.com/watch?v=Ml6o4Ey6Lco">How to make headcrab in Melon Sandbox #melonsanbox #shorts</a></td><td class="ch">Vedid</td><td class="dt">11 Aug 2026</td></tr><tr><td class="n">2,579,890</td><td><a href="https://www.youtube.com/watch?v=IahM-yXD_UQ">How to make a Pumpkin with a cannon leg in Melon Sandbox #melonsanbox #shorts</a></td><td class="ch">Vedid</td><td class="dt">2 Aug 2026</td></tr><tr><td class="n">2,043,421</td><td><a href="https://www.youtube.com/watch?v=wMlXNZXuBi8">Update 37.0 is already out in Melon Sandbox #melonsanbox #shorts</a></td><td class="ch">Vedid</td><td class="dt">8 Aug 2026</td></tr><tr><td class="n">1,971,528</td><td><a href="https://www.youtube.com/watch?v=sTItJNX6F94">Melon Sandbox | Temu verity</a></td><td class="ch">Yoggami</td><td class="dt">1 Aug 2026</td></tr><tr><td class="n">1,609,776</td><td><a href="https://www.youtube.com/watch?v=PWn4JR3XB8U">What will happen?</a></td><td class="ch">Melon Sandbox Official</td><td class="dt">3 Aug 2026</td></tr><tr><td class="n">1,538,816</td><td><a href="https://www.youtube.com/watch?v=B6TIAEixHgU">How to GET the MONSTER CAKE in Melon Playground!? #mods #melonsanbox</a></td><td class="ch">Richard USA</td><td class="dt">18 Aug 2026</td></tr><tr><td class="n">1,256,952</td><td><a href="https://www.youtube.com/watch?v=lBLlsIelheM">I Found the Weirdest Melon Sandbox Creator...</a></td><td class="ch">Zendi</td><td class="dt">2 Aug 2026</td></tr><tr><td class="n">1,040,655</td><td><a href="https://www.youtube.com/watch?v=cAC1omQF3SI">Melon Sandbox Maps You Should Try</a></td><td class="ch">Zendi</td><td class="dt">29 Jul 2026</td></tr><tr><td class="n">1,017,740</td><td><a href="https://www.youtube.com/watch?v=L-MWsb3ijDE">How to get ALL the items FROM A GIFT in Melon Playground!? #melonplaygroundupdate #mods</a></td><td class="ch">Melon World</td><td class="dt">8 Aug 2026</td></tr><tr><td class="n">998,755</td><td><a href="https://www.youtube.com/watch?v=wTXuNcmT7hg">How to make the NPC Cake Spider in Melon Sandbox #melonsanbox #shorts</a></td><td class="ch">Vedid</td><td class="dt">16 Aug 2026</td></tr><tr><td class="n">942,073</td><td><a href="https://www.youtube.com/watch?v=CsM51q6ghLk">Testing Flag Myths in Melon Sandbox</a></td><td class="ch">GamingWithSkull</td><td class="dt">5 Aug 2026</td></tr><tr><td class="n">876,507</td><td><a href="https://www.youtube.com/watch?v=3GGUZdHcJfQ">ALL NEW SECRET ACHIEVEMENTS in Melon Playground Sandbox</a></td><td class="ch">Melfy</td><td class="dt">3 Aug 2026</td></tr><tr><td class="n">872,224</td><td><a href="https://www.youtube.com/watch?v=D2CEos6KLQ4">How to get secret spider in Melon Sandbox #melonsanbox #shorts</a></td><td class="ch">Vedid</td><td class="dt">8 Aug 2026</td></tr></tbody></table>
+<p class="cap" style="margin-top:16px">Fourteen videos, all published between 29 July and 18 August 2026.</p>
+</details>
+</div>
+</div></div></section>
+
+<!-- ======================= 05 ROSTER ======================= -->
+<section class="beat" id="roster"><div class="wrap"><div class="card">
+<div class="folio"><span class="fn">05</span><span class="fk">The roster</span><span class="fr">Eight picks, in order</span></div>
+<div class="beat-head"><span class="snum">05</span><h2>The roster</h2></div>
+<p class="lede" style="margin-top:0">Eight creators across six beats, in approach order. Reach multiple is the best Melon Sandbox video in this page&rsquo;s ledger divided by subscribers.</p>
+<div class="picks"><details class="pick rv"><summary>
+<span class="pno">01</span><picture><source srcset="assets/avatars/vedid.webp" type="image/webp"><img src="assets/avatars/vedid.jpg" alt="Vedid" width="64" height="64" loading="lazy" decoding="async"></picture>
+<span class="pid"><b>Vedid</b><i>Guides &middot; Melon Sandbox</i><em class="pstat">NINE HOW-TOS IN THE WINDOW</em></span>
+<span class="pbig">6.3x<i>reach multiple</i></span>
+<span class="pline">Fifteen uploads in the window, nine of them how-tos.</span><span class="pmore" aria-hidden="true">RECEIPTS</span></summary>
+<div class="pbody"><div class="pstats"><div><b>440K</b><span>subscribers</span></div>
+<div><b>189,176,310</b><span>lifetime channel views</span></div>
+<div><a class="tag tag-acc" href="https://www.youtube.com/@vedid/about">15 uploads in the 30-day sample</a></div></div>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=Ml6o4Ey6Lco">How to make headcrab in Melon Sandbox #melonsanbox #shorts</a><span class="vnum">2,750,943<i>11 Aug 2026</i></span></div><div class="vrow"><a href="https://www.youtube.com/watch?v=IahM-yXD_UQ">How to make a Pumpkin with a cannon leg in Melon Sandbox #melonsanbox #shorts</a><span class="vnum">2,579,890<i>2 Aug 2026</i></span></div><div class="vrow"><a href="https://www.youtube.com/watch?v=wTXuNcmT7hg">How to make the NPC Cake Spider in Melon Sandbox #melonsanbox #shorts</a><span class="vnum">998,755<i>16 Aug 2026</i></span></div><p class="chan-line">Nine of Vedid&rsquo;s videos in the sample carry a view count in this page&rsquo;s ledger, more than any other channel here, and the lowest of them sits at 467,000.</p></div></details><details class="pick rv"><summary>
+<span class="pno">02</span><picture><source srcset="assets/avatars/gameswithzen.webp" type="image/webp"><img src="assets/avatars/gameswithzen.jpg" alt="Zendi" width="64" height="64" loading="lazy" decoding="async"></picture>
+<span class="pid"><b>Zendi</b><i>Creator spotlights &middot; Melon Sandbox</i><em class="pstat">OWNS THE CREATOR BEAT</em></span>
+<span class="pbig">4.7x<i>reach multiple</i></span>
+<span class="pline">The only channel here whose main subject is other players&rsquo; work.</span><span class="pmore" aria-hidden="true">RECEIPTS</span></summary>
+<div class="pbody"><div class="pstats"><div><b>265K</b><span>subscribers</span></div>
+<div><b>94,374,803</b><span>lifetime channel views</span></div>
+<div><a class="tag tag-acc" href="https://www.youtube.com/@gameswithzen/about">18 uploads in the 30-day sample</a></div></div>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=lBLlsIelheM">I Found the Weirdest Melon Sandbox Creator...</a><span class="vnum">1,256,952<i>2 Aug 2026</i></span></div><div class="vrow"><a href="https://www.youtube.com/watch?v=cAC1omQF3SI">Melon Sandbox Maps You Should Try</a><span class="vnum">1,040,655<i>29 Jul 2026</i></span></div><div class="vrow"><a href="https://www.youtube.com/watch?v=ofquQyOqfU0">This Melon Sandbox Creator Did It Again...</a><span class="vnum">774,958<i>9 Aug 2026</i></span></div><p class="chan-line">Fifteen of Zendi&rsquo;s eighteen sampled uploads are about somebody else&rsquo;s map or mod, and five of them cleared half a million views.</p></div></details><details class="pick rv"><summary>
+<span class="pno">03</span><picture><source srcset="assets/avatars/playmelonworld.webp" type="image/webp"><img src="assets/avatars/playmelonworld.jpg" alt="Melon World" width="64" height="64" loading="lazy" decoding="async"></picture>
+<span class="pid"><b>Melon World</b><i>Guides and update days &middot; Melon Sandbox</i><em class="pstat">BEST REACH MULTIPLE ON THE LIST</em></span>
+<span class="pbig">12.5x<i>reach multiple</i></span>
+<span class="pline">Twelve and a half times its subscriber count on one video.</span><span class="pmore" aria-hidden="true">RECEIPTS</span></summary>
+<div class="pbody"><div class="pstats"><div><b>81.2K</b><span>subscribers</span></div>
+<div><b>14,360,627</b><span>lifetime channel views</span></div>
+<div><a class="tag tag-acc" href="https://www.youtube.com/@playmelonworld/about">4 uploads in the 30-day sample</a></div></div>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=L-MWsb3ijDE">How to get ALL the items FROM A GIFT in Melon Playground!? #melonplaygroundupdate #mods</a><span class="vnum">1,017,740<i>8 Aug 2026</i></span></div><div class="vrow"><a href="https://www.youtube.com/watch?v=fiEdlR68LrY">You definitely didn't KNOW these FACTS about Update 37.0! #melonplaygroundupdate #mods</a><span class="vnum">580,526<i>9 Aug 2026</i></span></div><p class="chan-line">A 81.2K-subscriber channel put up a 1,017,740-view guide, then a 580,526-view update explainer eight days later.</p></div></details><details class="pick rv"><summary>
+<span class="pno">04</span><picture><source srcset="assets/avatars/itsshadowzzz.webp" type="image/webp"><img src="assets/avatars/itsshadowzzz.jpg" alt="Shadowz" width="64" height="64" loading="lazy" decoding="async"></picture>
+<span class="pid"><b>Shadowz</b><i>Mod showcases &middot; Melon Sandbox</i><em class="pstat">RUNS A NUMBERED MOD SERIES</em></span>
+<span class="pbig">6.8x<i>reach multiple</i></span>
+<span class="pline">A standing slot, already numbered, one mod at a time.</span><span class="pmore" aria-hidden="true">RECEIPTS</span></summary>
+<div class="pbody"><div class="pstats"><div><b>96.2K</b><span>subscribers</span></div>
+<div><b>66,481,367</b><span>lifetime channel views</span></div>
+<div><a class="tag tag-acc" href="https://www.youtube.com/@itsshadowzzz/about">6 uploads in the 30-day sample</a></div></div>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=P2h1vyLFcWo">New Verity Mod in Melon Sandbox! #shorts #gaming #melonsanbox</a><span class="vnum">654,483<i>5 Aug 2026</i></span></div><div class="vrow"><a href="https://www.youtube.com/watch?v=bXffoaYDXWM">Free Mods in Melon Sandbox Workshop Pt.12 #shorts #gaming #melonsanbox</a><span class="vnum">551,367<i>18 Aug 2026</i></span></div><p class="chan-line">Every one of Shadowz&rsquo;s six sampled uploads is a mod showcase, and the Workshop run is numbered: parts 12, 16 and 17 all landed inside the window.</p></div></details><details class="pick rv"><summary>
+<span class="pno">05</span><picture><source srcset="assets/avatars/thebigbuck36.webp" type="image/webp"><img src="assets/avatars/thebigbuck36.jpg" alt="Buckaroo" width="64" height="64" loading="lazy" decoding="async"></picture>
+<span class="pid"><b>Buckaroo</b><i>Sandbox experiments &middot; Melon Sandbox</i><em class="pstat">SEVENTEEN UPLOADS, MOSTLY ONE STORY</em></span>
+<span class="pbig">4.4x<i>reach multiple</i></span>
+<span class="pline">Most of those seventeen uploads belong to one running story.</span><span class="pmore" aria-hidden="true">RECEIPTS</span></summary>
+<div class="pbody"><div class="pstats"><div><b>109K</b><span>subscribers</span></div>
+<div><b>24,201,099</b><span>lifetime channel views</span></div>
+<div><a class="tag tag-acc" href="https://www.youtube.com/@thebigbuck36/about">17 uploads in the 30-day sample</a></div></div>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=vldu8nGxuPs">Melon Sandbox School Boy Runaway...</a><span class="vnum">476,109<i>30 Jul 2026</i></span></div><p class="chan-line">Seventeen of Buckaroo&rsquo;s sampled uploads are Melon Sandbox, most of them episodes of one running School Boy Runaway story. One of them carries a view count in the ledger.</p></div></details><details class="pick rv"><summary>
+<span class="pno">06</span><picture><source srcset="assets/avatars/melfyyyy.webp" type="image/webp"><img src="assets/avatars/melfyyyy.jpg" alt="Melfy" width="64" height="64" loading="lazy" decoding="async"></picture>
+<span class="pid"><b>Melfy</b><i>Update coverage &middot; Melon Sandbox</i><em class="pstat">COVERS UPDATE DAY</em></span>
+<span class="pbig">2.3x<i>reach multiple</i></span>
+<span class="pline">Files update coverage as the version lands.</span><span class="pmore" aria-hidden="true">RECEIPTS</span></summary>
+<div class="pbody"><div class="pstats"><div><b>385K</b><span>subscribers</span></div>
+<div><b>145,983,617</b><span>lifetime channel views</span></div>
+<div><a class="tag tag-acc" href="https://www.youtube.com/@melfyyyy/about">4 uploads in the 30-day sample</a></div></div>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=3GGUZdHcJfQ">ALL NEW SECRET ACHIEVEMENTS in Melon Playground Sandbox</a><span class="vnum">876,507<i>3 Aug 2026</i></span></div><p class="chan-line">Three of Melfy&rsquo;s four sampled uploads are update coverage, filed as the version lands. One of them carries a view count in the ledger.</p></div></details><details class="pick rv"><summary>
+<span class="pno">07</span><picture><source srcset="assets/avatars/yoggami.webp" type="image/webp"><img src="assets/avatars/yoggami.jpg" alt="Yoggami" width="64" height="64" loading="lazy" decoding="async"></picture>
+<span class="pid"><b>Yoggami</b><i>Animation and edits &middot; Melon Sandbox</i><em class="pstat">OWNS THE EDIT BEAT</em></span>
+<span class="pbig">2.7x<i>reach multiple</i></span>
+<span class="pline">Reaches the audience that watches character edits.</span><span class="pmore" aria-hidden="true">RECEIPTS</span></summary>
+<div class="pbody"><div class="pstats"><div><b>743K</b><span>subscribers</span></div>
+<div><b>373,479,721</b><span>lifetime channel views</span></div>
+<div><a class="tag tag-acc" href="https://www.youtube.com/@yoggami/about">4 uploads in the 30-day sample</a></div></div>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=sTItJNX6F94">Melon Sandbox | Temu verity</a><span class="vnum">1,971,528<i>1 Aug 2026</i></span></div><div class="vrow"><a href="https://www.youtube.com/watch?v=EEgjVFeZq-g">Melon Sandbox | All i want is you</a><span class="vnum">774,980<i>24 Aug 2026</i></span></div><p class="chan-line">Both of Yoggami&rsquo;s ledger receipts are edits built from the game&rsquo;s own characters, and they reach people who never watch a guide.</p></div></details><details class="pick rv"><summary>
+<span class="pno">08</span><picture><source srcset="assets/avatars/shortswithskull.webp" type="image/webp"><img src="assets/avatars/shortswithskull.jpg" alt="GamingWithSkull" width="64" height="64" loading="lazy" decoding="async"></picture>
+<span class="pid"><b>GamingWithSkull</b><i>Myth-busting at scale &middot; Melon Sandbox</i><em class="pstat">BIGGEST AUDIENCE ON THE LIST</em></span>
+<span class="pbig pbig-low">0.7x<i>reach multiple</i></span>
+<span class="pline">The largest audience here, and the one drawing under one view per subscriber.</span><span class="pmore" aria-hidden="true">RECEIPTS</span></summary>
+<div class="pbody"><div class="pstats"><div><b>1.27M</b><span>subscribers</span></div>
+<div><b>419,869,236</b><span>lifetime channel views</span></div>
+<div><a class="tag tag-acc" href="https://www.youtube.com/@shortswithskull/about">9 uploads in the 30-day sample</a></div></div>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=CsM51q6ghLk">Testing Flag Myths in Melon Sandbox</a><span class="vnum">942,073<i>5 Aug 2026</i></span></div><div class="vrow"><a href="https://www.youtube.com/watch?v=MeiFhStYCR4">This Melon Sandbox Mod Shouldn’t Be Possible</a><span class="vnum">802,292<i>13 Aug 2026</i></span></div><div class="vrow"><a href="https://www.youtube.com/watch?v=wbPy_EW1rJ0">Melon Sandbox But I Only Use Backrooms Mods</a><span class="vnum">749,382<i>10 Aug 2026</i></span></div><p class="chan-line">Nine sampled uploads, five of them in the ledger, none under 581,231 views. The best of them drew less than the channel&rsquo;s subscriber count, which is what a 1.27M-subscriber base looks like on a niche title.</p></div></details></div>
+<p class="cap">Sources: linked inside each creator&rsquo;s row.</p>
+</div></div></section>
+
+<!-- ======================= CLOSE ======================= -->
+<section class="beat"><div class="wrap"><div class="close rv">
+<div class="who">
+<img src="data:image/jpeg;base64,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" alt="Davorin Smit" width="236" height="236" loading="lazy" decoding="async">
+<div class="nm">Davorin Smit</div><div class="rl">ARCH</div>
+</div>
+<div class="pitch">
+<div class="cta-var cta-v1"><h2>Let&rsquo;s book the first three.</h2>
+<p></p></div>
+<div class="cta-var cta-v2"><h2>52,073 uploads a week, by YouTube&rsquo;s count. Let&rsquo;s book the creators making them.</h2>
+<p>The eight to start with are listed above, in order.</p></div>
+<div class="cta-var cta-v3"><h2>The roster is right there.</h2>
+<p>Eight creators, in order. Davorin walks you through the brief.</p></div>
+<a class="cta-btn" href="https://meetings-eu1.hubspot.com/davorin-smit/30-minute-sales-call">Book 30 minutes with Davorin</a>
+<p class="arch">ARCH has rolled with over 5,000 influencers across both Americas, Europe, MENA and Australia. <a href="https://arch.agency/">arch.agency</a></p>
+</div>
+</div></div></section>
+
+</main>
+
+<footer><div class="wrap">
+<details class="how"><summary>How this page was built</summary><div class="inner">
+<ul>
+<li>All figures come from the YouTube Data API v3 (search.list, videos.list, channels.list). No HTML scraping, no authenticated session.</li>
+<li>YouTube's public all-time “~N results” estimate is not available via the API, so the all-time volume claim is omitted rather than invented.</li>
+<li>Per-window result counts are the API's totalResults estimate, which fluctuates between reads; treat as order of magnitude.</li>
+<li>View counts drift upward; all figures are a snapshot taken on the read date.</li>
+<li>Paid-promotion status uses the API's paidProductPlacementDetails flag where available; the watch-page 'Includes paid promotion' overlay was not checked.</li>
+<li>Sample claims describe the 277-video sample only; Melon Sandbox content outside the sample is outside the claim boundary.</li>
+<li>Melon Sandbox and Melon Playground are the same title; both names were searched and the results are pooled.</li>
+<li>The handle @melon_sandboxofficial resolves through the API to the channel titled Melon Sandbox Official. Handle control is verifiable that way; ownership is not, so this page states only what the channel shows.</li>
+<li>Every video was labelled from its title and channel. A second reader re-labelled a 56-video slice of the sample without seeing the first pass and disagreed on 2 of them, 3.6%.</li>
+</ul>
+<p class="caveat">What this deliberately does not contain: watch time, audience demographics, CPM or rate-card estimates, sentiment scored by a model, or YouTube&rsquo;s all-time results figure, which the API does not expose and which we omit instead of estimating. View counts drift upward; every number is a snapshot from 27 August 2026. The full claim-to-URL list ships alongside this page as <em>sources.json</em>.</p>
+</div></details>
+<div class="foot"><div class="grid">
+<svg class="wordmark" viewBox="0 0 83 22" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ARCH."><path d="M12.9221 21.6938H16.6558L8.3093 0L0 21.6938H3.75839L4.64875 19.2654L11.9792 19.268L12.9221 21.6938ZM5.78611 16.2115C6.62793 13.7814 7.46899 11.3512 8.31107 8.92062L10.8443 16.218C9.15867 16.2163 7.47251 16.2137 5.78636 16.2112L5.78611 16.2115ZM30.5568 21.6938H34.6761L29.0098 12.544C29.0098 12.544 32.8828 11.7136 33.4664 8.05251C33.4664 8.05251 34.9666 1.00467 26.6508 0.585655H19.6557V4.1403L22.9621 9.37225V9.39451H19.6557V21.6938H23.1532V12.9158H25.1538L25.1555 12.9193H25.1598L30.5568 21.69Z" fill="#000F41"/><path d="M23.1533 12.9154V21.6934H23.1651V12.9187H25.1556L25.1539 12.9154H23.1533ZM53.1342 5.87189L55.6028 3.39297C55.6028 3.39297 52.9616 0.29249 48.2774 0.282122C48.2774 0.282122 42.6322 -0.0516709 39.4643 4.8604C39.4643 4.8604 35.5148 11.0942 39.4643 17.3802C39.4643 17.3802 42.2084 21.9913 48.1074 21.9913C48.1074 21.9913 52.2488 22.315 55.6028 18.926L53.1136 16.4099C53.1136 16.4099 51.3552 18.4597 48.3453 18.4693C48.3453 18.4693 41.6228 18.6736 41.2959 11.3441C41.2959 11.3441 40.8635 3.63598 48.7105 3.84991C48.7098 3.84991 51.1716 3.86964 53.1342 5.87189ZM71.9986 0.585317V9.34764H63.3301V0.585317H59.8293V21.6934H63.3301V12.8717H71.9986V21.6934H75.4861V0.585317H71.9986ZM81.12 21.8909C82.1583 21.8909 83.0001 21.0403 83.0001 19.9906C83.0001 18.9412 82.1583 18.0905 81.12 18.0905C80.0818 18.0905 79.2402 18.9412 79.2402 19.9906C79.2402 21.04 80.0818 21.8909 81.12 21.8909Z" fill="#000F41"/></svg>
+<span>Melon Sandbox &middot; Playducky &middot; 27 August 2026</span>
+</div></div>
+</div></footer>
+
+<script>
+(function(){
+var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* reveal on scroll + bar growth + count-ups */
+var io = new IntersectionObserver(function(es){
+  es.forEach(function(e){
+    if(!e.isIntersecting) return;
+    e.target.classList.add('in');
+    io.unobserve(e.target);
+    var ns = e.target.matches('[data-count]') ? [e.target] : e.target.querySelectorAll('[data-count]');
+    for(var i=0;i<ns.length;i++) count(ns[i]);
+  });
+}, {rootMargin:'0px 0px -12% 0px', threshold:0.15});
+
+document.querySelectorAll('.rv, .brow, .bbar, [data-count]').forEach(function(n){ io.observe(n); });
+
+function count(el){
+  if(reduce || el.dataset.done) return;
+  el.dataset.done = '1';
+  var end = parseFloat(el.dataset.count), dec = parseInt(el.dataset.dec || '0', 10);
+  var suf = el.dataset.suffix || '', dur = 1100, t0 = null;
+  function fmt(v){ return v.toLocaleString('en-US', {minimumFractionDigits:dec, maximumFractionDigits:dec}) + suf; }
+  function step(ts){
+    if(t0 === null) t0 = ts;
+    var p = Math.min(1, (ts - t0) / dur);
+    var e = 1 - Math.pow(1 - p, 3);
+    el.textContent = fmt(end * e);
+    if(p < 1) requestAnimationFrame(step); else el.textContent = fmt(end);
+  }
+  el.textContent = fmt(0);
+  requestAnimationFrame(step);
+}
+
+/* 02 scatter: click a face, open that channel card */
+var cards = document.querySelectorAll('#chans .chan');
+var dots  = document.querySelectorAll('.dot');
+if(cards.length && dots.length){
+  document.documentElement.classList.add('js-chan');
+  var open = null;
+  function show(key){
+    dots.forEach(function(d){ d.setAttribute('aria-expanded', String(d.dataset.ch === key)); });
+    cards.forEach(function(c){ c.classList.toggle('open', c.id === 'ch-' + key); });
+    open = key;
+  }
+  dots.forEach(function(d){
+    d.addEventListener('click', function(){
+      if(open === d.dataset.ch){ show(''); return; }
+      show(d.dataset.ch);
+      var c = document.getElementById('ch-' + d.dataset.ch);
+      if(c) c.classList.add('in');
+    });
+  });
+  show('vedid');
+}
+})();
+</script>
+<style>.js-chan .chan{display:none}.js-chan .chan.open{display:block}</style>
+</body></html>
