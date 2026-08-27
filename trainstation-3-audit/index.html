@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>TrainStation 3 on YouTube: a coverage and creator audit</title>
+<meta name="description" content="How TrainStation 3 is covered on YouTube, and the creators Pixel Federation should be working with. Read from the YouTube Data API, 27 August 2026."/>
+<meta name="robots" content="noindex, nofollow"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#000F41;--cobalt:#3562FF;--lime:#F2FF82;--white:#FFFFFF;--plate:#EDEDED;
+--ink:#000F41;--sup:#666666;--sup2:#666666;--hair:rgba(0,15,65,.14);--ease:cubic-bezier(.58,.21,.25,1)}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;max-width:100%;overflow-x:hidden}
+body{background:var(--navy);color:var(--ink);font-family:"DM Sans",Arial,Helvetica,sans-serif;
+font-size:17px;line-height:1.5;font-weight:500;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1400px;margin:0 auto;padding:0 14px}
+a{color:inherit;text-decoration:none;border-bottom:1px solid rgba(0,15,65,.28)}
+a:hover{color:var(--cobalt);border-bottom-color:var(--cobalt)}
+img{display:block;max-width:100%;height:auto}
+h1,h2,h3{margin:0;text-transform:uppercase;font-weight:600;letter-spacing:-.04em;line-height:.8}
+p{margin:0}
+button,summary{font:inherit;color:inherit}
+.num{font-weight:700;letter-spacing:-.05em;line-height:.76;font-feature-settings:"tnum" 1;font-variant-numeric:tabular-nums}
+.arw{width:1em;height:.62em;flex:0 0 auto;vertical-align:baseline;display:inline-block}
+/* ---- reveal ---- */
+.rv{opacity:0;transform:translateY(30px);transition:opacity .75s var(--ease) var(--d,0ms),transform .75s var(--ease) var(--d,0ms)}
+.rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}}
+/* ---- mast / foot pills ---- */
+.mast{padding-top:14px}
+.mast .grid,.foot .grid{display:flex;align-items:center;justify-content:space-between;gap:16px;
+background:var(--lime);border-radius:35px;padding:21px 40px;flex-wrap:wrap}
+.logo{border-bottom:none;display:block} .wordmark{width:92px;height:auto;display:block}
+.stamp,.foot span{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--navy)}
+/* ---- beats ---- */
+.beat{padding:0}
+.card{background:var(--white);border-radius:35px;margin:14px 0;padding:64px 60px;
+min-height:min(92vh,1000px);display:flex;flex-direction:column;justify-content:space-between;gap:40px}
+.beat-head{display:flex;align-items:flex-start;gap:22px;flex-wrap:wrap}
+.snum{font-size:12px;font-weight:700;letter-spacing:.14em;color:var(--cobalt);padding-top:.5em}
+.beat-head h2{font-size:clamp(38px,6vw,90px);font-weight:600;line-height:.8;letter-spacing:-.04em;flex:1;min-width:min(100%,280px)}
+.lede{font-size:19px;color:var(--sup);max-width:56ch;margin-top:18px}
+/* ---- folio (running head) + FIG caption register: 12px w700 caps ---- */
+.folio{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;
+border-top:1px solid var(--hair);padding-top:13px;margin-bottom:34px;
+font-size:12px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;line-height:1}
+.folio .fn{color:var(--cobalt)}
+.folio .fk{color:var(--ink)}
+.folio .fr{margin-left:auto;color:var(--sup2);text-align:right}
+.gapbeat .folio{border-top-color:rgba(255,255,255,.34)}
+.gapbeat .folio .fn{color:var(--lime)}
+.gapbeat .folio .fk{color:#fff}
+.gapbeat .folio .fr{color:rgba(255,255,255,.66)}
+.cap{font-size:12.5px;color:var(--sup2);max-width:88ch;line-height:1.5}
+.cap a{border-bottom-color:rgba(0,15,65,.2)}
+.fig{display:inline-block;margin-right:9px;font-size:11px;font-weight:700;letter-spacing:.13em;
+text-transform:uppercase;color:var(--cobalt)}
+.gapbeat .cap{color:rgba(255,255,255,.72);max-width:78ch}
+.gapbeat .cap a{color:#fff;border-bottom-color:rgba(255,255,255,.4)}
+.gapbeat .cap a:hover{color:var(--lime);border-bottom-color:var(--lime)}
+.gapbeat .fig{color:var(--lime)}
+/* ---- hero ---- */
+.hero{margin:14px 0 0;color:#fff}
+.stage{position:relative;border-radius:35px;overflow:hidden;background:#000F41;
+height:clamp(320px,40vh,540px);display:flex;align-items:flex-end}
+.stage picture,.stage img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.stage img{filter:saturate(.9);object-position:50% 26%}
+.veil{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,15,65,.74) 0%,rgba(0,15,65,.24) 30%,rgba(0,15,65,.58) 62%,rgba(0,15,65,.95) 100%)}
+.stage-in{position:relative;padding:40px;width:100%}
+.kicker{position:absolute;top:40px;left:40px;right:40px;font-size:12px;font-weight:700;
+letter-spacing:.14em;text-transform:uppercase;color:var(--lime)}
+.stamp-num{font-size:clamp(58px,11.4vw,172px);color:var(--lime)}
+.stamp-lab{font-size:clamp(12px,1.1vw,15px);font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+color:#fff;margin-top:10px;max-width:44ch}
+h1{font-size:clamp(38px,6.6vw,96px);color:#fff;margin:28px 0 0}
+.hero-dek{margin-top:24px;font-size:19px;color:rgba(255,255,255,.74);max-width:52ch}
+.hero-src{margin-top:12px;font-size:12.5px;color:rgba(255,255,255,.55);max-width:70ch}
+.hero-src a{color:rgba(255,255,255,.8);border-bottom-color:rgba(255,255,255,.3)}
+.hero-src a:hover{color:var(--lime);border-bottom-color:var(--lime)}
+/* hero stat ledger: three findings, plain-language labels, on screen one */
+.finds{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin:24px 0 0;
+border-top:1px solid rgba(255,255,255,.32)}
+.find{padding:20px 30px 0 0;border-left:1px solid rgba(255,255,255,.18);padding-left:30px}
+.find:first-child{border-left:0;padding-left:0}
+.find .n{display:block;font-size:clamp(34px,3.9vw,56px);color:#fff}
+.find:first-child .n{color:var(--lime)}
+.find .l{display:block;margin-top:12px;font-size:12px;font-weight:700;letter-spacing:.08em;
+text-transform:uppercase;color:rgba(255,255,255,.72);line-height:1.4;max-width:26ch}
+/* ---- 01 volume ---- */
+.poster{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;padding:20px 0}
+.poster .num{font-size:clamp(110px,25vw,380px)}
+.poster .unit{font-size:clamp(26px,4.4vw,74px);font-weight:600;letter-spacing:-.04em;text-transform:uppercase;line-height:.9;margin-top:6px}
+.poster .sub{margin-top:26px;font-size:18px;color:var(--sup);max-width:52ch}
+.tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.tiles>div{background:var(--plate);border-radius:25px;padding:28px 26px}
+.tiles b{display:block;font-size:clamp(28px,3.2vw,48px);font-weight:700;letter-spacing:-.04em;line-height:1}
+.tiles span{display:block;margin-top:12px;font-size:11px;font-weight:700;letter-spacing:.08em;
+text-transform:uppercase;color:var(--sup2);line-height:1.5}
+.tiles a{border-bottom:none} .tiles a:hover b{color:var(--cobalt)}
+/* ---- 02 scatter ---- */
+.plotwrap{position:relative}
+.plotscroll{overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;scrollbar-width:thin;padding:6px 30px 34px 54px}
+.plot{position:relative;height:clamp(380px,42vw,540px);background:var(--plate);border-radius:25px;
+margin:6px 0 0;padding:0}
+.gx{position:absolute;top:0;bottom:0;width:1px;background:rgba(0,15,65,.09)}
+.gx i,.gy i{position:absolute;font-style:normal;font-size:11px;font-weight:700;letter-spacing:.06em;color:var(--sup2)}
+.gx i{bottom:-24px;left:0;transform:translateX(-50%)}
+.gy{position:absolute;left:0;right:0;height:1px;background:rgba(0,15,65,.09)}
+.gy i{left:-8px;top:-7px;transform:translateX(-100%)}
+.diag{position:absolute;inset:0;width:100%;height:100%}
+.diaglab{position:absolute;left:46%;bottom:47%;font-size:11px;font-weight:700;letter-spacing:.04em;
+color:var(--sup2);transform:rotate(-34deg);transform-origin:left center;white-space:nowrap}
+.dot{position:absolute;transform:translate(-50%,50%);background:none;border:0;padding:0;cursor:pointer;
+width:56px;height:56px;border-radius:50%;transition:transform .4s var(--ease)}
+.dot img{width:56px;height:56px;border-radius:50%;border:3px solid var(--navy);background:#fff}
+.dot-hot img{border-color:var(--cobalt);box-shadow:0 0 0 6px rgba(53,98,255,.18)}
+.dot:hover,.dot:focus-visible{transform:translate(-50%,50%) scale(1.12);outline:none;z-index:6}
+.dot[aria-expanded="true"] img{border-color:var(--cobalt)}
+.dot[aria-expanded="true"]{z-index:7}
+.dlab{position:absolute;left:50%;transform:translateX(-50%);white-space:nowrap;font-size:10.5px;
+font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--sup);pointer-events:none}
+.lab-down .dlab{top:60px} .lab-up .dlab{bottom:60px}
+.lab-left .dlab{right:62px;left:auto;transform:none;top:20px}
+.lab-right .dlab{left:62px;transform:none;top:20px}
+.dot:hover .dlab,.dot[aria-expanded="true"] .dlab{color:var(--cobalt)}
+.ownmark{position:absolute;width:22px;height:22px;transform:translate(-50%,50%);border:3px solid var(--navy);background:#fff}
+.ownlab{position:absolute;transform:translate(-100%,50%);padding-right:20px;white-space:nowrap;font-size:10.5px;
+font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--sup)}
+.axl{display:flex;justify-content:space-between;gap:20px;margin-top:34px;font-size:11px;font-weight:700;
+letter-spacing:.08em;text-transform:uppercase;color:var(--sup2)}
+.swipe{display:none;font-size:11px;font-weight:700;letter-spacing:.1em;color:var(--sup2);margin-top:10px}
+.chans{margin-top:8px}
+.chan{background:var(--plate);border-radius:25px;padding:30px 32px;margin-top:12px}
+.chan-hot{background:#EDEDED;outline:2px solid var(--cobalt);outline-offset:-2px}
+.chan-h{display:flex;gap:16px;align-items:center}
+.chan-h img{width:64px;height:64px;border-radius:50%}
+.chan-h>div:nth-child(2){flex:1;min-width:0}
+.chan h3{font-size:22px;font-weight:700;letter-spacing:-.02em;line-height:1.05;text-transform:none;overflow-wrap:anywhere}
+.meta{margin-top:5px;font-size:12.5px;color:var(--sup2);text-transform:none;font-weight:500}
+.chan-n{text-align:right;font-size:24px;font-weight:700;letter-spacing:-.03em;white-space:nowrap;line-height:1}
+.chan-n i{display:block;font-style:normal;font-size:10px;font-weight:700;letter-spacing:.06em;
+text-transform:uppercase;color:var(--sup2);margin-top:6px}
+.vrow{display:flex;gap:16px;justify-content:space-between;align-items:baseline;padding:12px 0;
+border-top:1px solid var(--hair);font-size:14.5px;margin-top:14px}
+.vrow+.vrow{margin-top:0}
+.vrow a{flex:1;min-width:0;overflow-wrap:anywhere;border-bottom:none;text-decoration:underline;text-decoration-color:rgba(0,15,65,.22);text-underline-offset:4px}
+.vrow a:hover{text-decoration-color:var(--cobalt)}
+.vnum{white-space:nowrap;font-weight:700;text-align:right}
+.vnum i{display:block;font-style:normal;font-size:11px;font-weight:500;color:var(--sup2);margin-top:3px}
+.chan-line{margin-top:16px;font-size:15px;line-height:1.5;color:var(--sup)}
+.chan footer{margin-top:18px;display:flex;flex-wrap:wrap;gap:8px}
+.tag{font-size:10.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--navy);
+background:var(--white);border:1px solid var(--hair);padding:9px 15px;border-radius:40px;white-space:nowrap}
+.tag-paid{background:var(--lime);border-color:var(--lime)}
+a.tag-acc{background:var(--cobalt);border-color:var(--cobalt);color:#fff;border-bottom:1px solid var(--cobalt)}
+a.tag-acc:hover{background:var(--navy);border-color:var(--navy);color:var(--lime)}
+.callout{background:var(--cobalt);color:#fff;border-radius:25px;padding:34px 36px;margin-top:12px}
+.callout b{display:block;font-size:clamp(20px,2.4vw,34px);font-weight:600;letter-spacing:-.03em;
+line-height:.95;text-transform:uppercase;max-width:24ch}
+.callout span{display:block;margin-top:14px;font-size:13px;color:rgba(255,255,255,.82);max-width:70ch}
+/* ---- 03 gap (full bleed cobalt) ---- */
+.gapbeat{background:var(--cobalt);color:#fff;margin:14px 0;padding:96px 0 88px}
+.gapbeat h2,.gapbeat h3{color:#fff}
+.gapbeat .snum{color:var(--lime)}
+/* head-to-head ledger, staged inside the cobalt scoreboard */
+.tape{margin-top:44px;background:rgba(255,255,255,.12);border-radius:25px;padding:28px 34px}
+.taperow{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,auto) minmax(0,1fr);gap:18px;
+align-items:center;padding:16px 0;border-bottom:1px solid rgba(255,255,255,.22)}
+.taperow:last-child{border-bottom:0;padding-bottom:0}
+.taphead{padding-top:2px}
+.taphead .side{display:flex;gap:14px;align-items:center;min-width:0}
+.taphead .side img{width:54px;height:54px;border-radius:50%;flex:0 0 auto;border:2px solid rgba(255,255,255,.55)}
+.taphead .side.r{flex-direction:row-reverse;text-align:right}
+.taphead b{display:block;font-size:16px;font-weight:700;letter-spacing:-.01em;text-transform:uppercase;
+line-height:1.05;overflow-wrap:anywhere}
+.taphead i{display:block;font-style:normal;margin-top:5px;font-size:10.5px;font-weight:700;
+letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.72)}
+.vs{font-size:12px;font-weight:700;letter-spacing:.16em;color:var(--lime);text-align:center}
+.taperow .a,.taperow .b{font-size:clamp(20px,2.5vw,34px);font-weight:700;letter-spacing:-.04em;line-height:.95;
+font-variant-numeric:tabular-nums}
+.taperow .b{text-align:right}
+.taperow .m{font-size:10.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+color:rgba(255,255,255,.8);text-align:center;white-space:nowrap}
+.tape a{color:#fff;border-bottom-color:rgba(255,255,255,.32)}
+.tape a:hover{color:var(--lime);border-bottom-color:var(--lime)}
+.board{margin-top:48px;display:flex;flex-direction:column;gap:26px}
+.brow{display:block}
+.blab{display:flex;justify-content:space-between;gap:20px;align-items:baseline;
+font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.78)}
+.bval{white-space:nowrap;color:#fff}
+.btrack{margin-top:12px;height:clamp(64px,7.6vw,108px);background:rgba(255,255,255,.14);border-radius:6px;
+display:flex;overflow:hidden}
+.bfill{width:0;transition:width 1.15s var(--ease) var(--d,0ms);position:relative;overflow:hidden;flex:0 0 auto}
+.in .bfill,.brow.in .bfill{width:var(--w)}
+@media (prefers-reduced-motion:reduce){.bfill{width:var(--w);transition:none}}
+.bfill-w{background:#fff}
+.inbar{position:absolute;left:0;top:0;bottom:0;width:13.2%;overflow:hidden;border-right:3px solid var(--lime)}
+.inbar picture,.inbar img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.bfill picture,.bfill img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.bfill-img{outline:2px solid var(--lime);outline-offset:-2px}
+.bfill-2{opacity:.82}
+.bnote{margin-top:10px;font-size:13px;color:rgba(255,255,255,.7);max-width:78ch}
+.bnote a{color:#fff;border-bottom-color:rgba(255,255,255,.4)}
+.bnote a:hover{color:var(--lime);border-bottom-color:var(--lime)}
+.gapchip{margin-top:52px;background:var(--lime);color:var(--navy);border-radius:35px;padding:44px 48px;
+display:flex;align-items:center;gap:40px;flex-wrap:wrap}
+.gapchip .n{font-size:clamp(58px,9vw,140px)}
+.gapchip p{flex:1;min-width:min(100%,280px);font-size:clamp(18px,2vw,28px);font-weight:600;
+letter-spacing:-.02em;line-height:1.05;text-transform:uppercase}
+.gapchip a{border-bottom-color:rgba(0,15,65,.35)}
+.gapstats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:12px}
+.gapstats div{background:rgba(255,255,255,.12);border-radius:25px;padding:26px}
+.gapstats b{display:block;font-size:clamp(24px,2.6vw,38px);font-weight:700;letter-spacing:-.04em;line-height:1}
+.gapstats span{display:block;margin-top:10px;font-size:11px;font-weight:700;letter-spacing:.08em;
+text-transform:uppercase;color:rgba(255,255,255,.7);line-height:1.5}
+.gapstats a{color:#fff;border-bottom-color:rgba(255,255,255,.4)}
+/* ---- 04 mosaic ---- */
+.split{display:flex;gap:48px;align-items:flex-start;flex-wrap:wrap}
+.split .poster{flex:0 0 auto;min-width:min(100%,360px)}
+.dual{display:flex;gap:56px;flex-wrap:wrap;align-items:flex-end}
+.dual>div{min-width:min(100%,240px)}
+.dual .num{font-size:clamp(66px,11vw,168px)}
+.dual .l{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--sup2);margin-top:12px}
+/* view-proportional mosaic: every tile is a square, its AREA is that video's
+   share of the 141,851 sample views. 36 views renders at 36 views' worth of ink. */
+.mos{position:relative;width:100%;aspect-ratio:1248.5/571}
+.mtile{position:absolute;left:calc(var(--l)*1%);top:calc(var(--t)*1%);
+width:calc(var(--s)*1%);height:calc(var(--sy)*1%);
+border-radius:10px;overflow:hidden;border-bottom:none;background:var(--plate);display:block}
+.mtile picture,.mtile img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.tvz{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,15,65,.02) 38%,rgba(0,15,65,.86))}
+.mtile img{transition:transform .6s var(--ease)}
+.mtile:hover img{transform:scale(1.05)}
+.mtile:hover{outline:2px solid var(--cobalt);outline-offset:2px}
+.mtile .tv{position:absolute;left:12px;right:10px;bottom:24px;font-size:14px;font-weight:700;
+letter-spacing:-.03em;color:#fff;line-height:1;font-variant-numeric:tabular-nums}
+.mtile .tc{position:absolute;left:12px;bottom:10px;right:10px;font-size:9.5px;font-weight:700;letter-spacing:.07em;
+text-transform:uppercase;color:rgba(255,255,255,.7);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.g1{border-radius:18px}
+.g1 .tv{font-size:clamp(22px,2.7vw,42px);bottom:32px;letter-spacing:-.045em}
+.g1 .tc{font-size:11px;bottom:14px}
+.g2 .tv{font-size:clamp(13px,1.5vw,21px);bottom:26px}
+.g3 .tv{font-size:clamp(11px,1.05vw,15px);bottom:22px}
+.g3 .tc{font-size:9px;bottom:8px}
+.g4 .tv,.g4 .tc{display:none}
+.g4{border-radius:6px}
+.bbar{display:flex;height:56px;border-radius:12px;overflow:hidden;margin-top:12px;background:var(--plate)}
+.seg{width:0;transition:width 1s var(--ease)} .bbar.in .seg{width:var(--w)}
+@media (prefers-reduced-motion:reduce){.seg{width:var(--w);transition:none}}
+.b1{background:var(--cobalt)} .b2{background:var(--navy)} .b3{background:#F2FF82}
+.b4{background:#666666} .b5{background:#EDEDED}
+.bkeys{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin-top:14px}
+.bk i{display:block;width:24px;height:6px;border-radius:3px}
+/* b5 swatch is #EDEDED on a light plate: hairline keeps the key readable */
+.bk i.b5{box-shadow:inset 0 0 0 1px #666666}
+.bk b{display:block;margin-top:10px;font-size:13.5px;font-weight:700}
+.bk span{display:block;margin-top:3px;font-size:12px;color:var(--sup2)}
+details.all{margin-top:34px;border-top:1px solid var(--hair)}
+details.all>summary{cursor:pointer;list-style:none;padding:22px 0 0;font-size:12px;font-weight:700;
+letter-spacing:.12em;text-transform:uppercase;color:var(--cobalt)}
+details.all>summary::-webkit-details-marker{display:none}
+details.all>summary::after{content:" +"} details.all[open]>summary::after{content:" \2212"}
+table{width:100%;border-collapse:collapse;margin-top:20px;font-size:14.5px;table-layout:fixed}
+th{text-align:left;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--sup2);
+font-weight:700;padding:0 12px 10px 0;border-bottom:1px solid var(--hair)}
+td{padding:12px 12px 12px 0;border-bottom:1px solid var(--hair);vertical-align:baseline}
+td a{overflow-wrap:anywhere}
+td.n{font-weight:700;white-space:nowrap} td.ch{color:var(--sup2);font-size:13.5px}
+td.dt{color:var(--sup2);font-size:13px;white-space:nowrap;text-align:right}
+/* ---- 05 roster ---- */
+.picks{display:flex;flex-direction:column}
+.pick{border-top:1px solid var(--hair)}
+.pick:last-child{border-bottom:1px solid var(--hair)}
+.pick>summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:26px;padding:26px 0;
+transition:background .35s var(--ease)}
+.pick>summary::-webkit-details-marker{display:none}
+.pick>summary:hover{background:var(--plate)}
+.pno{font-size:clamp(34px,4vw,58px);font-weight:700;letter-spacing:-.05em;line-height:.8;color:var(--cobalt);flex:0 0 auto}
+.pick img{width:64px;height:64px;border-radius:50%;flex:0 0 auto}
+.pid{flex:0 0 auto;width:min(30vw,250px)}
+.pid b{display:block;font-size:20px;font-weight:700;letter-spacing:-.02em;line-height:1.1;overflow-wrap:anywhere}
+.pid i{display:block;font-style:normal;margin-top:5px;font-size:11.5px;font-weight:700;letter-spacing:.06em;
+text-transform:uppercase;color:var(--sup2)}
+.pstat{display:block;font-style:normal;margin-top:6px;font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--cobalt)}
+.pbig{flex:0 0 auto;width:170px;font-size:clamp(30px,3.6vw,54px);font-weight:700;letter-spacing:-.04em;line-height:.85;text-align:right}
+.pbig-low{color:var(--sup2)}
+.pbig i{display:block;font-style:normal;font-size:10px;font-weight:700;letter-spacing:.08em;
+text-transform:uppercase;color:var(--sup2);margin-top:8px;text-align:right}
+.pline{flex:1;min-width:0;font-size:15px;color:var(--sup);line-height:1.4}
+.pmore{flex:0 0 auto;font-size:12px;font-weight:700;letter-spacing:.1em;color:var(--navy);
+background:var(--lime);border:1px solid var(--lime);border-radius:40px;padding:11px 20px;line-height:1;
+transition:background .3s var(--ease),border-color .3s var(--ease),color .3s var(--ease)}
+.pick[open] .pmore{background:var(--cobalt);border-color:var(--cobalt);color:#fff}
+.pbody{padding:6px 0 34px}
+.pstats{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.pstats>div{background:var(--plate);border-radius:20px;padding:20px 24px}
+.pstats b{display:block;font-size:26px;font-weight:700;letter-spacing:-.03em;line-height:1}
+.pstats span{display:block;margin-top:8px;font-size:10.5px;font-weight:700;letter-spacing:.08em;
+text-transform:uppercase;color:var(--sup2)}
+.pstats>div:last-child{background:none;padding:0}
+/* ---- close ---- */
+.close{background:var(--cobalt);border-radius:35px;margin:14px 0;padding:84px 60px;color:#fff;
+display:flex;gap:60px;align-items:center;flex-wrap:wrap}
+.close .who{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;gap:4px}
+.close .who img{width:236px;height:236px;border-radius:50%;border:6px solid var(--lime);margin-bottom:14px}
+.nm{font-size:15px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.rl{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.65)}
+.pitch{flex:1;min-width:min(100%,340px)}
+.cta-var{display:none}
+body.cta-1 .cta-v1,body.cta-2 .cta-v2,body.cta-3 .cta-v3{display:block}
+.close h2{color:#fff;font-size:clamp(34px,5.4vw,82px);max-width:15ch}
+.close p{margin-top:24px;font-size:19px;line-height:1.45;color:rgba(255,255,255,.92);max-width:46ch}
+.cta-btn{display:inline-block;margin-top:36px;background:var(--lime);color:var(--navy);font-weight:700;
+font-size:16px;letter-spacing:.03em;text-transform:uppercase;padding:28px 48px;border-radius:80px;
+border-bottom:none;transition:background .3s var(--ease),color .3s var(--ease)}
+.cta-btn:hover{background:#fff;color:var(--navy);border-bottom:none}
+.arch{margin-top:34px;font-size:12.5px;color:rgba(255,255,255,.6);max-width:60ch}
+.arch a{color:rgba(255,255,255,.85);border-bottom-color:rgba(255,255,255,.35)}
+/* ---- method + foot ---- */
+.how{margin:14px 0;background:rgba(255,255,255,.06);border-radius:25px;color:rgba(255,255,255,.62);font-size:12.5px}
+.how summary{cursor:pointer;padding:20px 32px;font-size:11px;font-weight:700;letter-spacing:.12em;
+text-transform:uppercase;color:rgba(255,255,255,.85)}
+.how .inner{padding:0 32px 26px}
+.how ul{margin:8px 0 0;padding-left:18px;line-height:1.6;overflow-wrap:anywhere}
+.how li{margin-bottom:8px}
+.how .caveat{margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,.14);color:rgba(255,255,255,.5)}
+.how a{color:#fff}
+.foot{margin:14px 0;padding-bottom:26px}
+/* ---- responsive ---- */
+@media (max-width:1100px){
+ .card{padding:52px 40px}
+ .pid{width:min(34vw,210px)} .pbig{width:130px} .pline{display:none}
+}
+@media (max-width:860px){
+ .card{padding:40px 26px;min-height:0;gap:34px;border-radius:28px}
+ .gapbeat{padding:64px 0 60px}
+ .finds{grid-template-columns:minmax(0,1fr)}
+ .find{display:flex;align-items:baseline;justify-content:space-between;gap:20px;
+  border-left:0;padding:16px 0;border-bottom:1px solid rgba(255,255,255,.18)}
+ .find:first-child{padding-left:0} .find:last-child{border-bottom:0}
+ .find .n{flex:0 0 auto;order:2;font-size:34px}
+ .find .l{margin-top:0;flex:1;max-width:none;line-height:1.35}
+ .tiles{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .gapstats{grid-template-columns:minmax(0,1fr)}
+ .bkeys{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .plotscroll .plot{min-width:700px}
+ .swipe{display:block}
+ .mos{aspect-ratio:322.2/390.4}
+ .mtile{left:calc(var(--ml)*1%);top:calc(var(--mt)*1%);width:calc(var(--ms)*1%);height:calc(var(--msy)*1%)}
+ .g1 .tv{font-size:22px;bottom:26px} .g1 .tc{font-size:9.5px;bottom:10px}
+ .g2 .tv{font-size:12px;bottom:9px} .g2 .tc{display:none}
+ .g3 .tv,.g3 .tc{display:none}
+ /* roster: one grid at 390, the reach multiple never wraps */
+ .pick>summary{display:grid;grid-template-columns:auto 56px minmax(0,1fr);
+  grid-template-areas:"pno pav pid" "pbg pbg pbg";column-gap:14px;row-gap:12px;padding:22px 0;align-items:center}
+ .pno{grid-area:pno} .pick>summary>picture{grid-area:pav;display:block}
+ .pick img{width:56px;height:56px}
+ .pid{grid-area:pid;width:auto}
+ .pbig{grid-area:pbg;width:auto;display:flex;align-items:baseline;gap:12px;text-align:left;
+  border-top:1px solid var(--hair);padding-top:11px}
+ .pbig i{text-align:left;margin-top:0}
+ .pmore{display:none}
+ .taperow{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:4px 12px;padding:14px 0}
+ .taperow .m{grid-column:1/-1;order:-1;text-align:left;white-space:normal;margin-bottom:2px}
+ .taphead .vs{grid-column:1/-1;order:-1;text-align:left}
+ .taphead .side.r{flex-direction:row;text-align:left}
+ .taphead .side img{width:44px;height:44px}
+ .tape{padding:22px 20px}
+ .pstats>div{padding:16px 18px} .pstats b{font-size:20px}
+ .close{padding:48px 26px;gap:34px} .close .who{margin:0 auto}
+ .close .who img{width:168px;height:168px}
+ .mast .grid,.foot .grid{padding:16px 22px;border-radius:24px}
+ .stage{height:clamp(360px,58vh,520px)} .stage-in,.kicker{padding:24px}
+ .kicker{top:24px;left:24px;right:24px}
+ td.ch,td.dt{display:none}
+ .dual{gap:28px}
+}
+@media (max-width:560px){
+ body{font-size:16px} .wrap{padding:0 10px}
+ .card{padding:32px 20px} .how summary{padding:18px 22px} .how .inner{padding:0 22px 22px}
+ .chan{padding:24px 20px} .chan-h{flex-wrap:wrap} .chan-n{text-align:left}
+ .callout{padding:26px 22px} .gapchip{padding:30px 24px;gap:20px}
+ .axl{flex-direction:column;gap:6px}
+}
+</style>
+<noscript><style>.rv{opacity:1;transform:none}.bfill{width:var(--w)}.seg{width:var(--w)}</style></noscript>
+</head>
+<body class="cta-1">
+
+<div class="mast"><div class="wrap"><div class="grid">
+<a class="logo" href="https://arch.agency/"><svg class="wordmark" viewBox="0 0 83 22" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ARCH."><path d="M12.9221 21.6938H16.6558L8.3093 0L0 21.6938H3.75839L4.64875 19.2654L11.9792 19.268L12.9221 21.6938ZM5.78611 16.2115C6.62793 13.7814 7.46899 11.3512 8.31107 8.92062L10.8443 16.218C9.15867 16.2163 7.47251 16.2137 5.78636 16.2112L5.78611 16.2115ZM30.5568 21.6938H34.6761L29.0098 12.544C29.0098 12.544 32.8828 11.7136 33.4664 8.05251C33.4664 8.05251 34.9666 1.00467 26.6508 0.585655H19.6557V4.1403L22.9621 9.37225V9.39451H19.6557V21.6938H23.1532V12.9158H25.1538L25.1555 12.9193H25.1598L30.5568 21.69Z" fill="#000F41"/><path d="M23.1533 12.9154V21.6934H23.1651V12.9187H25.1556L25.1539 12.9154H23.1533ZM53.1342 5.87189L55.6028 3.39297C55.6028 3.39297 52.9616 0.29249 48.2774 0.282122C48.2774 0.282122 42.6322 -0.0516709 39.4643 4.8604C39.4643 4.8604 35.5148 11.0942 39.4643 17.3802C39.4643 17.3802 42.2084 21.9913 48.1074 21.9913C48.1074 21.9913 52.2488 22.315 55.6028 18.926L53.1136 16.4099C53.1136 16.4099 51.3552 18.4597 48.3453 18.4693C48.3453 18.4693 41.6228 18.6736 41.2959 11.3441C41.2959 11.3441 40.8635 3.63598 48.7105 3.84991C48.7098 3.84991 51.1716 3.86964 53.1342 5.87189ZM71.9986 0.585317V9.34764H63.3301V0.585317H59.8293V21.6934H63.3301V12.8717H71.9986V21.6934H75.4861V0.585317H71.9986ZM81.12 21.8909C82.1583 21.8909 83.0001 21.0403 83.0001 19.9906C83.0001 18.9412 82.1583 18.0905 81.12 18.0905C80.0818 18.0905 79.2402 18.9412 79.2402 19.9906C79.2402 21.04 80.0818 21.8909 81.12 21.8909Z" fill="#000F41"/></svg></a>
+<div class="stamp">Prepared for Pixel Federation &middot; 27 August 2026</div>
+</div></div></div>
+
+<main>
+
+<!-- ======================= HERO ======================= -->
+<section class="beat hero"><div class="wrap">
+<div class="stage rv">
+<picture><source srcset="assets/thumbs/GGgeZd9LEIg.webp" type="image/webp"><img src="assets/thumbs/GGgeZd9LEIg.jpg" alt="On the Rails: TrainStation 3 Developer Diaries - E05 RAIL YARD" width="800" height="450" fetchpriority="high" sizes="100vw" class=""></picture>
+<div class="veil"></div>
+<div class="kicker">TrainStation 3 &middot; YouTube coverage &amp; creator audit</div>
+<div class="stage-in">
+<div class="stamp-num num" data-count="1796">1,796</div>
+<div class="stamp-lab">Views on the 56 outside TrainStation 3 videos the sweep returned</div>
+</div>
+</div>
+<h1 class="rv">430 videos came back.<br>Fifty-six were TrainStation 3<br>from outside the studio.</h1>
+<div class="finds">
+<div class="find rv"><span class="n num" data-count="430">430</span><span class="l">videos the thirty-day sweep returned</span></div>
+<div class="find rv" style="--d:110ms"><span class="n num" data-count="56">56</span><span class="l">of them about TrainStation 3, from outside creators</span></div>
+<div class="find rv" style="--d:220ms"><span class="n num" data-count="14">14</span><span class="l">outside channels behind those fifty-six</span></div>
+</div>
+<p class="hero-src rv">Source: <a href="https://www.youtube.com/watch?v=GGgeZd9LEIg">TrainStation Games, 11 May 2025</a>.</p>
+</div></section>
+
+<!-- ======================= 01 VOLUME ======================= -->
+<section class="beat" id="volume"><div class="wrap"><div class="card">
+<div class="folio"><span class="fn">01</span><span class="fk">Volume</span></div>
+<div class="beat-head"><span class="snum">01</span><h2>How much<br>of it is<br>the game</h2></div>
+<div class="poster">
+<div class="num rv" data-count="136022">136,022</div>
+<div class="unit rv" style="--d:80ms">results YouTube reports for &ldquo;trainstation 3&rdquo; in thirty days</div>
+<p class="sub rv" style="--d:160ms">Ten queries, page one of each, returned 430 distinct videos. 56 were TrainStation 3 from outside creators and 361 were real railways, LEGO builds, language lessons and other games; ten more were TrainStation 2 and three came from the studio&rsquo;s own channel.</p>
+</div>
+<div>
+<div class="tiles">
+<div class="rv"><a href="https://www.youtube.com/results?search_query=trainstation+3&amp;sp=EgIIAw%3D%3D"><b class="num" data-count="40976">40,976</b></a><span>YouTube&rsquo;s estimate for &ldquo;trainstation 3&rdquo;, last 7 days</span></div>
+<div class="rv" style="--d:80ms"><a href="https://www.youtube.com/results?search_query=trainstation+3&amp;sp=EgIIBA%3D%3D"><b class="num" data-count="136022">136,022</b></a><span>YouTube&rsquo;s estimate, last 30 days</span></div>
+<div class="rv" style="--d:160ms"><a href="https://www.youtube.com/results?search_query=trainstation+3&amp;sp=EgIIBA%3D%3D"><b class="num" data-count="430">430</b></a><span>videos the sweep actually read</span></div>
+<div class="rv" style="--d:240ms"><a href="https://www.youtube.com/results?search_query=trainstation+3&amp;sp=EgIIBA%3D%3D"><b>56</b></a><span>of the 430 were TrainStation 3 from outside creators</span></div>
+</div>
+<p class="cap" style="margin-top:22px">Sample: <a href="https://www.youtube.com/results?search_query=trainstation+3&amp;sp=EgIIBA%3D%3D">430 videos, 342 channels, 38,901,672 views</a>. Page one of each query, so this is a floor. &ldquo;trainstation 3&rdquo; also returns real railways, model builds and language lessons, so the off-topic share is a property of the search term as much as of the game.</p>
+</div>
+</div></div></section>
+
+<!-- ======================= 02 WHO ======================= -->
+<section class="beat" id="who"><div class="wrap"><div class="card">
+<div class="folio"><span class="fn">02</span><span class="fk">Current coverage</span><span class="fr">Ten of fourteen</span></div>
+<div class="beat-head"><span class="snum">02</span><h2>Who covers<br>it today</h2></div>
+<div>
+<p class="lede" style="margin-top:0">The ten outside channels with a face sit below; tap one for receipts. Four more posted about the game inside the window and carry 106 views between them. The square marks the game&rsquo;s own channel.</p>
+<div class="plotwrap rv">
+<div class="plotscroll"><div class="plot"><span class="gx" style="left:0%"><i>1</i></span><span class="gx" style="left:33.33%"><i>100</i></span><span class="gx" style="left:66.67%"><i>10K</i></span><span class="gx" style="left:100%"><i>1M</i></span><span class="gy" style="bottom:0%"><i>1</i></span><span class="gy" style="bottom:33.33%"><i>100</i></span><span class="gy" style="bottom:66.67%"><i>10K</i></span><span class="gy" style="bottom:100%"><i>1M</i></span><svg class="diag" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="100" x2="100" y2="0" stroke="#666666" stroke-width="1" stroke-dasharray="4 5" vector-effect="non-scaling-stroke" opacity=".55"/></svg><button class="dot dot-hot lab-left" style="left:96.95%;bottom:34.83%" type="button" data-ch="tapcheat" aria-expanded="false" aria-controls="ch-tapcheat"><picture><source srcset="assets/avatars/tapcheat.webp" type="image/webp"><img src="assets/avatars/tapcheat.jpg" alt="TapCheat" width="64" height="64" loading="lazy" decoding="async"></picture><span class="dlab">TapCheat</span></button><button class="dot lab-up" style="left:73.41%;bottom:31.72%" type="button" data-ch="techjoshi" aria-expanded="false" aria-controls="ch-techjoshi"><picture><source srcset="assets/avatars/techjoshi03.webp" type="image/webp"><img src="assets/avatars/techjoshi03.jpg" alt="TechJoshi03" width="64" height="64" loading="lazy" decoding="async"></picture><span class="dlab">TechJoshi03</span></button><button class="dot lab-right" style="left:44.95%;bottom:34.95%" type="button" data-ch="outsideviews" aria-expanded="false" aria-controls="ch-outsideviews"><picture><source srcset="assets/avatars/outsideviewsos.webp" type="image/webp"><img src="assets/avatars/outsideviewsos.jpg" alt="Outside Views Online-Spiele" width="64" height="64" loading="lazy" decoding="async"></picture><span class="dlab">Outside Views Online-Spiele</span></button><button class="dot lab-up" style="left:34.47%;bottom:40.22%" type="button" data-ch="mkulas" aria-expanded="false" aria-controls="ch-mkulas"><picture><source srcset="assets/avatars/m_kulas.webp" type="image/webp"><img src="assets/avatars/m_kulas.jpg" alt="M_Kulas" width="64" height="64" loading="lazy" decoding="async"></picture><span class="dlab">M_Kulas</span></button><button class="dot lab-right" style="left:35.56%;bottom:26.33%" type="button" data-ch="sairam" aria-expanded="false" aria-controls="ch-sairam"><picture><source srcset="assets/avatars/sairampasupuleti.42.webp" type="image/webp"><img src="assets/avatars/sairampasupuleti.42.jpg" alt="Sairam Pasupuleti" width="64" height="64" loading="lazy" decoding="async"></picture><span class="dlab">Sairam Pasupuleti</span></button><button class="dot lab-down" style="left:28.74%;bottom:5.02%" type="button" data-ch="matriarcos" aria-expanded="false" aria-controls="ch-matriarcos"><picture><source srcset="assets/avatars/matriarcosg.webp" type="image/webp"><img src="assets/avatars/matriarcosg.jpg" alt="𝕄𝔸𝕋ℝ𝕀𝔸ℝℂ𝕆𝕊 𝔾" width="64" height="64" loading="lazy" decoding="async"></picture><span class="dlab">𝕄𝔸𝕋ℝ𝕀𝔸ℝℂ𝕆𝕊 𝔾</span></button><button class="dot lab-left" style="left:28.60%;bottom:15.05%" type="button" data-ch="katie" aria-expanded="false" aria-controls="ch-katie"><picture><source srcset="assets/avatars/katie105t.webp" type="image/webp"><img src="assets/avatars/katie105t.jpg" alt="KatieTheTrainStationFanGamer105" width="64" height="64" loading="lazy" decoding="async"></picture><span class="dlab">KatieTheTrainStationFanGamer105</span></button><button class="dot lab-right" style="left:15.90%;bottom:26.70%" type="button" data-ch="sungaming" aria-expanded="false" aria-controls="ch-sungaming"><picture><source srcset="assets/avatars/mr.sunrose.webp" type="image/webp"><img src="assets/avatars/mr.sunrose.jpg" alt="Sun Gaming" width="64" height="64" loading="lazy" decoding="async"></picture><span class="dlab">Sun Gaming</span></button><button class="dot lab-up" style="left:0.00%;bottom:37.05%" type="button" data-ch="natetibbs" aria-expanded="false" aria-controls="ch-natetibbs"><picture><source srcset="assets/avatars/natetibbs1990.webp" type="image/webp"><img src="assets/avatars/natetibbs1990.jpg" alt="Nathan Tibbs (Nate)" width="64" height="64" loading="lazy" decoding="async"></picture><span class="dlab">Nathan Tibbs (Nate)</span></button><button class="dot lab-down" style="left:0.00%;bottom:7.95%" type="button" data-ch="justinmcg" aria-expanded="false" aria-controls="ch-justinmcg"><picture><source srcset="assets/avatars/justinmcgovern-x4w.webp" type="image/webp"><img src="assets/avatars/justinmcgovern-x4w.jpg" alt="Justin McGovern" width="64" height="64" loading="lazy" decoding="async"></picture><span class="dlab">Justin McGovern</span></button><span class="ownmark" style="left:69.41%;bottom:52.36%" aria-hidden="true"></span><span class="ownlab" style="left:69.41%;bottom:52.36%">TrainStation Games (@trainstation-games) &middot; best video inside the window 1,385 views</span><span class="diaglab">one view per subscriber</span></div></div>
+<div class="axl"><span>subscribers <svg class="arw" viewBox="0 0 20 12" fill="none" aria-hidden="true"><path d="M0 6h17M12.5 1L18 6l-5.5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="square"/></svg></span><span>biggest TrainStation 3 video inside the 30 days, views</span></div>
+<p class="swipe">SWIPE THE CHART <svg class="arw" viewBox="0 0 20 12" fill="none" aria-hidden="true"><path d="M0 6h17M12.5 1L18 6l-5.5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="square"/></svg></p>
+<p class="cap" style="margin-top:16px">Source: <a href="https://www.youtube.com/results?search_query=trainstation+3&amp;sp=EgIIBA%3D%3D">the 30-day sample</a>, read through the YouTube Data API on 27 August 2026. Both axes log. The channel&rsquo;s all-time best, a <a href="https://www.youtube.com/watch?v=GGgeZd9LEIg">May 2025 developer diary</a>, sits off this chart at 622,881 views.</p>
+</div>
+<div class="chans" id="chans"><article class="chan chan-hot" id="ch-tapcheat">
+<header class="chan-h"><picture><source srcset="assets/avatars/tapcheat.webp" type="image/webp"><img src="assets/avatars/tapcheat.jpg" alt="TapCheat" width="72" height="72" loading="lazy" decoding="async"></picture><div><h3>TapCheat</h3>
+<p class="meta"><a href="https://www.youtube.com/@tapcheat/about">@tapcheat</a> &middot; Mobile walkthroughs</p></div>
+<div class="chan-n">656K<i>subscribers</i></div></header>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=40awNFPAIxY">Train Station 3: Rail Games 3D - Gameplay Walkthrough Part 1 - Tutorial (Android, iOS)</a><span class="vnum">123<i>22 Aug 2026</i></span></div><p class="chan-line">Posts a tutorial for almost every mobile release, so TrainStation 3 got the format and none of the audience.</p><footer><span class="tag ">251,653,917 lifetime views</span><span class="tag ">1 TrainStation 3 video in the sample</span></footer></article><article class="chan" id="ch-techjoshi">
+<header class="chan-h"><picture><source srcset="assets/avatars/techjoshi03.webp" type="image/webp"><img src="assets/avatars/techjoshi03.jpg" alt="TechJoshi03" width="72" height="72" loading="lazy" decoding="async"></picture><div><h3>TechJoshi03</h3>
+<p class="meta"><a href="https://www.youtube.com/@techjoshi03/about">@techjoshi03</a> &middot; Android gameplay</p></div>
+<div class="chan-n">25.4K<i>subscribers</i></div></header>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=zgsVEXTAU3M">Train Station 3: Rail Games 3D🚂 | Building My Ultimate Railway Empire! 🏗️ | Android Gameplay #1</a><span class="vnum">80<i>23 Aug 2026</i></span></div><p class="chan-line">Opened a rail-empire series in August and has not posted a second episode.</p><footer><span class="tag ">27,360,979 lifetime views</span><span class="tag ">1 TrainStation 3 video in the sample</span></footer></article><article class="chan" id="ch-outsideviews">
+<header class="chan-h"><picture><source srcset="assets/avatars/outsideviewsos.webp" type="image/webp"><img src="assets/avatars/outsideviewsos.jpg" alt="Outside Views Online-Spiele" width="72" height="72" loading="lazy" decoding="async"></picture><div><h3>Outside Views Online-Spiele</h3>
+<p class="meta"><a href="https://www.youtube.com/@outsideviewsos/about">@outsideviewsos</a> &middot; German let&rsquo;s plays</p></div>
+<div class="chan-n">498<i>subscribers</i></div></header>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=40JwBfcQIOw">Let´s Play Train Station 3 | Tag 5 | Outside Views OS</a><span class="vnum">125<i>24 Aug 2026</i></span></div><div class="vrow"><a href="https://www.youtube.com/watch?v=cYQ7f-rFhl0">Let´s Play Train Station 3 | Tag 1 | Outside Views OS</a><span class="vnum">94<i>19 Aug 2026</i></span></div><p class="chan-line">Six numbered episodes, Tag 1 to Tag 6, the only outside series that ran in order.</p><footer><span class="tag ">3,363 lifetime views</span><span class="tag ">6 TrainStation 3 videos in the sample</span></footer></article><article class="chan" id="ch-mkulas">
+<header class="chan-h"><picture><source srcset="assets/avatars/m_kulas.webp" type="image/webp"><img src="assets/avatars/m_kulas.jpg" alt="M_Kulas" width="72" height="72" loading="lazy" decoding="async"></picture><div><h3>M_Kulas</h3>
+<p class="meta"><a href="https://www.youtube.com/@m_kulas/about">@m_kulas</a> &middot; Polish rail games</p></div>
+<div class="chan-n">117<i>subscribers</i></div></header>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=dT6RBRNypys">Wielka aktualizacja - ta gra wygląda inaczej! | Train Station 3 | SE2ON | #169 #shorts</a><span class="vnum">259<i>5 Aug 2026</i></span></div><div class="vrow"><a href="https://www.youtube.com/watch?v=iYjBDEiv6ko">Główne linie kolejowe na 6 torów! | Train Station 3 | SE2ON | #170 #shorts</a><span class="vnum">183<i>7 Aug 2026</i></span></div><p class="chan-line">The only outside creator who covered a TrainStation 3 update inside the window.</p><footer><span class="tag ">76,811 lifetime views</span><span class="tag ">4 TrainStation 3 videos in the sample</span></footer></article><article class="chan" id="ch-sairam">
+<header class="chan-h"><picture><source srcset="assets/avatars/sairampasupuleti.42.webp" type="image/webp"><img src="assets/avatars/sairampasupuleti.42.jpg" alt="Sairam Pasupuleti" width="72" height="72" loading="lazy" decoding="async"></picture><div><h3>Sairam Pasupuleti</h3>
+<p class="meta"><a href="https://www.youtube.com/@sairampasupuleti.42/about">@sairampasupuleti.42</a> &middot; First looks</p></div>
+<div class="chan-n">136<i>subscribers</i></div></header>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=HDztTlwCqgQ">Building My First Rail Empire! | TrainStation 3: Journey of Steel</a><span class="vnum">38<i>18 Aug 2026</i></span></div><p class="chan-line">One first-empire episode, posted under the game&rsquo;s full title.</p><footer><span class="tag ">35,015 lifetime views</span><span class="tag ">1 TrainStation 3 video in the sample</span></footer></article><article class="chan" id="ch-matriarcos">
+<header class="chan-h"><picture><source srcset="assets/avatars/matriarcosg.webp" type="image/webp"><img src="assets/avatars/matriarcosg.jpg" alt="𝕄𝔸𝕋ℝ𝕀𝔸ℝℂ𝕆𝕊 𝔾" width="72" height="72" loading="lazy" decoding="async"></picture><div><h3>𝕄𝔸𝕋ℝ𝕀𝔸ℝℂ𝕆𝕊 𝔾</h3>
+<p class="meta"><a href="https://www.youtube.com/@matriarcosg/about">@matriarcosg</a> &middot; Mobile gameplay</p></div>
+<div class="chan-n">53<i>subscribers</i></div></header>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=wxw6L4cvsXE">TRAIN STATION 3 RAIL GAMES 3D GAMEPLAY</a><span class="vnum">2<i>25 Aug 2026</i></span></div><p class="chan-line">A single gameplay upload on a channel that opened on 31 Dec 2025.</p><footer><span class="tag ">10,709 lifetime views</span><span class="tag ">1 TrainStation 3 video in the sample</span></footer></article><article class="chan" id="ch-katie">
+<header class="chan-h"><picture><source srcset="assets/avatars/katie105t.webp" type="image/webp"><img src="assets/avatars/katie105t.jpg" alt="KatieTheTrainStationFanGamer105" width="72" height="72" loading="lazy" decoding="async"></picture><div><h3>KatieTheTrainStationFanGamer105</h3>
+<p class="meta"><a href="https://www.youtube.com/@katie105t/about">@katie105t</a> &middot; Fan channel</p></div>
+<div class="chan-n">52<i>subscribers</i></div></header>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=KgQhLG4Gl6I">Train station 3 engine upgrades episode</a><span class="vnum">8<i>30 Jul 2026</i></span></div><div class="vrow"><a href="https://www.youtube.com/watch?v=DpE3qxPqbSo">Train station 3 engine upgrades episode</a><span class="vnum">5<i>14 Aug 2026</i></span></div><p class="chan-line">33 of the 56 outside TrainStation 3 videos are hers, posted under two repeating titles, averaging one view each.</p><footer><span class="tag ">14,636 lifetime views</span><span class="tag ">33 TrainStation 3 videos in the sample</span></footer></article><article class="chan" id="ch-sungaming">
+<header class="chan-h"><picture><source srcset="assets/avatars/mr.sunrose.webp" type="image/webp"><img src="assets/avatars/mr.sunrose.jpg" alt="Sun Gaming" width="72" height="72" loading="lazy" decoding="async"></picture><div><h3>Sun Gaming</h3>
+<p class="meta"><a href="https://www.youtube.com/@mr.sunrose/about">@mr.sunrose</a> &middot; Daily series</p></div>
+<div class="chan-n">9<i>subscribers</i></div></header>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=GIn-6nIQYFI">My first day in Train Station 3 let's go</a><span class="vnum">40<i>11 Aug 2026</i></span></div><div class="vrow"><a href="https://www.youtube.com/watch?v=H9wt8ASVlwA">Day 2 in My train station.Train Station 3       #EP3</a><span class="vnum">5<i>12 Aug 2026</i></span></div><p class="chan-line">Day 1 and Day 2, posted 11 and 12 Aug 2026 for 45 views between them.</p><footer><span class="tag ">94 lifetime views</span><span class="tag ">2 TrainStation 3 videos in the sample</span></footer></article><article class="chan" id="ch-natetibbs">
+<header class="chan-h"><picture><source srcset="assets/avatars/natetibbs1990.webp" type="image/webp"><img src="assets/avatars/natetibbs1990.jpg" alt="Nathan Tibbs (Nate)" width="72" height="72" loading="lazy" decoding="async"></picture><div><h3>Nathan Tibbs (Nate)</h3>
+<p class="meta"><a href="https://www.youtube.com/@natetibbs1990/about">@natetibbs1990</a> &middot; First look</p></div>
+<div class="chan-n">1<i>subscribers</i></div></header>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=FcaX_O7CJIQ">Train Station 3 Gameplay - First Look &amp; Building My Rail Empire!</a><span class="vnum">167<i>2 Aug 2026</i></span></div><p class="chan-line">One subscriber, and one of the best-watched outside uploads in the sample.</p><footer><span class="tag ">227 lifetime views</span><span class="tag ">1 TrainStation 3 video in the sample</span></footer></article><article class="chan" id="ch-justinmcg">
+<header class="chan-h"><picture><source srcset="assets/avatars/justinmcgovern-x4w.webp" type="image/webp"><img src="assets/avatars/justinmcgovern-x4w.jpg" alt="Justin McGovern" width="72" height="72" loading="lazy" decoding="async"></picture><div><h3>Justin McGovern</h3>
+<p class="meta"><a href="https://www.youtube.com/@justinmcgovern-x4w/about">@justinmcgovern-x4w</a> &middot; Shorts</p></div>
+<div class="chan-n">1<i>subscribers</i></div></header>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=Q2I9fccrzjw">I love #TrainStation3</a><span class="vnum">3<i>22 Aug 2026</i></span></div><p class="chan-line">Three words, three views.</p><footer><span class="tag ">2,076 lifetime views</span><span class="tag ">1 TrainStation 3 video in the sample</span></footer></article></div>
+<div class="callout rv"><b>A cheats-and-mods upload is already indexed against the game</b>
+<span>One video in the sample offers unlimited fuel and gems for TrainStation 3. It carries 81 views on a one-subscriber channel, and it is the only cheats upload the sweep returned. Twelve videos across the whole sample carry the API&rsquo;s paid-product-placement flag and none of them is about the game.</span></div>
+</div>
+</div></div></section>
+
+<!-- ======================= 03 GAP ======================= -->
+<section class="beat gapbeat" id="gap"><div class="wrap">
+<div class="folio"><span class="fn">03</span><span class="fk">The gap</span><span class="fr">Official presence</span></div>
+<div class="beat-head"><span class="snum">03</span><h2>The only channel<br>pulling views on this game<br>is the studio&rsquo;s own.</h2></div>
+
+<div class="tape rv">
+<div class="taperow taphead">
+<div class="side"><picture><source srcset="assets/avatars/trainstation-games.webp" type="image/webp"><img src="assets/avatars/trainstation-games.jpg" alt="TrainStation Games" width="54" height="54" loading="lazy" decoding="async"></picture><div><b>TrainStation Games</b><i>The game&rsquo;s own channel</i></div></div>
+<div class="vs">VS</div>
+<div class="side r"><picture><source srcset="assets/avatars/tapcheat.webp" type="image/webp"><img src="assets/avatars/tapcheat.jpg" alt="TapCheat" width="54" height="54" loading="lazy" decoding="async"></picture><div><b>TapCheat</b><i>The biggest outside channel the sweep found</i></div></div>
+</div>
+<div class="taperow"><span class="a"><a href="https://www.youtube.com/@trainstation-games/about">14.6K</a></span><span class="m">Subscribers</span><span class="b"><a href="https://www.youtube.com/@tapcheat/about">656K</a></span></div>
+<div class="taperow"><span class="a"><a href="https://www.youtube.com/@trainstation-games/about">3,271,728</a></span><span class="m">Lifetime channel views</span><span class="b"><a href="https://www.youtube.com/@tapcheat/about">251,653,917</a></span></div>
+<div class="taperow"><span class="a"><a href="https://www.youtube.com/watch?v=GGgeZd9LEIg">622,881</a> (11 May 2025)</span><span class="m">Biggest video about the game, all time</span><span class="b"><a href="https://www.youtube.com/watch?v=40awNFPAIxY">123</a> (22 Aug 2026)</span></div>
+<div class="taperow"><span class="a"><a href="https://www.youtube.com/watch?v=xdF_JoDdG2E">1,385</a></span><span class="m">Biggest video about the game inside the 30 days</span><span class="b"><a href="https://www.youtube.com/watch?v=40awNFPAIxY">123</a></span></div>
+</div>
+
+<div class="board">
+<div class="brow rv"><div class="blab"><span>The studio&rsquo;s own best video &middot; On the Rails E05 &middot; posted 11 May 2025</span><span class="bval">622,881 views</span></div>
+<div class="btrack"><span class="bfill bfill-img" style="--w:100%"><picture><source srcset="assets/thumbs/GGgeZd9LEIg.webp" type="image/webp"><img src="assets/thumbs/GGgeZd9LEIg.jpg" alt="On the Rails, TrainStation 3 Developer Diaries E05 RAIL YARD" width="800" height="450" loading="lazy" decoding="async" class=""></picture></span></div></div>
+
+<div class="brow rv"><div class="blab"><span>The best outside TrainStation 3 video &middot; M_Kulas &middot; posted 5 Aug 2026</span><span class="bval">259 views</span></div>
+<div class="btrack"><span class="bfill bfill-w" style="--w:0.04%;--d:180ms"></span></div>
+<p class="bnote">Drawn to scale against the bar above. All 56 outside uploads together carry 1,796 views, which is 0.29 per cent of 622,881.</p></div>
+
+<div class="brow rv"><div class="blab"><span>The one outside guide &middot; TapCheat &middot; posted 22 Aug 2026</span><span class="bval">123 views</span></div>
+<div class="btrack"><span class="bfill bfill-w" style="--w:0.02%;--d:260ms"></span></div></div>
+</div>
+<p class="cap" style="margin-top:20px">Sources: <a href="https://www.youtube.com/@trainstation-games/about">the TrainStation Games channel page</a>, <a href="https://www.youtube.com/results?search_query=trainstation+3&amp;sp=EgIIBA%3D%3D">the 30-day sample</a>.</p>
+
+<div class="gapchip rv"><span class="n num" data-count="3271728">3,271,728</span>
+<p>lifetime views on <a href="https://www.youtube.com/@trainstation-games/about">the game&rsquo;s own channel</a>, across 198 videos since 27 Jan 2014. Inside the thirty days sampled its three uploads drew 2,819 views, against 1,796 for every outside creator combined.</p></div>
+
+<div class="gapstats">
+<div class="rv"><b><a href="https://www.youtube.com/watch?v=GGgeZd9LEIg">622,881</a></b><span>views on the studio&rsquo;s own best video</span></div>
+<div class="rv" style="--d:100ms"><b><a href="https://www.youtube.com/results?search_query=trainstation+3&amp;sp=EgIIBA%3D%3D">1,796</a></b><span>views on every outside TrainStation 3 video in the sample</span></div>
+<div class="rv" style="--d:200ms"><b><a href="https://www.youtube.com/results?search_query=trainstation+3&amp;sp=EgIIBA%3D%3D">14</a></b><span>outside channels in the sample posted about the game</span></div>
+</div>
+</div></section>
+
+<!-- ======================= 04 SENTIMENT ======================= -->
+<section class="beat" id="sentiment"><div class="wrap"><div class="card">
+<div class="folio"><span class="fn">04</span><span class="fk">Where the attention goes</span><span class="fr">29 Jul 2026 to 27 Aug 2026</span></div>
+<div class="beat-head"><span class="snum">04</span><h2>Fifty of the fifty-six<br>uploads are someone<br>just playing it.</h2></div>
+<div class="dual">
+<div class="rv"><div class="num" data-count="67.8" data-dec="1" data-suffix="%">67.8%</div><div class="l">of the 1,796 outside views are raw play</div></div>
+<div class="rv" style="--d:120ms"><div class="num" data-count="89.3" data-dec="1" data-suffix="%">89.3%</div><div class="l">of the 56 outside videos are raw play</div></div>
+<p class="lede" style="margin-top:0;flex:1">Fifty of the 56 outside uploads are raw play. The sweep returned no backlash about TrainStation 3 and no spend showcases of any kind. One 52-subscriber fan channel accounts for 33 of the 56.</p>
+</div>
+<div class="mos">
+<a class="mtile g1 rv" style="--l:0.000;--t:0.000;--s:25.641;--sy:58.253;--ml:0.000;--mt:0.000;--ms:44.488;--msy:34.699" href="https://www.youtube.com/watch?v=dT6RBRNypys"><picture><source srcset="assets/thumbs/dT6RBRNypys.webp" type="image/webp"><img src="assets/thumbs/dT6RBRNypys.jpg" alt="Wielka aktualizacja - ta gra wygląda inaczej! | Train Station 3 | SE2ON | #169 #shorts" width="800" height="450" loading="lazy" decoding="async"></picture><span class="tvz"></span><span class="tv">259</span><span class="tc">M_Kulas</span></a>
+<a class="mtile g2 rv" style="--l:26.241;--t:0.000;--s:17.941;--sy:58.253;--ml:0.000;--mt:35.047;--ms:44.488;--msy:24.415" href="https://www.youtube.com/watch?v=iYjBDEiv6ko"><picture><source srcset="assets/thumbs/iYjBDEiv6ko.webp" type="image/webp"><img src="assets/thumbs/iYjBDEiv6ko.jpg" alt="Główne linie kolejowe na 6 torów! | Train Station 3 | SE2ON | #170 #shorts" width="800" height="450" loading="lazy" decoding="async"></picture><span class="tvz"></span><span class="tv">183</span><span class="tc">M_Kulas</span></a>
+<a class="mtile g2 rv" style="--l:44.782;--t:0.000;--s:16.320;--sy:58.253;--ml:0.000;--mt:59.811;--ms:44.488;--msy:22.250" href="https://www.youtube.com/watch?v=FcaX_O7CJIQ"><picture><source srcset="assets/thumbs/FcaX_O7CJIQ.webp" type="image/webp"><img src="assets/thumbs/FcaX_O7CJIQ.jpg" alt="Train Station 3 Gameplay - First Look &amp; Building My Rail Empire!" width="800" height="450" loading="lazy" decoding="async"></picture><span class="tvz"></span><span class="tv">167</span><span class="tc">Nathan Tibbs (Nate)</span></a>
+<a class="mtile g3 rv" style="--l:61.702;--t:0.000;--s:12.571;--sy:58.253;--ml:0.000;--mt:82.409;--ms:44.488;--msy:17.243" href="https://www.youtube.com/watch?v=1TcC9waFKVU"><picture><source srcset="assets/thumbs/1TcC9waFKVU.webp" type="image/webp"><img src="assets/thumbs/1TcC9waFKVU.jpg" alt="Główne linie kolejowe na 6 torów! | Train Station 3 | SE2ON | #170" width="800" height="450" loading="lazy" decoding="async"></picture><span class="tvz"></span><span class="tv">130</span><span class="tc">M_Kulas</span></a>
+<a class="mtile g3 rv" style="--l:74.873;--t:0.000;--s:12.065;--sy:58.253;--ml:45.088;--mt:0.000;--ms:32.774;--msy:22.504" href="https://www.youtube.com/watch?v=40JwBfcQIOw"><picture><source srcset="assets/thumbs/40JwBfcQIOw.webp" type="image/webp"><img src="assets/thumbs/40JwBfcQIOw.jpg" alt="Let´s Play Train Station 3 | Tag 5 | Outside Views OS" width="800" height="450" loading="lazy" decoding="async"></picture><span class="tvz"></span><span class="tv">125</span><span class="tc">Outside Views Online-Spiele</span></a>
+<a class="mtile g3 rv" style="--l:87.538;--t:0.000;--s:11.862;--sy:58.253;--ml:45.088;--mt:22.852;--ms:32.774;--msy:22.138" href="https://www.youtube.com/watch?v=40awNFPAIxY"><picture><source srcset="assets/thumbs/40awNFPAIxY.webp" type="image/webp"><img src="assets/thumbs/40awNFPAIxY.jpg" alt="Train Station 3: Rail Games 3D - Gameplay Walkthrough Part 1 - Tutorial (Android, iOS)" width="800" height="450" loading="lazy" decoding="async"></picture><span class="tvz"></span><span class="tv">123</span><span class="tc">TapCheat</span></a>
+<a class="mtile g3 rv" style="--l:0.000;--t:60.220;--s:17.731;--sy:35.312;--ml:45.088;--mt:45.338;--ms:32.774;--msy:20.127" href="https://www.youtube.com/watch?v=JTUO_G2ADnE"><picture><source srcset="assets/thumbs/JTUO_G2ADnE.webp" type="image/webp"><img src="assets/thumbs/JTUO_G2ADnE.jpg" alt="Wielka aktualizacja - ta gra wygląda inaczej! | Train Station 3 | SE2ON | #169" width="800" height="450" loading="lazy" decoding="async"></picture><span class="tvz"></span><span class="tv">112</span><span class="tc">M_Kulas</span></a>
+<a class="mtile g3 rv" style="--l:18.331;--t:60.220;--s:14.785;--sy:35.312;--ml:45.088;--mt:65.814;--ms:32.774;--msy:16.836" href="https://www.youtube.com/watch?v=cYQ7f-rFhl0"><picture><source srcset="assets/thumbs/cYQ7f-rFhl0.webp" type="image/webp"><img src="assets/thumbs/cYQ7f-rFhl0.jpg" alt="Let´s Play Train Station 3 | Tag 1 | Outside Views OS" width="800" height="450" loading="lazy" decoding="async"></picture><span class="tvz"></span><span class="tv">94</span><span class="tc">Outside Views Online-Spiele</span></a>
+<a class="mtile g3 rv" style="--l:33.715;--t:60.220;--s:14.621;--sy:35.312;--ml:45.088;--mt:82.998;--ms:32.774;--msy:16.653" href="https://www.youtube.com/watch?v=z531M0RNTr8"><picture><source srcset="assets/thumbs/z531M0RNTr8.webp" type="image/webp"><img src="assets/thumbs/z531M0RNTr8.jpg" alt="Let´s Play Train Station 3 | Tag 6 | Outside Views OS" width="800" height="450" loading="lazy" decoding="async"></picture><span class="tvz"></span><span class="tv">93</span><span class="tc">Outside Views Online-Spiele</span></a>
+<a class="mtile g4 rv" style="--l:48.936;--t:60.220;--s:12.984;--sy:35.312;--ml:78.462;--mt:0.000;--ms:20.938;--msy:23.164" href="https://www.youtube.com/watch?v=CW-Ki6aO2Do"><picture><source srcset="assets/thumbs/CW-Ki6aO2Do.webp" type="image/webp"><img src="assets/thumbs/CW-Ki6aO2Do.jpg" alt="Let´s Play Train Station 3 | Tag 3 | Outside Views OS" width="800" height="450" loading="lazy" decoding="async"></picture><span class="tvz"></span><span class="tv">83</span><span class="tc">Outside Views Online-Spiele</span></a>
+<a class="mtile g4 rv" style="--l:62.520;--t:60.220;--s:12.657;--sy:35.312;--ml:78.462;--mt:23.513;--ms:20.938;--msy:22.598" href="https://www.youtube.com/watch?v=6x2VYOjW03o"><picture><source srcset="assets/thumbs/6x2VYOjW03o.webp" type="image/webp"><img src="assets/thumbs/6x2VYOjW03o.jpg" alt="Train Station 3 Cheats/Mod - How to get unlimited fuel and gems (code)" width="800" height="450" loading="lazy" decoding="async"></picture><span class="tvz"></span><span class="tv">81</span><span class="tc">Ben Nguyen</span></a>
+<a class="mtile g4 rv" style="--l:75.777;--t:60.220;--s:12.493;--sy:35.312;--ml:78.462;--mt:46.459;--ms:20.938;--msy:22.315" href="https://www.youtube.com/watch?v=zgsVEXTAU3M"><picture><source srcset="assets/thumbs/zgsVEXTAU3M.webp" type="image/webp"><img src="assets/thumbs/zgsVEXTAU3M.jpg" alt="Train Station 3: Rail Games 3D🚂 | Building My Ultimate Railway Empire! 🏗️ | Android Gameplay #1" width="800" height="450" loading="lazy" decoding="async"></picture><span class="tvz"></span><span class="tv">80</span><span class="tc">TechJoshi03</span></a>
+<a class="mtile g4 rv" style="--l:88.871;--t:60.220;--s:10.529;--sy:35.312;--ml:78.462;--mt:69.122;--ms:20.938;--msy:18.915" href="https://www.youtube.com/watch?v=un13eOtne88"><picture><source srcset="assets/thumbs/un13eOtne88.webp" type="image/webp"><img src="assets/thumbs/un13eOtne88.jpg" alt="Let´s Play Train Station 3 | Tag 4 | Outside Views OS" width="800" height="450" loading="lazy" decoding="async"></picture><span class="tvz"></span><span class="tv">68</span><span class="tc">Outside Views Online-Spiele</span></a>
+<a class="mtile g4 rv" style="--l:0.000;--t:97.498;--s:99.400;--sy:0.535;--ml:78.462;--mt:88.385;--ms:20.938;--msy:11.266" href="https://www.youtube.com/watch?v=jUBQzTAM5sI"><picture><source srcset="assets/thumbs/jUBQzTAM5sI.webp" type="image/webp"><img src="assets/thumbs/jUBQzTAM5sI.jpg" alt="Let´s Play Train Station 3 | Tag 2 | Outside Views OS" width="800" height="450" loading="lazy" decoding="async"></picture><span class="tvz"></span><span class="tv">41</span><span class="tc">Outside Views Online-Spiele</span></a>
+</div>
+<p class="cap" style="margin-top:16px">Squares sized by share of the 1,639 views on the fourteen biggest of these videos.</p>
+<div>
+<div class="bbar rv"><span class="seg b1" style="--w:67.8%"></span><span class="seg b2" style="--w:20.7%"></span><span class="seg b3" style="--w:6.8%"></span><span class="seg b4" style="--w:4.5%"></span><span class="seg b5" style="--w:0.2%"></span></div><div class="bkeys"><div class="bk"><i class="b1"></i><b>Raw play</b><span>50 videos &middot; 1,217 views</span></div><div class="bk"><i class="b2"></i><b>Update coverage</b><span>2 videos &middot; 371 views</span></div><div class="bk"><i class="b3"></i><b>Guides</b><span>1 video &middot; 123 views</span></div><div class="bk"><i class="b4"></i><b>Cheats &amp; mods</b><span>1 video &middot; 81 views</span></div><div class="bk"><i class="b5"></i><b>Other</b><span>2 videos &middot; 4 views</span></div></div>
+<p class="cap" style="margin-top:18px">All 56 outside TrainStation 3 videos in the sample, classified by title and channel. The 361 off-topic results, 10 TrainStation 2 uploads and 3 videos from the game&rsquo;s own channel are excluded.</p>
+<details class="all"><summary>See all fourteen videos</summary>
+<table><colgroup><col style="width:14%"><col style="width:49%"><col style="width:23%"><col style="width:14%"></colgroup><thead><tr><th>Views</th><th>Video</th><th>Channel</th><th>Posted</th></tr></thead><tbody><tr><td class="n">259</td><td><a href="https://www.youtube.com/watch?v=dT6RBRNypys">Wielka aktualizacja - ta gra wygląda inaczej! | Train Station 3 | SE2ON | #169 #shorts</a></td><td class="ch">M_Kulas</td><td class="dt">5 Aug 2026</td></tr><tr><td class="n">183</td><td><a href="https://www.youtube.com/watch?v=iYjBDEiv6ko">Główne linie kolejowe na 6 torów! | Train Station 3 | SE2ON | #170 #shorts</a></td><td class="ch">M_Kulas</td><td class="dt">7 Aug 2026</td></tr><tr><td class="n">167</td><td><a href="https://www.youtube.com/watch?v=FcaX_O7CJIQ">Train Station 3 Gameplay - First Look &amp; Building My Rail Empire!</a></td><td class="ch">Nathan Tibbs (Nate)</td><td class="dt">2 Aug 2026</td></tr><tr><td class="n">130</td><td><a href="https://www.youtube.com/watch?v=1TcC9waFKVU">Główne linie kolejowe na 6 torów! | Train Station 3 | SE2ON | #170</a></td><td class="ch">M_Kulas</td><td class="dt">6 Aug 2026</td></tr><tr><td class="n">125</td><td><a href="https://www.youtube.com/watch?v=40JwBfcQIOw">Let´s Play Train Station 3 | Tag 5 | Outside Views OS</a></td><td class="ch">Outside Views Online-Spiele</td><td class="dt">24 Aug 2026</td></tr><tr><td class="n">123</td><td><a href="https://www.youtube.com/watch?v=40awNFPAIxY">Train Station 3: Rail Games 3D - Gameplay Walkthrough Part 1 - Tutorial (Android, iOS)</a></td><td class="ch">TapCheat</td><td class="dt">22 Aug 2026</td></tr><tr><td class="n">112</td><td><a href="https://www.youtube.com/watch?v=JTUO_G2ADnE">Wielka aktualizacja - ta gra wygląda inaczej! | Train Station 3 | SE2ON | #169</a></td><td class="ch">M_Kulas</td><td class="dt">4 Aug 2026</td></tr><tr><td class="n">94</td><td><a href="https://www.youtube.com/watch?v=cYQ7f-rFhl0">Let´s Play Train Station 3 | Tag 1 | Outside Views OS</a></td><td class="ch">Outside Views Online-Spiele</td><td class="dt">19 Aug 2026</td></tr><tr><td class="n">93</td><td><a href="https://www.youtube.com/watch?v=z531M0RNTr8">Let´s Play Train Station 3 | Tag 6 | Outside Views OS</a></td><td class="ch">Outside Views Online-Spiele</td><td class="dt">25 Aug 2026</td></tr><tr><td class="n">83</td><td><a href="https://www.youtube.com/watch?v=CW-Ki6aO2Do">Let´s Play Train Station 3 | Tag 3 | Outside Views OS</a></td><td class="ch">Outside Views Online-Spiele</td><td class="dt">21 Aug 2026</td></tr><tr><td class="n">81</td><td><a href="https://www.youtube.com/watch?v=6x2VYOjW03o">Train Station 3 Cheats/Mod - How to get unlimited fuel and gems (code)</a></td><td class="ch">Ben Nguyen</td><td class="dt">13 Aug 2026</td></tr><tr><td class="n">80</td><td><a href="https://www.youtube.com/watch?v=zgsVEXTAU3M">Train Station 3: Rail Games 3D🚂 | Building My Ultimate Railway Empire! 🏗️ | Android Gameplay #1</a></td><td class="ch">TechJoshi03</td><td class="dt">23 Aug 2026</td></tr><tr><td class="n">68</td><td><a href="https://www.youtube.com/watch?v=un13eOtne88">Let´s Play Train Station 3 | Tag 4 | Outside Views OS</a></td><td class="ch">Outside Views Online-Spiele</td><td class="dt">22 Aug 2026</td></tr><tr><td class="n">41</td><td><a href="https://www.youtube.com/watch?v=jUBQzTAM5sI">Let´s Play Train Station 3 | Tag 2 | Outside Views OS</a></td><td class="ch">Outside Views Online-Spiele</td><td class="dt">20 Aug 2026</td></tr></tbody></table>
+<p class="cap" style="margin-top:16px">Fourteen videos, all published between 2 Aug 2026 and 25 Aug 2026.</p>
+</details>
+</div>
+</div></div></section>
+
+<!-- ======================= 05 ROSTER ======================= -->
+<section class="beat" id="roster"><div class="wrap"><div class="card">
+<div class="folio"><span class="fn">05</span><span class="fk">The roster</span><span class="fr">Eight picks, in order</span></div>
+<div class="beat-head"><span class="snum">05</span><h2>Eight creators<br>worth the ask.</h2></div>
+<p class="lede" style="margin-top:0">In approach order; reach multiple is a creator&rsquo;s biggest video in this sample divided by subscribers.</p>
+<div class="picks"><details class="pick rv"><summary>
+<span class="pno">01</span><picture><source srcset="assets/avatars/masterhellish.webp" type="image/webp"><img src="assets/avatars/masterhellish.jpg" alt="Master Hellish" width="64" height="64" loading="lazy" decoding="async"></picture>
+<span class="pid"><b>Master Hellish</b><i>Train-game reviews &middot; Steam</i><em class="pstat">REVIEWS NEW TRAIN GAMES</em></span>
+<span class="pbig pbig-low">0.28x<i>reach multiple</i></span>
+<span class="pline">Judging a new train game is the format the channel already runs.</span><span class="pmore" aria-hidden="true">RECEIPTS</span></summary>
+<div class="pbody"><div class="pstats"><div><b>47.6K</b><span>subscribers</span></div>
+<div><b>14,526,230</b><span>lifetime channel views</span></div>
+<div><a class="tag tag-acc" href="https://www.youtube.com/@masterhellish/about">no TrainStation 3 coverage in the sample</a></div></div>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=o1bsJQnlgtI">Is The Latest Train Game On Steam Worth It? Platform Rush Tokyo Station</a><span class="vnum">13,165<i>19 Aug 2026</i></span></div><p class="chan-line">The <a href="https://www.youtube.com/watch?v=o1bsJQnlgtI">Platform Rush verdict</a> did 13,165 views, 2.75 times the channel&rsquo;s own lifetime average per upload.</p></div></details><details class="pick rv"><summary>
+<span class="pno">02</span><picture><source srcset="assets/avatars/wolfsgaming687.webp" type="image/webp"><img src="assets/avatars/wolfsgaming687.jpg" alt="Wolf Gaming" width="64" height="64" loading="lazy" decoding="async"></picture>
+<span class="pid"><b>Wolf Gaming</b><i>Rail-game patch cycles &middot; Roblox</i><em class="pstat">COVERS RAIL-GAME UPDATES</em></span>
+<span class="pbig pbig-low">0.94x<i>reach multiple</i></span>
+<span class="pline">Announcements and version previews are the standing beat here.</span><span class="pmore" aria-hidden="true">RECEIPTS</span></summary>
+<div class="pbody"><div class="pstats"><div><b>19.8K</b><span>subscribers</span></div>
+<div><b>4,060,143</b><span>lifetime channel views</span></div>
+<div><a class="tag tag-acc" href="https://www.youtube.com/@wolfsgaming687/about">no TrainStation 3 coverage in the sample</a></div></div>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=-kdoSfxvyRA">British Railway V1.4.3 has been ANNOUNCED! #britishrailway #roblox #newupdate #preview #fourthrail</a><span class="vnum">18,618<i>16 Aug 2026</i></span></div><div class="vrow"><a href="https://www.youtube.com/watch?v=CE-Mi0qIcrU">New ELECTRIFIED Line Preview for BR 1.4.3? #roblox #train #update #preview #electrification</a><span class="vnum">14,889<i>22 Aug 2026</i></span></div><p class="chan-line">The <a href="https://www.youtube.com/watch?v=-kdoSfxvyRA">V1.4.3 announcement</a> did 18,618 views on 19.8K subscribers, 1.58 times the channel&rsquo;s own average.</p></div></details><details class="pick rv"><summary>
+<span class="pno">03</span><picture><source srcset="assets/avatars/bostonbyrails.webp" type="image/webp"><img src="assets/avatars/bostonbyrails.jpg" alt="Boston By Rails" width="64" height="64" loading="lazy" decoding="async"></picture>
+<span class="pid"><b>Boston By Rails</b><i>Rail-system history &middot; United States</i><em class="pstat">RAIL SYSTEMS, PULLED APART</em></span>
+<span class="pbig">2.1x<i>reach multiple</i></span>
+<span class="pline">Takes a rail network apart and says why it works.</span><span class="pmore" aria-hidden="true">RECEIPTS</span></summary>
+<div class="pbody"><div class="pstats"><div><b>24.3K</b><span>subscribers</span></div>
+<div><b>5,539,912</b><span>lifetime channel views</span></div>
+<div><a class="tag tag-acc" href="https://www.youtube.com/@bostonbyrails/about">no TrainStation 3 coverage in the sample</a></div></div>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=_w7jH6CsXd0">Boston's Most Ridiculous Train Station</a><span class="vnum">50,853<i>23 Aug 2026</i></span></div><p class="chan-line"><a href="https://www.youtube.com/watch?v=_w7jH6CsXd0">Boston&rsquo;s Most Ridiculous Train Station</a> did 50,853 views on 24.3K subscribers, 3.84 times the channel&rsquo;s own average.</p></div></details><details class="pick rv"><summary>
+<span class="pno">04</span><picture><source srcset="assets/avatars/the_train_channel.webp" type="image/webp"><img src="assets/avatars/the_train_channel.jpg" alt="The Train Channel" width="64" height="64" loading="lazy" decoding="async"></picture>
+<span class="pid"><b>The Train Channel</b><i>Rail-sim shorts &middot; India</i><em class="pstat">RAIL SHORTS AT VOLUME</em></span>
+<span class="pbig">5.5x<i>reach multiple</i></span>
+<span class="pline">Low cost per upload, in front of a rail audience that already watches every day.</span><span class="pmore" aria-hidden="true">RECEIPTS</span></summary>
+<div class="pbody"><div class="pstats"><div><b>21.5K</b><span>subscribers</span></div>
+<div><b>37,180,295</b><span>lifetime channel views</span></div>
+<div><a class="tag tag-acc" href="https://www.youtube.com/@the_train_channel/about">no TrainStation 3 coverage in the sample</a></div></div>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=s78RWqapMjE">Train Arrival On Platform Indian Railways | Railwork #shorts #train # #trainsim #railway #railtrack</a><span class="vnum">118,573<i>24 Aug 2026</i></span></div><div class="vrow"><a href="https://www.youtube.com/watch?v=siiuzwzuho0">Amrit Bharat Express Crossing in Railway Gate #shorts #train #indianrailways #railway #crossing</a><span class="vnum">35,859<i>26 Aug 2026</i></span></div><div class="vrow"><a href="https://www.youtube.com/watch?v=hgWNIn739K4">Train Crossing in Railway Gate | Train Simulator | Railwork | Indian Railways #train</a><span class="vnum">17,819<i>17 Aug 2026</i></span></div><p class="chan-line">37,180,295 lifetime views across 176 uploads since 16 Nov 2025. The <a href="https://www.youtube.com/watch?v=s78RWqapMjE">platform-arrival short</a> did 118,573 views and that is 0.56 times the channel&rsquo;s own average, so it is a routine upload on a feed that posts daily.</p></div></details><details class="pick rv"><summary>
+<span class="pno">05</span><picture><source srcset="assets/avatars/shinise.webp" type="image/webp"><img src="assets/avatars/shinise.jpg" alt="#しにせ/shinise" width="64" height="64" loading="lazy" decoding="async"></picture>
+<span class="pid"><b>#しにせ/shinise</b><i>Rail games &middot; Japan</i><em class="pstat">JAPANESE RAIL-GAME CHANNEL</em></span>
+<span class="pbig pbig-low">0.65x<i>reach multiple</i></span>
+<span class="pline">A rail-game channel in a market this sample shows no TrainStation 3 content in.</span><span class="pmore" aria-hidden="true">RECEIPTS</span></summary>
+<div class="pbody"><div class="pstats"><div><b>71.8K</b><span>subscribers</span></div>
+<div><b>60,480,787</b><span>lifetime channel views</span></div>
+<div><a class="tag tag-acc" href="https://www.youtube.com/@shinise/about">no TrainStation 3 coverage in the sample</a></div></div>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=KuIyY-3YdEc">重大注意！今夜発売のSTEAM版『トレインプラス西日本』でズイキマスコンを使用する方法 #トレインプラス西日本 #JR西日本 #鉄道ゲーム</a><span class="vnum">46,915<i>26 Aug 2026</i></span></div><div class="vrow"><a href="https://www.youtube.com/watch?v=CvrHDTBbK-A">あさってリリースの鉄道ゲーム、実はすごかった #トレインプラス西日本 #JR西日本 #鉄道ゲーム</a><span class="vnum">9,705<i>25 Aug 2026</i></span></div><div class="vrow"><a href="https://www.youtube.com/watch?v=H_Ev2dcR-8E">本日ついにリリースしました！！早速「話題の新作」になる『トレインプラス西日本』！！皆さんありがとうございます #トレインプラス西日本 #JR西日本 #鉄道ゲーム</a><span class="vnum">3,442<i>27 Aug 2026</i></span></div><p class="chan-line">The <a href="https://www.youtube.com/watch?v=KuIyY-3YdEc">controller walkthrough</a> did 46,915 views, 1.66 times the channel&rsquo;s own average. Approach depends on a Japanese campaign; the channel is mid-cycle on another rail game&rsquo;s launch, released 26 Aug 2026.</p></div></details><details class="pick rv"><summary>
+<span class="pno">06</span><picture><source srcset="assets/avatars/matgonian.webp" type="image/webp"><img src="assets/avatars/matgonian.jpg" alt="Matgonian" width="64" height="64" loading="lazy" decoding="async"></picture>
+<span class="pid"><b>Matgonian</b><i>City builders &middot; Cities: Skylines 2</i><em class="pstat">CITY BUILDERS, 2.06M SUBSCRIBERS</em></span>
+<span class="pbig pbig-low">0.08x<i>reach multiple</i></span>
+<span class="pline">The reach slot, and the ask is a segment inside a normal upload.</span><span class="pmore" aria-hidden="true">RECEIPTS</span></summary>
+<div class="pbody"><div class="pstats"><div><b>2.06M</b><span>subscribers</span></div>
+<div><b>491,746,526</b><span>lifetime channel views</span></div>
+<div><a class="tag tag-acc" href="https://www.youtube.com/@matgonian/about">no TrainStation 3 coverage in the sample</a></div></div>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=AFHtzwKLTrY">THIS TRAIN STATION CHANGED MY ENTIRE CITY! | Cities: Skylines 2</a><span class="vnum">169,475<i>15 Aug 2026</i></span></div><p class="chan-line"><a href="https://www.youtube.com/watch?v=AFHtzwKLTrY">The train-station episode</a> did 169,475 views, which is 0.11 times the channel&rsquo;s own average across 324 uploads. A dedicated station video has already underperformed here.</p></div></details><details class="pick rv"><summary>
+<span class="pno">07</span><picture><source srcset="assets/avatars/p.lohyoutube.webp" type="image/webp"><img src="assets/avatars/p.lohyoutube.jpg" alt="P.LOH" width="64" height="64" loading="lazy" decoding="async"></picture>
+<span class="pid"><b>P.LOH</b><i>TrainStation 2 walkthroughs &middot; franchise</i><em class="pstat">1,607 TRAINSTATION 2 EPISODES</em></span>
+<span class="pbig pbig-low">0.04x<i>reach multiple</i></span>
+<span class="pline">Already plays a Pixel Federation train game, 1,607 episodes deep.</span><span class="pmore" aria-hidden="true">RECEIPTS</span></summary>
+<div class="pbody"><div class="pstats"><div><b>3.83K</b><span>subscribers</span></div>
+<div><b>1,906,161</b><span>lifetime channel views</span></div>
+<div><a class="tag tag-acc" href="https://www.youtube.com/@p.lohyoutube/about">TrainStation 2 coverage in the sample</a></div></div>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=9jaKYGo2O3I">TrainStation2 🚆#1607: Train Yard 2026 🆕 Event Walkthrough</a><span class="vnum">170<i>11 Aug 2026</i></span></div><p class="chan-line"><a href="https://www.youtube.com/watch?v=9jaKYGo2O3I">Episode 1,607</a> of a TrainStation 2 walkthrough series did 170 views, 0.49 times the channel&rsquo;s own average. Small, and the audience is pre-qualified for the franchise.</p></div></details><details class="pick rv"><summary>
+<span class="pno">08</span><picture><source srcset="assets/avatars/infiniterailtracks.webp" type="image/webp"><img src="assets/avatars/infiniterailtracks.jpg" alt="Infinite Rail Tracks" width="64" height="64" loading="lazy" decoding="async"></picture>
+<span class="pid"><b>Infinite Rail Tracks</b><i>Rail-simulator challenges &middot; puzzles</i><em class="pstat">RAIL PUZZLES, 765 UPLOADS</em></span>
+<span class="pbig pbig-low">0.26x<i>reach multiple</i></span>
+<span class="pline">Treats a rail network as a problem to solve, which is the game&rsquo;s verb.</span><span class="pmore" aria-hidden="true">RECEIPTS</span></summary>
+<div class="pbody"><div class="pstats"><div><b>11.4K</b><span>subscribers</span></div>
+<div><b>6,628,717</b><span>lifetime channel views</span></div>
+<div><a class="tag tag-acc" href="https://www.youtube.com/@infiniterailtracks/about">no TrainStation 3 coverage in the sample</a></div></div>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=MjC1g0t8oqY">😱 Can 3 Trains Survive This Impossible Rail Maze? | Train Simulator Challenge 🔥</a><span class="vnum">2,966<i>9 Aug 2026</i></span></div><p class="chan-line"><a href="https://www.youtube.com/watch?v=MjC1g0t8oqY">The impossible-maze challenge</a> did 2,966 views on 11.4K subscribers, 0.34 times the channel&rsquo;s own average.</p></div></details></div>
+<p class="cap">Sources: linked inside each creator&rsquo;s row.</p>
+</div></div></section>
+
+<!-- ======================= CLOSE ======================= -->
+<section class="beat"><div class="wrap"><div class="close rv">
+<div class="who">
+<img src="data:image/jpeg;base64,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" alt="Davorin Smit" width="236" height="236" loading="lazy" decoding="async">
+<div class="nm">Davorin Smit</div><div class="rl">ARCH</div>
+</div>
+<div class="pitch">
+<div class="cta-var cta-v1"><h2>Let&rsquo;s get TrainStation 3 covered.</h2>
+<p>Fifty-six videos, 1,796 views, fourteen channels. Eight creators above, in approach order.</p></div>
+<div class="cta-var cta-v2"><h2>136,022 results in thirty days, by YouTube&rsquo;s count. The sweep read 430 of them and fifty-six came from outside creators.</h2>
+<p>The eight creators who could change that are listed above.</p></div>
+<div class="cta-var cta-v3"><h2>The roster is right there.</h2>
+<p>Eight creators, in order. Davorin walks you through the brief.</p></div>
+<a class="cta-btn" href="https://meetings-eu1.hubspot.com/davorin-smit/30-minute-sales-call">Book 30 minutes with Davorin</a>
+<p class="arch">ARCH has rolled with over 5,000 influencers across both Americas, Europe, MENA and Australia. <a href="https://arch.agency/">arch.agency</a></p>
+</div>
+</div></div></section>
+
+</main>
+
+<footer><div class="wrap">
+<details class="how"><summary>How this page was built</summary><div class="inner">
+<ul>
+<li>All figures come from the YouTube Data API v3 (search.list, videos.list, channels.list); no HTML scraping, no authenticated session.</li>
+<li>YouTube's public all-time “~N results” estimate is not available via the API and reading it requires a public-page read, so this page carries no all-time volume number.</li>
+<li>Per-window result counts are the API's totalResults estimate, which fluctuates between reads; treat as order of magnitude.</li>
+<li>View counts drift upward; all figures are a snapshot taken on the read date.</li>
+<li>Paid-promotion status uses the API's paidProductPlacementDetails flag, which was returned for every video in the sample. The watch-page 'Includes paid promotion' overlay was not checked by hand.</li>
+<li>Ten queries, page one of each, de-duplicated to 430 videos. The sample is a floor and TrainStation 3 content outside it sits outside the claim boundary.</li>
+<li>Videos were classified by title and channel into ten labels declared before either pass ran. A second reviewer who never saw the first pass re-tagged a fixed 20% sample of 87 videos and disagreed on none of them.</li>
+<li>The query “trainstation 3” collides with real-world railway, model-railway, language-lesson and unrelated-game content, so the off-topic share below is a property of the search term as much as of the game.</li>
+<li>The game's own channel was confirmed by reading the @trainstation-games channel page, which names TrainStation 2 and TrainStation 3 and links to Pixel Federation install pages. Ownership beyond what that page states is not verifiable through the API.</li>
+<li>Reach multiple divides a channel's biggest video in this sample by its subscriber count. The sample catches whichever upload fell inside a 30-day window, so a low multiple can describe a routine upload on a large back catalogue.</li>
+</ul>
+<p class="caveat">What this does not contain: watch time, audience demographics, CPM or rate-card estimates, sentiment scores, or YouTube&rsquo;s all-time results figure, which the API does not expose and which we omit instead of estimating. View counts drift upward; every number is a snapshot from 27 August 2026. The full claim-to-URL list ships alongside this page as <em>sources.json</em>.</p>
+</div></details>
+<div class="foot"><div class="grid">
+<svg class="wordmark" viewBox="0 0 83 22" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ARCH."><path d="M12.9221 21.6938H16.6558L8.3093 0L0 21.6938H3.75839L4.64875 19.2654L11.9792 19.268L12.9221 21.6938ZM5.78611 16.2115C6.62793 13.7814 7.46899 11.3512 8.31107 8.92062L10.8443 16.218C9.15867 16.2163 7.47251 16.2137 5.78636 16.2112L5.78611 16.2115ZM30.5568 21.6938H34.6761L29.0098 12.544C29.0098 12.544 32.8828 11.7136 33.4664 8.05251C33.4664 8.05251 34.9666 1.00467 26.6508 0.585655H19.6557V4.1403L22.9621 9.37225V9.39451H19.6557V21.6938H23.1532V12.9158H25.1538L25.1555 12.9193H25.1598L30.5568 21.69Z" fill="#000F41"/><path d="M23.1533 12.9154V21.6934H23.1651V12.9187H25.1556L25.1539 12.9154H23.1533ZM53.1342 5.87189L55.6028 3.39297C55.6028 3.39297 52.9616 0.29249 48.2774 0.282122C48.2774 0.282122 42.6322 -0.0516709 39.4643 4.8604C39.4643 4.8604 35.5148 11.0942 39.4643 17.3802C39.4643 17.3802 42.2084 21.9913 48.1074 21.9913C48.1074 21.9913 52.2488 22.315 55.6028 18.926L53.1136 16.4099C53.1136 16.4099 51.3552 18.4597 48.3453 18.4693C48.3453 18.4693 41.6228 18.6736 41.2959 11.3441C41.2959 11.3441 40.8635 3.63598 48.7105 3.84991C48.7098 3.84991 51.1716 3.86964 53.1342 5.87189ZM71.9986 0.585317V9.34764H63.3301V0.585317H59.8293V21.6934H63.3301V12.8717H71.9986V21.6934H75.4861V0.585317H71.9986ZM81.12 21.8909C82.1583 21.8909 83.0001 21.0403 83.0001 19.9906C83.0001 18.9412 82.1583 18.0905 81.12 18.0905C80.0818 18.0905 79.2402 18.9412 79.2402 19.9906C79.2402 21.04 80.0818 21.8909 81.12 21.8909Z" fill="#000F41"/></svg>
+<span>TrainStation 3 &middot; Pixel Federation &middot; 27 August 2026</span>
+</div></div>
+</div></footer>
+
+<script>
+(function(){
+var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* reveal on scroll + bar growth + count-ups */
+var io = new IntersectionObserver(function(es){
+  es.forEach(function(e){
+    if(!e.isIntersecting) return;
+    e.target.classList.add('in');
+    io.unobserve(e.target);
+    var ns = e.target.matches('[data-count]') ? [e.target] : e.target.querySelectorAll('[data-count]');
+    for(var i=0;i<ns.length;i++) count(ns[i]);
+  });
+}, {rootMargin:'0px 0px -12% 0px', threshold:0.15});
+
+document.querySelectorAll('.rv, .brow, .bbar, [data-count]').forEach(function(n){ io.observe(n); });
+
+function count(el){
+  if(reduce || el.dataset.done) return;
+  el.dataset.done = '1';
+  var end = parseFloat(el.dataset.count), dec = parseInt(el.dataset.dec || '0', 10);
+  var suf = el.dataset.suffix || '', dur = 1100, t0 = null;
+  function fmt(v){ return v.toLocaleString('en-US', {minimumFractionDigits:dec, maximumFractionDigits:dec}) + suf; }
+  function step(ts){
+    if(t0 === null) t0 = ts;
+    var p = Math.min(1, (ts - t0) / dur);
+    var e = 1 - Math.pow(1 - p, 3);
+    el.textContent = fmt(end * e);
+    if(p < 1) requestAnimationFrame(step); else el.textContent = fmt(end);
+  }
+  el.textContent = fmt(0);
+  requestAnimationFrame(step);
+}
+
+/* 02 scatter: click a face, open that channel card */
+var cards = document.querySelectorAll('#chans .chan');
+var dots  = document.querySelectorAll('.dot');
+if(cards.length && dots.length){
+  document.documentElement.classList.add('js-chan');
+  var open = null;
+  function show(key){
+    dots.forEach(function(d){ d.setAttribute('aria-expanded', String(d.dataset.ch === key)); });
+    cards.forEach(function(c){ c.classList.toggle('open', c.id === 'ch-' + key); });
+    open = key;
+  }
+  dots.forEach(function(d){
+    d.addEventListener('click', function(){
+      if(open === d.dataset.ch){ show(''); return; }
+      show(d.dataset.ch);
+      var c = document.getElementById('ch-' + d.dataset.ch);
+      if(c) c.classList.add('in');
+    });
+  });
+  show('tapcheat');
+}
+})();
+</script>
+<style>.js-chan .chan{display:none}.js-chan .chan.open{display:block}</style>
+</body></html>
