@@ -123,8 +123,14 @@ margin:6px 0 0;padding:0}
 .gx i,.gy i,.diaglab,.ownlab{text-shadow:0 0 4px var(--plate),0 0 4px var(--plate),0 0 4px var(--plate),0 0 8px var(--plate)}
 .gx i,.gy i{z-index:1}
 .diag{position:absolute;inset:0;width:100%;height:100%}
+/* Opaque chip, not just a halo. This is a reference-line label sitting at a fixed % on a plot
+   whose dots are placed by data: on TrainStation 3 the old 46/47 spot ran through the studio
+   mark, and moving it to 58/59 cleared that game while landing in Hello Neighbor's and Melon
+   Sandbox's clusters. No fixed coordinate is safe for every game, so instead of chasing one,
+   the label carries its own background and always reads on top of whatever it crosses. */
 .diaglab{position:absolute;left:58%;bottom:59%;font-size:11px;font-weight:700;letter-spacing:.04em;
-color:var(--sup2);transform:rotate(-34deg);transform-origin:left center;white-space:nowrap}
+color:var(--sup2);transform:rotate(-34deg);transform-origin:left center;white-space:nowrap;
+background:var(--plate);padding:2px 7px;border-radius:20px;z-index:3}
 .dot{position:absolute;transform:translate(-50%,50%);background:none;border:0;padding:0;cursor:pointer;
 width:56px;height:56px;border-radius:50%;transition:transform .4s var(--ease)}
 .dot img{width:56px;height:56px;border-radius:50%;border:3px solid var(--navy);background:#fff}
@@ -140,7 +146,11 @@ font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--sup);p
 .dot:hover .dlab,.dot[aria-expanded="true"] .dlab{color:var(--cobalt)}
 .ownmark{position:absolute;width:22px;height:22px;transform:translate(-50%,50%);border:3px solid var(--navy);background:#fff}
 .ownlab{position:absolute;transform:translate(-100%,50%);padding-right:20px;white-space:nowrap;font-size:10.5px;
-font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--sup)}
+font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--sup);z-index:2}
+/* Axis ticks sit above dot labels when they must share space (Kingshot: "1K" under the studio
+   label). The tick is the one that has to stay readable - a label you can read but cannot
+   scale against is worse than a slightly covered name. */
+.gx i,.gy i{z-index:4;background:var(--plate);padding:1px 4px;border-radius:20px}
 .axl{display:flex;justify-content:space-between;gap:20px;margin-top:34px;font-size:11px;font-weight:700;
 letter-spacing:.08em;text-transform:uppercase;color:var(--sup2)}
 .swipe{display:none;font-size:11px;font-weight:700;letter-spacing:.1em;color:var(--sup2);margin-top:10px}
