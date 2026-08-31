@@ -99,16 +99,31 @@ text-transform:uppercase;color:var(--sup2);line-height:1.5}
 .tiles a{border-bottom:none} .tiles a:hover b{color:var(--cobalt)}
 /* ---- 02 scatter ---- */
 .plotwrap{position:relative}
-.plotscroll{overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;scrollbar-width:thin;padding:6px 30px 34px 54px}
+/* Label gutters. A creator name is arbitrarily long ("KATIETHETRAINSTATIONFANGAMER105")
+   and .dlab is nowrap, so a dot near either edge pushes its label past the scroll box and
+   gets sliced ("NATHAN TIBBS" shipped as "IATHAN TIBBS" on the live TrainStation 3 page).
+   The box scrolls horizontally, so wider side padding costs nothing but scroll length.
+   Bottom padding grows too, to seat the x-axis ticks below the dot-label band (see .gx i). */
+.plotscroll{overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;scrollbar-width:thin;padding:6px 96px 78px 118px}
 .plot{position:relative;height:clamp(380px,42vw,540px);background:var(--plate);border-radius:25px;
 margin:6px 0 0;padding:0}
 .gx{position:absolute;top:0;bottom:0;width:1px;background:rgba(0,15,65,.09)}
 .gx i,.gy i{position:absolute;font-style:normal;font-size:11px;font-weight:700;letter-spacing:.06em;color:var(--sup2)}
-.gx i{bottom:-24px;left:0;transform:translateX(-50%)}
+/* -46px clears a .lab-down dot label sitting at the plot floor; at the old -24px the axis
+   ticks landed inside that band ("JUSTIN MCGOVERN" over "1", "MATRIARCOS G" over "100"). */
+.gx i{bottom:-66px;left:0;transform:translateX(-50%)}
 .gy{position:absolute;left:0;right:0;height:1px;background:rgba(0,15,65,.09)}
-.gy i{left:-8px;top:-7px;transform:translateX(-100%)}
+/* -62px, not -14px: a dot sitting at the chart origin (left:0%) centres a nowrap label that
+   reaches ~53px left of the plot edge, straight through the y-axis tick gutter. Seating the
+   ticks beyond that reach clears it for any creator who lands on the axis. */
+.gy i{left:-62px;top:-7px;transform:translateX(-100%)}
+/* Plate-coloured halo on every chart annotation. Dot positions come from the data, so no
+   amount of hand-placing guarantees a clear spot on the NEXT game — the halo keeps ticks and
+   the diagonal legible wherever a creator happens to land. Cheap, and data-independent. */
+.gx i,.gy i,.diaglab,.ownlab{text-shadow:0 0 4px var(--plate),0 0 4px var(--plate),0 0 4px var(--plate),0 0 8px var(--plate)}
+.gx i,.gy i{z-index:1}
 .diag{position:absolute;inset:0;width:100%;height:100%}
-.diaglab{position:absolute;left:46%;bottom:47%;font-size:11px;font-weight:700;letter-spacing:.04em;
+.diaglab{position:absolute;left:58%;bottom:59%;font-size:11px;font-weight:700;letter-spacing:.04em;
 color:var(--sup2);transform:rotate(-34deg);transform-origin:left center;white-space:nowrap}
 .dot{position:absolute;transform:translate(-50%,50%);background:none;border:0;padding:0;cursor:pointer;
 width:56px;height:56px;border-radius:50%;transition:transform .4s var(--ease)}
@@ -344,6 +359,10 @@ text-transform:uppercase;color:rgba(255,255,255,.85)}
  .gapstats{grid-template-columns:minmax(0,1fr)}
  .bkeys{grid-template-columns:repeat(2,minmax(0,1fr))}
  .plotscroll .plot{min-width:700px}
+ /* The studio's own label carries channel handle + best-video + view count on one nowrap line
+    (547px on TrainStation 3). On the 700px mobile plot that sweeps across half the chart and
+    crosses whatever creator labels sit in the way. Wrapping it costs two lines and no meaning. */
+ .ownlab{white-space:normal;max-width:230px;text-align:right;line-height:1.35}
  .swipe{display:block}
  .mos{aspect-ratio:322.2/390.4}
  .mtile{left:calc(var(--ml)*1%);top:calc(var(--mt)*1%);width:calc(var(--ms)*1%);height:calc(var(--msy)*1%)}
@@ -649,7 +668,7 @@ text-transform:uppercase;color:rgba(255,255,255,.85)}
 </div>
 <div class="pitch">
 <div class="cta-var cta-v1"><h2>Let&rsquo;s get Kingshot in the game.</h2>
-</div>
+<p></p></div>
 <div class="cta-var cta-v2"><h2>5,018 uploads a week, by YouTube&rsquo;s count. Let&rsquo;s make some of them yours.</h2>
 <p>The eight creators who should be making them are listed above.</p></div>
 <div class="cta-var cta-v3"><h2>The roster is right there.</h2>
