@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>HubX (BestSelf) on YouTube: a coverage and creator audit</title>
+<meta name="description" content="Who is buying creator sponsorships in yoga, pilates and mindfulness practice apps on YouTube, and the creators HubX (BestSelf) should be working with. Built from public YouTube Data API reads, 2 September 2026."/>
+<meta name="robots" content="noindex, nofollow"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#000F41;--cobalt:#3562FF;--lime:#F2FF82;--white:#FFFFFF;--plate:#EDEDED;
+--ink:#000F41;--sup:#666666;--sup2:#666666;--hair:rgba(0,15,65,.14);--ease:cubic-bezier(.58,.21,.25,1)}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;max-width:100%;overflow-x:hidden}
+body{background:var(--navy);color:var(--ink);font-family:"DM Sans",Arial,Helvetica,sans-serif;
+font-size:17px;line-height:1.5;font-weight:500;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1400px;margin:0 auto;padding:0 14px}
+a{color:inherit;text-decoration:none;border-bottom:1px solid rgba(0,15,65,.28)}
+a:hover{color:var(--cobalt);border-bottom-color:var(--cobalt)}
+img{display:block;max-width:100%;height:auto}
+h1,h2,h3{margin:0;text-transform:uppercase;font-weight:600;letter-spacing:-.04em;line-height:.8}
+p{margin:0}
+button,summary{font:inherit;color:inherit}
+.num{font-weight:700;letter-spacing:-.05em;line-height:.76;font-feature-settings:"tnum" 1;font-variant-numeric:tabular-nums}
+.arw{width:1em;height:.62em;flex:0 0 auto;vertical-align:baseline;display:inline-block}
+/* ---- reveal ---- */
+.rv{opacity:0;transform:translateY(30px);transition:opacity .75s var(--ease) var(--d,0ms),transform .75s var(--ease) var(--d,0ms)}
+.rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}}
+/* ---- mast / foot pills ---- */
+.mast{padding-top:14px}
+.mast .grid,.foot .grid{display:flex;align-items:center;justify-content:space-between;gap:16px;
+background:var(--lime);border-radius:35px;padding:21px 40px;flex-wrap:wrap}
+.logo{border-bottom:none;display:block} .wordmark{width:92px;height:auto;display:block}
+.stamp,.foot span{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--navy)}
+/* ---- beats ---- */
+.beat{padding:0}
+.card{background:var(--white);border-radius:35px;margin:14px 0;padding:64px 60px;
+min-height:min(92vh,1000px);display:flex;flex-direction:column;justify-content:space-between;gap:40px}
+.beat-head{display:flex;align-items:flex-start;gap:22px;flex-wrap:wrap}
+.snum{font-size:12px;font-weight:700;letter-spacing:.14em;color:var(--cobalt);padding-top:.5em}
+.beat-head h2{font-size:clamp(38px,6vw,90px);font-weight:600;line-height:.8;letter-spacing:-.04em;flex:1;min-width:min(100%,280px)}
+.lede{font-size:19px;color:var(--sup);max-width:56ch;margin-top:18px}
+/* ---- folio (running head) + FIG caption register: 12px w700 caps ---- */
+.folio{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;
+border-top:1px solid var(--hair);padding-top:13px;margin-bottom:34px;
+font-size:12px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;line-height:1}
+.folio .fn{color:var(--cobalt)}
+.folio .fk{color:var(--ink)}
+.folio .fr{margin-left:auto;color:var(--sup2);text-align:right}
+.gapbeat .folio{border-top-color:rgba(255,255,255,.34)}
+.gapbeat .folio .fn{color:var(--lime)}
+.gapbeat .folio .fk{color:#fff}
+.gapbeat .folio .fr{color:rgba(255,255,255,.66)}
+.cap{font-size:12.5px;color:var(--sup2);max-width:88ch;line-height:1.5}
+.cap a{border-bottom-color:rgba(0,15,65,.2)}
+.fig{display:inline-block;margin-right:9px;font-size:11px;font-weight:700;letter-spacing:.13em;
+text-transform:uppercase;color:var(--cobalt)}
+.gapbeat .cap{color:rgba(255,255,255,.72);max-width:78ch}
+.gapbeat .cap a{color:#fff;border-bottom-color:rgba(255,255,255,.4)}
+.gapbeat .cap a:hover{color:var(--lime);border-bottom-color:var(--lime)}
+.gapbeat .fig{color:var(--lime)}
+/* ---- hero ---- */
+.hero{margin:14px 0 0;color:#fff}
+.stage{position:relative;border-radius:35px;overflow:hidden;background:#000F41;
+height:clamp(320px,40vh,540px);display:flex;align-items:flex-end}
+.stage picture,.stage img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.stage img{filter:saturate(.9);object-position:50% 26%}
+.veil{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,15,65,.74) 0%,rgba(0,15,65,.24) 30%,rgba(0,15,65,.58) 62%,rgba(0,15,65,.95) 100%)}
+.stage-in{position:relative;padding:40px;width:100%}
+.kicker{position:absolute;top:40px;left:40px;right:40px;font-size:12px;font-weight:700;
+letter-spacing:.14em;text-transform:uppercase;color:var(--lime)}
+.stamp-num{font-size:clamp(58px,11.4vw,172px);color:var(--lime)}
+.stamp-lab{font-size:clamp(12px,1.1vw,15px);font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+color:#fff;margin-top:10px;max-width:44ch}
+h1{font-size:clamp(38px,6.6vw,96px);color:#fff;margin:28px 0 0}
+.hero-dek{margin-top:24px;font-size:19px;color:rgba(255,255,255,.74);max-width:52ch}
+.hero-src{margin-top:12px;font-size:12.5px;color:rgba(255,255,255,.55);max-width:70ch}
+.hero-src a{color:rgba(255,255,255,.8);border-bottom-color:rgba(255,255,255,.3)}
+.hero-src a:hover{color:var(--lime);border-bottom-color:var(--lime)}
+/* hero stat ledger: three findings, plain-language labels, on screen one */
+.finds{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin:24px 0 0;
+border-top:1px solid rgba(255,255,255,.32)}
+.find{padding:20px 30px 0 0;border-left:1px solid rgba(255,255,255,.18);padding-left:30px}
+.find:first-child{border-left:0;padding-left:0}
+.find .n{display:block;font-size:clamp(34px,3.9vw,56px);color:#fff}
+.find:first-child .n{color:var(--lime)}
+.find .l{display:block;margin-top:12px;font-size:12px;font-weight:700;letter-spacing:.08em;
+text-transform:uppercase;color:rgba(255,255,255,.72);line-height:1.4;max-width:26ch}
+/* ---- 01 volume ---- */
+.poster{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;padding:20px 0}
+.poster .num{font-size:clamp(110px,25vw,380px)}
+.poster .unit{font-size:clamp(26px,4.4vw,74px);font-weight:600;letter-spacing:-.04em;text-transform:uppercase;line-height:.9;margin-top:6px}
+.poster .sub{margin-top:26px;font-size:18px;color:var(--sup);max-width:52ch}
+.tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.tiles>div{background:var(--plate);border-radius:25px;padding:28px 26px}
+.tiles b{display:block;font-size:clamp(28px,3.2vw,48px);font-weight:700;letter-spacing:-.04em;line-height:1}
+.tiles span{display:block;margin-top:12px;font-size:11px;font-weight:700;letter-spacing:.08em;
+text-transform:uppercase;color:var(--sup2);line-height:1.5}
+.tiles a{border-bottom:none} .tiles a:hover b{color:var(--cobalt)}
+/* ---- 02 scatter ---- */
+.plotwrap{position:relative}
+/* Label gutters. A creator name is arbitrarily long ("KATIETHETRAINSTATIONFANGAMER105")
+   and .dlab is nowrap, so a dot near either edge pushes its label past the scroll box and
+   gets sliced ("NATHAN TIBBS" shipped as "IATHAN TIBBS" on the live TrainStation 3 page).
+   The box scrolls horizontally, so wider side padding costs nothing but scroll length.
+   Bottom padding grows too, to seat the x-axis ticks below the dot-label band (see .gx i). */
+.plotscroll{overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;scrollbar-width:thin;padding:6px 96px 78px 118px}
+.plot{position:relative;height:clamp(380px,42vw,540px);background:var(--plate);border-radius:25px;
+margin:6px 0 0;padding:0}
+.gx{position:absolute;top:0;bottom:0;width:1px;background:rgba(0,15,65,.09)}
+.gx i,.gy i{position:absolute;font-style:normal;font-size:11px;font-weight:700;letter-spacing:.06em;color:var(--sup2)}
+/* -46px clears a .lab-down dot label sitting at the plot floor; at the old -24px the axis
+   ticks landed inside that band ("JUSTIN MCGOVERN" over "1", "MATRIARCOS G" over "100"). */
+.gx i{bottom:-66px;left:0;transform:translateX(-50%)}
+.gy{position:absolute;left:0;right:0;height:1px;background:rgba(0,15,65,.09)}
+/* -62px, not -14px: a dot sitting at the chart origin (left:0%) centres a nowrap label that
+   reaches ~53px left of the plot edge, straight through the y-axis tick gutter. Seating the
+   ticks beyond that reach clears it for any creator who lands on the axis. */
+.gy i{left:-62px;top:-7px;transform:translateX(-100%)}
+/* Plate-coloured halo on every chart annotation. Dot positions come from the data, so no
+   amount of hand-placing guarantees a clear spot on the NEXT game — the halo keeps ticks and
+   the diagonal legible wherever a creator happens to land. Cheap, and data-independent. */
+.gx i,.gy i,.diaglab,.ownlab{text-shadow:0 0 4px var(--plate),0 0 4px var(--plate),0 0 4px var(--plate),0 0 8px var(--plate)}
+.gx i,.gy i{z-index:1}
+.diag{position:absolute;inset:0;width:100%;height:100%}
+/* Opaque chip, not just a halo. This is a reference-line label sitting at a fixed % on a plot
+   whose dots are placed by data: on TrainStation 3 the old 46/47 spot ran through the studio
+   mark, and moving it to 58/59 cleared that game while landing in Hello Neighbor's and Melon
+   Sandbox's clusters. No fixed coordinate is safe for every game, so instead of chasing one,
+   the label carries its own background and always reads on top of whatever it crosses. */
+.diaglab{position:absolute;left:58%;bottom:59%;font-size:11px;font-weight:700;letter-spacing:.04em;
+color:var(--sup2);transform:rotate(-34deg);transform-origin:left center;white-space:nowrap;
+background:var(--plate);padding:2px 7px;border-radius:20px;z-index:3}
+.dot{position:absolute;transform:translate(-50%,50%);background:none;border:0;padding:0;cursor:pointer;
+width:56px;height:56px;border-radius:50%;transition:transform .4s var(--ease)}
+.dot img{width:56px;height:56px;border-radius:50%;border:3px solid var(--navy);background:#fff}
+.dot-hot img{border-color:var(--cobalt);box-shadow:0 0 0 6px rgba(53,98,255,.18)}
+.dot:hover,.dot:focus-visible{transform:translate(-50%,50%) scale(1.12);outline:none;z-index:6}
+.dot[aria-expanded="true"] img{border-color:var(--cobalt)}
+.dot[aria-expanded="true"]{z-index:7}
+.dlab{position:absolute;left:50%;transform:translateX(-50%);white-space:nowrap;font-size:10.5px;
+font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--sup);pointer-events:none}
+.lab-down .dlab{top:60px} .lab-up .dlab{bottom:60px}
+.lab-left .dlab{right:62px;left:auto;transform:none;top:20px}
+.lab-right .dlab{left:62px;transform:none;top:20px}
+.dot:hover .dlab,.dot[aria-expanded="true"] .dlab{color:var(--cobalt)}
+.ownmark{position:absolute;width:22px;height:22px;transform:translate(-50%,50%);border:3px solid var(--navy);background:#fff}
+.ownlab{position:absolute;transform:translate(-100%,50%);padding-right:20px;white-space:nowrap;font-size:10.5px;
+font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--sup);z-index:2}
+/* Axis ticks sit above dot labels when they must share space (Kingshot: "1K" under the studio
+   label). The tick is the one that has to stay readable - a label you can read but cannot
+   scale against is worse than a slightly covered name. */
+.gx i,.gy i{z-index:4;background:var(--plate);padding:1px 4px;border-radius:20px}
+.axl{display:flex;justify-content:space-between;gap:20px;margin-top:34px;font-size:11px;font-weight:700;
+letter-spacing:.08em;text-transform:uppercase;color:var(--sup2)}
+.swipe{display:none;font-size:11px;font-weight:700;letter-spacing:.1em;color:var(--sup2);margin-top:10px}
+.chans{margin-top:8px}
+.chan{background:var(--plate);border-radius:25px;padding:30px 32px;margin-top:12px}
+.chan-hot{background:#EDEDED;outline:2px solid var(--cobalt);outline-offset:-2px}
+.chan-h{display:flex;gap:16px;align-items:center}
+.chan-h img{width:64px;height:64px;border-radius:50%}
+.chan-h>div:nth-child(2){flex:1;min-width:0}
+.chan h3{font-size:22px;font-weight:700;letter-spacing:-.02em;line-height:1.05;text-transform:none;overflow-wrap:anywhere}
+.meta{margin-top:5px;font-size:12.5px;color:var(--sup2);text-transform:none;font-weight:500}
+.chan-n{text-align:right;font-size:24px;font-weight:700;letter-spacing:-.03em;white-space:nowrap;line-height:1}
+.chan-n i{display:block;font-style:normal;font-size:10px;font-weight:700;letter-spacing:.06em;
+text-transform:uppercase;color:var(--sup2);margin-top:6px}
+.vrow{display:flex;gap:16px;justify-content:space-between;align-items:baseline;padding:12px 0;
+border-top:1px solid var(--hair);font-size:14.5px;margin-top:14px}
+.vrow+.vrow{margin-top:0}
+.vrow a{flex:1;min-width:0;overflow-wrap:anywhere;border-bottom:none;text-decoration:underline;text-decoration-color:rgba(0,15,65,.22);text-underline-offset:4px}
+.vrow a:hover{text-decoration-color:var(--cobalt)}
+.vnum{white-space:nowrap;font-weight:700;text-align:right}
+.vnum i{display:block;font-style:normal;font-size:11px;font-weight:500;color:var(--sup2);margin-top:3px}
+.chan-line{margin-top:16px;font-size:15px;line-height:1.5;color:var(--sup)}
+.chan footer{margin-top:18px;display:flex;flex-wrap:wrap;gap:8px}
+.tag{font-size:10.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--navy);
+background:var(--white);border:1px solid var(--hair);padding:9px 15px;border-radius:40px;white-space:nowrap}
+.tag-paid{background:var(--lime);border-color:var(--lime)}
+a.tag-acc{background:var(--cobalt);border-color:var(--cobalt);color:#fff;border-bottom:1px solid var(--cobalt)}
+a.tag-acc:hover{background:var(--navy);border-color:var(--navy);color:var(--lime)}
+.callout{background:var(--cobalt);color:#fff;border-radius:25px;padding:34px 36px;margin-top:12px}
+.callout b{display:block;font-size:clamp(20px,2.4vw,34px);font-weight:600;letter-spacing:-.03em;
+line-height:.95;text-transform:uppercase;max-width:24ch}
+.callout span{display:block;margin-top:14px;font-size:13px;color:rgba(255,255,255,.82);max-width:70ch}
+/* ---- 03 gap (full bleed cobalt) ---- */
+.gapbeat{background:var(--cobalt);color:#fff;margin:14px 0;padding:96px 0 88px}
+.gapbeat h2,.gapbeat h3{color:#fff}
+.gapbeat .snum{color:var(--lime)}
+/* head-to-head ledger, staged inside the cobalt scoreboard */
+.tape{margin-top:44px;background:rgba(255,255,255,.12);border-radius:25px;padding:28px 34px}
+.taperow{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,auto) minmax(0,1fr);gap:18px;
+align-items:center;padding:16px 0;border-bottom:1px solid rgba(255,255,255,.22)}
+.taperow:last-child{border-bottom:0;padding-bottom:0}
+.taphead{padding-top:2px}
+.taphead .side{display:flex;gap:14px;align-items:center;min-width:0}
+.taphead .side img{width:54px;height:54px;border-radius:50%;flex:0 0 auto;border:2px solid rgba(255,255,255,.55)}
+.taphead .side.r{flex-direction:row-reverse;text-align:right}
+.taphead b{display:block;font-size:16px;font-weight:700;letter-spacing:-.01em;text-transform:uppercase;
+line-height:1.05;overflow-wrap:anywhere}
+.taphead i{display:block;font-style:normal;margin-top:5px;font-size:10.5px;font-weight:700;
+letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.72)}
+.vs{font-size:12px;font-weight:700;letter-spacing:.16em;color:var(--lime);text-align:center}
+.taperow .a,.taperow .b{font-size:clamp(20px,2.5vw,34px);font-weight:700;letter-spacing:-.04em;line-height:.95;
+font-variant-numeric:tabular-nums}
+.taperow .b{text-align:right}
+.taperow .m{font-size:10.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+color:rgba(255,255,255,.8);text-align:center;white-space:nowrap}
+.tape a{color:#fff;border-bottom-color:rgba(255,255,255,.32)}
+.tape a:hover{color:var(--lime);border-bottom-color:var(--lime)}
+.board{margin-top:48px;display:flex;flex-direction:column;gap:26px}
+.brow{display:block}
+.blab{display:flex;justify-content:space-between;gap:20px;align-items:baseline;
+font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.78)}
+.bval{white-space:nowrap;color:#fff}
+.btrack{margin-top:12px;height:clamp(64px,7.6vw,108px);background:rgba(255,255,255,.14);border-radius:6px;
+display:flex;overflow:hidden}
+.bfill{width:0;transition:width 1.15s var(--ease) var(--d,0ms);position:relative;overflow:hidden;flex:0 0 auto}
+.in .bfill,.brow.in .bfill{width:var(--w)}
+@media (prefers-reduced-motion:reduce){.bfill{width:var(--w);transition:none}}
+.bfill-w{background:#fff}
+.inbar{position:absolute;left:0;top:0;bottom:0;width:13.2%;overflow:hidden;border-right:3px solid var(--lime)}
+.inbar picture,.inbar img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.bfill picture,.bfill img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.bfill-img{outline:2px solid var(--lime);outline-offset:-2px}
+.bfill-2{opacity:.82}
+.bnote{margin-top:10px;font-size:13px;color:rgba(255,255,255,.7);max-width:78ch}
+.bnote a{color:#fff;border-bottom-color:rgba(255,255,255,.4)}
+.bnote a:hover{color:var(--lime);border-bottom-color:var(--lime)}
+.gapchip{margin-top:52px;background:var(--lime);color:var(--navy);border-radius:35px;padding:44px 48px;
+display:flex;align-items:center;gap:40px;flex-wrap:wrap}
+.gapchip .n{font-size:clamp(58px,9vw,140px)}
+.gapchip p{flex:1;min-width:min(100%,280px);font-size:clamp(18px,2vw,28px);font-weight:600;
+letter-spacing:-.02em;line-height:1.05;text-transform:uppercase}
+.gapchip a{border-bottom-color:rgba(0,15,65,.35)}
+.gapstats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:12px}
+.gapstats div{background:rgba(255,255,255,.12);border-radius:25px;padding:26px}
+.gapstats b{display:block;font-size:clamp(24px,2.6vw,38px);font-weight:700;letter-spacing:-.04em;line-height:1}
+.gapstats span{display:block;margin-top:10px;font-size:11px;font-weight:700;letter-spacing:.08em;
+text-transform:uppercase;color:rgba(255,255,255,.7);line-height:1.5}
+.gapstats a{color:#fff;border-bottom-color:rgba(255,255,255,.4)}
+/* ---- 04 mosaic ---- */
+.split{display:flex;gap:48px;align-items:flex-start;flex-wrap:wrap}
+.split .poster{flex:0 0 auto;min-width:min(100%,360px)}
+.dual{display:flex;gap:56px;flex-wrap:wrap;align-items:flex-end}
+.dual>div{min-width:min(100%,240px)}
+.dual .num{font-size:clamp(66px,11vw,168px)}
+.dual .l{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--sup2);margin-top:12px}
+/* view-proportional mosaic: every tile is a square, its AREA is that video's
+   share of the 141,851 sample views. 36 views renders at 36 views' worth of ink. */
+.mos{position:relative;width:100%;aspect-ratio:1248.5/571}
+.mtile{position:absolute;left:calc(var(--l)*1%);top:calc(var(--t)*1%);
+width:calc(var(--s)*1%);height:calc(var(--sy)*1%);
+border-radius:10px;overflow:hidden;border-bottom:none;background:var(--plate);display:block}
+.mtile picture,.mtile img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.tvz{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,15,65,.02) 38%,rgba(0,15,65,.86))}
+.mtile img{transition:transform .6s var(--ease)}
+.mtile:hover img{transform:scale(1.05)}
+.mtile:hover{outline:2px solid var(--cobalt);outline-offset:2px}
+.mtile .tv{position:absolute;left:12px;right:10px;bottom:24px;font-size:14px;font-weight:700;
+letter-spacing:-.03em;color:#fff;line-height:1;font-variant-numeric:tabular-nums}
+.mtile .tc{position:absolute;left:12px;bottom:10px;right:10px;font-size:9.5px;font-weight:700;letter-spacing:.07em;
+text-transform:uppercase;color:rgba(255,255,255,.7);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.g1{border-radius:18px}
+.g1 .tv{font-size:clamp(22px,2.7vw,42px);bottom:32px;letter-spacing:-.045em}
+.g1 .tc{font-size:11px;bottom:14px}
+.g2 .tv{font-size:clamp(13px,1.5vw,21px);bottom:26px}
+.g3 .tv{font-size:clamp(11px,1.05vw,15px);bottom:22px}
+.g3 .tc{font-size:9px;bottom:8px}
+.g4 .tv,.g4 .tc{display:none}
+.g4{border-radius:6px}
+.bbar{display:flex;height:56px;border-radius:12px;overflow:hidden;margin-top:12px;background:var(--plate)}
+.seg{width:0;transition:width 1s var(--ease)} .bbar.in .seg{width:var(--w)}
+@media (prefers-reduced-motion:reduce){.seg{width:var(--w);transition:none}}
+.b1{background:var(--cobalt)} .b2{background:var(--navy)} .b3{background:#F2FF82}
+.b4{background:#666666} .b5{background:#EDEDED}
+.bkeys{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin-top:14px}
+.bk i{display:block;width:24px;height:6px;border-radius:3px}
+/* b5 swatch is #EDEDED on a light plate: hairline keeps the key readable */
+.bk i.b5{box-shadow:inset 0 0 0 1px #666666}
+.bk b{display:block;margin-top:10px;font-size:13.5px;font-weight:700}
+.bk span{display:block;margin-top:3px;font-size:12px;color:var(--sup2)}
+details.all{margin-top:34px;border-top:1px solid var(--hair)}
+details.all>summary{cursor:pointer;list-style:none;padding:22px 0 0;font-size:12px;font-weight:700;
+letter-spacing:.12em;text-transform:uppercase;color:var(--cobalt)}
+details.all>summary::-webkit-details-marker{display:none}
+details.all>summary::after{content:" +"} details.all[open]>summary::after{content:" \2212"}
+table{width:100%;border-collapse:collapse;margin-top:20px;font-size:14.5px;table-layout:fixed}
+th{text-align:left;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--sup2);
+font-weight:700;padding:0 12px 10px 0;border-bottom:1px solid var(--hair)}
+td{padding:12px 12px 12px 0;border-bottom:1px solid var(--hair);vertical-align:baseline}
+td a{overflow-wrap:anywhere}
+td.n{font-weight:700;white-space:nowrap} td.ch{color:var(--sup2);font-size:13.5px}
+td.dt{color:var(--sup2);font-size:13px;white-space:nowrap;text-align:right}
+/* ---- 05 roster ---- */
+.picks{display:flex;flex-direction:column}
+.pick{border-top:1px solid var(--hair)}
+.pick:last-child{border-bottom:1px solid var(--hair)}
+.pick>summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:26px;padding:26px 0;
+transition:background .35s var(--ease)}
+.pick>summary::-webkit-details-marker{display:none}
+.pick>summary:hover{background:var(--plate)}
+.pno{font-size:clamp(34px,4vw,58px);font-weight:700;letter-spacing:-.05em;line-height:.8;color:var(--cobalt);flex:0 0 auto}
+.pick img{width:64px;height:64px;border-radius:50%;flex:0 0 auto}
+.pid{flex:0 0 auto;width:min(30vw,250px)}
+.pid b{display:block;font-size:20px;font-weight:700;letter-spacing:-.02em;line-height:1.1;overflow-wrap:anywhere}
+.pid i{display:block;font-style:normal;margin-top:5px;font-size:11.5px;font-weight:700;letter-spacing:.06em;
+text-transform:uppercase;color:var(--sup2)}
+.pstat{display:block;font-style:normal;margin-top:6px;font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--cobalt)}
+.pbig{flex:0 0 auto;width:170px;font-size:clamp(30px,3.6vw,54px);font-weight:700;letter-spacing:-.04em;line-height:.85;text-align:right}
+.pbig-low{color:var(--sup2)}
+.pbig i{display:block;font-style:normal;font-size:10px;font-weight:700;letter-spacing:.08em;
+text-transform:uppercase;color:var(--sup2);margin-top:8px;text-align:right}
+.pline{flex:1;min-width:0;font-size:15px;color:var(--sup);line-height:1.4}
+.pmore{flex:0 0 auto;font-size:12px;font-weight:700;letter-spacing:.1em;color:var(--navy);
+background:var(--lime);border:1px solid var(--lime);border-radius:40px;padding:11px 20px;line-height:1;
+transition:background .3s var(--ease),border-color .3s var(--ease),color .3s var(--ease)}
+.pick[open] .pmore{background:var(--cobalt);border-color:var(--cobalt);color:#fff}
+.pbody{padding:6px 0 34px}
+.pstats{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.pstats>div{background:var(--plate);border-radius:20px;padding:20px 24px}
+.pstats b{display:block;font-size:26px;font-weight:700;letter-spacing:-.03em;line-height:1}
+.pstats span{display:block;margin-top:8px;font-size:10.5px;font-weight:700;letter-spacing:.08em;
+text-transform:uppercase;color:var(--sup2)}
+.pstats>div:last-child{background:none;padding:0}
+/* ---- close ---- */
+.close{background:var(--cobalt);border-radius:35px;margin:14px 0;padding:84px 60px;color:#fff;
+display:flex;gap:60px;align-items:center;flex-wrap:wrap}
+.close .who{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;gap:4px}
+.close .who img{width:236px;height:236px;border-radius:50%;border:6px solid var(--lime);margin-bottom:14px}
+.nm{font-size:15px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.rl{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.65)}
+.pitch{flex:1;min-width:min(100%,340px)}
+.cta-var{display:none}
+body.cta-1 .cta-v1,body.cta-2 .cta-v2,body.cta-3 .cta-v3{display:block}
+.close h2{color:#fff;font-size:clamp(34px,5.4vw,82px);max-width:15ch}
+.close p{margin-top:24px;font-size:19px;line-height:1.45;color:rgba(255,255,255,.92);max-width:46ch}
+.cta-btn{display:inline-block;margin-top:36px;background:var(--lime);color:var(--navy);font-weight:700;
+font-size:16px;letter-spacing:.03em;text-transform:uppercase;padding:28px 48px;border-radius:80px;
+border-bottom:none;transition:background .3s var(--ease),color .3s var(--ease)}
+.cta-btn:hover{background:#fff;color:var(--navy);border-bottom:none}
+.arch{margin-top:34px;font-size:12.5px;color:rgba(255,255,255,.6);max-width:60ch}
+.arch a{color:rgba(255,255,255,.85);border-bottom-color:rgba(255,255,255,.35)}
+/* ---- method + foot ---- */
+.how{margin:14px 0;background:rgba(255,255,255,.06);border-radius:25px;color:rgba(255,255,255,.62);font-size:12.5px}
+.how summary{cursor:pointer;padding:20px 32px;font-size:11px;font-weight:700;letter-spacing:.12em;
+text-transform:uppercase;color:rgba(255,255,255,.85)}
+.how .inner{padding:0 32px 26px}
+.how ul{margin:8px 0 0;padding-left:18px;line-height:1.6;overflow-wrap:anywhere}
+.how li{margin-bottom:8px}
+.how .caveat{margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,.14);color:rgba(255,255,255,.5)}
+.how a{color:#fff}
+.foot{margin:14px 0;padding-bottom:26px}
+/* ---- responsive ---- */
+@media (max-width:1100px){
+ .card{padding:52px 40px}
+ .pid{width:min(34vw,210px)} .pbig{width:130px} .pline{display:none}
+}
+@media (max-width:860px){
+ .card{padding:40px 26px;min-height:0;gap:34px;border-radius:28px}
+ .gapbeat{padding:64px 0 60px}
+ .finds{grid-template-columns:minmax(0,1fr)}
+ .find{display:flex;align-items:baseline;justify-content:space-between;gap:20px;
+  border-left:0;padding:16px 0;border-bottom:1px solid rgba(255,255,255,.18)}
+ .find:first-child{padding-left:0} .find:last-child{border-bottom:0}
+ .find .n{flex:0 0 auto;order:2;font-size:34px}
+ .find .l{margin-top:0;flex:1;max-width:none;line-height:1.35}
+ .tiles{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .gapstats{grid-template-columns:minmax(0,1fr)}
+ .bkeys{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .plotscroll .plot{min-width:700px}
+ /* The studio's own label carries channel handle + best-video + view count on one nowrap line
+    (547px on TrainStation 3). On the 700px mobile plot that sweeps across half the chart and
+    crosses whatever creator labels sit in the way. Wrapping it costs two lines and no meaning. */
+ .ownlab{white-space:normal;max-width:230px;text-align:right;line-height:1.35}
+ .swipe{display:block}
+ .mos{aspect-ratio:322.2/390.4}
+ .mtile{left:calc(var(--ml)*1%);top:calc(var(--mt)*1%);width:calc(var(--ms)*1%);height:calc(var(--msy)*1%)}
+ .g1 .tv{font-size:22px;bottom:26px} .g1 .tc{font-size:9.5px;bottom:10px}
+ .g2 .tv{font-size:12px;bottom:9px} .g2 .tc{display:none}
+ .g3 .tv,.g3 .tc{display:none}
+ /* roster: one grid at 390, the reach multiple never wraps */
+ .pick>summary{display:grid;grid-template-columns:auto 56px minmax(0,1fr);
+  grid-template-areas:"pno pav pid" "pbg pbg pbg";column-gap:14px;row-gap:12px;padding:22px 0;align-items:center}
+ .pno{grid-area:pno} .pick>summary>picture{grid-area:pav;display:block}
+ .pick img{width:56px;height:56px}
+ .pid{grid-area:pid;width:auto}
+ .pbig{grid-area:pbg;width:auto;display:flex;align-items:baseline;gap:12px;text-align:left;
+  border-top:1px solid var(--hair);padding-top:11px}
+ .pbig i{text-align:left;margin-top:0}
+ .pmore{display:none}
+ .taperow{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:4px 12px;padding:14px 0}
+ .taperow .m{grid-column:1/-1;order:-1;text-align:left;white-space:normal;margin-bottom:2px}
+ .taphead .vs{grid-column:1/-1;order:-1;text-align:left}
+ .taphead .side.r{flex-direction:row;text-align:left}
+ .taphead .side img{width:44px;height:44px}
+ .tape{padding:22px 20px}
+ .pstats>div{padding:16px 18px} .pstats b{font-size:20px}
+ .close{padding:48px 26px;gap:34px} .close .who{margin:0 auto}
+ .close .who img{width:168px;height:168px}
+ .mast .grid,.foot .grid{padding:16px 22px;border-radius:24px}
+ .stage{height:clamp(360px,58vh,520px)} .stage-in,.kicker{padding:24px}
+ .kicker{top:24px;left:24px;right:24px}
+ td.ch,td.dt{display:none}
+ .dual{gap:28px}
+}
+@media (max-width:560px){
+ body{font-size:16px} .wrap{padding:0 10px}
+ .card{padding:32px 20px} .how summary{padding:18px 22px} .how .inner{padding:0 22px 22px}
+ .chan{padding:24px 20px} .chan-h{flex-wrap:wrap} .chan-n{text-align:left}
+ .callout{padding:26px 22px} .gapchip{padding:30px 24px;gap:20px}
+ .axl{flex-direction:column;gap:6px}
+}
+</style>
+<noscript><style>.rv{opacity:1;transform:none}.bfill{width:var(--w)}.seg{width:var(--w)}</style></noscript>
+</head>
+<body class="cta-3">
+
+<div class="mast"><div class="wrap"><div class="grid">
+<a class="logo" href="https://arch.agency/"><svg class="wordmark" viewBox="0 0 83 22" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ARCH."><path d="M12.9221 21.6938H16.6558L8.3093 0L0 21.6938H3.75839L4.64875 19.2654L11.9792 19.268L12.9221 21.6938ZM5.78611 16.2115C6.62793 13.7814 7.46899 11.3512 8.31107 8.92062L10.8443 16.218C9.15867 16.2163 7.47251 16.2137 5.78636 16.2112L5.78611 16.2115ZM30.5568 21.6938H34.6761L29.0098 12.544C29.0098 12.544 32.8828 11.7136 33.4664 8.05251C33.4664 8.05251 34.9666 1.00467 26.6508 0.585655H19.6557V4.1403L22.9621 9.37225V9.39451H19.6557V21.6938H23.1532V12.9158H25.1538L25.1555 12.9193H25.1598L30.5568 21.69Z" fill="#000F41"/><path d="M23.1533 12.9154V21.6934H23.1651V12.9187H25.1556L25.1539 12.9154H23.1533ZM53.1342 5.87189L55.6028 3.39297C55.6028 3.39297 52.9616 0.29249 48.2774 0.282122C48.2774 0.282122 42.6322 -0.0516709 39.4643 4.8604C39.4643 4.8604 35.5148 11.0942 39.4643 17.3802C39.4643 17.3802 42.2084 21.9913 48.1074 21.9913C48.1074 21.9913 52.2488 22.315 55.6028 18.926L53.1136 16.4099C53.1136 16.4099 51.3552 18.4597 48.3453 18.4693C48.3453 18.4693 41.6228 18.6736 41.2959 11.3441C41.2959 11.3441 40.8635 3.63598 48.7105 3.84991C48.7098 3.84991 51.1716 3.86964 53.1342 5.87189ZM71.9986 0.585317V9.34764H63.3301V0.585317H59.8293V21.6934H63.3301V12.8717H71.9986V21.6934H75.4861V0.585317H71.9986ZM81.12 21.8909C82.1583 21.8909 83.0001 21.0403 83.0001 19.9906C83.0001 18.9412 82.1583 18.0905 81.12 18.0905C80.0818 18.0905 79.2402 18.9412 79.2402 19.9906C79.2402 21.04 80.0818 21.8909 81.12 21.8909Z" fill="#000F41"/></svg></a>
+<div class="stamp">Prepared for HubX (BestSelf) &middot; 2 September 2026</div>
+</div></div></div>
+
+<main>
+
+<!-- ======================= HERO ======================= -->
+<section class="beat hero"><div class="wrap">
+<div class="stage rv">
+<picture><source srcset="assets/thumbs/aGcwjh4kETQ.webp" type="image/webp"><img src="assets/thumbs/aGcwjh4kETQ.jpg" alt="Mady Morrison, 20 Min. Daily Yoga Stretch | Full Body Routine for All Levels" width="800" height="450" fetchpriority="high" sizes="100vw" class=""></picture>
+<div class="veil"></div>
+<div class="kicker">HubX (BestSelf) &middot; YouTube coverage &amp; creator audit</div>
+<div class="stage-in">
+<div class="stamp-num num" data-count="6360739">6,360,739</div>
+<div class="stamp-lab">Views on the 57 videos we sampled, last 180 days</div>
+</div>
+</div>
+<h1 class="rv">57 videos we sampled<br>in yoga, pilates and mindfulness practice apps, 180 days.<br>None of the five brands<br>we searched bought<br>a long-form placement in them.</h1>
+<div class="finds">
+<div class="find rv"><span class="n num" data-count="0">0</span><span class="l">of the five brands we searched are buying</span></div>
+<div class="find rv" style="--d:110ms"><span class="n num" data-count="0">0</span><span class="l">channels took one</span></div>
+</div>
+<p class="hero-src rv">Source: <a href="https://www.youtube.com/watch?v=aGcwjh4kETQ">Mady Morrison, 10 May 2026</a>.</p>
+</div></section>
+
+<!-- ======================= 01 VOLUME ======================= -->
+<section class="beat" id="volume"><div class="wrap"><div class="card">
+<div class="folio"><span class="fn">01</span><span class="fk">Sponsorship volume</span></div>
+<div class="beat-head"><span class="snum">01</span><h2>How thin<br>the buying is</h2></div>
+<div class="poster">
+<div class="num rv" data-count="0">0</div>
+<div class="unit rv" style="--d:80ms">disclosed long-form sponsorships in 180 days</div>
+<p class="sub rv" style="--d:160ms">Out of 57 videos we sampled across four searches, none carries a firm placement for one of the five brands we searched: the platform paid label, or a sponsor sentence. A further zero carry a creator code only, and zero carry the paid label and name none of the five brands we searched. HubX (BestSelf) is named in none of them.</p>
+</div>
+<div>
+<div class="tiles">
+<div class="rv"><a href="https://www.youtube.com/results?search_query=home+yoga+practice+for+beginners"><b class="num" data-count="60">60</b></a><span>read channels with a long-form upload in the window</span></div>
+<div class="rv" style="--d:80ms"><a href="https://www.youtube.com/results?search_query=home+yoga+practice+for+beginners"><b class="num" data-count="0">0</b></a><span>channels with a creator-code deal for a brand we searched</span></div>
+<div class="rv" style="--d:160ms"><a href="https://www.youtube.com/results?search_query=home+yoga+practice+for+beginners"><b class="num" data-count="2">2</b></a><span>channels dark over 90 days (no upload of any kind in the last 90 days of the window)</span></div>
+<div class="rv" style="--d:240ms"><a href="https://www.youtube.com/results?search_query=home+yoga+practice+for+beginners"><b class="num" data-count="10">10</b></a><span>channels with no long-form upload in the window</span></div>
+<div class="rv" style="--d:320ms"><a href="https://www.youtube.com/results?search_query=home+yoga+practice+for+beginners"><b class="num" data-count="15">15</b></a><span>measured channels under the reach floor</span></div>
+</div>
+<p class="cap" style="margin-top:22px">Sample: <a href="https://www.youtube.com/results?search_query=home+yoga+practice+for+beginners">57 videos, 26 channels, 6,360,739 views</a>, four queries, read through the YouTube Data API on 2 September 2026. Treat every count as a floor: each search returns at most 50 videos. Of the 111 long-form videos the searches returned inside the window, 54 are excluded (19 off the market language, 32 in the neighbouring category and 3 off category), which leaves the 57 sampled here.</p>
+</div>
+</div></div></section>
+
+<!-- ======================= 02 WHO ======================= -->
+<section class="beat" id="who"><div class="wrap"><div class="card">
+<div class="folio"><span class="fn">02</span><span class="fk">Who covers it today</span><span class="fr">Twenty-nine channels</span></div>
+<div class="beat-head"><span class="snum">02</span><h2>Who covers<br>it today</h2></div>
+<div>
+<p class="lede" style="margin-top:0">Above the dashed line, a typical upload out-reaches the subscriber count; tap a face for receipts.</p>
+<div class="plotwrap rv">
+<div class="plotscroll"><div class="plot"><span class="gx" style="left:0%"><i>10</i></span><span class="gx" style="left:14.29%"><i>100</i></span><span class="gx" style="left:28.57%"><i>1K</i></span><span class="gx" style="left:42.86%"><i>10K</i></span><span class="gx" style="left:57.14%"><i>100K</i></span><span class="gx" style="left:71.43%"><i>1M</i></span><span class="gx" style="left:85.71%"><i>10M</i></span><span class="gx" style="left:100%"><i>100M</i></span><span class="gy" style="bottom:0.00%"><i>10</i></span><span class="gy" style="bottom:20.00%"><i>100</i></span><span class="gy" style="bottom:40.00%"><i>1K</i></span><span class="gy" style="bottom:60.00%"><i>10K</i></span><span class="gy" style="bottom:80.00%"><i>100K</i></span><span class="gy" style="bottom:100.00%"><i>1M</i></span><svg class="diag" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="100" x2="71.43" y2="0" stroke="#666666" stroke-width="1" stroke-dasharray="4 5" vector-effect="non-scaling-stroke" opacity=".55"/></svg><button class="dot lab-up" style="left:87.67%;bottom:89.61%" type="button" data-ch="yoga7" aria-expanded="false" aria-controls="ch-yoga7"><picture><source srcset="assets/avatars/yogawithadriene.webp" type="image/webp"><img src="assets/avatars/yogawithadriene.jpg" alt="Yoga With Adriene" width="64" height="64" loading="lazy" decoding="async"></picture><span class="dlab">Yoga With Adriene</span></button><button class="dot lab-up" style="left:51.79%;bottom:85.16%" type="button" data-ch="move" aria-expanded="false" aria-controls="ch-move"><picture><source srcset="assets/avatars/moveplaykidss.webp" type="image/webp"><img src="assets/avatars/moveplaykidss.jpg" alt="Move &amp; Play Kids" width="64" height="64" loading="lazy" decoding="async"></picture><span class="dlab">Move &amp; Play Kids</span></button><button class="dot lab-down" style="left:91.67%;bottom:82.71%" type="button" data-ch="chloe" aria-expanded="false" aria-controls="ch-chloe"><picture><source srcset="assets/avatars/chloeting.webp" type="image/webp"><img src="assets/avatars/chloeting.jpg" alt="Chloe Ting" width="64" height="64" loading="lazy" decoding="async"></picture><span class="dlab">Chloe Ting</span></button><button class="dot lab-up" style="left:73.69%;bottom:82.25%" type="button" data-ch="charlie" aria-expanded="false" aria-controls="ch-charlie"><picture><source srcset="assets/avatars/charliefollows.webp" type="image/webp"><img src="assets/avatars/charliefollows.jpg" alt="Charlie Follows" width="64" height="64" loading="lazy" decoding="async"></picture><span class="dlab">Charlie Follows</span></button><button class="dot lab-right" style="left:78.85%;bottom:81.53%" type="button" data-ch="yoga11" aria-expanded="false" aria-controls="ch-yoga11"><picture><source srcset="assets/avatars/yogawithkassandra.webp" type="image/webp"><img src="assets/avatars/yogawithkassandra.jpg" alt="Yoga with Kassandra" width="64" height="64" loading="lazy" decoding="async"></picture><span class="dlab">Yoga with Kassandra</span></button><button class="dot lab-down" style="left:78.82%;bottom:78.70%" type="button" data-ch="boho" aria-expanded="false" aria-controls="ch-boho"><picture><source srcset="assets/avatars/bohobeautiful.webp" type="image/webp"><img src="assets/avatars/bohobeautiful.jpg" alt="Boho Beautiful Yoga" width="64" height="64" loading="lazy" decoding="async"></picture><span class="dlab">Boho Beautiful Yoga</span></button><button class="dot lab-left" style="left:71.04%;bottom:76.67%" type="button" data-ch="matthew" aria-expanded="false" aria-controls="ch-matthew"><picture><source srcset="assets/avatars/matthewmoniz.webp" type="image/webp"><img src="assets/avatars/matthewmoniz.jpg" alt="Matthew Moniz" width="64" height="64" loading="lazy" decoding="async"></picture><span class="dlab">Matthew Moniz</span></button><button class="dot lab-left" style="left:65.63%;bottom:71.70%" type="button" data-ch="just" aria-expanded="false" aria-controls="ch-just"><picture><source srcset="assets/avatars/justjoshtech.webp" type="image/webp"><img src="assets/avatars/justjoshtech.jpg" alt="Just Josh" width="64" height="64" loading="lazy" decoding="async"></picture><span class="dlab">Just Josh</span></button><button class="dot lab-left" style="left:67.81%;bottom:70.08%" type="button" data-ch="travis" aria-expanded="false" aria-controls="ch-travis"><picture><source srcset="assets/avatars/traviseliotyoga.webp" type="image/webp"><img src="assets/avatars/traviseliotyoga.jpg" alt="Travis Eliot" width="64" height="64" loading="lazy" decoding="async"></picture><span class="dlab">Travis Eliot</span></button><button class="dot dot-hot lab-right" style="left:72.13%;bottom:69.91%" type="button" data-ch="yoga9" aria-expanded="false" aria-controls="ch-yoga9"><picture><source srcset="assets/avatars/yogawithbird.webp" type="image/webp"><img src="assets/avatars/yogawithbird.jpg" alt="Yoga With Bird" width="64" height="64" loading="lazy" decoding="async"></picture><span class="dlab">Yoga With Bird</span></button><button class="dot dot-hot lab-left" style="left:54.67%;bottom:63.18%" type="button" data-ch="anni" aria-expanded="false" aria-controls="ch-anni"><picture><source srcset="assets/avatars/anniyoga.webp" type="image/webp"><img src="assets/avatars/anniyoga.jpg" alt="ANNI YOGA" width="64" height="64" loading="lazy" decoding="async"></picture><span class="dlab">ANNI YOGA</span></button><button class="dot lab-right" style="left:67.54%;bottom:62.94%" type="button" data-ch="yoga12" aria-expanded="false" aria-controls="ch-yoga12"><picture><source srcset="assets/avatars/yogawithtim.webp" type="image/webp"><img src="assets/avatars/yogawithtim.jpg" alt="Yoga With Tim" width="64" height="64" loading="lazy" decoding="async"></picture><span class="dlab">Yoga With Tim</span></button><button class="dot dot-hot lab-up" style="left:55.27%;bottom:62.92%" type="button" data-ch="yoga5" aria-expanded="false" aria-controls="ch-yoga5"><picture><source srcset="assets/avatars/nancysidhuyoga.webp" type="image/webp"><img src="assets/avatars/nancysidhuyoga.jpg" alt="Yoga With Nancy" width="64" height="64" loading="lazy" decoding="async"></picture><span class="dlab">Yoga With Nancy</span></button><button class="dot lab-right" style="left:77.14%;bottom:61.65%" type="button" data-ch="pregnancy" aria-expanded="false" aria-controls="ch-pregnancy"><picture><source srcset="assets/avatars/pregnancyandpostpartumtv.webp" type="image/webp"><img src="assets/avatars/pregnancyandpostpartumtv.jpg" alt="Pregnancy and Postpartum TV" width="64" height="64" loading="lazy" decoding="async"></picture><span class="dlab">Pregnancy and Postpartum TV</span></button><button class="dot lab-right" style="left:62.65%;bottom:60.80%" type="button" data-ch="funny" aria-expanded="false" aria-controls="ch-funny"><picture><source srcset="assets/avatars/wearekidsru7401.webp" type="image/webp"><img src="assets/avatars/wearekidsru7401.jpg" alt="Funny We are Kids" width="64" height="64" loading="lazy" decoding="async"></picture><span class="dlab">Funny We are Kids</span></button><button class="dot lab-left" style="left:54.26%;bottom:59.97%" type="button" data-ch="yoga3" aria-expanded="false" aria-controls="ch-yoga3"><picture><source srcset="assets/avatars/ritajnajah.webp" type="image/webp"><img src="assets/avatars/ritajnajah.jpg" alt="Yoga Bliss" width="64" height="64" loading="lazy" decoding="async"></picture><span class="dlab">Yoga Bliss</span></button><button class="dot lab-down" style="left:69.54%;bottom:57.83%" type="button" data-ch="cancer" aria-expanded="false" aria-controls="ch-cancer"><picture><source srcset="assets/avatars/cancerrehabpt.webp" type="image/webp"><img src="assets/avatars/cancerrehabpt.jpg" alt="Cancer Rehab PT" width="64" height="64" loading="lazy" decoding="async"></picture><span class="dlab">Cancer Rehab PT</span></button><button class="dot lab-up" style="left:60.17%;bottom:56.30%" type="button" data-ch="one" aria-expanded="false" aria-controls="ch-one"><picture><source srcset="assets/avatars/one-emoji123.webp" type="image/webp"><img src="assets/avatars/one-emoji123.jpg" alt="One emoji" width="64" height="64" loading="lazy" decoding="async"></picture><span class="dlab">One emoji</span></button><button class="dot lab-left" style="left:53.53%;bottom:53.76%" type="button" data-ch="rainbow" aria-expanded="false" aria-controls="ch-rainbow"><picture><source srcset="assets/avatars/rainbowkids-m3k.webp" type="image/webp"><img src="assets/avatars/rainbowkids-m3k.jpg" alt="Rainbow kids" width="64" height="64" loading="lazy" decoding="async"></picture><span class="dlab">Rainbow kids</span></button><button class="dot lab-down" style="left:58.17%;bottom:52.72%" type="button" data-ch="yoga8" aria-expanded="false" aria-controls="ch-yoga8"><picture><source srcset="assets/avatars/larissa-91.webp" type="image/webp"><img src="assets/avatars/larissa-91.jpg" alt="Yoga With Larissa" width="64" height="64" loading="lazy" decoding="async"></picture><span class="dlab">Yoga With Larissa</span></button><button class="dot lab-right" style="left:63.05%;bottom:52.72%" type="button" data-ch="sean" aria-expanded="false" aria-controls="ch-sean"><picture><source srcset="assets/avatars/seanviguefitness.webp" type="image/webp"><img src="assets/avatars/seanviguefitness.jpg" alt="Sean Vigue Fitness" width="64" height="64" loading="lazy" decoding="async"></picture><span class="dlab">Sean Vigue Fitness</span></button><button class="dot dot-hot lab-down" style="left:62.42%;bottom:52.16%" type="button" data-ch="black" aria-expanded="false" aria-controls="ch-black"><picture><source srcset="assets/avatars/yogawithnico.webp" type="image/webp"><img src="assets/avatars/yogawithnico.jpg" alt="Black Yogi Nico Marie" width="64" height="64" loading="lazy" decoding="async"></picture><span class="dlab">Black Yogi Nico Marie</span></button><button class="dot lab-left" style="left:51.79%;bottom:50.77%" type="button" data-ch="yogachild" aria-expanded="false" aria-controls="ch-yogachild"><picture><source srcset="assets/avatars/yogachildzen.webp" type="image/webp"><img src="assets/avatars/yogachildzen.jpg" alt="YOGACHiLD" width="64" height="64" loading="lazy" decoding="async"></picture><span class="dlab">YOGACHiLD</span></button><button class="dot dot-hot lab-up" style="left:41.79%;bottom:49.86%" type="button" data-ch="leah" aria-expanded="false" aria-controls="ch-leah"><picture><source srcset="assets/avatars/leahsugermanyoga.webp" type="image/webp"><img src="assets/avatars/leahsugermanyoga.jpg" alt="Leah Sugerman Yoga" width="64" height="64" loading="lazy" decoding="async"></picture><span class="dlab">Leah Sugerman Yoga</span></button><button class="dot lab-left" style="left:51.41%;bottom:43.32%" type="button" data-ch="sleepy" aria-expanded="false" aria-controls="ch-sleepy"><picture><source srcset="assets/avatars/sleepywonderland123.webp" type="image/webp"><img src="assets/avatars/sleepywonderland123.jpg" alt="Sleepy Wonderland" width="64" height="64" loading="lazy" decoding="async"></picture><span class="dlab">Sleepy Wonderland</span></button><button class="dot lab-down" style="left:47.06%;bottom:39.06%" type="button" data-ch="tiny" aria-expanded="false" aria-controls="ch-tiny"><picture><source srcset="assets/avatars/tinyrainbowyogakids.webp" type="image/webp"><img src="assets/avatars/tinyrainbowyogakids.jpg" alt="Tiny Rainbow Yoga Kids" width="64" height="64" loading="lazy" decoding="async"></picture><span class="dlab">Tiny Rainbow Yoga Kids</span></button><button class="dot lab-down" style="left:33.87%;bottom:38.39%" type="button" data-ch="little" aria-expanded="false" aria-controls="ch-little"><picture><source srcset="assets/avatars/littleyogges.webp" type="image/webp"><img src="assets/avatars/littleyogges.jpg" alt="Little Yogges" width="64" height="64" loading="lazy" decoding="async"></picture><span class="dlab">Little Yogges</span></button><button class="dot lab-up" style="left:20.87%;bottom:23.17%" type="button" data-ch="fun" aria-expanded="false" aria-controls="ch-fun"><picture><source srcset="assets/avatars/funflowkids.official.webp" type="image/webp"><img src="assets/avatars/funflowkids.official.jpg" alt="Fun Flow Kids" width="64" height="64" loading="lazy" decoding="async"></picture><span class="dlab">Fun Flow Kids</span></button><button class="dot lab-down" style="left:13.13%;bottom:20.91%" type="button" data-ch="fit" aria-expanded="false" aria-controls="ch-fit"><picture><source srcset="assets/avatars/fitwithainee.webp" type="image/webp"><img src="assets/avatars/fitwithainee.jpg" alt="Fit with Ainee" width="64" height="64" loading="lazy" decoding="async"></picture><span class="dlab">Fit with Ainee</span></button><span class="ownmark" style="left:47%;bottom:0%" aria-hidden="true"></span><span class="ownlab" style="left:47%;bottom:0%">HubX (BestSelf) &middot; no channel read in this sweep &middot; below this chart</span><span class="diaglab">one median view per subscriber</span></div></div>
+<div class="axl"><span>subscribers <svg class="arw" viewBox="0 0 20 12" fill="none" aria-hidden="true"><path d="M0 6h17M12.5 1L18 6l-5.5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="square"/></svg></span><span>vertical: median views, long-form uploads, last 180 days</span></div>
+<p class="swipe">SWIPE THE CHART <svg class="arw" viewBox="0 0 20 12" fill="none" aria-hidden="true"><path d="M0 6h17M12.5 1L18 6l-5.5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="square"/></svg></p>
+<p class="cap" style="margin-top:16px">Source: channel and video pages read through the YouTube Data API. Both axes log. Three tests decide what is plotted: the channel passes this page&rsquo;s English-speaking markets (United States, United Kingdom, Australia, Canada) rule, it shows a subscriber count, and it published at least five long-form uploads in the window. 29 channels we read meet all three and every one of them is a dot, so no channel that meets them sits off this chart. Dots ringed in blue are the 5 on the roster; the 24 in navy are held out (Shorts-first, dark over 90 days, publishes a different category, publishes the neighbouring category, by its own channel description, publishes the neighbouring category, by its window titles, sells a competing product and under the reach floor), and section 05 counts each hold.</p>
+</div>
+<div class="chans" id="chans"><article class="chan chan-hot" id="ch-yoga7">
+<header class="chan-h"><picture><source srcset="assets/avatars/yogawithadriene.webp" type="image/webp"><img src="assets/avatars/yogawithadriene.jpg" alt="Yoga With Adriene" width="72" height="72" loading="lazy" decoding="async"></picture><div><h3>Yoga With Adriene</h3>
+<p class="meta"><a href="https://www.youtube.com/@yogawithadriene/about">@yogawithadriene</a> &middot; United States &middot; Tier A</p></div>
+<div class="chan-n">13.7M<i>subscribers</i></div></header>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=a-sZbOfau6c">Yoga for People Who Sit All Day</a><span class="vnum">410,814<i>7 Apr 2026</i></span></div><p class="chan-line">Its window uploads are titled around yoga, anxiety and grounded. Nothing in the five long-form uploads in its window carries a paid label or a sponsor disclosure for the five brands we searched. Median long-form upload 302,193 views, over the five it published in the window.</p><footer><span class="tag ">1,743,978,289 lifetime views</span><span class="tag ">no disclosed sponsorship for the five brands we searched</span><span class="tag ">held out of the roster: sells a competing product</span></footer></article><article class="chan" id="ch-move">
+<header class="chan-h"><picture><source srcset="assets/avatars/moveplaykidss.webp" type="image/webp"><img src="assets/avatars/moveplaykidss.jpg" alt="Move &amp; Play Kids" width="72" height="72" loading="lazy" decoding="async"></picture><div><h3>Move &amp; Play Kids</h3>
+<p class="meta"><a href="https://www.youtube.com/@moveplaykidss/about">@moveplaykidss</a> &middot; United States &middot; Tier A</p></div>
+<div class="chan-n">42.2K<i>subscribers</i></div></header>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=AtWGf2a2lMA">Yoga for Children | Yoga for Health | Yoga for Overthinking | Kids Yoga</a><span class="vnum">14,372,779<i>24 Mar 2026</i></span></div><p class="chan-line">Its window uploads are titled around yoga, kids and astronaut. Nothing in the six long-form uploads in its window carries a paid label or a sponsor disclosure for the five brands we searched. Median long-form upload 181,046 views, over the six we read inside the window (its 9 reads cover 174 of the 180 days).</p><footer><span class="tag ">23,154,544 lifetime views</span><span class="tag ">no disclosed sponsorship for the five brands we searched</span><span class="tag ">held out of the roster: dark over 90 days and publishes the neighbouring category, by its window titles</span></footer></article><article class="chan" id="ch-chloe">
+<header class="chan-h"><picture><source srcset="assets/avatars/chloeting.webp" type="image/webp"><img src="assets/avatars/chloeting.jpg" alt="Chloe Ting" width="72" height="72" loading="lazy" decoding="async"></picture><div><h3>Chloe Ting</h3>
+<p class="meta"><a href="https://www.youtube.com/@chloeting/about">@chloeting</a> &middot; United States &middot; Tier A</p></div>
+<div class="chan-n">26.1M<i>subscribers</i></div></header>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=mY7YTRGeoT0">5 Min Full Body Warm Up Exercises</a><span class="vnum">667,711<i>14 Jun 2026</i></span></div><p class="chan-line">Its window uploads are titled around workout, body and pilates. Nothing in the ten long-form uploads in its window carries a paid label or a sponsor disclosure for the five brands we searched. Median long-form upload 136,673 views, over the last ten in the window.</p><footer><span class="tag ">3,536,530,541 lifetime views</span><span class="tag ">no disclosed sponsorship for the five brands we searched</span><span class="tag ">held out of the roster: sells a competing product</span></footer></article><article class="chan" id="ch-charlie">
+<header class="chan-h"><picture><source srcset="assets/avatars/charliefollows.webp" type="image/webp"><img src="assets/avatars/charliefollows.jpg" alt="Charlie Follows" width="72" height="72" loading="lazy" decoding="async"></picture><div><h3>Charlie Follows</h3>
+<p class="meta"><a href="https://www.youtube.com/@charliefollows/about">@charliefollows</a> &middot; United Kingdom &middot; Tier A</p></div>
+<div class="chan-n">1.44M<i>subscribers</i></div></header>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=aYDt3PW7O8E">30 Min Full Body Yoga Flow | All Levels Vinyasa Yoga</a><span class="vnum">329,884<i>14 Jun 2026</i></span></div><p class="chan-line">Its window uploads are titled around yoga, body and flow. Nothing in the ten long-form uploads in its window carries a paid label or a sponsor disclosure for the five brands we searched. Median long-form upload 129,522 views, over the last ten in the window.</p><footer><span class="tag ">230,309,410 lifetime views</span><span class="tag ">no disclosed sponsorship for the five brands we searched</span><span class="tag ">held out of the roster: sells a competing product</span></footer></article><article class="chan" id="ch-yoga11">
+<header class="chan-h"><picture><source srcset="assets/avatars/yogawithkassandra.webp" type="image/webp"><img src="assets/avatars/yogawithkassandra.jpg" alt="Yoga with Kassandra" width="72" height="72" loading="lazy" decoding="async"></picture><div><h3>Yoga with Kassandra</h3>
+<p class="meta"><a href="https://www.youtube.com/@yogawithkassandra/about">@yogawithkassandra</a> &middot; Canada &middot; Tier A</p></div>
+<div class="chan-n">3.31M<i>subscribers</i></div></header>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=V5DjVzCCijI">15 Minute Full Body Stretch (DAILY FLEXIBILITY YOGA - NO PROPS)</a><span class="vnum">210,527<i>3 Aug 2026</i></span></div><p class="chan-line">Its window uploads are titled around yoga, stretch and body. Nothing in the ten long-form uploads in its window carries a paid label or a sponsor disclosure for the five brands we searched. Median long-form upload 119,230 views, over the last ten in the window.</p><footer><span class="tag ">443,261,805 lifetime views</span><span class="tag ">no disclosed sponsorship for the five brands we searched</span><span class="tag ">held out of the roster: sells a competing product</span></footer></article><article class="chan" id="ch-boho">
+<header class="chan-h"><picture><source srcset="assets/avatars/bohobeautiful.webp" type="image/webp"><img src="assets/avatars/bohobeautiful.jpg" alt="Boho Beautiful Yoga" width="72" height="72" loading="lazy" decoding="async"></picture><div><h3>Boho Beautiful Yoga</h3>
+<p class="meta"><a href="https://www.youtube.com/@bohobeautiful/about">@bohobeautiful</a> &middot; Canada &middot; Tier A</p></div>
+<div class="chan-n">3.29M<i>subscribers</i></div></header>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=ZrtiBtRQ2uc">30 Min Heart Opening Vinyasa Yoga | Full Body Flow For Strength + Flexibility</a><span class="vnum">138,973<i>13 Apr 2026</i></span></div><p class="chan-line">Its window uploads are titled around body, flow and yoga. Nothing in the ten long-form uploads in its window carries a paid label or a sponsor disclosure for the five brands we searched. Median long-form upload 86,102 views, over the last ten in the window.</p><footer><span class="tag ">559,323,903 lifetime views</span><span class="tag ">no disclosed sponsorship for the five brands we searched</span><span class="tag ">held out of the roster: sells a competing product</span></footer></article><article class="chan" id="ch-matthew">
+<header class="chan-h"><picture><source srcset="assets/avatars/matthewmoniz.webp" type="image/webp"><img src="assets/avatars/matthewmoniz.jpg" alt="Matthew Moniz" width="72" height="72" loading="lazy" decoding="async"></picture><div><h3>Matthew Moniz</h3>
+<p class="meta"><a href="https://www.youtube.com/@matthewmoniz/about">@matthewmoniz</a> &middot; Canada &middot; Tier A</p></div>
+<div class="chan-n">940K<i>subscribers</i></div></header>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=CkozJ6YOhKU">Pixel 11 Pro XL vs S26 Ultra: Same Price, Not Even Close!</a><span class="vnum">452,227<i>19 Aug 2026</i></span></div><p class="chan-line">Its window uploads are titled around fold, pixel and ultra. Four of the 22 long-form uploads in its window carry YouTube&rsquo;s paid-promotion label, none of them for the five brands we searched. Median long-form upload 68,186 views, over the last ten in the window.</p><footer><span class="tag ">423,250,336 lifetime views</span><span class="tag ">no disclosed sponsorship for the five brands we searched</span><span class="tag ">held out of the roster: Shorts-first and publishes a different category</span></footer></article><article class="chan" id="ch-just">
+<header class="chan-h"><picture><source srcset="assets/avatars/justjoshtech.webp" type="image/webp"><img src="assets/avatars/justjoshtech.jpg" alt="Just Josh" width="72" height="72" loading="lazy" decoding="async"></picture><div><h3>Just Josh</h3>
+<p class="meta"><a href="https://www.youtube.com/@justjoshtech/about">@justjoshtech</a> &middot; United States &middot; Tier B</p></div>
+<div class="chan-n">393K<i>subscribers</i></div></header>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=c-dgTi_g9eQ">The Best Gaming Laptops for Students (2026 Edition)</a><span class="vnum">90,002<i>16 Aug 2026</i></span></div><p class="chan-line">Its window uploads are titled around laptop, laptops and gaming. Two of the 40 long-form uploads in its window carry YouTube&rsquo;s paid-promotion label, none of them for the five brands we searched. Median long-form upload 38,477 views, over the last ten in the window.</p><footer><span class="tag ">75,335,622 lifetime views</span><span class="tag tag-paid">paid label on file</span><span class="tag ">held out of the roster: publishes a different category and publishes the neighbouring category, by its window titles</span></footer></article><article class="chan" id="ch-travis">
+<header class="chan-h"><picture><source srcset="assets/avatars/traviseliotyoga.webp" type="image/webp"><img src="assets/avatars/traviseliotyoga.jpg" alt="Travis Eliot" width="72" height="72" loading="lazy" decoding="async"></picture><div><h3>Travis Eliot</h3>
+<p class="meta"><a href="https://www.youtube.com/@traviseliotyoga/about">@traviseliotyoga</a> &middot; United States &middot; Tier B</p></div>
+<div class="chan-n">558K<i>subscribers</i></div></header>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=_3KXHPj4mbA">30 Min Full Body Yin Yoga | Deep Fascia Stretch</a><span class="vnum">50,014<i>25 Jul 2026</i></span></div><p class="chan-line">Its window uploads are titled around yoga, body and flow. Nothing in the seven long-form uploads in its window carries a paid label or a sponsor disclosure for the five brands we searched. Median long-form upload 31,900 views, over the seven we read inside the window (its 50 reads cover 48 of the 180 days).</p><footer><span class="tag ">62,381,343 lifetime views</span><span class="tag ">no disclosed sponsorship for the five brands we searched</span><span class="tag ">held out of the roster: Shorts-first and sells a competing product</span></footer></article><article class="chan" id="ch-yoga9">
+<header class="chan-h"><picture><source srcset="assets/avatars/yogawithbird.webp" type="image/webp"><img src="assets/avatars/yogawithbird.jpg" alt="Yoga With Bird" width="72" height="72" loading="lazy" decoding="async"></picture><div><h3>Yoga With Bird</h3>
+<p class="meta"><a href="https://www.youtube.com/@yogawithbird/about">@yogawithbird</a> &middot; Canada &middot; Tier B</p></div>
+<div class="chan-n">1.12M<i>subscribers</i></div></header>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=CG4y14fpCnQ">18 Min Yoga Full Body Stretch for Muscle Soreness</a><span class="vnum">68,027<i>13 Jul 2026</i></span></div><p class="chan-line">Its window uploads are titled around yoga, morning and stretch. Nothing in the ten long-form uploads in its window carries a paid label or a sponsor disclosure for the five brands we searched. Median long-form upload 31,302 views, over the last ten in the window.</p><footer><span class="tag ">128,466,562 lifetime views</span><span class="tag ">no disclosed sponsorship for the five brands we searched</span></footer></article><article class="chan" id="ch-anni">
+<header class="chan-h"><picture><source srcset="assets/avatars/anniyoga.webp" type="image/webp"><img src="assets/avatars/anniyoga.jpg" alt="ANNI YOGA" width="72" height="72" loading="lazy" decoding="async"></picture><div><h3>ANNI YOGA</h3>
+<p class="meta"><a href="https://www.youtube.com/@anniyoga/about">@anniyoga</a> &middot; United States &middot; Tier B</p></div>
+<div class="chan-n">67.1K<i>subscribers</i></div></header>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=uhP_yKEUK1Y">12 Min Morning Yoga for a Good Day | Full Body Yoga for All Levels</a><span class="vnum">186,889<i>14 Aug 2026</i></span></div><p class="chan-line">Its window uploads are titled around yoga, body and flow. Nothing in the ten long-form uploads in its window carries a paid label or a sponsor disclosure for the five brands we searched. Median long-form upload 14,420 views, over the last ten in the window.</p><footer><span class="tag ">2,740,130 lifetime views</span><span class="tag ">no disclosed sponsorship for the five brands we searched</span></footer></article><article class="chan" id="ch-yoga12">
+<header class="chan-h"><picture><source srcset="assets/avatars/yogawithtim.webp" type="image/webp"><img src="assets/avatars/yogawithtim.jpg" alt="Yoga With Tim" width="72" height="72" loading="lazy" decoding="async"></picture><div><h3>Yoga With Tim</h3>
+<p class="meta"><a href="https://www.youtube.com/@yogawithtim/about">@yogawithtim</a> &middot; United States &middot; Tier B</p></div>
+<div class="chan-n">534K<i>subscribers</i></div></header>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=ZIS6TE93rAg">10 Min Morning Yoga Mobility Routine (Do This Every Day)</a><span class="vnum">69,086<i>22 Jun 2026</i></span></div><p class="chan-line">Its window uploads are titled around yoga, body and flow. Nothing in the ten long-form uploads in its window carries a paid label or a sponsor disclosure for the five brands we searched. Median long-form upload 14,033 views, over the last ten in the window.</p><footer><span class="tag ">59,655,745 lifetime views</span><span class="tag ">no disclosed sponsorship for the five brands we searched</span><span class="tag ">held out of the roster: sells a competing product</span></footer></article><article class="chan" id="ch-yoga5">
+<header class="chan-h"><picture><source srcset="assets/avatars/nancysidhuyoga.webp" type="image/webp"><img src="assets/avatars/nancysidhuyoga.jpg" alt="Yoga With Nancy" width="72" height="72" loading="lazy" decoding="async"></picture><div><h3>Yoga With Nancy</h3>
+<p class="meta"><a href="https://www.youtube.com/@nancysidhuyoga/about">@nancysidhuyoga</a> &middot; Canada &middot; Tier B</p></div>
+<div class="chan-n">73.9K<i>subscribers</i></div></header>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=lncevkNS7EU">15 MIN MORNING YOGA STRETCH || Wake Up &amp; Feel Amazing - All Levels (Yoga With Nancy)</a><span class="vnum">23,954<i>13 Jul 2026</i></span></div><p class="chan-line">Its window uploads are titled around yoga, stretch and nancy. Nothing in the ten long-form uploads in its window carries a paid label or a sponsor disclosure for the five brands we searched. Median long-form upload 13,997 views, over the last ten in the window.</p><footer><span class="tag ">4,231,811 lifetime views</span><span class="tag ">no disclosed sponsorship for the five brands we searched</span></footer></article><article class="chan" id="ch-pregnancy">
+<header class="chan-h"><picture><source srcset="assets/avatars/pregnancyandpostpartumtv.webp" type="image/webp"><img src="assets/avatars/pregnancyandpostpartumtv.jpg" alt="Pregnancy and Postpartum TV" width="72" height="72" loading="lazy" decoding="async"></picture><div><h3>Pregnancy and Postpartum TV</h3>
+<p class="meta"><a href="https://www.youtube.com/@pregnancyandpostpartumtv/about">@pregnancyandpostpartumtv</a> &middot; Canada &middot; Tier B</p></div>
+<div class="chan-n">2.51M<i>subscribers</i></div></header>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=OLJlxxxxjAQ">15 MIN Stretch Routine to Reduce Risk of Tearing During Birth</a><span class="vnum">72,586<i>28 May 2026</i></span></div><p class="chan-line">Its window uploads are titled around workout, pilates and postpartum. Nothing in the nine long-form uploads in its window carries a paid label or a sponsor disclosure for the five brands we searched. Median long-form upload 12,092 views, over the nine we read inside the window (its 50 reads cover 111 of the 180 days).</p><footer><span class="tag ">868,649,968 lifetime views</span><span class="tag ">no disclosed sponsorship for the five brands we searched</span><span class="tag ">held out of the roster: Shorts-first and sells a competing product</span></footer></article><article class="chan" id="ch-funny">
+<header class="chan-h"><picture><source srcset="assets/avatars/wearekidsru7401.webp" type="image/webp"><img src="assets/avatars/wearekidsru7401.jpg" alt="Funny We are Kids" width="72" height="72" loading="lazy" decoding="async"></picture><div><h3>Funny We are Kids</h3>
+<p class="meta"><a href="https://www.youtube.com/@wearekidsru7401/about">@wearekidsru7401</a> &middot; United States &middot; Tier B</p></div>
+<div class="chan-n">243K<i>subscribers</i></div></header>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=0sD3cjDzBLo">Easy Partner Yoga Poses for Kids | Full Body Partner Yoga | Strength &amp; Flexibility</a><span class="vnum">130,576<i>7 Aug 2026</i></span></div><p class="chan-line">Its window uploads are titled around yoga, flexibility and spider. Nothing in the ten long-form uploads in its window carries a paid label or a sponsor disclosure for the five brands we searched. Median long-form upload 10,971 views, over the last ten in the window.</p><footer><span class="tag ">65,494,636 lifetime views</span><span class="tag ">no disclosed sponsorship for the five brands we searched</span><span class="tag ">held out of the roster: publishes the neighbouring category, by its window titles</span></footer></article><article class="chan" id="ch-yoga3">
+<header class="chan-h"><picture><source srcset="assets/avatars/ritajnajah.webp" type="image/webp"><img src="assets/avatars/ritajnajah.jpg" alt="Yoga Bliss" width="72" height="72" loading="lazy" decoding="async"></picture><div><h3>Yoga Bliss</h3>
+<p class="meta"><a href="https://www.youtube.com/@ritajnajah/about">@ritajnajah</a> &middot; United States &middot; Tier C</p></div>
+<div class="chan-n">62.8K<i>subscribers</i></div></header>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=Sju1_jVow9M">🩷 RUMI &amp; ZOEY Partner Yoga | Full Body Stretching, Relaxation &amp; Flexibility 🌈</a><span class="vnum">30,239<i>20 Aug 2026</i></span></div><p class="chan-line">Its window uploads are titled around yoga, partner and routine. Nothing in the ten long-form uploads in its window carries a paid label or a sponsor disclosure for the five brands we searched. Median long-form upload 9,966 views, over the last ten in the window.</p><footer><span class="tag ">28,362,431 lifetime views</span><span class="tag ">no disclosed sponsorship for the five brands we searched</span><span class="tag ">held out of the roster: publishes the neighbouring category, by its own channel description</span></footer></article><article class="chan" id="ch-cancer">
+<header class="chan-h"><picture><source srcset="assets/avatars/cancerrehabpt.webp" type="image/webp"><img src="assets/avatars/cancerrehabpt.jpg" alt="Cancer Rehab PT" width="72" height="72" loading="lazy" decoding="async"></picture><div><h3>Cancer Rehab PT</h3>
+<p class="meta"><a href="https://www.youtube.com/@cancerrehabpt/about">@cancerrehabpt</a> &middot; United States &middot; Tier C</p></div>
+<div class="chan-n">737K<i>subscribers</i></div></header>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=0pchKp-Iqp0">Traveling with Lymphedema: What to Do Before, During, and After</a><span class="vnum">44,689<i>7 Jul 2026</i></span></div><p class="chan-line">Its window uploads are titled around lymphedema, body and lymphatic. Two of the 19 long-form uploads in its window carry YouTube&rsquo;s paid-promotion label, none of them for the five brands we searched. Median long-form upload 7,792 views, over the last ten in the window.</p><footer><span class="tag ">63,054,549 lifetime views</span><span class="tag tag-paid">paid label on file</span><span class="tag ">held out of the roster: Shorts-first and publishes a different category</span></footer></article><article class="chan" id="ch-one">
+<header class="chan-h"><picture><source srcset="assets/avatars/one-emoji123.webp" type="image/webp"><img src="assets/avatars/one-emoji123.jpg" alt="One emoji" width="72" height="72" loading="lazy" decoding="async"></picture><div><h3>One emoji</h3>
+<p class="meta"><a href="https://www.youtube.com/@one-emoji123/about">@one-emoji123</a> &middot; United States &middot; Tier C</p></div>
+<div class="chan-n">163K<i>subscribers</i></div></header>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=dx4po_DkAxw">Great Full Body Partner Yoga for Kids | Kids Yoga for BetterYOGA Mobility</a><span class="vnum">36,470<i>4 Aug 2026</i></span></div><p class="chan-line">Its window uploads are titled around yoga, kids and partner. Nothing in the ten long-form uploads in its window carries a paid label or a sponsor disclosure for the five brands we searched. Median long-form upload 6,534 views, over the last ten in the window.</p><footer><span class="tag ">71,445,910 lifetime views</span><span class="tag ">no disclosed sponsorship for the five brands we searched</span><span class="tag ">held out of the roster: publishes the neighbouring category, by its window titles</span></footer></article><article class="chan" id="ch-rainbow">
+<header class="chan-h"><picture><source srcset="assets/avatars/rainbowkids-m3k.webp" type="image/webp"><img src="assets/avatars/rainbowkids-m3k.jpg" alt="Rainbow kids" width="72" height="72" loading="lazy" decoding="async"></picture><div><h3>Rainbow kids</h3>
+<p class="meta"><a href="https://www.youtube.com/@rainbowkids-m3k/about">@rainbowkids-m3k</a> &middot; English audio, no country set &middot; Tier C</p></div>
+<div class="chan-n">55.9K<i>subscribers</i></div></header>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=5IwvB48GopY">Yoga for Kids | 20 Easy Yoga Poses for Beginners | Fun &amp; Simple Kids Yoga #yogapose</a><span class="vnum">91,189<i>28 Aug 2026</i></span></div><p class="chan-line">Its window uploads are titled around yoga, kids and poses. Nothing in the ten long-form uploads in its window carries a paid label or a sponsor disclosure for the five brands we searched. Median long-form upload 4,874 views, over the last ten in the window.</p><footer><span class="tag ">24,880,401 lifetime views</span><span class="tag ">no disclosed sponsorship for the five brands we searched</span><span class="tag ">held out of the roster: Shorts-first and publishes the neighbouring category, by its window titles</span></footer></article><article class="chan" id="ch-yoga8">
+<header class="chan-h"><picture><source srcset="assets/avatars/larissa-91.webp" type="image/webp"><img src="assets/avatars/larissa-91.jpg" alt="Yoga With Larissa" width="72" height="72" loading="lazy" decoding="async"></picture><div><h3>Yoga With Larissa</h3>
+<p class="meta"><a href="https://www.youtube.com/@larissa-91/about">@larissa-91</a> &middot; United States &middot; Tier C</p></div>
+<div class="chan-n">118K<i>subscribers</i></div></header>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=IUpJloAPlwc">Partner Yoga Poses for Confidence ⭐| Partner Yoga for Kids ✨| Confidence-Building Yoga Flow 🌈</a><span class="vnum">63,874<i>19 Aug 2026</i></span></div><p class="chan-line">Its window uploads are titled around yoga, kids and confidence. Nothing in the ten long-form uploads in its window carries a paid label or a sponsor disclosure for the five brands we searched. Median long-form upload 4,326 views, over the last ten in the window.</p><footer><span class="tag ">32,000,297 lifetime views</span><span class="tag ">no disclosed sponsorship for the five brands we searched</span><span class="tag ">held out of the roster: publishes the neighbouring category, by its window titles</span></footer></article><article class="chan" id="ch-sean">
+<header class="chan-h"><picture><source srcset="assets/avatars/seanviguefitness.webp" type="image/webp"><img src="assets/avatars/seanviguefitness.jpg" alt="Sean Vigue Fitness" width="72" height="72" loading="lazy" decoding="async"></picture><div><h3>Sean Vigue Fitness</h3>
+<p class="meta"><a href="https://www.youtube.com/@seanviguefitness/about">@seanviguefitness</a> &middot; United States &middot; Tier C</p></div>
+<div class="chan-n">259K<i>subscribers</i></div></header>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=ytOYYfOyPuI">Stiff Body? FIX IT!🔥 | 10 Minute Morning Yoga &amp; Mobility Workout</a><span class="vnum">5,435<i>18 Aug 2026</i></span></div><p class="chan-line">Its window uploads are titled around morning, mobility and stiff. Nothing in the ten long-form uploads in its window carries a paid label or a sponsor disclosure for the five brands we searched. Median long-form upload 4,326 views, over the last ten in the window.</p><footer><span class="tag ">36,353,289 lifetime views</span><span class="tag ">no disclosed sponsorship for the five brands we searched</span><span class="tag ">held out of the roster: Shorts-first and sells a competing product</span></footer></article><article class="chan" id="ch-black">
+<header class="chan-h"><picture><source srcset="assets/avatars/yogawithnico.webp" type="image/webp"><img src="assets/avatars/yogawithnico.jpg" alt="Black Yogi Nico Marie" width="72" height="72" loading="lazy" decoding="async"></picture><div><h3>Black Yogi Nico Marie</h3>
+<p class="meta"><a href="https://www.youtube.com/@yogawithnico/about">@yogawithnico</a> &middot; United States &middot; Tier C</p></div>
+<div class="chan-n">234K<i>subscribers</i></div></header>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=jn5mL-1E9Nc">Grounding Root Chakra Activation Yoga | 10 Minutes</a><span class="vnum">21,459<i>17 Aug 2026</i></span></div><p class="chan-line">Its window uploads are titled around minutes, yoga and chakra. Nothing in the ten long-form uploads in its window carries a paid label or a sponsor disclosure for the five brands we searched. Median long-form upload 4,055 views, over the last ten in the window.</p><footer><span class="tag ">12,969,758 lifetime views</span><span class="tag ">no disclosed sponsorship for the five brands we searched</span></footer></article><article class="chan" id="ch-yogachild">
+<header class="chan-h"><picture><source srcset="assets/avatars/yogachildzen.webp" type="image/webp"><img src="assets/avatars/yogachildzen.jpg" alt="YOGACHiLD" width="72" height="72" loading="lazy" decoding="async"></picture><div><h3>YOGACHiLD</h3>
+<p class="meta"><a href="https://www.youtube.com/@yogachildzen/about">@yogachildzen</a> &middot; United States &middot; Tier C</p></div>
+<div class="chan-n">42.2K<i>subscribers</i></div></header>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=u9XqV_flpiw">Partner Yoga for Happy Moments | Yoga For Total Body Relaxation | Easy Yoga for Kids and Friends</a><span class="vnum">9,748<i>18 Aug 2026</i></span></div><p class="chan-line">Its window uploads are titled around yoga, kids and body. Nothing in the ten long-form uploads in its window carries a paid label or a sponsor disclosure for the five brands we searched. Median long-form upload 3,456 views, over the last ten in the window.</p><footer><span class="tag ">26,330,947 lifetime views</span><span class="tag ">no disclosed sponsorship for the five brands we searched</span><span class="tag ">held out of the roster: publishes the neighbouring category, by its window titles</span></footer></article><article class="chan" id="ch-leah">
+<header class="chan-h"><picture><source srcset="assets/avatars/leahsugermanyoga.webp" type="image/webp"><img src="assets/avatars/leahsugermanyoga.jpg" alt="Leah Sugerman Yoga" width="72" height="72" loading="lazy" decoding="async"></picture><div><h3>Leah Sugerman Yoga</h3>
+<p class="meta"><a href="https://www.youtube.com/@leahsugermanyoga/about">@leahsugermanyoga</a> &middot; United States &middot; Tier C</p></div>
+<div class="chan-n">8.42K<i>subscribers</i></div></header>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=NJyStWI_Tog">15 MINUTE GENTLE YOGA ROUTINE | No Talking, Full Body Yoga Stretch to Relax 🧘‍♀️</a><span class="vnum">5,078<i>28 Jun 2026</i></span></div><p class="chan-line">Its window uploads are titled around stretch, yoga and minute. Nothing in the ten long-form uploads in its window carries a paid label or a sponsor disclosure for the five brands we searched. Median long-form upload 3,111 views, over the last ten in the window.</p><footer><span class="tag ">794,104 lifetime views</span><span class="tag ">no disclosed sponsorship for the five brands we searched</span></footer></article><article class="chan" id="ch-sleepy">
+<header class="chan-h"><picture><source srcset="assets/avatars/sleepywonderland123.webp" type="image/webp"><img src="assets/avatars/sleepywonderland123.jpg" alt="Sleepy Wonderland" width="72" height="72" loading="lazy" decoding="async"></picture><div><h3>Sleepy Wonderland</h3>
+<p class="meta"><a href="https://www.youtube.com/@sleepywonderland123/about">@sleepywonderland123</a> &middot; United States</p></div>
+<div class="chan-n">39.7K<i>subscribers</i></div></header>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=WycZqapbuB4">YOGA FOR BALANCE | Yoga for Kids Health | Yoga Poses for Kids | Yoga for Children</a><span class="vnum">4,125<i>19 Jul 2026</i></span></div><p class="chan-line">Its window uploads are titled around yoga, kids and children. Nothing in the ten long-form uploads in its window carries a paid label or a sponsor disclosure for the five brands we searched. Median long-form upload 1,465 views, over the last ten in the window.</p><footer><span class="tag ">20,702,231 lifetime views</span><span class="tag ">no disclosed sponsorship for the five brands we searched</span><span class="tag ">held out of the roster: publishes the neighbouring category, by its window titles and under the reach floor</span></footer></article><article class="chan" id="ch-tiny">
+<header class="chan-h"><picture><source srcset="assets/avatars/tinyrainbowyogakids.webp" type="image/webp"><img src="assets/avatars/tinyrainbowyogakids.jpg" alt="Tiny Rainbow Yoga Kids" width="72" height="72" loading="lazy" decoding="async"></picture><div><h3>Tiny Rainbow Yoga Kids</h3>
+<p class="meta"><a href="https://www.youtube.com/@tinyrainbowyogakids/about">@tinyrainbowyogakids</a> &middot; United States</p></div>
+<div class="chan-n">19.7K<i>subscribers</i></div></header>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=nLjn9PAqu5I">🕷️Spider-Man Yoga For Flexibility #1 |🧘‍♀️Yoga For KIDS! |🌈K-POP Yoga for Kids! ❓Can You Do It?</a><span class="vnum">8,054<i>24 Aug 2026</i></span></div><p class="chan-line">Its window uploads are titled around yoga, kids and flexibility. Nothing in the ten long-form uploads in its window carries a paid label or a sponsor disclosure for the five brands we searched. Median long-form upload 897 views, over the last ten in the window.</p><footer><span class="tag ">4,090,417 lifetime views</span><span class="tag ">no disclosed sponsorship for the five brands we searched</span><span class="tag ">held out of the roster: publishes the neighbouring category, by its window titles and under the reach floor</span></footer></article><article class="chan" id="ch-little">
+<header class="chan-h"><picture><source srcset="assets/avatars/littleyogges.webp" type="image/webp"><img src="assets/avatars/littleyogges.jpg" alt="Little Yogges" width="72" height="72" loading="lazy" decoding="async"></picture><div><h3>Little Yogges</h3>
+<p class="meta"><a href="https://www.youtube.com/@littleyogges/about">@littleyogges</a> &middot; United States</p></div>
+<div class="chan-n">2.35K<i>subscribers</i></div></header>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=pGlW9ldIhLs">Morning Family Yoga for Kids with Lesya | Yoga For Flexibility | Exercise For Kids | Yoga For Health</a><span class="vnum">20,821<i>14 Aug 2026</i></span></div><p class="chan-line">Its window uploads are titled around yoga, kids and flexibility. Nothing in the ten long-form uploads in its window carries a paid label or a sponsor disclosure for the five brands we searched. Median long-form upload 831 views, over the last ten in the window.</p><footer><span class="tag ">1,341,038 lifetime views</span><span class="tag ">no disclosed sponsorship for the five brands we searched</span><span class="tag ">held out of the roster: publishes the neighbouring category, by its window titles and under the reach floor</span></footer></article><article class="chan" id="ch-fun">
+<header class="chan-h"><picture><source srcset="assets/avatars/funflowkids.official.webp" type="image/webp"><img src="assets/avatars/funflowkids.official.jpg" alt="Fun Flow Kids" width="72" height="72" loading="lazy" decoding="async"></picture><div><h3>Fun Flow Kids</h3>
+<p class="meta"><a href="https://www.youtube.com/@funflowkids.official/about">@funflowkids.official</a> &middot; United States</p></div>
+<div class="chan-n">289<i>subscribers</i></div></header>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=yEMTyKb-IIA">Fun Yoga Exercises for Kids | Move &amp; Stay Active#yogaforflexibility</a><span class="vnum">7,131<i>27 Aug 2026</i></span></div><p class="chan-line">Its window uploads are titled around kids, yoga and poses. Nothing in the ten long-form uploads in its window carries a paid label or a sponsor disclosure for the five brands we searched. Median long-form upload 144 views, over the last ten in the window.</p><footer><span class="tag ">151,627 lifetime views</span><span class="tag ">no disclosed sponsorship for the five brands we searched</span><span class="tag ">held out of the roster: publishes the neighbouring category, by its window titles and under the reach floor</span></footer></article><article class="chan" id="ch-fit">
+<header class="chan-h"><picture><source srcset="assets/avatars/fitwithainee.webp" type="image/webp"><img src="assets/avatars/fitwithainee.jpg" alt="Fit with Ainee" width="72" height="72" loading="lazy" decoding="async"></picture><div><h3>Fit with Ainee</h3>
+<p class="meta"><a href="https://www.youtube.com/@fitwithainee/about">@fitwithainee</a> &middot; English audio, no country set</p></div>
+<div class="chan-n">83<i>subscribers</i></div></header>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=dYuk5Smqtts">30 Day Yoga Challenge Day 2 | 12 Min Yoga For Belly Fat | Lose Belly Fat Fast</a><span class="vnum">345<i>21 Aug 2026</i></span></div><p class="chan-line">Its window uploads are titled around yoga, challenge and body. Nothing in the ten long-form uploads in its window carries a paid label or a sponsor disclosure for the five brands we searched. Median long-form upload 111 views, over the last ten in the window.</p><footer><span class="tag ">27,379 lifetime views</span><span class="tag ">no disclosed sponsorship for the five brands we searched</span><span class="tag ">held out of the roster: Shorts-first and under the reach floor</span></footer></article></div>
+<div class="callout rv"><b>No channel in this sweep has disclosed a sponsorship for the five brands we searched. Three of them carry the platform paid label for somebody, on 8 uploads between them.</b>
+<span>Of the 70 channels we read, 31 pass the region rule this page prints. Not one carries a disclosed placement for the five brands we searched.</span></div>
+</div>
+</div></div></section>
+
+<!-- ======================= 03 GAP ======================= -->
+<section class="beat gapbeat" id="gap"><div class="wrap">
+<div class="folio"><span class="fn">03</span><span class="fk">The gap</span><span class="fr">The competitor sponsorship map</span></div>
+<div class="beat-head"><span class="snum">03</span><h2>Nothing we read<br>in yoga, pilates and mindfulness practice apps<br>carries a deal<br>we searched for.</h2></div>
+
+<div class="tape rv">
+<div class="taperow taphead">
+<div class="side"><picture><source srcset="assets/avatars/plate-hubx.webp" type="image/webp"><img src="assets/avatars/plate-hubx.jpg" alt="HubX (BestSelf)" width="54" height="54" loading="lazy" decoding="async"></picture><div><b>HubX (BestSelf)</b><i>Disclosed deals in the window</i></div></div>
+<div class="vs">VS</div>
+<div class="side r"><picture><source srcset="assets/avatars/plate-field.webp" type="image/webp"><img src="assets/avatars/plate-field.jpg" alt="The category" width="54" height="54" loading="lazy" decoding="async"></picture><div><b>The category</b><i>Every brand we searched</i></div></div>
+</div>
+<div class="taperow"><span class="a">0</span><span class="m">Long-form sponsored videos, 180 days</span><span class="b">0</span></div>
+<div class="taperow"><span class="a">0</span><span class="m">Channels bought</span><span class="b">0</span></div>
+<div class="taperow"><span class="a">0</span><span class="m">Views on them</span><span class="b">0</span></div>
+<div class="taperow"><span class="a">none</span><span class="m">Most recent long-form</span><span class="b">none</span></div>
+</div>
+
+<div class="board">
+<div class="brow rv"><div class="blab"><span>Everything we sampled &middot; 57 videos</span><span class="bval">6,360,739 views</span></div>
+<div class="btrack"><span class="bfill bfill-w" style="--w:100%"><span class="inbar"><picture><source srcset="assets/thumbs/aGcwjh4kETQ.webp" type="image/webp"><img src="assets/thumbs/aGcwjh4kETQ.jpg" alt="20 Min. Daily Yoga Stretch | Full Body Routine for All Levels" width="800" height="450" loading="lazy" decoding="async" class=""></picture></span></span></div></div>
+
+<div class="brow rv"><div class="blab"><span>Videos carrying the platform paid label &middot; 0 videos</span><span class="bval">0 views</span></div>
+<div class="btrack"><span class="bfill bfill-2" style="--w:2.00%;--d:180ms"></span></div></div>
+
+<div class="brow rv"><div class="blab"><span>HubX (BestSelf) &middot; 0 long-form sponsored videos &middot; 0 creator-code deals on 0 channels</span><span class="bval">0 views &middot; 0.0%</span></div>
+<div class="btrack"><span class="bfill bfill-2" style="--w:0.00%;--d:280ms"></span></div>
+<p class="bnote">Nothing we read in the window carries a paid HubX (BestSelf) placement of five minutes or longer.</p></div>
+</div>
+<p class="cap" style="margin-top:20px">Sources: the 57 sampled videos, read through the YouTube Data API on 2 September 2026. 5 brands searched. Placements by brand, every brand we graded and its own count: Down Dog 0; Alo Moves 0; Asana Rebel 0; Glo 0 and Find What Feels Good 0.</p>
+
+<div class="gapchip rv"><span class="n num" data-count="57">57</span>
+<p>videos we sampled in yoga, pilates and mindfulness practice apps, and not one of them carries a disclosed deal for the five brands we searched.</p></div>
+
+<div class="gapstats">
+<div class="rv"><b>0 of 5</b><span>competitors we searched are buying</span></div>
+<div class="rv" style="--d:100ms"><b>0</b><span>videos carry a paid label credited to nobody</span></div>
+<div class="rv" style="--d:200ms"><b>57</b><span>videos in the sample, none of them bought</span></div>
+</div>
+</div></section>
+
+<!-- ======================= 04 SENTIMENT ======================= -->
+<section class="beat" id="sentiment"><div class="wrap"><div class="card">
+<div class="folio"><span class="fn">04</span><span class="fk">What the category publishes</span><span class="fr">5 March 2026 to 1 September 2026</span></div>
+<div class="beat-head"><span class="snum">04</span><h2>57 videos.<br>26 channels.<br>one format.</h2></div>
+<div class="dual">
+<div class="rv"><div class="num" data-count="0.0" data-dec="1" data-suffix="%">0.0%</div><div class="l">of the sample carries a disclosed deal</div></div>
+<div class="rv" style="--d:120ms"><div class="num" data-count="0.0" data-dec="1" data-suffix="%">0.0%</div><div class="l">of the sample carries the paid label</div></div>
+<p class="lede" style="margin-top:0;flex:1">None of the 57 sampled videos carry a disclosed deal for the five brands we searched.</p>
+</div>
+<div class="mos">
+<a class="mtile g1 rv" style="--l:0.000;--t:0.000;--s:23.607;--sy:51.618;--ml:0.000;--mt:0.000;--ms:40.283;--msy:33.246" href="https://www.youtube.com/watch?v=aGcwjh4kETQ"><picture><source srcset="assets/thumbs/aGcwjh4kETQ.webp" type="image/webp"><img src="assets/thumbs/aGcwjh4kETQ.jpg" alt="20 Min. Daily Yoga Stretch | Full Body Routine for All Levels" width="800" height="450" loading="lazy" decoding="async"></picture><span class="tvz"></span><span class="tv">755,241</span><span class="tc">Mady Morrison</span></a>
+<a class="mtile g2 rv" style="--l:24.407;--t:0.000;--s:19.494;--sy:42.625;--ml:41.083;--mt:0.000;--ms:33.265;--msy:27.454" href="https://www.youtube.com/watch?v=DJ4-cgGjn1s"><picture><source srcset="assets/thumbs/DJ4-cgGjn1s.webp" type="image/webp"><img src="assets/thumbs/DJ4-cgGjn1s.jpg" alt="Do this to BURN FAT | 20-Min Walking Challenge | Saurabh Bothra Yoga" width="800" height="450" loading="lazy" decoding="async"></picture><span class="tvz"></span><span class="tv">515,011</span><span class="tc">Saurabh Bothra</span></a>
+<a class="mtile g2 rv" style="--l:44.702;--t:0.000;--s:19.010;--sy:41.565;--ml:41.083;--mt:28.114;--ms:32.438;--msy:26.771" href="https://www.youtube.com/watch?v=c-CW45ulPvg"><picture><source srcset="assets/thumbs/c-CW45ulPvg.webp" type="image/webp"><img src="assets/thumbs/c-CW45ulPvg.jpg" alt="Body Pain Relief Yoga | 15 Min Daily Routine for Full Body | Saurabh Bothra Yoga" width="800" height="450" loading="lazy" decoding="async"></picture><span class="tvz"></span><span class="tv">489,711</span><span class="tc">Saurabh Bothra</span></a>
+<a class="mtile g2 rv" style="--l:64.511;--t:0.000;--s:15.991;--sy:34.964;--ml:0.000;--mt:33.906;--ms:27.286;--msy:22.519" href="https://www.youtube.com/watch?v=AkVJtluZLTo"><picture><source srcset="assets/thumbs/AkVJtluZLTo.webp" type="image/webp"><img src="assets/thumbs/AkVJtluZLTo.jpg" alt="20 Min Daily Yoga Flow | Everyday Full Body Yoga For All Levels" width="800" height="450" loading="lazy" decoding="async"></picture><span class="tvz"></span><span class="tv">346,514</span><span class="tc">Charlie Follows</span></a>
+<a class="mtile g3 rv" style="--l:81.302;--t:0.000;--s:14.564;--sy:31.845;--ml:75.148;--mt:0.000;--ms:24.852;--msy:20.511" href="https://www.youtube.com/watch?v=ICMf8_IAddU"><picture><source srcset="assets/thumbs/ICMf8_IAddU.webp" type="image/webp"><img src="assets/thumbs/ICMf8_IAddU.jpg" alt="30 Min Energising Morning Yoga Flow | Full Body for Yoga All Levels" width="800" height="450" loading="lazy" decoding="async"></picture><span class="tvz"></span><span class="tv">287,461</span><span class="tc">Charlie Follows</span></a>
+<a class="mtile g3 rv" style="--l:81.302;--t:33.595;--s:13.875;--sy:30.339;--ml:75.148;--mt:21.171;--ms:23.677;--msy:19.540" href="https://www.youtube.com/watch?v=iloGbSR30Jg"><picture><source srcset="assets/thumbs/iloGbSR30Jg.webp" type="image/webp"><img src="assets/thumbs/iloGbSR30Jg.jpg" alt="15 Min Daily Yoga Flow | Everyday Full Body Yoga For All Levels" width="800" height="450" loading="lazy" decoding="async"></picture><span class="tvz"></span><span class="tv">260,906</span><span class="tc">Charlie Follows</span></a>
+<a class="mtile g3 rv" style="--l:64.511;--t:36.713;--s:13.494;--sy:29.504;--ml:74.320;--mt:41.372;--ms:23.026;--msy:19.003" href="https://www.youtube.com/watch?v=4k6KvmqVMWw"><picture><source srcset="assets/thumbs/4k6KvmqVMWw.webp" type="image/webp"><img src="assets/thumbs/4k6KvmqVMWw.jpg" alt="20 Min Daily Yoga Flow | Everyday Full Body Yoga For All Levels" width="800" height="450" loading="lazy" decoding="async"></picture><span class="tvz"></span><span class="tv">246,754</span><span class="tc">Charlie Follows</span></a>
+<a class="mtile g3 rv" style="--l:44.702;--t:43.314;--s:13.244;--sy:28.959;--ml:28.086;--mt:55.545;--ms:22.600;--msy:18.652" href="https://www.youtube.com/watch?v=4Lq5Sf9FDpY"><picture><source srcset="assets/thumbs/4Lq5Sf9FDpY.webp" type="image/webp"><img src="assets/thumbs/4Lq5Sf9FDpY.jpg" alt="20 min Yoga for Flexibility &amp; Relaxation - Gentle Evening Stretch" width="800" height="450" loading="lazy" decoding="async"></picture><span class="tvz"></span><span class="tv">237,715</span><span class="tc">Yoga with Kassandra</span></a>
+<a class="mtile g3 rv" style="--l:24.407;--t:44.374;--s:13.048;--sy:28.530;--ml:51.486;--mt:55.545;--ms:22.265;--msy:18.376" href="https://www.youtube.com/watch?v=CBdpJUKeIYc"><picture><source srcset="assets/thumbs/CBdpJUKeIYc.webp" type="image/webp"><img src="assets/thumbs/CBdpJUKeIYc.jpg" alt="Rise and Shine - 10 Minute Morning Yoga Flow" width="800" height="450" loading="lazy" decoding="async"></picture><span class="tvz"></span><span class="tv">230,731</span><span class="tc">Yoga with Kassandra</span></a>
+<a class="mtile g3 rv" style="--l:0.000;--t:53.367;--s:12.785;--sy:27.955;--ml:0.000;--mt:57.085;--ms:21.816;--msy:18.005" href="https://www.youtube.com/watch?v=0iIEanNe8r8"><picture><source srcset="assets/thumbs/0iIEanNe8r8.webp" type="image/webp"><img src="assets/thumbs/0iIEanNe8r8.jpg" alt="30 Min Daily Yoga Flow | Every day Full Body Yoga All Levels" width="800" height="450" loading="lazy" decoding="async"></picture><span class="tvz"></span><span class="tv">221,514</span><span class="tc">Charlie Follows</span></a>
+<a class="mtile g3 rv" style="--l:78.805;--t:65.682;--s:12.464;--sy:27.253;--ml:74.551;--mt:61.035;--ms:21.268;--msy:17.553" href="https://www.youtube.com/watch?v=V5DjVzCCijI"><picture><source srcset="assets/thumbs/V5DjVzCCijI.webp" type="image/webp"><img src="assets/thumbs/V5DjVzCCijI.jpg" alt="15 Minute Full Body Stretch (DAILY FLEXIBILITY YOGA - NO PROPS)" width="800" height="450" loading="lazy" decoding="async"></picture><span class="tvz"></span><span class="tv">210,527</span><span class="tc">Yoga with Kassandra</span></a>
+<a class="mtile g3 rv" style="--l:58.746;--t:67.967;--s:12.462;--sy:27.249;--ml:51.486;--mt:74.581;--ms:21.266;--msy:17.551" href="https://www.youtube.com/watch?v=fUM0r-_zYKo"><picture><source srcset="assets/thumbs/fUM0r-_zYKo.webp" type="image/webp"><img src="assets/thumbs/fUM0r-_zYKo.jpg" alt="10 min Morning Yoga Energy Boost - TWIST &amp; STRETCH" width="800" height="450" loading="lazy" decoding="async"></picture><span class="tvz"></span><span class="tv">210,474</span><span class="tc">Yoga with Kassandra</span></a>
+<a class="mtile g3 rv" style="--l:38.256;--t:74.022;--s:11.743;--sy:25.677;--ml:22.616;--mt:74.857;--ms:20.039;--msy:16.538" href="https://www.youtube.com/watch?v=uhP_yKEUK1Y"><picture><source srcset="assets/thumbs/uhP_yKEUK1Y.webp" type="image/webp"><img src="assets/thumbs/uhP_yKEUK1Y.jpg" alt="12 Min Morning Yoga for a Good Day | Full Body Yoga for All Levels" width="800" height="450" loading="lazy" decoding="async"></picture><span class="tvz"></span><span class="tv">186,889</span><span class="tc">ANNI YOGA</span></a>
+<a class="mtile g3 rv" style="--l:13.585;--t:74.654;--s:11.592;--sy:25.346;--ml:0.000;--mt:75.751;--ms:19.780;--msy:16.325" href="https://www.youtube.com/watch?v=S6PQeVpmSfY"><picture><source srcset="assets/thumbs/S6PQeVpmSfY.webp" type="image/webp"><img src="assets/thumbs/S6PQeVpmSfY.jpg" alt="30 min Gentle Yoga for Flexibility &amp; Relaxation" width="800" height="450" loading="lazy" decoding="async"></picture><span class="tvz"></span><span class="tv">182,101</span><span class="tc">Yoga with Kassandra</span></a>
+</div>
+<p class="cap" style="margin-top:16px">Squares sized by share of the 4,381,549 views on the fourteen largest of the 57 sampled videos. Every tile is a square; its area is that video&rsquo;s share. The smallest square here holds 182,101.</p>
+<div>
+<div class="bbar rv"><span class="seg b5" style="--w:100.00%"></span></div><div class="bkeys"><div class="bk"><i class="b5"></i><b>Integrated read</b><span>57 videos &middot; 6,360,739 views</span></div></div>
+<p class="cap" style="margin-top:18px">All 57 sampled videos, classified by title. Every token is matched as a whole word, case-insensitively, on the title alone. Dedicated review if the title contains &lsquo;review&rsquo;, &lsquo;honest&rsquo;, &lsquo;worth it&rsquo; or &lsquo;vs&rsquo;; tutorial if it contains &lsquo;how to&rsquo;, &lsquo;guide&rsquo;, &lsquo;tutorial&rsquo;, &lsquo;tips&rsquo; or &lsquo;learn&rsquo;; roundup if it contains &lsquo;best&rsquo;, &lsquo;top&rsquo;, &lsquo;ranked&rsquo; or &lsquo;alternative&rsquo;; Short under 60 seconds; integrated read otherwise. Rules apply in that order.</p>
+<details class="all"><summary>See the largest 20</summary>
+<table><colgroup><col style="width:14%"><col style="width:49%"><col style="width:23%"><col style="width:14%"></colgroup><thead><tr><th>Views</th><th>Video</th><th>Channel</th><th>Posted</th></tr></thead><tbody><tr><td class="n">755,241</td><td><a href="https://www.youtube.com/watch?v=aGcwjh4kETQ">20 Min. Daily Yoga Stretch | Full Body Routine for All Levels</a></td><td class="ch">Mady Morrison</td><td class="dt">10 May 2026</td></tr><tr><td class="n">515,011</td><td><a href="https://www.youtube.com/watch?v=DJ4-cgGjn1s">Do this to BURN FAT | 20-Min Walking Challenge | Saurabh Bothra Yoga</a></td><td class="ch">Saurabh Bothra</td><td class="dt">29 Jul 2026</td></tr><tr><td class="n">489,711</td><td><a href="https://www.youtube.com/watch?v=c-CW45ulPvg">Body Pain Relief Yoga | 15 Min Daily Routine for Full Body | Saurabh Bothra Yoga</a></td><td class="ch">Saurabh Bothra</td><td class="dt">30 Apr 2026</td></tr><tr><td class="n">346,514</td><td><a href="https://www.youtube.com/watch?v=AkVJtluZLTo">20 Min Daily Yoga Flow | Everyday Full Body Yoga For All Levels</a></td><td class="ch">Charlie Follows</td><td class="dt">3 May 2026</td></tr><tr><td class="n">287,461</td><td><a href="https://www.youtube.com/watch?v=ICMf8_IAddU">30 Min Energising Morning Yoga Flow | Full Body for Yoga All Levels</a></td><td class="ch">Charlie Follows</td><td class="dt">12 Apr 2026</td></tr><tr><td class="n">260,906</td><td><a href="https://www.youtube.com/watch?v=iloGbSR30Jg">15 Min Daily Yoga Flow | Everyday Full Body Yoga For All Levels</a></td><td class="ch">Charlie Follows</td><td class="dt">8 Mar 2026</td></tr><tr><td class="n">246,754</td><td><a href="https://www.youtube.com/watch?v=4k6KvmqVMWw">20 Min Daily Yoga Flow | Everyday Full Body Yoga For All Levels</a></td><td class="ch">Charlie Follows</td><td class="dt">5 Apr 2026</td></tr><tr><td class="n">237,715</td><td><a href="https://www.youtube.com/watch?v=4Lq5Sf9FDpY">20 min Yoga for Flexibility &amp; Relaxation - Gentle Evening Stretch</a></td><td class="ch">Yoga with Kassandra</td><td class="dt">16 Mar 2026</td></tr><tr><td class="n">230,731</td><td><a href="https://www.youtube.com/watch?v=CBdpJUKeIYc">Rise and Shine - 10 Minute Morning Yoga Flow</a></td><td class="ch">Yoga with Kassandra</td><td class="dt">23 Mar 2026</td></tr><tr><td class="n">221,514</td><td><a href="https://www.youtube.com/watch?v=0iIEanNe8r8">30 Min Daily Yoga Flow | Every day Full Body Yoga All Levels</a></td><td class="ch">Charlie Follows</td><td class="dt">26 Apr 2026</td></tr><tr><td class="n">210,527</td><td><a href="https://www.youtube.com/watch?v=V5DjVzCCijI">15 Minute Full Body Stretch (DAILY FLEXIBILITY YOGA - NO PROPS)</a></td><td class="ch">Yoga with Kassandra</td><td class="dt">3 Aug 2026</td></tr><tr><td class="n">210,474</td><td><a href="https://www.youtube.com/watch?v=fUM0r-_zYKo">10 min Morning Yoga Energy Boost - TWIST &amp; STRETCH</a></td><td class="ch">Yoga with Kassandra</td><td class="dt">29 Jun 2026</td></tr><tr><td class="n">186,889</td><td><a href="https://www.youtube.com/watch?v=uhP_yKEUK1Y">12 Min Morning Yoga for a Good Day | Full Body Yoga for All Levels</a></td><td class="ch">ANNI YOGA</td><td class="dt">14 Aug 2026</td></tr><tr><td class="n">182,101</td><td><a href="https://www.youtube.com/watch?v=S6PQeVpmSfY">30 min Gentle Yoga for Flexibility &amp; Relaxation</a></td><td class="ch">Yoga with Kassandra</td><td class="dt">27 Apr 2026</td></tr><tr><td class="n">181,357</td><td><a href="https://www.youtube.com/watch?v=RIgB-LpWBKE">30 min Morning Yoga Flow - Stretch, Breathe &amp; Set Your Intention</a></td><td class="ch">Yoga with Kassandra</td><td class="dt">13 Jul 2026</td></tr><tr><td class="n">159,597</td><td><a href="https://www.youtube.com/watch?v=7BEhZLHfL2Q">10 Min Yoga Full Body Stretch | Post Workout For Rest &amp; Recovery</a></td><td class="ch">Charlie Follows</td><td class="dt">22 Mar 2026</td></tr><tr><td class="n">158,682</td><td><a href="https://www.youtube.com/watch?v=9MYGEt_JSdE">20 Min Daily Yoga Flow | Morning Workout Routine &amp; Flexibility</a></td><td class="ch">Chloe Ting</td><td class="dt">17 Mar 2026</td></tr><tr><td class="n">131,705</td><td><a href="https://www.youtube.com/watch?v=A83spinhZGs">20 min Vinyasa Yoga All Levels - Full Body Opening Flow</a></td><td class="ch">Yoga with Kassandra</td><td class="dt">20 Jul 2026</td></tr><tr><td class="n">127,434</td><td><a href="https://www.youtube.com/watch?v=SL00RJLLE_c">15 Min Energising Yoga Flow | Full Body Feel Good Yoga</a></td><td class="ch">Charlie Follows</td><td class="dt">19 Jul 2026</td></tr><tr><td class="n">123,255</td><td><a href="https://www.youtube.com/watch?v=8kgixgveYJE">5 Minute Everyday Yoga Flow | The Simple Routine To Stay Consistent</a></td><td class="ch">Charlie Follows</td><td class="dt">29 Mar 2026</td></tr></tbody></table>
+<p class="cap" style="margin-top:16px">The 57 sampled videos, largest first. Not one is a placement for the five brands we searched. The 20 largest are shown.</p>
+</details>
+</div>
+</div></div></section>
+
+<!-- ======================= 05 ROSTER ======================= -->
+<section class="beat" id="roster"><div class="wrap"><div class="card">
+<div class="folio"><span class="fn">05</span><span class="fk">The roster</span><span class="fr">Five picks, in order</span></div>
+<div class="beat-head"><span class="snum">05</span><h2>The roster</h2></div>
+<p class="lede" style="margin-top:0">In approach order. Reach multiple is the channel&rsquo;s best upload among its last ten long-form uploads inside the 180-day window, divided by the median of those ten.</p>
+<div class="picks"><details class="pick rv"><summary>
+<span class="pno">01</span><picture><source srcset="assets/avatars/yogawithbird.webp" type="image/webp"><img src="assets/avatars/yogawithbird.jpg" alt="Yoga With Bird" width="64" height="64" loading="lazy" decoding="async"></picture>
+<span class="pid"><b>Yoga With Bird</b><i>Canada &middot; Tier B</i><em class="pstat">NO SPONSOR SLOT WE SEARCHED FOR</em></span>
+<span class="pbig">2.2x<i>reach multiple</i></span>
+<span class="pline">No disclosed sponsorship or adjacent-brand promotion in the window, and no adjacent-brand link in the uploads we read.</span><span class="pmore" aria-hidden="true">RECEIPTS</span></summary>
+<div class="pbody"><div class="pstats"><div><b>1.12M</b><span>subscribers</span></div>
+<div><b>128,466,562</b><span>lifetime channel views</span></div>
+<div><a class="tag tag-acc" href="https://www.youtube.com/@yogawithbird/about">no disclosed sponsorship or adjacent-brand link in the uploads we read</a></div></div>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=CG4y14fpCnQ">18 Min Yoga Full Body Stretch for Muscle Soreness</a><span class="vnum">68,027<i>13 Jul 2026</i></span></div><p class="chan-line">Its window uploads are titled around yoga, morning and stretch. Nothing in the ten long-form uploads in its window carries a paid label or a sponsor disclosure for the five brands we searched. Median long-form upload 31,302 views, over the last ten in the window.</p></div></details><details class="pick rv"><summary>
+<span class="pno">02</span><picture><source srcset="assets/avatars/anniyoga.webp" type="image/webp"><img src="assets/avatars/anniyoga.jpg" alt="ANNI YOGA" width="64" height="64" loading="lazy" decoding="async"></picture>
+<span class="pid"><b>ANNI YOGA</b><i>United States &middot; Tier B</i><em class="pstat">NO SPONSOR SLOT WE SEARCHED FOR</em></span>
+<span class="pbig">13.0x<i>reach multiple</i></span>
+<span class="pline">No disclosed sponsorship or adjacent-brand promotion in the window, and no adjacent-brand link in the uploads we read.</span><span class="pmore" aria-hidden="true">RECEIPTS</span></summary>
+<div class="pbody"><div class="pstats"><div><b>67.1K</b><span>subscribers</span></div>
+<div><b>2,740,130</b><span>lifetime channel views</span></div>
+<div><a class="tag tag-acc" href="https://www.youtube.com/@anniyoga/about">no disclosed sponsorship or adjacent-brand link in the uploads we read</a></div></div>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=uhP_yKEUK1Y">12 Min Morning Yoga for a Good Day | Full Body Yoga for All Levels</a><span class="vnum">186,889<i>14 Aug 2026</i></span></div><p class="chan-line">Its window uploads are titled around yoga, body and flow. Nothing in the ten long-form uploads in its window carries a paid label or a sponsor disclosure for the five brands we searched. Median long-form upload 14,420 views, over the last ten in the window.</p></div></details><details class="pick rv"><summary>
+<span class="pno">03</span><picture><source srcset="assets/avatars/nancysidhuyoga.webp" type="image/webp"><img src="assets/avatars/nancysidhuyoga.jpg" alt="Yoga With Nancy" width="64" height="64" loading="lazy" decoding="async"></picture>
+<span class="pid"><b>Yoga With Nancy</b><i>Canada &middot; Tier B</i><em class="pstat">NO SPONSOR SLOT WE SEARCHED FOR</em></span>
+<span class="pbig">1.7x<i>reach multiple</i></span>
+<span class="pline">No disclosed sponsorship or adjacent-brand promotion in the window, and no adjacent-brand link in the uploads we read.</span><span class="pmore" aria-hidden="true">RECEIPTS</span></summary>
+<div class="pbody"><div class="pstats"><div><b>73.9K</b><span>subscribers</span></div>
+<div><b>4,231,811</b><span>lifetime channel views</span></div>
+<div><a class="tag tag-acc" href="https://www.youtube.com/@nancysidhuyoga/about">no disclosed sponsorship or adjacent-brand link in the uploads we read</a></div></div>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=lncevkNS7EU">15 MIN MORNING YOGA STRETCH || Wake Up &amp; Feel Amazing - All Levels (Yoga With Nancy)</a><span class="vnum">23,954<i>13 Jul 2026</i></span></div><p class="chan-line">Its window uploads are titled around yoga, stretch and nancy. Nothing in the ten long-form uploads in its window carries a paid label or a sponsor disclosure for the five brands we searched. Median long-form upload 13,997 views, over the last ten in the window.</p></div></details><details class="pick rv"><summary>
+<span class="pno">04</span><picture><source srcset="assets/avatars/yogawithnico.webp" type="image/webp"><img src="assets/avatars/yogawithnico.jpg" alt="Black Yogi Nico Marie" width="64" height="64" loading="lazy" decoding="async"></picture>
+<span class="pid"><b>Black Yogi Nico Marie</b><i>United States &middot; Tier C</i><em class="pstat">CARRIES LINKS TO INSIGHT TIMER</em></span>
+<span class="pbig">5.3x<i>reach multiple</i></span>
+<span class="pline">Carries links to Insight Timer in the uploads we read.</span><span class="pmore" aria-hidden="true">RECEIPTS</span></summary>
+<div class="pbody"><div class="pstats"><div><b>234K</b><span>subscribers</span></div>
+<div><b>12,969,758</b><span>lifetime channel views</span></div>
+<div><a class="tag tag-acc" href="https://www.youtube.com/@yogawithnico/about">carries links to Insight Timer</a></div></div>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=jn5mL-1E9Nc">Grounding Root Chakra Activation Yoga | 10 Minutes</a><span class="vnum">21,459<i>17 Aug 2026</i></span></div><p class="chan-line">Its window uploads are titled around minutes, yoga and chakra. Nothing in the ten long-form uploads in its window carries a paid label or a sponsor disclosure for the five brands we searched. Median long-form upload 4,055 views, over the last ten in the window.</p></div></details><details class="pick rv"><summary>
+<span class="pno">05</span><picture><source srcset="assets/avatars/leahsugermanyoga.webp" type="image/webp"><img src="assets/avatars/leahsugermanyoga.jpg" alt="Leah Sugerman Yoga" width="64" height="64" loading="lazy" decoding="async"></picture>
+<span class="pid"><b>Leah Sugerman Yoga</b><i>United States &middot; Tier C</i><em class="pstat">NO SPONSOR SLOT WE SEARCHED FOR</em></span>
+<span class="pbig">1.6x<i>reach multiple</i></span>
+<span class="pline">No disclosed sponsorship or adjacent-brand promotion in the window, and no adjacent-brand link in the uploads we read.</span><span class="pmore" aria-hidden="true">RECEIPTS</span></summary>
+<div class="pbody"><div class="pstats"><div><b>8.42K</b><span>subscribers</span></div>
+<div><b>794,104</b><span>lifetime channel views</span></div>
+<div><a class="tag tag-acc" href="https://www.youtube.com/@leahsugermanyoga/about">no disclosed sponsorship or adjacent-brand link in the uploads we read</a></div></div>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=NJyStWI_Tog">15 MINUTE GENTLE YOGA ROUTINE | No Talking, Full Body Yoga Stretch to Relax 🧘‍♀️</a><span class="vnum">5,078<i>28 Jun 2026</i></span></div><p class="chan-line">Its window uploads are titled around stretch, yoga and minute. Nothing in the ten long-form uploads in its window carries a paid label or a sponsor disclosure for the five brands we searched. Median long-form upload 3,111 views, over the last ten in the window.</p></div></details></div>
+<p class="cap">Sources: linked inside each creator&rsquo;s row. 31 channels published more Shorts than long-form inside the 180-day window (we read each channel&rsquo;s 50 most recent uploads, so a channel&rsquo;s reads may not cover the full window); every one is held out of the roster. Seven of them appear on the chart, marked held out. That count is over every channel we read. The counts that follow are over the channels this page prints. Nine channels on this page are excluded by name, each with a written receipt: a channel selling a competing product. Four more channels are excluded by name and appear nowhere on this page. Twelve channels are held out because they publish the neighbouring category: at least half of their ten window titles name it, or their channel description says so (1 on the description, the rest on titles). Three channels are held out because they publish a different category: fewer than half of the ten window titles behind their median name this one.</p>
+</div></div></section>
+
+<!-- ======================= CLOSE ======================= -->
+<section class="beat"><div class="wrap"><div class="close rv">
+<div class="who">
+<img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAASABIAAD/4QBMRXhpZgAATU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAABkKADAAQAAAABAAABkAAAAAD/7QA4UGhvdG9zaG9wIDMuMAA4QklNBAQAAAAAAAA4QklNBCUAAAAAABDUHYzZjwCyBOmACZjs+EJ+/8IAEQgBkAGQAwEiAAIRAQMRAf/EAB8AAAEFAQEBAQEBAAAAAAAAAAMCBAEFAAYHCAkKC//EAMMQAAEDAwIEAwQGBAcGBAgGcwECAAMRBBIhBTETIhAGQVEyFGFxIweBIJFCFaFSM7EkYjAWwXLRQ5I0ggjhU0AlYxc18JNzolBEsoPxJlQ2ZJR0wmDShKMYcOInRTdls1V1pJXDhfLTRnaA40dWZrQJChkaKCkqODk6SElKV1hZWmdoaWp3eHl6hoeIiYqQlpeYmZqgpaanqKmqsLW2t7i5usDExcbHyMnK0NTV1tfY2drg5OXm5+jp6vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAQIAAwQFBgcICQoL/8QAwxEAAgIBAwMDAgMFAgUCBASHAQACEQMQEiEEIDFBEwUwIjJRFEAGMyNhQhVxUjSBUCSRoUOxFgdiNVPw0SVgwUThcvEXgmM2cCZFVJInotIICQoYGRooKSo3ODk6RkdISUpVVldYWVpkZWZnaGlqc3R1dnd4eXqAg4SFhoeIiYqQk5SVlpeYmZqgo6SlpqeoqaqwsrO0tba3uLm6wMLDxMXGx8jJytDT1NXW19jZ2uDi4+Tl5ufo6ery8/T19vf4+fr/2wBDAAICAgICAgQCAgQGBAQEBggGBgYGCAoICAgICAoMCgoKCgoKDAwMDAwMDAwODg4ODg4QEBAQEBISEhISEhISEhL/2wBDAQMDAwUEBQgEBAgTDQsNExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExP/2gAMAwEAAhEDEQAAAb4kEVcuSVCpVSVK1RMrpMrmkyuaRiRSJmTaJohXbX5y8bV/syk+NhBvt7vPzw9VF9fq8X9g0zcZclUSvUiCxSIJqFiRQ0GTQUlgwUligpLAgoMmgIcBMJeWrSqVQypVSVKmkqUqkKUqkyuaHBYoeWzqg+Krzis9a4eU9JRKE67HoZ5+lh6jwNQt9q2PxD9mdfFayqWVGJqHBNQ0lgw0lTQkGgQUHQYEFigJNFNxuUU2XlK0rhdZeXCFSqkqldJlcmTKtUJLAheQ+w/O0fmR0NpluwdNY0SzAR8rPep5f0TDbljewWee/wAw/Tng1f1cX6GLZWOvOPLmkYkGHBNQkHRQoLFASYdCSZNBSaKAJwKmy8tWy8usqVQysuMKlUIlU0mVKMjEmg/Ff2t+eAbnugT3nN2eeG9BOuvmXTdn3Yen9q3a59Bbp7ZR+c/kP9FfiN+X3j2D5a+qO3zEyqWUeJoDgkUOCpEJJkmAkyaDBIoEGTQBOBU1XK1bKlVQvLqFyqoVlG0yqolWqJVNV35v/ov+c6vb9/xfacnfnzG1z3P1zXqF37658i9UXT0S7a2unPU/GX3H87Wfz59m/FH2p3eYWV7TFGXoIgkUNJYoSTJoKDooMFRQ0FTQBOB02UpaslUqrKUqMKmYQrKNlSqolSoIkk1XfnN+kn5zppf26OE5e/tj+TGdPfe0+ffRsezqPbvm4Qb6XafE3V6c36C8b4r9C5bfH31N4D7xvzdHl7s81GXFIgkQRBIiJJYoKSJgJJU0FBU0EZh0FUrV0rlVRKlQiVSSlUqAhSlGhWmpnLh5j8XfX3zBzd9nxHeclm/Nt+jjbHnvS+N9Rx6vsD5a+uX3P2fnH7H6l1O3Nw/0Oy6bDbyMA4uvuIXHr/LJmZgmFxSUkihoKmgpKmhJJFBQYcAoKOhry1aFSqMKlUImVRQvKNlZVaZVCFZRuU+Cf0X/ADw5+/vKS+p+fobgdNwzLsuD6kN95db5n1q9FdY/JPv6H2AYCa83C1HV2I1pcren88nLik5WpKSRQ0lRQkGRQoKiAUGRTcbgVDXlB8vKFlZRolU0mVSLTKqhUybTKiI+VvqyuTT4We+yeN8vfTsn1XnpXTZ2Dr7Z7583fROXXzPmP0PyKj0O+5izzLJb1p6Xkp0zvyRCtScqKiFJpKVRQ0rTSErihIKigicDoapUGysqoVM1pyqSrKrKy6iZk2XCqytNC+GPu/5dx38crLms5e2pOZDXp3vXyt9NJ3ei+XextMFviNODs+vffCX3Z6/hzEyVTlakwuKSlUUhJE0hBE0lK4oaCJoIzDpC8sMlczWylUiVTSVTNZcKNp01KoXWmdUfm1+k35kC7pjxHY8XorcncZ7eh/UnyR7SnR9BV1TziK/8j9S+FXxo/wBJvgf769fxolWWiFakQuKRCopCSJocLihwuKGgiaEgiKSvKDQqZrKmaiZmoysbTlVlRNSqFVpjVvkj2348h4zf0CVf0Vz5vcY7+gd14/6nlr9AdV438/569p5A2f8Ao+ba/YnxsHXH9MbT8uvVEb7wj5w9cU9npikQtNJSqKQlcUhK9Q0FRQkFHWXlBoVM1plVJlWqMrGicqomQ0efE/nsX2n8f+AVdHAOCJTojMo1OFtlQeFbvWD55VlZXdUOzqVmZkFe1qI+qe7fHrsX6V3H5n+wqfsxPlXqSsqFRBMKihwtNCGYdKVCw2VlVpmTRlaonzjykX075p8beZw+lvCOcQYaCjpETEZTpocOVU1ztMG5FkMt4A5GzwrALtEkQkiBCrislawdVzkh8VqJhedfwTsj7G9w/Nn6ARvqWIUhShaaGgiKIrLmiZVUK00n4/6H46AUpKGBdlmGk+puh4OmUHECMZxgw4arp6tuYg5AHYOXIXTLmUtAXZgHgpuavpiFQkd8VDYi9TnLrOYOatbESXX746/w33TDQcLSIYyooysqbTMiwXHMm/NOmIylsEN3Zimly4aKWqkocqhVtrRmrMxuRgtkHEJbxg6M9sGdy6pFYc4VC5Y2iuVaIKzWvmALIJUq1jWu2BukeNFuldeUnU04NV3Dr6v9lfnn+hGbylaMygZUUdcLm05VbxX2z5ah8aDPFNCwE3QWPPdDojSXLalKzQF9W27EiuQ4SjMm75mCI4DCvLuovNkr+bfVqFxcVVvSB4Zs1cNwa9UKUoDlC6MSHeinGQbLcOWSiHX6JfBP2CreloKPJhoIinS8uaJVNR8cfZXwVL8+OWwI2LB2Uis6PnHEexYO1a5saezpEbpCVtwwo1GQpaM7WtBZFQpT09pWu9k5ZvI8nsbqmtWVuJQKO2M3pohYVYJ27wVtaiY6oh6N8Qq8amIffQPgvrkfrcZR4OgZUU7Igs2lU1H5k/pd+UEtYmIiMxA1Z1aLlgrpOE691ZUHWcmpd9BydzT9o+bMNVX9WDSZaEbq8kWic4OU5Pbv6146oHOEpqdtFu3K3Urta7omBYpjsLG0bOXR49CAwvoP5+9OB+5hmFg4xlHT0kEmVMrri/y2/R/83pUolzTB0tuZ7XmuTUr9kCPecZ1dI6UbtpOWnUzUWmiWLF3mXlAWDLPTpW62zLQaFZvZuW8sq1CLQmxmtNxqUrPLEFe6z0NY5ItHVVYOj9RHBDsiEk/oa94rt+fQQijqwKgwbLyq+ffz++6fhWVBRLi9MxWyu4h6Q65frhtVNhzfWA8YM7fNnNrSP2ujd1NvpnQ1N9UI9rX2dKRWEE4zayE4aOJK3IKGbhoCN03eCNXrQZ6Zm8ItbGqf6JbGZu2Dg7Vwb6y9u+U/q7FwCOFTaFQUNK4XXyF8Z/T3zBLBEEophFYOXDR6wfPWDx15i0d1CtRtnTfN0um5qtrvmr3RYqLthB3y/ScqpE8Z2Cs/YP2DAZBKWS1OAEq4CaFDICd20MVtLCqe6Jbvay0cHOIpu0+7vzq/QrNjBOHNrciChlLhdfmt4z3nBySYJSTlQYghxuGDp8yfur7hO+4JWqZCvNyLHc1W3RKgi5S3e6Ky5y0qs31iwshOa58wYDlOUjTChSJXVK3JF67kYnOwK6Pnta5K39tzXRarYuGVgwP95fCH3WjdEA4smuCjKGWtJK/Jzju34eRRQkJMSHREPgCYXb7nOhcWXn/b1eb8N13pDXi7PdfZai6ydHyF9YeLdOPzaqscdvHUVXVrU8XZXcA0bDv6SuXm/gHm92IKrfTeKZ47ei+W3bN0rYz9s2fQNhOGF0/ckIvKRy4v/vH4R++VNgIgsXuyjKGWRJK/Kjz/ANP8vkxRGiawYw4u10J2FgVg6g9v+M6XDfsqzq3HB3+NPuWbdvH7r5CWp1xfjaoZXimIaI+rnsbVuwGVeVb9kDdMWjyCWpEAu2rd5Q6542B7SpFaapVdpxUi75yzc6B9+hXwd97IwQHBkf/aAAgBAQABBQJ0/wBSLnhjc2+7VC/6U7TyrXxHtN20kKH+oqOnc/6lvdwtNvRu3jDnJudwuLhZXV+8SB5hT2rxNfWEdp4ytJVwzRTx/wA7T/Ve67pb7VbbluNxuFwZHlUAsBK2Iilw2ql2dlYTC8sd6k2g21zBdxf75p5UQRb5u0m5XmBLLKOjDBI0VtlrbXYvknbbmG+Bu7m45o2jfLzaJrK7ivbf/UNP9SeMpuXtYGSlL6XIuqFdbNUG3nktxc828iEalNcJcs3V4G3FMlt/NU7U/wBU+PpwmEEOSrL4sLLUnmot4Vh2NurG32jmGbZVhG42axJtd5Ltt7bSpnh/3yeNrz3ndoklSvdjT3FRf6OU/wBHSVtbFbsNkXI7fYbeJFrYoSzCjHxHscZhvbflSeDL73ra/wDfGdBvU3P3Tb0gyYBhIdA0BJdhFGXbaAK6LagTImr3VBVZ7nATJ4Fn5d9/vjuNILjql23SUsNKcmmIh7boq3WhxrqYEloGZvIObFvNoY59gn9y3v8A3x7gK2KuNgjqUw4aBxpRI+SIIbK4U7FJLij6UjFqL8SWmUsqFQXUSs4/98U6BJBKnGWyj6FaPmpDErsZ+u4uCLfbZEqXDNHClXiW0tyPGNtnbbhbXsfiKDO3vU6bYoybf/vikTki8j5d9HjDbXN7Ks82ZpubhDtNwVVV6JreyjuLc7nLuEqfpCbG1Qo2G2TRGSNU+2y26plWhtNtR/vi8T3tzZ2d6qZdwkVtLnkwtRnEcIXMY1kL2tGc1hBbz2Pi2xukXK7BNy9v8NRXVht3h3ctumihwh2bbKXG+W6o7/8A3xeN4eZssqealAIs5YApXJ0EKUBMHVsqRz9nSAjcdptdwhV4RjhkgtFWrsI5C1poN+lvduG1bird0/74t6hTPtU8yycP4vRmMMoAdBXbThNs6M7XRI94glMMQLCMXJ7G9Wku4bdtG1DboP8AfFPHzYLi1kjuIViWFXFrVpbnOW3XjL4d3CJVl7/Yym63C5s9z2jdk3CEz1BNWJqX1yof75PFm1e43Vgs5rSKqazoMkuIyJPhqeGSCy2rbbUb/sAvItnVc2E9uvJAXR3CZvev98l3Z299BfeDk2aSdZWQVPB28KOZNt6EJ2+9gjhv92sLazsLqx3V2sao0Vo5TVX++VaBJHdwqt7lYqFHF824LQJ1LsbNNNvsNukTc7Xtktns+1p2+5yelILqC7H++bxfZph3JqHU+qtt7zIvZLSRCDGtSY7ZcZHS973Ga12rwVvFxa7t/vl4O/3me58QVSpqTrgxDV7KBGvbylSeWgBeCTLNkfG11HZ+G/D6FK3X/fN4lsDt292V6xIGCktKnFcJS9rv1YG/SiNc65WTDZw+KN7Xve4eDjax77/vm+s2xhD4GC9KWmfRNzqLt7fuUwNkbm6c95HYjxJ4om3FSdHHonZfGO1+4Wt9Z3qP98e9eK9o2R+KPFcniEdkrUhou3FcwE7Zc7dG5/Gm12UW577fbmqrQlpL5rjnUFbV403nb4rP6xbVbsfEOzbj/q/cNystrt9++sG9uyuVSlV0+5k83kwCWhIDyDUvFIylNNFUDq0Lo9v8S7ttz276wYFuz3Gx3BH+qJJI4U7p482Pb3uP1ib1dO5vbu8X/MhpLqwzWVSRiKAM0LpR1YLBcF1LArbvG27WrsPGW0XjStEif9R7p4u2Pa3uH1k3sj3DeNy3NX3afeDDFHk8VKaU0YDKuyzQVYLBdWFtEpdjvF9YK2PxjDeq/n77xbsO3qvfrKt0jdPFe9bt/M1eheAfJU+Ut8tb5a2IixGGEPWgIZq9XVyKYYYParTq0qowaPw54tNukEEfzZ0fjLxjzu1fu0dPvDto9Ho091r1HCnZSqNZ7JdWNRQpY7IaTR+H5zc7N/N+PvEi7Ydw6dqOjoyO57Bg90h07LkY1Y49llq7IGhOsJatWVUaOpoQMR1q8C3vMs/5qRXLj3C5ku7wK7pdO1HRkMhkfdDDDQGA5FupJQywy1s9vyk624q5DR+dshyLyaKB+Ebr3bev5reZxa7SvUlpU6hTQGRoxxeLIZDp2I7BpLAq0AUOiZl1aWll1ZamWnio6OD2ZWhNTXkoSXGl2917vdpUFo/mfH1z7v4fPbg0lofEFhlpNWsMjuQz2S0aiNzLajUpaWXVllqaWoscY9EqcCAGVmQwAJcsyY02calnbpBNt/8AM/WdKRbspZfBxLadWoU7HglWvEKDLoyz2S4gwOiZWrQ0s9y1PyLS0lhLkVQIYU0wJUuoSnwjee9bP/M/WfJW7q0LDWinYGhgkftMgpKuFdYi1Bq4hqDV2S4hpIQmJZ1cfEcFdiex4nslxpq6iJAyUckpaBKsxoTG0nNfgCY+8/zP1iXAl35Q7Ry0a46guJdDEqrUmjX2iU+LkS0tQauyXDwuiQhXaN+R7FllnsgawocijMsILQhCWM3imuSY0/V6Sdy/mfE1x73vdXSvZEhQcY5mpCozbyMdQnDLjU0KqJBVpDUGsMtPGB3jUw4yGToe3kWWWHElzL5ccdI0ZKlUgBD6lFCAHPNkfq/KYr/+YnWIoJ5ObMXV6KakENKiklXPiQrFUEgLuE6K4pLiUzqAHSrkDUxxgd4RmWGh10r3LPZIcIo1ycxaSqVhHSgaAtc9HBBVWy3XuO8n+Y8QTe77GeHFkdkrZhCx1RkkSO3kaqLjkGrQqjQurpqHKGtjjbu+P0hYaHXuWpntGHKvGNAKjGnEZtEgdCWiPqQ1k5WsvvFp9/x1LyfDJ4Piyh4tCig9EwlhMZQqioFZC5TRTDiV2S1irlDAcDvKcxhpamnsWWWlo0cis1xUS89UtFHGXHTKtHWr8NTc/Y/v/WTJh4d8mGkvFJZhYQoMDmImiMarWR3YqD2SWlTQasjSYdoHdn6RpYamOxZ7JDUrEJYW0nWNpLTwRo9WH4Enz277/wBaK6bR2DD1YUppVUpdxEJER9C1ddursGkuJVXwczprDxuf3rSw1dyyww1mvYNLS0sMHsH4GueXuf3/AK1Jfo+w7DsA0hh3qMJYSDEvj2S4zqD0yujichqpo7Hj2Uy0s9w0sFpaWnsHsVx7tu3Y/d+tC45m79gwww0sNLu4uZb2pa+PYNB1QdC6anRCu0fZXHse5PcMNLSWktHeMlKoJObb9h9zx3Pz/Ev3AwwxVhjVxdCian7kau2jnVSMsNHZXcsfdyAaVPJoU0OPsAw9oVltX3vEi+ZvnYMB0YYaWlpc/RPV17Rbfezte07jGASkhTTq7hWSmlpZZ7nvaWGbu7VCO4dEscpx4lpCktLT22b/AGkMsfc33/av2D1dSGJGldWnVpDDuv36I1yKh2S7W/D/AIGsLe2hitbc39hbGPxDtEcLPLJMMREllK1W86WlKmAWoEA/dtLcyLCMAqOHGaA80Rxpa45InDOsExW8qZLUwKjlUhMdxGtirD2oU2tn7viAU3ruCw8A1RlLilo0EKYkaLBE0tvHDbRyKMi9r3qyvrf6FCpbrbxJ9YG6bbMkMLeb5rM9BziXPiqH3WJqghQ0S4GaGGqEx480pa5l5yLqnLIKJjNutKFXNoK282gCSxbBJXZhwhcbrV2ScLH73iYU37uNWkF8OxQ0ZIMqi7NXTQ0lK41XF/NPeJv5ZJfE27EzZvJ5PJlTWolUXtTr+nC2pVQrRxr5sANFeanEqqa0Z1HslEnMhni1TMQIJBPEFdohmpAxjZY+54vTh4j7VDSSyVMRZPkoaLaRmLF1nQbCVLt4xIldulKb0YXKFVd/cIlnyq6urqytp4WqsplrylzaA5Xby8uWRPLWzq0nFS9XVrdgsZ6pM8dHaTmKVh7TFztx7F//2gAIAQMRAT8B+ls/N2hOO/CYkef2UDUQoWyAqmUa/YxrTCyKRgtyRPg/scXFCw+wGPThjhEW+XqYerIc/sUXD4QxHq8Miz5DmHP7FB3CAf1Djy2EyNO8n0RyE9LLL+H9ixYxLHYZR44TjL00DfLlj6I6WN21X2vTx9se76fsXRnghDQcZo2kElMePtac2U48RH7FinsNsZiXMUlH9EbqRI3yl6rKZS2n0/Y+nNGtA48nHAf6pNBkbN/sYNG2E7Q7rFIc+QRif2WMiPCMzDJ/Vl1MYuXKZ8lDf7PT40pst/Tv6N94P7IPqD6JRqOw6DtOp1HYUJ7wx7T2hPcfoR7T2SDFOgOnr3EtJ0Hb66+NBofpFP0wU/nqUI+gdR2ns9NShHeU6FHYPHaNSNB2xiTwGUdvbHsj47C44WeH2KFljEDw5pCuNNzbubdzDMI+jPMZ6f1DekeyOtaYDRfTSWlJaQ12HgtaR0//2gAIAQIRAT8B+lu/JsomR5Qb/Zb1M7NMSbQf2M9kuDb7jE8X+xlnLl9wpyu60xcUvRj+xScnnTzpSDy4/wBik7dxfaTGi+rQ/NLHLt8/sUzUkFEw5Zfkw9CnORw+fubs1+xZh66yCKpHnlkXDHdL9ilHcKZRMeyTbggBG/2PKOL0tlKmUyUcoFCv2Mi2Ua09WRcEDKQT+x2yiD5Ti/JlBj08pOLEICgkO39nBfOltAu36lfQrUo1Mfy/YQk916S8/QA1OoQE8I0OhfRjpMfQjqeyLIo+hPx9AGtCjQ6emg7fCNJePoeWJZBB0I09O6Ib5RoRx9Dy+GWl6nx3eiPqEWjxWgOhT4+gNZee8aeqUMSlkhPdHWfeNJag6SQnWUq8sZXoEIcncNAXJKhynPfhnOR8vTQP4jptDSYtfm7GeKzyWGLboOOCiKHJ3BvTqBY4fV9GJ4bbQ2nt8hBo6ZNP/9oACAEBAAY/Av8AUvWoCj6pk/Y+YlZ08n0yYn+Vo6j/AH2cy6WEvHb6p9SXzJlkn498mmJfWj4vG4QUD1GrEsKsknz/AN9JmlOvkPVm4nNe+jHYSJ9WmCntvlLGUHl8GJoFZJP++dU0hoE6tSq9A9llXp2yYX6sKZSfh+t+5p1AW8z7SaAfYzCvzNfk9Dkg8U+rRcw8Fiv++bCtMz2x7JHox8HiWUoOnqxcjWnF5D5sE+Tp6aNVirig1H++aGD11q8k/c1YP2PhkHjHwegpXiyacGdGi4QaUP6mmZGoUK/75eSOEQo6B0enbR6h5HQF8w8XUPAhmWMavEPkH2odP98s8nqs/d1eodA8e6gzXyclsfzp/g/3yLNaaHVqI9fvdXYB17FPqGoK0cajwUcfx/3yTD+Qf4O1fu8xLp92rROB7J/gLC/UV/3xrQrgQWpPoS8u+joXTtVReBU8XnCoV9H7wPJ6uFavNA/3xkORB8llgl9OgenbV8tJ1L6gXRPSHjNOl054LE0En4NUUmpxfJjFVcHDtkiqzLH++NPuqsCs0q+bNqo+bD6uL5yQAC+o+TxOrHo+XIkaPSuDGAoWIFJ+lJqV+nyYEU/NR+yXiXPLSqgohLsL2nny1f748h+VYZjPEMPJWrx8n09gH1PlzB1iXo8U8XlK6uK8s1YpzVl82qO41x6x8x/vjnQr9mv4avEMB6/cDydC+kuvcWVsKryyaio1WeP++NcR/MCGU+hen3CfRgvr8njl1NSjoCWNdXV0fKGnxeKf98hvYvZm/UWpB8/uVS9SzbzLKasrgSMleb5kPtB8mcUDHaqaY04/75TbXKckqa722lqEAnEj+v7o5mgaJLFVWOfxpq1T8wUDroavlny/30KjVwUKNUKuKSR204vRLopQDCjOfkH9NVfzaoeUmhD+i9ntUsrt1BYBKTT1H++fnJI+lFafq+5o/OjClOnapd1dW/tRoJaIFK+jnOKh8T5/755b2Y1ClFP+TwDqnz76MJX9jHfEcHJAPauKJDtkp/01H8P++e4tvILJHyOrwX20ejD0LyJdR5szXBo+j90jRLgVdHEDh/a8v989vuCf3hqg/EcXo8VusZevYBFWDIyZfIP3aA9D+LoHFFuMxTMBRRUHnZypkH8k/wC+TCdecv7CNT/oNEXKESIzUeZ76PrHYLnkCXhZjmq+Ggf0qqJ9A+nvV1QSPloxGVCZP+xNf18XjfQKR8UasC2nTkfyq0P6/wDV5ub5YQkNVvtP0MX7X5j/AHGVKNSf5unfEOg70tpzj+yrUfrYRucWH8pGo/B8yylTJ8uP4f6pzlUEj1OjKIVe8LH7HD8WU2mNun4an8S+ZdyKkPqo1/nal6Og+/nCopUPMaMInInT/K4/iwmYmBX8rh+LzjIUPUf6kKZJeYsflRqyjbYkxD1Vqf7jyvplSfPh+H8/o+p6fzeVpIU/wfgxbbjSNfkr8p/uf6gMc04UoeSOp02+3Kj6r0/geM8uCP2UaD+a1eh+7x766PT+b1dQ02e46x8Er9P9B1H85Us7VtK+n86x5/Af6l1en8zT7tXbynjjT8NP5wbPYropQ+kI/gev+pNXT+eGfDzeTksVcYzkPkf5tSz5CrkupDUrUT2p/qPT+c17VeCeHaNJ4SdH4/zdxOfyxq/g/wBS/wDDfz+nEujqpxyJ4pUD+DCx5iv80qMf31QT/X/vjyU9OHar5y3BKPNCf4P5q2g9ST97T+eqf4P52nblp+3t0PKY1+DxDTGfahOH9z+atovRBP6+1C6/6vzdS/XtUvR3UHqAr+aMY/vaEj+vvQvJHD/UAH89pwHbXV6aPqLq5j/sP+sfzV1N/sQ/q0+7VOhev87T+exHEvV9PDvV8sNcauK0afYf5lch/KCWuQ/mJP3viO9fvV/1Dq83TydEvXtil5KdtL5ZYn5HT+ZupfSNX3aKdUdq+bp/qjEebp20+6FDy1cc/wC2kH8R/MXH8qifxP39ePen3a/6m1de1e1ur0Tj+H8xh+1In+YxV2o8x/NH+cr92jr3ktv9LX/D/MQo9ZP6j/M6Ohfy/mj/AKg1+6q3PCRH8H8xaQfFR/msh5sg/wA1X/UtvL/LA/HT+Yit/wDS4/4f5on0/mir/UwUPJol/aSD+r79x/Jon8B/NEerKfT+Zp/qe3V/sNP37tf+xVfw/wA3J9z6KMl1VGXirT+ezlfT9zUv2i9F/dtv91j79z/u1X8P82t4oFS6yUR82m7vfpFnVgHFKVaIFKMhYaLhA0UqlT+LodX0Gj0IL1S+HbX7wJ7Vlo1U0FXSWo+Lqk1T6h0Jf0gxPqHRR+T0dF6F6drcf7DT/B9+6H+xVfw/f0dFOo7GRRrV0iADGasQ0pURHKgUVGrTX+sNVxKsf5VGRJOAlfpqr7A4NtseMNch6fP4n7teyYV/N+b9XQMSU9rV0xD6dHlViRLoX8H0+yriGceIfLkfKl1T5fB0dUuh7Qp9EJ/g+/d/7tV/D9/Tto8h2qwpAqRq1XVdSeHBoHA1GtWmKw+iTT7TpTX7Pu6Og8mAyn00+5h5p1dR3MZ7U7Jl9OkvJLxLr+ZPcJaU+gH37sf7EP3aPUvi65UD/eGrodQ9fJ1r2UPj2+j4JA+9kWGpXbXsCyn8PuZjvyV8F6PBfk6jtpw7QReqx9z/xAAzEAEAAwACAgICAgMBAQAAAgsBEQAhMUFRYXGBkaGxwfDREOHxIDBAUGBwgJCgsMDQ4P/aAAgBAQABPyEKUFChYsWLFixYsWP/AMEf945sl2xlLyc+U/xWY4rYbcw/BSScjSx/+CLFixY/7FixYsVP+Gmv/QUKFix/wLFixSxQ/wCRYsf9UhOhdfguBH4E/W2WDdq8YdpEHiscc1XI+DUepvAaYy/ccUkgZBw/8ix/yLFixYsVKlj/AIixYsVqVKlChY//AARYsULFix/yLH/dCzO9VlqXDoPBT4MqYqlJS+G8FpehJifX/l6NY774vN5zDmXMf6onuClLFixYsf8AI/7FS/P/ABKlipUrUoUKFD/kWP8Asf8AIsWLFixQACktWO6BEZfRBtBObYgO2LOV3p6oSOGmxy79f+q8baP8+72XU/58VkmIY55fqjGRbce3pqccRY/7FixYsWLFixYr/wASx/0lKf8A4Isf9ihYsf8AI/5FLdQgHfzUtp8SusHNWH0UYnS+v6yokIPE2Vk18/A1wLRPyz9XkIeDE49WSclt/E0Fp/zLFixYsWLH/Cf8R/xLFipUsUoWKULFihYsWLFixYsWFBLZPXi8g55us9XW0lS3MHjLJGxy/iqcew9WYkV0+LDq+hR80GMc1fYTzlngIn5c1HIIPzYsZYsWLFipYsVLFi7YqWKlaH/Iof8AD/gUP+RY/wCRYsVKqN/K8tBFzXQLPxSPaDk2QHF6scv7BFjBMJ2xYdcFW876qEPc8UkGCgLqk/jqxYsV/wCRYsWLFT/iWKlitSpYoWKf8ixYsWKFixYsWLsfF8AfyLPr2xfEoHJX6agGgEMponY4/dCypiF7kSvsafdRYsVLFixYsWKlitixYsVqUKULFixY/wCBYoWKFixYsVMfiZdumVv3cN5f8EMui1WAEOawm2LSSJxYzoRf/wAWPnMfrTf+RY/5FixYsWLFixYrWpXKFihYsWKH/wCILFCxXMYnX7U7jzUM6p0uivnsQdUhaz6ZJe7OCaNyWEhzxZgUL90Ivq/Imx/2P+RYqf8AErWxUsVKlSxQsWLFCxYp/wAixYsWP+HHIz9l9Wr8N2OqhkUe9kKXw1/Vn085YFKYONjJz/qyVhzLbA4cX4bHlpt5IP4NixYsWLFixYsWKla/8itShYsULFj/AIFixQ/4FixYvscaw6In7q8N2Elo99a9O0BaTTMLKBTvzZ0I9rFCAW9s/uwM940urnqcf+ViZ3vu77DA8xVITsa//D/8MWLH/IrXmxUrYqVrQsWKFixYsWKUP+BYsWKa8CvOEwfNdbHfJ9+7NjxUHZcFP42HlqaUiS+P+GG77WYEjsuMJ/R8XxQ+42kA8AQ4hct8+TSE+LCDybUH0C4IJ/ujLg/k5P7qWP8Asf8AIsWIrY/61Kla2LFCxYsf9ilKWP8AsV+7b+c/uiAwx9liDnLHyVSIMLpsQqWTQe3WkZkqiUNfO9GkCr8D/VJ7Hv8A5BxURDhRO/VAaTJPJY//AAx/2KlSp/xK1rWhH/IoWP8Akf8AIpShY/4f8NOSf3/8rO+JerIN0FjNI0pGUCHdgfukDwgqtqshrPFRF3YQHV3imQXJYwkmxJjHp/8Agj/kWP8AjYsVLFa2KlT/AIH/AAP+xY/7FP8A8J/7ghFHBK36a5falmXiwZqNcUBT3Y0uEVZJ+22ZBN/dnSginm76Uixr5Hi/tz/+OLFj/wDBFSpUqVpT/hY/5FixQsUP+xYsUjO78dp980HQJ/FYkvOf+AzYzXkizUXL5mMrtmy9a4DKSyH+RKqCkAa3Cg9vxdPf/Y//AAv/AB/5Fita1qWKWKf9LH/D/gf/AIIsXsFI/s91b/LsTxCxobhq0U6RVzpHWkqcmn93hlBKcrLEM2ifLJXKyuJsonZQkPBX/wDMf+NitSpY/wCB/wBj/wDEf/jPPQvhIoKws+mP+Qe9eFJMR8tLSX1Q8+xgFLkXw7BGyEFeHM8UAwd1FQt8Y6LCf/jf+v8A2LFT/iVK0KWLFj/8IUKH/Qp/0vBEXLRNZ7qZeZV8WRKoiFet1ZmGW8r3AE0+XeMFj0PB/NRSy1x0fKaWP/yX/j/+BK1sf8j/AJFj/wDNmE1AMDdAUPqK7LKkldNjjyoNHmVQkIbxRXKps1OpDE7iRf0UkNf4L/2P/wAEf8f/AMlK0P8AsWP+R/yP/wAEWP8A8MX/AFSDf81QGs4WmzwpiHKznJ82BfrvaVWmTwplYEs3YnhP7sxds3iZE/v92LH/ADqx/wDjj/rWta/8j/8AFFix/wDlFChfSBH4sslEc5XdSlywlg0aIS8/FA3xwHFhxCQV7rKIMY7p48q+8TN2mshF8yHi/Bph/XNj/wDC1/4//hf+NSx/yKf8ix/+Mp/+AJhHH7nr7Wfg+6ska8fiu/8AHpdPj7roGrBx5bK5DkfyLV7Nf4L3TUcq5rYnagWV+SdSvyXq4Mkj4CftYdJ2gfww/wA1L/FBkLzp/wBf/wAT/wDgaf8AIsf/AJAf/h8+FuV8By3xMXjf462om3K63Uq2bNGjOKLii/5GFTjFKR8XieLjzuaxOmnjUG2Cif8A8Ph9WRRf/YTP4mxMHhY+eRUqV/5H/H/8D/yP+RYpYsf8ix/yKtM+VAfbUFuh2/PPxNZlnx/xPRfc6R/KtRs//iP+YMuSqOsrj8KfY2DPmyKgy83nNnyb20DxEVX5LFkfx/H+5sw56/qZ+Yp5Z4QT8la//ha/9LH/AOKLxzYFva8+3g/N8cI/j+H7vpyhY+Bn6rP/AOF7H/4wpHNSNG3BQzj+bEbUeKRyv+fmtyf5+af8R5LSFXmb0dvMv6Dr54fqjCvBxPfl+rz/APga1/8AwR/2KwEt5uJEr9Z+6k6meH4U05b/APTo1+2srLWtSp/yP+H/ABJqeGL8f5vx/mnNl7MbP1mmHC1NofyoP8v9VLr/AD8WB/jcF6iqqx2Usurl5/4iCaa+b7w+r5/YoJ5HR/4/8a0LH/4UDgCs2g5++PHl7svP/E/8ix/w0lip/wAGocbBR4Ue5QXV/C6cUg/+ajCpQP8AP5pDj+rHr9WB/wDbI0anY7vvY/5v7rsP8/d9P8/mz1Wnw03Dl4+KrEwv5/8AL/rWv/I//DtCDmg8T6nv1dWaj/gsrGT/AMbr/wAkf/gKP+hNR6oCkOrPkvQvY0R/8U1n/VVjj9Vf8m6bNTUWG0gd/djp/qh/gvCcUfE5fA/3dsbJfgn5fw//AIGpT/8ACfCm/AmyinX5aLjRmk2ia0A01d/8er/glSp/x3Vl/k0Y4/ViMf3/ALph/sf1WSpP8i8vj4vl/q/H/r3TNH6/5TBP9WD/AI/mquaqlYeJz7bwCugg1fST9lT/AK1of8j/AL/vHEgrkoeT/gcT/pGg7XDi63/uNJ/wan/hkaLH+q/NvtWRBeVMH/yyf8Lw/wDlY/4WH/JqGF7uZ/6qYzPzf8n/AHQfGP8A7d4WV/TeqeftN41yH2T/AMa/8P8A8EWVkP0Uy/j/AL5SUxrG5IU7rdtxxeAUe731Aan/AAH/AB7Y6f3Qun6j+6xn8h/wDQ8/6qmf/L/jirP/AJV/wY3/AJap/wCJSrx/FM4A8xFmvoPi8gbf0tWX13gAd+lf+NaUP+RSiZxf6I/usLUNouqwc3OanScUfHfurl/dUjP7qk9gvOsqcpj/AJysAF4p9sqmP+c8oY/+WWn9Wdj/AFX/ADf+DtMpXlcD/S96Z8FA+3pxT+qjAJpKZ8KEhE03UqXxz+jWv/Gh/wAj/sC/7D/xXW/8G+HFSpaYhakJqUSy42ZOikP90Uo7Uf8AEVvKzX1DfmySo7Rinkn6phk/izv/AMLh/wC1f8m6pZWna3L+Kqv6jzWru2aeysA4KH22C6c3V8/BMfw1rWtKf9iuhJ9y6/m9hZS+RjR5Oh/0geq4Iq7c4oQO7Cyf3RJx/wAzW8roRWBP5GqaNJ/hcIWPX8NhHP4soj/X/HKu92SsvPxfiNPfuywKlOhWuELi5bInxepirNa1p/yLH/I20QPj/wAL4NeipZ8VL9Zcpj/gsLBxeVUpQL/0Ipx/wEf8EoKrQeY8RVtW0m0MD/Nh/k31H6s8v6/5VVMtkRpes/YUiYeb/KFPnloeEXyy6LeWu/gLX/jWn/4OEL8ILX/2DFaKIp93/AkReO+LzUsQe7PDc1C3X/l2c/isWP1e6jf+TIBvERx5r28rM2v+DTo/zSHLliV1bNQGoPdZVwYfFXOqsDOmbS0H0X3Kp76uKxB+Rfz/AMNa0KFCxf8AK0kf3Xy/4hunF94WSdjxUp3X+dYZXTNsVcWRYm79F8B+rCJuU0f8nuVHU8f9G9VRxZf+LxVVTWyt6+/pYVuJSB61HJtOTS5k0glHzbB9Uw/9ONa1oUof8xfT8ReGlIF8FXZYUIea9Euld1s1XKkVRYMpE/6XxcmuLC3Svr+a5I/Vbypyatqr5vCv/gXKbkHxTpeauikw0qFhL80TGWZ94qVrSlP+fEJ+Jf6rx/4soxDTg3x13KcBfUr2LD05/wDI2++iNocLyv8AVDbKY36qIM1vKhizqszVXeX/AJSMXlKxWaTUeKM1QqEm5lFNlJ2QPRH+ZrWtKWP+D7v/ABZ4/wCDKGnjTc3nLJcsB5Fb4C6uX6U7/wAW/wDJhDZhpHzQc0oJE/xV+X4/4dsQmraNmrKqZbgsqKU2FSQVRBT0mkMFHbqyUhUfLn+JrWtKU/5H/hJFf+Cn/BDxS5sUXRYcoKjWlO//AC81ac1XqWapNmNIb/5Zv/g0GL5v+TV/wKoqy0/5Re+rqsyqxt8azLAI+P8A0rWqlKf8gRwH7a15pz/01fNumvqosU87s5G/Ve7Fi5/4J8NYmV6qj1HiqWlJ3cCr/grvdmCyU5p/xK4NsjY7qxtJmbyIIT5LFX+yDWp/wf8AIsjnGH0VpTj/AJyoOLmzUxTFeBFm/wBn9f8AIP8AhR29bZ3L5WJPfuf+OVNViLy/6/8Aha/8P+CSzbNdXllj/kNLJXf8Fa0pS9V3O/6FaWH/ACFzStHVklG0xeB8v7p/wJXLtfTP/JNEiR04lF2yEbeE0MreVgFZF5/91/0CdnV4BF4yhdYUL/XV4n1Q4HPsilyn3yVTTDtIXKYD/GK/9CljLk3/ABdaf8elLomWjkYokUpimayM82SZuijkC/eooGxwHz8ermXgRJ45d2kSWGRJoo34wO3ouJke4/1Xsi97ZK/c3dSPW/xZUS/FLiP4uWJ9RV/yF4L3/wABjLFhlXKT4WtaCKLwofBP1SidccN4DnzYUPwf6vcRqOGlp8VqD3FUDmebIgrJUP8AwUper68/lVpS9VA0e7zq2njcXk9VUEkxwWRU7QoEiPOz+KVUjkgdk/IUnv3JcfXirHk8o8BsfMHu8AxARi9IxbXxxXDYDf8AmVdF9U/3r317nNnea1CabiDxV8Sfy7qWkj1Qh1eLqk/d/ND5qKGG1dWcrqfr2X/6BF+F3sQ5eVw+s8l8cTdRreBX6Vq0pT/kVoaUYoll75SBtGelneKfEUB+eylj/gTAMfhtVckOmB4yGl4Y2E++vd0fdJ8wjeB+XzZxCy9tjLNdQtawiulGKGd23PcQ/CtrZqapV154vjurYXhd83z4olD/AMzcabXP/lsD/wCZE7PofitMcRXea/lUPzfWg/Vf+hSlnPyfna0pZfGXuK2mr0qrYL2UhGiiwe4qBMNQwFd+K57e2wF5f7v4lI8Cj8bTzVp/5MfNMOkB90iO1pASok1psk8d3uU5+DVn5uFWamP/AAeVnUy/Lq7S3FO8dLjjXHUrT4s+Hur/AI/ZrmV/4//aAAwDAQACEQMRAAAQvrPnLHTz4HhAuE73XLHXNJ//AMXl4x+918zx9FUA/wB1NNUlvWnnkYKMNtFVMvjkQNybP8FlW2XHFH8JPoNdkNl9eLMHLUAH2cm0WFXZf7IhyzQjOXpee4zUlE2UXUl1P9aO3iPHdbrIEiipkXXhgmFnUo7tT/H4vecyWMU79Sn1AGTzWGNI86wBsgpwU6Bl0sHX1EU2V1XSogR7KR1t2dg/EcLlnUU3ylhTQyRihLASzdo2DNs13lFnH0FlACRiSIBzjTc/BSBMy1H0nGnlgibSA7RAziSWrG2GitX+3ln1lW2bThJQijRblDwf/uX0wMv52mHF4IAjaP2LxBJcnZSnbrPxfqlGnjgh+ShiWTYJpBhZ69KVmqX/AJRQSgfeJEFL6T5tzw3bREfcwQpRoIcqZtFwcXH/ABH8wAOI5hRw1fYFKekxkzcg76wGjl0eL9uTvfU2MLWgiVSz8Skc/wAtfON35V6JP3xgU+cshN5gfgIJ5+nK0wFe6NniQ2ZEdZYfS9L1vjFatslxCXMGCiTckiuYE2SmtmmNfUjel1bn9zzOR5J9I2HNCBfxbvPGi4zWpIBjZ3opQqo45osWqQAs3/DpnnwDG9OSwtqM3d4e5P1P5rRU1Ihf/8QAMxEBAQEAAwABAgUFAQEAAQEJAQARITEQQVFhIHHwkYGhsdHB4fEwQFBgcICQoLDA0OD/2gAIAQMRAT8Qk8z8HcP1j6EfJQPcHZdA/wDxDmzLmPvHt6Z9aP8A8PvDhxbnFy5IfQJBsJYTPE/+H2/+A5h0heWV1AFkxaYLJH/y7vizw/AY5zhrMRFyxdDF5bDx1L+PL7WWWfg72TscuoOOMUIds5GwC/D1urfxfnP3/F8phZH6klOeJghOmZ9WRiP0Ebv1+Rl18fT8ee8d32j0wNy+aMIj3qLW7Q8yp6T+/wCJJ/8Aky/T3KFw8QVCd2NwWVwljcfiB51d/wDyFV8yfEcd7kUYWfJ1iZt9f/DY/wDkpCA6WLGBi/LN3y8Q7r/8Mg/+SSuzbh4k3iB8ustKd4s/Mc9fh+/m/wDx36WepP2mZiC5WHEF/Bv4nI+i3eGPwaTnj9ExxBxJZ9LcteH8a/Bd3V9rbY9ZYPmSGxdz3lnz4On4Vw2HHNiS822274TOGzx5w5tiTmfGEc3X8PW6vzhjsRyS8Ju8MPAR9b4urrmetb7pc/h+JdmRxJpHDngY28Q3xZzHXg5gu5btl2Zc/h7F3fa5H7XyF0jvMLl8DHXj4k9PJ4S3qDZch+Fm5CPcvys04uLngyHGOrOfPnwJs1tvEIud2PwPK3xJnVrIPMMcRMOZcXJmPCWDiSEeLT8B2+meGHYdT1GXF3mL4j8DEeOsvvPU/e2+Zuellm3Bk8Q4n6R67DrGST6WZP0ld+9EstxCTKB0dYKJRPyhErvIx3H0X5IHjlZGGSvcowp787NvnN08ReLP1uuNj527jmtvcsicC62Opw5HHM8MfSDHI0/A/9oACAECEQE/EP8A4qHLPxFr14Aeker5lnh7+f8A8XTrGE/adD2XN2/DZ5nuf/Xpk8vN3i25w2YpGNAiz/75cS6nMFxS/M8mwppZR6f/AILLkZ7q3CWO9QuNiKtP/vvjHq0lvOG4pkOGyRz/AEXFHY2Hy/8AwOLJ7zebDwRJsTqQ+blaI5E5f/tn1/AGinmW1EbAfWclmFhL8P8A8n8WeHolMZ7tPm6eOomZC+YATl/+32Z/BuPon6wc6tY3cx0Fnf8AzP8A8ACMyxudkzTEvBfQI5uOH/yzwvv+I+iByIfVcXJLnGHgE0JXxzInZ/8ALIPfzt+lm9/gGObCdX2ng4uHDNFnUmcP4fymPN+li98Qe5Pcsggb7r8p+8uZW3fdnz+N34FlniQw+tOIlzzcg025cQQxH4N866tuDfEh4njaeLk7b66xxBrr5zD+EgupaTxDncPpJMQtG+uWfHljky+xflHt+Lq75LZJppd5aScwvmI93EmXwjhxBg5jy8/L8BZ8kYL4vaTm4r5m/MdeM2jG4PlupFNv4S6gOncKtYabDjHCTSTn1+PFvm3Jk5hjx4U/CWwDZuJ6lPkPEeZ9InghmJdYZx4cX4SPJZn5/wAAC6hdrp43XhKPD0/gYggxcMbbSP4h2WsPXzAdgHS24S3wOD8DEIEgYtoiwyPK3a/xDKQTjZfi4s+jZduCDfOwDxDUYPFo7uh+BiWcw/pG95IeLkxBwS7k+C1NnntyNtUGbdJhKXB8XXn/2gAIAQEAAT8QXq9VgyqbH/Ao8KQp2srKYo5/4MWMipuWOqaypd6snJFibIBMg8LLw8U8nWQOSdOobLUwVjhjDs8I3nboZlKxi5RBDSJwnmgdKVC1IYKHn/h1lE1XVlO1CZsS7Ud1Cw11UM1pOayZKE07tHijeOKkuZUip1ze2lFBO0eqUdKdCi+VkoFaMf8AHV2LHWywkfXI/RdH7IRfEX5Y+KKKEKWTw7U1Ib/8vZiwnk7q0gfYxOcMU4qN6iEQDMJ1sNVqZJbcMQIPhykQ87IPCUCmtvKpvq6IpqLwqLBYr6XtsmRZx8V7ZVTJxUc+aicrQZ2i8WcmsUUigUk0ChQonmgnKXKUxTzpCg16VhU2mUgyULq4BPB29WH0I1ZeB0R4r5wFkTk78lbznNKpcuD+KTL0j4n/ANym+KoYwyI+0fdB8HuBE302KVNiMSvuJl8KISRR+k6fTtE0d2RYl4f8RNhFie6gZXpfBY8NqZEVD4ushWZIV4n+b2UrwWVlKEcXp/4YZQygpDaFDIaCxk0l1SiFdxUcRUxVYP4QAnyVcaqO5MYl1881AxuVxMdVoVCwSggfiau3IfgY+1/QTdiwH7mH/dKzKnlAEsd4mmLkYOSXdiR4eapROBIRZY+Dl0iQDRVJ3KeP1XsDyWLMbEPZz3Nlqgk5PI+xymNsJtRS8Lymu5bHn/lNez/zGIrqiNsS8RcK4io6qB6u1G0UNmh1QuNp2bEbFApQNJU6FjzVdVPFcU/NlEZFheCJ95UIrjv4oGkOHy90qvHInuxRAF+ZbHJsf18fmgZYxJ6mJp7RzgjXH+ZZPxkJqIA8x5+rzFMGYJfk76myxoRoIO57On4rkMapE0cY813SaE6iLnLDO/VNif8AhHJTN1/xwGte3NfLKNxUjURy61fdlE2axaUoQRfRSFENwpneqYvTTVM7QPH/AAeVaXWZS+XfwMR8nl8ZSZPARlhLOT+6RYbGLMQb/fxZMmKEPXDo7/5WSGC4MHKfXDSswSJMy5zH/CtPGYaH03wxPxQRE8sTxI+3/wBqcWEZIcTJyVEr2CMpynuR3xlgx1KCSB+nfmhfFhGQDyXhYUCIdsLkrjOKbuO1g2DZDiq4qh81PCq7yycVlcKcnzctoE01H/AJyjpodFw/4BtJcUoKB265/wCcK3hBHoX7tNs5SUZ7pw6Xz1VOcopfhZF+BWsiXENn62vSCEjfAmPFNTrkcjzOd80IZCIHRxTQB6I4bsfRQM7mfzXoNHJzHe+eSyqjSZPd94x9XFg8XyojmwpMXwr9Lgiv2rFutQer3JYdXyV5NDHFjKS0xQpYih6pR4UohfSyFJUGU7Xq1LdDkF/FfuBnd4d+iyJqaFUiChcB7v5YpNgTgRFVYiTuloPIOOvzStKI18f6KIdLH7UiRCDkyw2TAvw83RGY45Jf8/8AaqRcsYTkyfC2E0gRFAP/AAwRYNNQ1K17V8P+LAKI5qOqlxvvVBR5/wCOtHcXpouaQp0aUB/wPC4U7UP+nDLFGFK4AlfqxiSs8hW/dcZ5a4YVo+qTJv4prJMYs1RVgk+diaoR3j2d3cl33z8fihLk8zPB1S0Yh1zYKhIPjinuQvOPgj7KBT2EwCGWDGHq4yNBSKyrNvDBfJsE8XDlQN8qy4K9yq5a9IrHaI2jxVeaddXCaZ/5FFHSLAUOmknFJCh5oPF9FdXts4myHo8THo7rx4FR+abPB5uDBaMHl8WMeYd+qTEENDm7sIT5z7qEJU5+Jrdgylp86TmeubEInHfdBqnJcxSlkajOfHP5si4O8EBTjwUFIBjmIORndkEBQfFidi8JixP/ABDu4zUz/gKZa12H/RCf8CRH/Ahd/dMUApi62j1QmmKTp/xKh/1YrAryKJtM46h9p1X6Bco5XjtsuI/FaxwUICGT4qKHFHxA5oscoj1O82PwHcw+7MxWbr35igdKu6B+3fiiTIMCE+p4o6hpNicl+GKwcsaOGc+Z/irsLDGcE/q8bwvCa4vCmprTBrKovtSyg/4QrjaGwe6tLO17CnlQlipRUqTWgjdLyoKdouSTG/I1Yig/EO8fRPCV+Cq+o81/dcyl3A0nAHcjWXh7p4Aa9vNg78lGB8/6sQs805xsmVV86A/Cf3TCojoeuZfuubcQRqJzyvw/N1VwQEgkc+KcccfgeT/vaNsoahBqvEgh5jCoBY6sZFi+VcRcGWMquCiOKJhdbdIpHKwbBpYUJYNpmaf8gKJpUrKZonm4UN0vk/4gUxNTuukACaO4dbeVUo4ZuQAeyc81zCsR+KYJbAKxooEfZ4s5EjoBdfm4hA8n9Nj08J+JKGGgEFEMjMqZcJDhBQ9mCaM4ozwDNxIeaJUPgjgRBA1U1mOrOqXQG5pIYpRguBZiSOaAo0S5I6eYXT4xDss7+N0Y/wCI8UDiuKkFyTWWRWgeSutsM5e4ii6UCYoOFoOKYv5/8SNJ0qGJoMUhQUEXXVIUGhT8K/JZachKf6Wf/LfVHRfLRboh/N9HjPBe2v2k/EVSEybBA/7rRoE8WEBEOfXNgyOMnnj7vIPwnI+RsRc2Kfjkim+wAix5qOoyRCGmyZIi9AXhhQPYhD2U46cHANPGKXhQ5qerFiceq+FSKjFlzYMulgYLG7QihoeqCYoJ/wCAJoualFwUGYvvQaDujdo9WSlAjQNCCx/A0/A/dM1+a52pM7HzG/uuMZePD624lW5iyKYx+7ssMdv4rKSBMd2fHRFJIY33Y8nr85QGEQgiN83YDikE4RkZEv6vDodMU6DHkqeaE8VBKVDR817V3CiOK4rTPNcA3RDQnxUNBb+qh6sFD/hFCKJ2lR4sRn/A82KRQj4oZFFCR8+f+1hruReJhn4isxMITwmxYwM6syhYfdBhSlQfgodcDPw3YeDDw5TS4QkNHkmx2PeY1afITSoDoL6NLMqB1745uh4SqLcYHISS8SsxcBArj+qk2IsTYyh4sJXwuK9qkVA5qeaibIoX8F0i+ijdo8UNNopL5odNOlz/AMLNIUGxlOIuMsIp0rhVhgZBPiOQ+ymxBBjzy/VyKuZuKa48VFvS+/FnjUiX+PFGPaQF5hG7Yh2BC/C8fW0JEwvMEx80LMUCAn5vAmgo8j4nxWC1yaYBTTcLMh9JnigBKrte6kkWMiwbFCwRFRef+GjcrlYV7UM0M5R3S8WHmgijdpQ6ihHHdjJokmnaxRlChNCaFDaQ90lQIGhMROE5B0lLHYGkNwGGynVjRix8ULxzLTKw5fi5HZRQwZPHet5PoU55ccFXxgiGQbi8F2S8JmXg15eI5rNgAIEk+I4TmfJWuJeZDh++aAdnkoPgCo8WGwc2BsWKl5+KniptSa4r+LwsPFG1hRDdLJhlOlBn/gBzQVovFChlJmKZlDzfamtjYaFClCzYAb2l/Nc4Kny37BP3UkeqklhBTCAnH+opPRbtj8t2hgg1Ez3w5WMZyxFkjSOfVnr1FMMRIpM+5st2eU5D3YrAwmrB0Zn2VqJ0TKP8In9mXmbnNg4sVPNiCjzUyK3lJWYqDxVXhlQsH/QAcd/8BHNMU1FKCh5sQWPP/DosFjZoZ/wPUUJIsRR3FAuQOOaHkEBGIWbxAGLKo8VDhHq7DpxNyUIIC7IHFcpUCWdjN4osqh76PrxUIMnl5j/yvJge+vNhylfyEb2jI+LKwIaryzxjvYozRk2EZxYyaljqxHNg6qRXbFgtSeLI1vPFROah/wAuFHVFQomhF0UHdh6sUKRNDqmcWCh20KBNi881CromyHBtwojgAPzthxOxU+deLHPM0ewoD5opSaD2TYtZDIjf8KghfBu9V20M36sPLUocHf6pcuFJNuOf9tlpHH0r9DQ6KElPCrHNQ6vNgVJovxYrMV3lsdlRisxUX/gP+AdUKeVKCn72KUBQKG0VP+DxQvqshK3RELy8v4j9XBvxK8WaM9T6aBfXPqv0Ac8VRXXB15rNphKOJAjqhxACIfJx55v8+Qj/ANp2yfgAGptYMpR8ZIx90KAmGNYJwFY+h3WL/wAJFiuVTqp0XgisVJqZWGFTpoZ/xi+lEtENDadixSxtChk3hTE0xQoTeqD1Y2xtb2WcuRiiGkXuVJ8PopLUJRfqF5KggnkWf1XTnXDmVAKE8b/k0RKJLiPtXAT4IHEr3PNR85pHnEdB+2oL3LQhODPH82dGuU4hARhnmfXqrDHD3UA4hhzEUNhiqpPmUPsK0kWP+Ou3VB/wZY6ajdvUUNSD/oKDLwosQbTFKDKScWIvVKXW3ypvNfX/ACFfOFpxOYPkPqtIgEwbldHgfbVyOak0e8vdD4UwsPcljItIYx0QS/q8LyZXMYf6Gyv5zvHXZj69UIFPZqU++f8AVZ1dTPHFSgPnxUqUGDj3INBqDEaMGQJ0oOr10n5Uzj9NQgBIn1cp+FoAkEezbEO2JoqS198X4rxQJo7LFTxUkojmihRUAUKBMWLFiLFPf/CLEMUoFxTgSl3A9HwFmPWZjxlGUL0fYVogq6i8qqqr22TrmavFexzdFUpNTBNnQ5csc7pBI3Xy/NJ2uvdmyKyfXq+HVEOtrwdtEOQRs8/hrkLZ9Sf1ZQ3joh/qjzynrpM0RHkerNEcZfkUP2oIgkofgaPuKkf8B1YjKibBNFeKnqvNPihSgvQb4Uf8SH5oef8Ag6UIpQHLkEPaBZxlGcPZD5UJIBDiXzND8Ffs/ZPqTH1F1o0jNEEWZrzd4spzR80y4Vhia1BA2igWaJkg/NXz78808c93/wBsundMxP2PXgrAkM9ZYCEvMf6qAY16j/VHL7lYjWc3gHo5+EGrKvwY+CF+xQaBhBM3xPCh/wB5TR6RLKaE4sFTxXbxzRFB4oBxQzaP+AobQk4sTxQjmiqAXB7qcuAwmOgebmZHiookT8qgifVYarKoj6Bp9mrdso2ZsxyXR/6HVDxQzN7kigiiw4y+aqt37cKZE8a+PFBQ4dGj7dFf1d1deU/lrcIU9/4/z8RiUcGtK69bNVYcGzFEPo/3QQD5h4z90Wg+ppo5J4s3ack17Jc+5WEUegEABWT/AOjiyCRzq8e66+K0C3FhQoPdBaKKBxQ2P+JBADt8VtVoIU6WYfTWvygJ+GY/yVKhXkf7PzlaEl9/86yz1JqNfaojJl0F2jkI92PJHzUmWvup9L6WLr8FKSR91jBj1/7SyaHbNkwz0Bv3RAB8CP7TFCmQO8/TmvmWGf6qdgwehMfFm0ud8/2U4m453/RZd83H5/z/ADf7swJx9/8AtDK8Pn3/AJ/mUBlTHvj91wBo40eOe1uBYT8x65j+KcyGffunHyIx8Gsh9h5MCIDAMiJIidJepvLa+28IafVkojihtBOKFj1V6AJVYAO66glyJkiZn1PQY5kZO9zR8DZLX4rEmp4rjdrBtTxY83sKyN8lK/0UcIWfEv8AqsJEe9/3Y4B/n3WJBHHn+m4OPbPXPH+fyGDMPJ/dJYFDvmnuVipHceCf6IsHIHd7/PD/ADzYkjev/prAnDMPt9WQh58I4r7/AN/3Wmxk3Ef5zfKUz7/ts2Ez2T/CoEku5PH1TFeGeGH8lTmGQ8H+FUgXu9EfNHoOp9uH75aA6STyP8RWaxNHm4/4LqgUwsFDugBcUzkgcjvbB3RZ2cNFtHazjzWSk4rKd/z90Wq3EcXTK0zRWR811vFmOKG5H6seCo8RP9RYhVz4Y/n/AD83Q4+ZP5pzBDhXn5lph05APn4LBuj7+PbTBkwP4/5/jU6F/P8AxpHznZkfxeA0mRoJskEyeF/1/n3Vcc+orw+3T+J8eP4oTKE7m/sGi9C/44augmP/ALxUBQ7TzJh8oM+IrhYS5HAdH4uyApW5A+l/JUqBtaIocxRtDaG0LHdz6XfDL+K35yN5UPgID0VjCHqgFOnD5LHK5F6qmv1RI4j/ADzZvH8/+1CANuQ/mwaoFXu9bl0i8N66wRz9/wCqHkS/CqoMfavX+v8AJpZBHIE/VKxIRwp/CuHMT7/8/wA+rGRyfh5+e6IRP+H+f5NCoj5x1qI8vX+m81jjn7+W8tKEiLGfo5V/n+fNmSFYIMHj/Ya8yZORU/g/zZ0ln+/gK+DROZP2OfdjI1BeDmQ4jfnmjjnJmuJ8HV0fqvirpU7/AOBfBQp4ULD3WogQPt+wSqrytM+CpnqxEPjutJHed/7rkJn/AD3YRDHvj/VRBH6/z/IsRojjx/TYCMtQ53/PuuL/AJ/Vk/z/AHf85sG0blBxXGOP1UyTPy00gH2/2a4Artg/MTdKgPZ/VE6/z83Mno7qC/brUEs6c/ypxgvc/wDquc8P1/V96CJYpRo/ddsYDg8P9c0iCiJ4H9xWljFJ4/tTZw4CEh3CIiOHz7pA0eg83XsOBekyh6f4EX9eOhD9Nebpoio7RG0EZoWPNKeOF47/AKC0qzU6rNjYUOZ49lSAcbW8A9/+WEPMHn/yz5OPZ/qhJj8/+FDED8lDhwfH+6gmN+KoP/tawN4bBCxrB9Sn9UQkkntz4/SuqH6LvxXWX/Pqyp77ylBPwCnjxUQ80QnQ3vp/n+c0zL+/9KiJP7/0XLD/AJ+ag5/NleaeSsM7MRi/9rcMOGD+7hkkyQg9k74+rqwGKzHQPikyHty3ys4O1as/MwbxEu/F/VHioXwLPqipG0KUIuah6fWaEReeLmuKDVlFdAs8YXy37/1XYpxMPH6sbvMPb+Kz6jcf6vcx9v6ugbnVmAsfP/yjiPPt/oKoc/I3hR+rIy9/8pEiV82VdHNL4SGsQwniI/m4sj/n1SpCz4z+6wu/hfw/5+KwgObwP2/53YbyeOH+f57seVz2P6KpkH9tk8/f/wBsW4msrtMnvavM666WVHwN0PfH6+6yxgZiRyCG860HAjpdpURuH5sGF44zfNA+eAWH2H7hs/JfiiMoXazRsd/8A6pQUooJmj5ioIUo63hvez4btDzchWBn5ApQpXiPXX4qgCHTKkmQcvE2Nl32/wCrKWBjv9JyzUIN3f6vsIfblCOODiP/AGocn6vV+6PNea4kPHZn6+KYhLyhL+HGkoDnx/ugwn/PqskE74/3SdrPD+qEMr/nlsmPDNG4sT6f6sZz+1M67+7HArlqQ7uaPHIfv/PVLKEzDXwI9eYK5MLkvK3jB4Dcn6os/WRZXz3fLXOJPb1zVaBQnJ3/AILOdoo8UeKMozKFCKeFnLEegf4NmXhdvIvD+EjZJeY7LBUEePimAQ0nQ/8Am2cyDxzWV8ucTWH1+q3JwdrQVEvpf6f891X7HxRgnTmD/c1wMj6qmP8AFM1IX3eIZ5lOu1zz+6pUIySfk2ql81hmo1J+E/5/nquoGbwnXqpcOfH9lzQz8D+Wpace6S6P7LzSz+aNgaQP/tlQAueQx8PPH+bVcxaQI5ao7fNAr9uX4sgP87rQlwHoaMrMuK4cTCnN0mqLUTtFDRGl8KGRWjtQgmyUwdpLGgJ4KIXlUGyQzx5spDv6LYSntY0FhLsFhJmIJ/ZQMKQ9z/FfhFNAcGYmP3Xwuux/muMFfj/2KygEPwT+7mIfJ/rqhuQ+5siLOB76swrKdDudfdhGgHqq6qhSIgn5f6/z9XFB8I/VSDjPlWNAe+XXz/n7spcNryHPgu3L/wAokWCuJyPmI/z/AFSWIwERHKP6Pmx1lCTpVIzLawJ/JzQaOOnurC4knqsMgiGLD5v+ODHyfxQ1JvDaC89oWJJsZtROF69H9ZUDlWff95XHKrJQccUnKZZJpFICPd4PV7IQ8cXYIehr+v8AMoOannP2/wC6ZNrTWMkv5P7sZgGPQz++qx5nOU/CHqGfVeVR9T3Yk/7soTcwbzMn7N7uZwDhP87ZFZVECxHchWZzH0/+2Zk/aoBRPuWyWMZ72uSIoLZGzA38WTFBLKDPcf5FTB41Zgf+7UyxzR3dWR2fuunR4bMywfmhDVELZNyspe7IIOhNZvwaKPFMf8pdJuEXGWd2E4+3P7pI9paprzVE3aeVhIJPN5vPFZ/WfFzALlqRTnH/ANoSQgV7Yj81XmjLbCwx+K0ZPl/ssjgfA/3eeI6SEfuO7rDj4YKIv+6JAVwkhONl/dSnUiY8eq9y87EzPqKXEvwZ/n+c0R989E3AR6zn3R5X7vh/n/kKELIM91mVWeo8vdBDlfWBleeE/wBqbEE0k/zzWl1XBkJFRjI5+qyMNB1IT9lfXPz4ftojW+tjW5oaFCurkR9J/RdReWqCLEzRHHNP1QqJc4Qc2aR8ioFwOSJhP/v4ri87s/zWVlWWLvjK0FE9avP03Z+XxZOwz5SpJ/q4LmY6cZ+vi8QwAYTr3X5pkU4Ynxv+f57p5zOeaHJj6KlfP4is9Pqx1bFlZo4URzPH+f8AtXoTEf8At1JMF6XA5RUhifmmRE8r+KDogDHfXNawkz+aQhsHRUVThH+r+RYWn8QvY0T/AMAp2ihlzDGP5KR/dYsYjqr/AGGhCoWmJORsbzdJ1Oe67PLGoQs/J/jZySJDvj07RCP+RL493gH8lef8/wAm8YLjy9fNZEx2qD/nu8YU8pn44sZHLy395WKSZrN5UycrhM/n4qDv82Ezn5uc5+W5ZZVvRQkWKzGknVxQyY7LEaUb6PN6KPJZeycKvJYB/uyAOd0tRh5i79t8T+IKP/c0RSgqH5/en92cSzZs3lT6oHKk+lgkfrLkDnsyqg5ksd4Vs2buhuiP5Lt6+akVikjnO7IaeIZLMIAlOFAsPmg44+KRNh5TJ9bZ4IxmHT1XmlBp4L1FSU9eqBxNG+bF2vjuhUyNYFeHq7AWAXvqrSRFEImeympKAnxxY0PP3tlEuHdbJw8XjMAXkh+6Glppo8UFCkE6rPRC/t/5OZ7oJcbZcnNcQGMnavwy8BzElKUcTs3Go8nC90oJGIK/VAi426y4p+P6uYUTzINIBQiPJZaLzkTFNLfcz/FVBOaw8Pl+Lu0yrzNOaKkE1sWYfiv/AO1H4KDm4VSxQ/8At4Qw1tLC55oIUp5DH1TEZLzRMH5siMTmfJTQ4ifxV1JImbMsM9Sy/VGSaOaFM80ZlEbQIm6kJA6/gwVTqwIc0D6oOOKvwpxDLDkIuxwTPzSKTzVBzne4Of1XgKxxR+Z6s8Hl92bcXD/2xGYn5i5n8FRcnYw8/wBXSSkeMvaU/KkGuVVZ5olrOkydNJhBMd1GRxZeavqzcUls7Gf8GqVDGWfZqY0WEZROqGBmXj/V0zxz3ThkmKTBhEXGF68IJ+ynwad/yOaeou00bRlDhpT6j0dGj8ze1g8vFiSKEsN4IoCXixQ+Yo9NI8BPE80xfNHUJFwJl32evqzTzQFieSxjbGEvCnPP3UiBJ1NDkAnzlOBvNhYP0f8ABmnPJTICf57q3Lz7q60CM/iz880RreuYLppzTLN4EC3nsAU5TxUQDchXp7qcxe2pWHusvmX+KQnuZcrc4kfRP6uSSrzTQ90WISeK5O/qofxVLU81Kok8hYhHO4qleBExSSYn1nVxkjn9WeSlXWR+h/7SmWw7qACZzJaMB3h/3UWcJMd/hifqqVrRkQc48NDAx5BmyJH3kJ87ZWXAf5x/wBJSDj8Xck/LVXoqxUqzBk1ZYNmmxmj190tTEeKjJdUHXit7c80UUN6T+2KbD6j/AHY0dwNL70pyceCJ+GypDJzzYs0PNIXh3XdqM0ZfaijzWTPVDrKvpWzNl8UiTkfFNJki4S/NgIw6aoBlOaAL4GjDfxUqcw/RSGMAVfwVtVcnEPMEv5synFzKNJBnCOTKsQHla4BgQalhBhzWriAIThwEBMT182YHLAw8RLgOvIeKhjlwAh6YWVAjDgfH+NUSNenfsKZ5dIh+ZXQA/L/VA0uIVQjM8Lp9t0256vamPA3nVXLDmLIPdYAY3iyYowEfzQz3qgRORUN9gAb9v7ogvbz04I+mm1KcaPw0G88B9FGP4o6aDojyP9dV7eMs7NFyH4F8xQfBh2WUkz/u4NJxfCy+v+Dl3TvFTfmLMSrJXm2WqMr2zZ2iSk/N5wx7/wDKB1r237s4p4R/qkImJWYk7OA9Ly/VmLJwC/LzQiIIyHhhsLBHc0YvzC4IokSQWT2WcKTwRPRriNTvu+rNQGCY7YYKrSqA6M90kICOAlJBPRgOT1RZ2H6LlCTpj4oWmehizZrOXt/0WDlV77UlSonFBZA+Is6DgTMk/wAUh+wc/UX6wiAakYjysdIh72tPOKieaQg8WP4sFBOJT/LSwggUjyI7Us+6tE90oFY5aXkzOTvpyligvRByCR5IaU0hwLdAIknKcb46a6eNNoYkQn1Y1WAS+TR3xUAf0FkpfupjKCjihBXVOP3psdirZrQEv9TskIk6X/d30c7pYMBHHJ390T4vKFBreBH/AAAEMKkvmkAQqcdFjSAjwqhP2UmR4kxQBYRHE8zZ+KLOIJDp2ETaVTKPB4NZSg18mqyNiMo6/LROTO+L1h92TXf7pnKev8/8oZvQ491SWBPqmMcB9AoENyhAa3KfNTWt+Xh/h+qUTH+rslBMnzZkal3Jo+TiyC4YadWxU1Kncx+SDn+Mp8O5m9Y+m6EAQd9H+qocnCwDzkn3QFqb9g/u4Z/SEsypnKPNMNNGZVOx/EH9r22ooYyWqwfoWSiM+KxAHetEG97Fvsp3Jp5thxJZgJ9h8NhEb3zv+qEhqDGHEvus+BKn+eKhSAY+GP7XAEjNI5mJsauUSqwUqqs0Mmq8b/upJDpWBC/dmY+DRd8ftqAdz31WK5e/NiR14LiLbpA47+L5wIHSOJ+KSj2HToP+d2MQvpYKPP8AdFSTaBcLzFE40bC4UIU9cl9NeVgqfVQcBeK69EvY5RuQJelaf6sh8qJvhMX4Cv0VwB1VNWzf/9k=" alt="Davorin Smit" width="236" height="236" loading="lazy" decoding="async">
+<div class="nm">Davorin Smit</div><div class="rl">ARCH</div>
+</div>
+<div class="pitch">
+<div class="cta-var cta-v1"><h2>Let&rsquo;s get HubX (BestSelf) into this category.</h2>
+<p></p></div>
+<div class="cta-var cta-v2"><h2>0 placements in the videos we read. Let&rsquo;s make the next one yours.</h2>
+<p>Five creators are listed above, in the order we would approach them.</p></div>
+<div class="cta-var cta-v3"><h2>The roster is right there.</h2>
+<p>Five creators, in order. Davorin walks you through the brief.</p></div>
+<a class="cta-btn" href="https://meetings-eu1.hubspot.com/davorin-smit">Book 30 minutes with Davorin</a>
+<p class="arch">ARCH has rolled with over 5,000 influencers across both Americas, Europe, MENA and Australia. <a href="https://arch.agency/">arch.agency</a></p>
+</div>
+</div></div></section>
+
+</main>
+
+<footer><div class="wrap">
+<details class="how"><summary>How this page was built</summary><div class="inner">
+<ul>
+<li>Everything on this page came from the YouTube Data API v3 (search.list, videos.list, channels.list), over a window of 5 March 2026 to 1 September 2026 and read on 2 September 2026. No scraping, no paid tool, no logged-in session, no third-party estimate.</li>
+<li>The sample is four category searches, page one of each. A search returns at most 50 videos, so every count here is a floor, never a market size: 57 distinct videos across 26 channels, published in the 180 days to 1 September 2026. The four category searches returned 185 videos inside the window, 111 of them long-form. 54 of them are excluded from the sample: 19 did not pass the market-language test, because a search language preference is a bias and not a filter, 32 carry a title from the neighbouring category this page holds out by rule, or sit on a channel that mostly publishes it and 3 name none of this page&rsquo;s category words, on a channel that publishes a different category. YouTube&rsquo;s own total-results figure is never printed.</li>
+<li>A placement is a window video, long-form and five minutes or longer, where a researched brand won a disclosure phrase within 250 characters of its own name. Every competitor count on this page carries that five-minute floor, and the 03 map counts your own deals without it, so a shorter sponsored video of yours is named rather than dropped. The platform paid label on its own attributes to nobody, and a phrase that names its party inline is spent on that party. A firm placement carries the paid label or a sponsor sentence; a creator-code-only disclosure is counted separately as a code deal. A brand named with no attributable disclosure is a mention, never a placement: 3 mentions were discarded on that rule.</li>
+<li>Before any of that, each channel&rsquo;s standing description text is blanked out: any line or 80-character run appearing in at least half of its stored descriptions, once it has five of them. An evergreen affiliate link is standing text, not a deal, so a brand that survives only inside it is recorded and never counted: 0 window videos landed there.</li>
+<li>We read each channel&rsquo;s 50 most recent uploads, so every per-channel count is a floor as well. A channel&rsquo;s median is the views of the last 10 long-form uploads it published inside the window, where long-form means at least 300 seconds and not a livestream, and on an even count the median is the mean of the two middle values. Fewer than 5 leaves no median and no tier: 23 read channels sit there, unmeasured rather than under the floor. Shorts under 60 seconds are counted once, separately, and sit in no median: 34 in the window sample. A channel publishing more Shorts than long-form inside the window is held out of the roster; seven of them still plot on the chart, marked held out. A roster row needs a median of at least 3,000 and a long-form upload inside 90 days, an owner path we can point at (a channel description, a link or an email in the descriptions we read, or a custom handle), at least half of those ten window titles naming this category, and no more than half of them naming the neighbouring category this page holds out by rule. The sample obeys those same category floors, video by video.</li>
+<li>English-speaking markets (United States, United Kingdom, Australia, Canada) means a channel whose country is US, GB, AU, CA, or a channel with no country set, and in both cases the language floor: at least 70 per cent of the window uploads that carry an audio-language field are in English, over at least three of them, or, below three, at least 70 per cent of the window titles classify as English on a fixed stopword list. If a channel tags an audio language at all and not one of those tags is English, it fails outright and the title test is never reached. A country on its own is never enough. The market is the receipted market: the product is listed and priced in its own currency in each of the four countries the label names (the four per-country App Store listings for Lotus Flow (US, GB, AU and CA), each opened directly; the Canadian listing was read live and prices Lotus Premium in Canadian dollars, read 2 September 2026). The market rule governs the roster and the chart; the sample is held to the market language only, so 10 of its videos sit on channels outside the region set. The placement counts are read across every channel the searches surfaced, in any country and any language, because a competitor&rsquo;s spend is evidence wherever it sits.</li>
+<li>What this deliberately does not contain: audience geography, CPMs, rate cards, install or revenue figures, results claims, HubX (BestSelf)&rsquo;s own spend, contact details, or sentiment scored by a model.</li>
+</ul>
+<p class="caveat">View counts drift upward. The numbers on this page are a snapshot, and every one of them is a few hundred views behind by the time you read it. Nothing here is a forecast and nothing here is a result: it is a read of what is already public. The full claim-to-id list ships alongside this page as <em>claims.json</em>.</p>
+</div></details>
+<div class="foot"><div class="grid">
+<svg class="wordmark" viewBox="0 0 83 22" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ARCH."><path d="M12.9221 21.6938H16.6558L8.3093 0L0 21.6938H3.75839L4.64875 19.2654L11.9792 19.268L12.9221 21.6938ZM5.78611 16.2115C6.62793 13.7814 7.46899 11.3512 8.31107 8.92062L10.8443 16.218C9.15867 16.2163 7.47251 16.2137 5.78636 16.2112L5.78611 16.2115ZM30.5568 21.6938H34.6761L29.0098 12.544C29.0098 12.544 32.8828 11.7136 33.4664 8.05251C33.4664 8.05251 34.9666 1.00467 26.6508 0.585655H19.6557V4.1403L22.9621 9.37225V9.39451H19.6557V21.6938H23.1532V12.9158H25.1538L25.1555 12.9193H25.1598L30.5568 21.69Z" fill="#000F41"/><path d="M23.1533 12.9154V21.6934H23.1651V12.9187H25.1556L25.1539 12.9154H23.1533ZM53.1342 5.87189L55.6028 3.39297C55.6028 3.39297 52.9616 0.29249 48.2774 0.282122C48.2774 0.282122 42.6322 -0.0516709 39.4643 4.8604C39.4643 4.8604 35.5148 11.0942 39.4643 17.3802C39.4643 17.3802 42.2084 21.9913 48.1074 21.9913C48.1074 21.9913 52.2488 22.315 55.6028 18.926L53.1136 16.4099C53.1136 16.4099 51.3552 18.4597 48.3453 18.4693C48.3453 18.4693 41.6228 18.6736 41.2959 11.3441C41.2959 11.3441 40.8635 3.63598 48.7105 3.84991C48.7098 3.84991 51.1716 3.86964 53.1342 5.87189ZM71.9986 0.585317V9.34764H63.3301V0.585317H59.8293V21.6934H63.3301V12.8717H71.9986V21.6934H75.4861V0.585317H71.9986ZM81.12 21.8909C82.1583 21.8909 83.0001 21.0403 83.0001 19.9906C83.0001 18.9412 82.1583 18.0905 81.12 18.0905C80.0818 18.0905 79.2402 18.9412 79.2402 19.9906C79.2402 21.04 80.0818 21.8909 81.12 21.8909Z" fill="#000F41"/></svg>
+<span>HubX (BestSelf) &middot; English-speaking markets (United States, United Kingdom, Australia, Canada) &middot; 2 September 2026</span>
+</div></div>
+</div></footer>
+
+<script>
+(function(){
+var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* reveal on scroll + bar growth + count-ups */
+var io = new IntersectionObserver(function(es){
+  es.forEach(function(e){
+    if(!e.isIntersecting) return;
+    e.target.classList.add('in');
+    io.unobserve(e.target);
+    var ns = e.target.matches('[data-count]') ? [e.target] : e.target.querySelectorAll('[data-count]');
+    for(var i=0;i<ns.length;i++) count(ns[i]);
+  });
+}, {rootMargin:'0px 0px -12% 0px', threshold:0.15});
+
+document.querySelectorAll('.rv, .brow, .bbar, [data-count]').forEach(function(n){ io.observe(n); });
+
+function count(el){
+  if(reduce || el.dataset.done) return;
+  el.dataset.done = '1';
+  var end = parseFloat(el.dataset.count), dec = parseInt(el.dataset.dec || '0', 10);
+  var suf = el.dataset.suffix || '', dur = 1100, t0 = null;
+  function fmt(v){ return v.toLocaleString('en-US', {minimumFractionDigits:dec, maximumFractionDigits:dec}) + suf; }
+  function step(ts){
+    if(t0 === null) t0 = ts;
+    var p = Math.min(1, (ts - t0) / dur);
+    var e = 1 - Math.pow(1 - p, 3);
+    el.textContent = fmt(end * e);
+    if(p < 1) requestAnimationFrame(step); else el.textContent = fmt(end);
+  }
+  el.textContent = fmt(0);
+  requestAnimationFrame(step);
+}
+
+/* 02 scatter: click a face, open that channel card */
+var cards = document.querySelectorAll('#chans .chan');
+var dots  = document.querySelectorAll('.dot');
+if(cards.length && dots.length){
+  document.documentElement.classList.add('js-chan');
+  var open = null;
+  function show(key){
+    dots.forEach(function(d){ d.setAttribute('aria-expanded', String(d.dataset.ch === key)); });
+    cards.forEach(function(c){ c.classList.toggle('open', c.id === 'ch-' + key); });
+    open = key;
+  }
+  dots.forEach(function(d){
+    d.addEventListener('click', function(){
+      if(open === d.dataset.ch){ show(''); return; }
+      show(d.dataset.ch);
+      var c = document.getElementById('ch-' + d.dataset.ch);
+      if(c) c.classList.add('in');
+    });
+  });
+  show('yoga7');
+}
+})();
+</script>
+<style>.js-chan .chan{display:none}.js-chan .chan.open{display:block}</style>
+</body></html>
