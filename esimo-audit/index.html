@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>eSIMo on YouTube: a coverage and creator audit</title>
+<meta name="description" content="Who is buying creator sponsorships in travel connectivity and eSIM data plans on YouTube, and the creators eSIMo should be working with. Built from public YouTube Data API reads, 2 September 2026."/>
+<meta name="robots" content="noindex, nofollow"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#000F41;--cobalt:#3562FF;--lime:#F2FF82;--white:#FFFFFF;--plate:#EDEDED;
+--ink:#000F41;--sup:#666666;--sup2:#666666;--hair:rgba(0,15,65,.14);--ease:cubic-bezier(.58,.21,.25,1)}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;max-width:100%;overflow-x:hidden}
+body{background:var(--navy);color:var(--ink);font-family:"DM Sans",Arial,Helvetica,sans-serif;
+font-size:17px;line-height:1.5;font-weight:500;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1400px;margin:0 auto;padding:0 14px}
+a{color:inherit;text-decoration:none;border-bottom:1px solid rgba(0,15,65,.28)}
+a:hover{color:var(--cobalt);border-bottom-color:var(--cobalt)}
+img{display:block;max-width:100%;height:auto}
+h1,h2,h3{margin:0;text-transform:uppercase;font-weight:600;letter-spacing:-.04em;line-height:.8}
+p{margin:0}
+button,summary{font:inherit;color:inherit}
+.num{font-weight:700;letter-spacing:-.05em;line-height:.76;font-feature-settings:"tnum" 1;font-variant-numeric:tabular-nums}
+.arw{width:1em;height:.62em;flex:0 0 auto;vertical-align:baseline;display:inline-block}
+/* ---- reveal ---- */
+.rv{opacity:0;transform:translateY(30px);transition:opacity .75s var(--ease) var(--d,0ms),transform .75s var(--ease) var(--d,0ms)}
+.rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}}
+/* ---- mast / foot pills ---- */
+.mast{padding-top:14px}
+.mast .grid,.foot .grid{display:flex;align-items:center;justify-content:space-between;gap:16px;
+background:var(--lime);border-radius:35px;padding:21px 40px;flex-wrap:wrap}
+.logo{border-bottom:none;display:block} .wordmark{width:92px;height:auto;display:block}
+.stamp,.foot span{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--navy)}
+/* ---- beats ---- */
+.beat{padding:0}
+.card{background:var(--white);border-radius:35px;margin:14px 0;padding:64px 60px;
+min-height:min(92vh,1000px);display:flex;flex-direction:column;justify-content:space-between;gap:40px}
+.beat-head{display:flex;align-items:flex-start;gap:22px;flex-wrap:wrap}
+.snum{font-size:12px;font-weight:700;letter-spacing:.14em;color:var(--cobalt);padding-top:.5em}
+.beat-head h2{font-size:clamp(38px,6vw,90px);font-weight:600;line-height:.8;letter-spacing:-.04em;flex:1;min-width:min(100%,280px)}
+.lede{font-size:19px;color:var(--sup);max-width:56ch;margin-top:18px}
+/* ---- folio (running head) + FIG caption register: 12px w700 caps ---- */
+.folio{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;
+border-top:1px solid var(--hair);padding-top:13px;margin-bottom:34px;
+font-size:12px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;line-height:1}
+.folio .fn{color:var(--cobalt)}
+.folio .fk{color:var(--ink)}
+.folio .fr{margin-left:auto;color:var(--sup2);text-align:right}
+.gapbeat .folio{border-top-color:rgba(255,255,255,.34)}
+.gapbeat .folio .fn{color:var(--lime)}
+.gapbeat .folio .fk{color:#fff}
+.gapbeat .folio .fr{color:rgba(255,255,255,.66)}
+.cap{font-size:12.5px;color:var(--sup2);max-width:88ch;line-height:1.5}
+.cap a{border-bottom-color:rgba(0,15,65,.2)}
+.fig{display:inline-block;margin-right:9px;font-size:11px;font-weight:700;letter-spacing:.13em;
+text-transform:uppercase;color:var(--cobalt)}
+.gapbeat .cap{color:rgba(255,255,255,.72);max-width:78ch}
+.gapbeat .cap a{color:#fff;border-bottom-color:rgba(255,255,255,.4)}
+.gapbeat .cap a:hover{color:var(--lime);border-bottom-color:var(--lime)}
+.gapbeat .fig{color:var(--lime)}
+/* ---- hero ---- */
+.hero{margin:14px 0 0;color:#fff}
+.stage{position:relative;border-radius:35px;overflow:hidden;background:#000F41;
+height:clamp(320px,40vh,540px);display:flex;align-items:flex-end}
+.stage picture,.stage img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.stage img{filter:saturate(.9);object-position:50% 26%}
+.veil{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,15,65,.74) 0%,rgba(0,15,65,.24) 30%,rgba(0,15,65,.58) 62%,rgba(0,15,65,.95) 100%)}
+.stage-in{position:relative;padding:40px;width:100%}
+.kicker{position:absolute;top:40px;left:40px;right:40px;font-size:12px;font-weight:700;
+letter-spacing:.14em;text-transform:uppercase;color:var(--lime)}
+.stamp-num{font-size:clamp(58px,11.4vw,172px);color:var(--lime)}
+.stamp-lab{font-size:clamp(12px,1.1vw,15px);font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+color:#fff;margin-top:10px;max-width:44ch}
+h1{font-size:clamp(38px,6.6vw,96px);color:#fff;margin:28px 0 0}
+.hero-dek{margin-top:24px;font-size:19px;color:rgba(255,255,255,.74);max-width:52ch}
+.hero-src{margin-top:12px;font-size:12.5px;color:rgba(255,255,255,.55);max-width:70ch}
+.hero-src a{color:rgba(255,255,255,.8);border-bottom-color:rgba(255,255,255,.3)}
+.hero-src a:hover{color:var(--lime);border-bottom-color:var(--lime)}
+/* hero stat ledger: three findings, plain-language labels, on screen one */
+.finds{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin:24px 0 0;
+border-top:1px solid rgba(255,255,255,.32)}
+.find{padding:20px 30px 0 0;border-left:1px solid rgba(255,255,255,.18);padding-left:30px}
+.find:first-child{border-left:0;padding-left:0}
+.find .n{display:block;font-size:clamp(34px,3.9vw,56px);color:#fff}
+.find:first-child .n{color:var(--lime)}
+.find .l{display:block;margin-top:12px;font-size:12px;font-weight:700;letter-spacing:.08em;
+text-transform:uppercase;color:rgba(255,255,255,.72);line-height:1.4;max-width:26ch}
+/* ---- 01 volume ---- */
+.poster{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;padding:20px 0}
+.poster .num{font-size:clamp(110px,25vw,380px)}
+.poster .unit{font-size:clamp(26px,4.4vw,74px);font-weight:600;letter-spacing:-.04em;text-transform:uppercase;line-height:.9;margin-top:6px}
+.poster .sub{margin-top:26px;font-size:18px;color:var(--sup);max-width:52ch}
+.tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.tiles>div{background:var(--plate);border-radius:25px;padding:28px 26px}
+.tiles b{display:block;font-size:clamp(28px,3.2vw,48px);font-weight:700;letter-spacing:-.04em;line-height:1}
+.tiles span{display:block;margin-top:12px;font-size:11px;font-weight:700;letter-spacing:.08em;
+text-transform:uppercase;color:var(--sup2);line-height:1.5}
+.tiles a{border-bottom:none} .tiles a:hover b{color:var(--cobalt)}
+/* ---- 02 scatter ---- */
+.plotwrap{position:relative}
+/* Label gutters. A creator name is arbitrarily long ("KATIETHETRAINSTATIONFANGAMER105")
+   and .dlab is nowrap, so a dot near either edge pushes its label past the scroll box and
+   gets sliced ("NATHAN TIBBS" shipped as "IATHAN TIBBS" on the live TrainStation 3 page).
+   The box scrolls horizontally, so wider side padding costs nothing but scroll length.
+   Bottom padding grows too, to seat the x-axis ticks below the dot-label band (see .gx i). */
+.plotscroll{overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;scrollbar-width:thin;padding:6px 96px 78px 118px}
+.plot{position:relative;height:clamp(380px,42vw,540px);background:var(--plate);border-radius:25px;
+margin:6px 0 0;padding:0}
+.gx{position:absolute;top:0;bottom:0;width:1px;background:rgba(0,15,65,.09)}
+.gx i,.gy i{position:absolute;font-style:normal;font-size:11px;font-weight:700;letter-spacing:.06em;color:var(--sup2)}
+/* -46px clears a .lab-down dot label sitting at the plot floor; at the old -24px the axis
+   ticks landed inside that band ("JUSTIN MCGOVERN" over "1", "MATRIARCOS G" over "100"). */
+.gx i{bottom:-66px;left:0;transform:translateX(-50%)}
+.gy{position:absolute;left:0;right:0;height:1px;background:rgba(0,15,65,.09)}
+/* -62px, not -14px: a dot sitting at the chart origin (left:0%) centres a nowrap label that
+   reaches ~53px left of the plot edge, straight through the y-axis tick gutter. Seating the
+   ticks beyond that reach clears it for any creator who lands on the axis. */
+.gy i{left:-62px;top:-7px;transform:translateX(-100%)}
+/* Plate-coloured halo on every chart annotation. Dot positions come from the data, so no
+   amount of hand-placing guarantees a clear spot on the NEXT game — the halo keeps ticks and
+   the diagonal legible wherever a creator happens to land. Cheap, and data-independent. */
+.gx i,.gy i,.diaglab,.ownlab{text-shadow:0 0 4px var(--plate),0 0 4px var(--plate),0 0 4px var(--plate),0 0 8px var(--plate)}
+.gx i,.gy i{z-index:1}
+.diag{position:absolute;inset:0;width:100%;height:100%}
+/* Opaque chip, not just a halo. This is a reference-line label sitting at a fixed % on a plot
+   whose dots are placed by data: on TrainStation 3 the old 46/47 spot ran through the studio
+   mark, and moving it to 58/59 cleared that game while landing in Hello Neighbor's and Melon
+   Sandbox's clusters. No fixed coordinate is safe for every game, so instead of chasing one,
+   the label carries its own background and always reads on top of whatever it crosses. */
+.diaglab{position:absolute;left:58%;bottom:59%;font-size:11px;font-weight:700;letter-spacing:.04em;
+color:var(--sup2);transform:rotate(-34deg);transform-origin:left center;white-space:nowrap;
+background:var(--plate);padding:2px 7px;border-radius:20px;z-index:3}
+.dot{position:absolute;transform:translate(-50%,50%);background:none;border:0;padding:0;cursor:pointer;
+width:56px;height:56px;border-radius:50%;transition:transform .4s var(--ease)}
+.dot img{width:56px;height:56px;border-radius:50%;border:3px solid var(--navy);background:#fff}
+.dot-hot img{border-color:var(--cobalt);box-shadow:0 0 0 6px rgba(53,98,255,.18)}
+.dot:hover,.dot:focus-visible{transform:translate(-50%,50%) scale(1.12);outline:none;z-index:6}
+.dot[aria-expanded="true"] img{border-color:var(--cobalt)}
+.dot[aria-expanded="true"]{z-index:7}
+.dlab{position:absolute;left:50%;transform:translateX(-50%);white-space:nowrap;font-size:10.5px;
+font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--sup);pointer-events:none}
+.lab-down .dlab{top:60px} .lab-up .dlab{bottom:60px}
+.lab-left .dlab{right:62px;left:auto;transform:none;top:20px}
+.lab-right .dlab{left:62px;transform:none;top:20px}
+.dot:hover .dlab,.dot[aria-expanded="true"] .dlab{color:var(--cobalt)}
+.ownmark{position:absolute;width:22px;height:22px;transform:translate(-50%,50%);border:3px solid var(--navy);background:#fff}
+.ownlab{position:absolute;transform:translate(-100%,50%);padding-right:20px;white-space:nowrap;font-size:10.5px;
+font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--sup);z-index:2}
+/* Axis ticks sit above dot labels when they must share space (Kingshot: "1K" under the studio
+   label). The tick is the one that has to stay readable - a label you can read but cannot
+   scale against is worse than a slightly covered name. */
+.gx i,.gy i{z-index:4;background:var(--plate);padding:1px 4px;border-radius:20px}
+.axl{display:flex;justify-content:space-between;gap:20px;margin-top:34px;font-size:11px;font-weight:700;
+letter-spacing:.08em;text-transform:uppercase;color:var(--sup2)}
+.swipe{display:none;font-size:11px;font-weight:700;letter-spacing:.1em;color:var(--sup2);margin-top:10px}
+.chans{margin-top:8px}
+.chan{background:var(--plate);border-radius:25px;padding:30px 32px;margin-top:12px}
+.chan-hot{background:#EDEDED;outline:2px solid var(--cobalt);outline-offset:-2px}
+.chan-h{display:flex;gap:16px;align-items:center}
+.chan-h img{width:64px;height:64px;border-radius:50%}
+.chan-h>div:nth-child(2){flex:1;min-width:0}
+.chan h3{font-size:22px;font-weight:700;letter-spacing:-.02em;line-height:1.05;text-transform:none;overflow-wrap:anywhere}
+.meta{margin-top:5px;font-size:12.5px;color:var(--sup2);text-transform:none;font-weight:500}
+.chan-n{text-align:right;font-size:24px;font-weight:700;letter-spacing:-.03em;white-space:nowrap;line-height:1}
+.chan-n i{display:block;font-style:normal;font-size:10px;font-weight:700;letter-spacing:.06em;
+text-transform:uppercase;color:var(--sup2);margin-top:6px}
+.vrow{display:flex;gap:16px;justify-content:space-between;align-items:baseline;padding:12px 0;
+border-top:1px solid var(--hair);font-size:14.5px;margin-top:14px}
+.vrow+.vrow{margin-top:0}
+.vrow a{flex:1;min-width:0;overflow-wrap:anywhere;border-bottom:none;text-decoration:underline;text-decoration-color:rgba(0,15,65,.22);text-underline-offset:4px}
+.vrow a:hover{text-decoration-color:var(--cobalt)}
+.vnum{white-space:nowrap;font-weight:700;text-align:right}
+.vnum i{display:block;font-style:normal;font-size:11px;font-weight:500;color:var(--sup2);margin-top:3px}
+.chan-line{margin-top:16px;font-size:15px;line-height:1.5;color:var(--sup)}
+.chan footer{margin-top:18px;display:flex;flex-wrap:wrap;gap:8px}
+.tag{font-size:10.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--navy);
+background:var(--white);border:1px solid var(--hair);padding:9px 15px;border-radius:40px;white-space:nowrap}
+.tag-paid{background:var(--lime);border-color:var(--lime)}
+a.tag-acc{background:var(--cobalt);border-color:var(--cobalt);color:#fff;border-bottom:1px solid var(--cobalt)}
+a.tag-acc:hover{background:var(--navy);border-color:var(--navy);color:var(--lime)}
+.callout{background:var(--cobalt);color:#fff;border-radius:25px;padding:34px 36px;margin-top:12px}
+.callout b{display:block;font-size:clamp(20px,2.4vw,34px);font-weight:600;letter-spacing:-.03em;
+line-height:.95;text-transform:uppercase;max-width:24ch}
+.callout span{display:block;margin-top:14px;font-size:13px;color:rgba(255,255,255,.82);max-width:70ch}
+/* ---- 03 gap (full bleed cobalt) ---- */
+.gapbeat{background:var(--cobalt);color:#fff;margin:14px 0;padding:96px 0 88px}
+.gapbeat h2,.gapbeat h3{color:#fff}
+.gapbeat .snum{color:var(--lime)}
+/* head-to-head ledger, staged inside the cobalt scoreboard */
+.tape{margin-top:44px;background:rgba(255,255,255,.12);border-radius:25px;padding:28px 34px}
+.taperow{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,auto) minmax(0,1fr);gap:18px;
+align-items:center;padding:16px 0;border-bottom:1px solid rgba(255,255,255,.22)}
+.taperow:last-child{border-bottom:0;padding-bottom:0}
+.taphead{padding-top:2px}
+.taphead .side{display:flex;gap:14px;align-items:center;min-width:0}
+.taphead .side img{width:54px;height:54px;border-radius:50%;flex:0 0 auto;border:2px solid rgba(255,255,255,.55)}
+.taphead .side.r{flex-direction:row-reverse;text-align:right}
+.taphead b{display:block;font-size:16px;font-weight:700;letter-spacing:-.01em;text-transform:uppercase;
+line-height:1.05;overflow-wrap:anywhere}
+.taphead i{display:block;font-style:normal;margin-top:5px;font-size:10.5px;font-weight:700;
+letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.72)}
+.vs{font-size:12px;font-weight:700;letter-spacing:.16em;color:var(--lime);text-align:center}
+.taperow .a,.taperow .b{font-size:clamp(20px,2.5vw,34px);font-weight:700;letter-spacing:-.04em;line-height:.95;
+font-variant-numeric:tabular-nums}
+.taperow .b{text-align:right}
+.taperow .m{font-size:10.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+color:rgba(255,255,255,.8);text-align:center;white-space:nowrap}
+.tape a{color:#fff;border-bottom-color:rgba(255,255,255,.32)}
+.tape a:hover{color:var(--lime);border-bottom-color:var(--lime)}
+.board{margin-top:48px;display:flex;flex-direction:column;gap:26px}
+.brow{display:block}
+.blab{display:flex;justify-content:space-between;gap:20px;align-items:baseline;
+font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.78)}
+.bval{white-space:nowrap;color:#fff}
+.btrack{margin-top:12px;height:clamp(64px,7.6vw,108px);background:rgba(255,255,255,.14);border-radius:6px;
+display:flex;overflow:hidden}
+.bfill{width:0;transition:width 1.15s var(--ease) var(--d,0ms);position:relative;overflow:hidden;flex:0 0 auto}
+.in .bfill,.brow.in .bfill{width:var(--w)}
+@media (prefers-reduced-motion:reduce){.bfill{width:var(--w);transition:none}}
+.bfill-w{background:#fff}
+.inbar{position:absolute;left:0;top:0;bottom:0;width:13.2%;overflow:hidden;border-right:3px solid var(--lime)}
+.inbar picture,.inbar img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.bfill picture,.bfill img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.bfill-img{outline:2px solid var(--lime);outline-offset:-2px}
+.bfill-2{opacity:.82}
+.bnote{margin-top:10px;font-size:13px;color:rgba(255,255,255,.7);max-width:78ch}
+.bnote a{color:#fff;border-bottom-color:rgba(255,255,255,.4)}
+.bnote a:hover{color:var(--lime);border-bottom-color:var(--lime)}
+.gapchip{margin-top:52px;background:var(--lime);color:var(--navy);border-radius:35px;padding:44px 48px;
+display:flex;align-items:center;gap:40px;flex-wrap:wrap}
+.gapchip .n{font-size:clamp(58px,9vw,140px)}
+.gapchip p{flex:1;min-width:min(100%,280px);font-size:clamp(18px,2vw,28px);font-weight:600;
+letter-spacing:-.02em;line-height:1.05;text-transform:uppercase}
+.gapchip a{border-bottom-color:rgba(0,15,65,.35)}
+.gapstats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:12px}
+.gapstats div{background:rgba(255,255,255,.12);border-radius:25px;padding:26px}
+.gapstats b{display:block;font-size:clamp(24px,2.6vw,38px);font-weight:700;letter-spacing:-.04em;line-height:1}
+.gapstats span{display:block;margin-top:10px;font-size:11px;font-weight:700;letter-spacing:.08em;
+text-transform:uppercase;color:rgba(255,255,255,.7);line-height:1.5}
+.gapstats a{color:#fff;border-bottom-color:rgba(255,255,255,.4)}
+/* ---- 04 mosaic ---- */
+.split{display:flex;gap:48px;align-items:flex-start;flex-wrap:wrap}
+.split .poster{flex:0 0 auto;min-width:min(100%,360px)}
+.dual{display:flex;gap:56px;flex-wrap:wrap;align-items:flex-end}
+.dual>div{min-width:min(100%,240px)}
+.dual .num{font-size:clamp(66px,11vw,168px)}
+.dual .l{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--sup2);margin-top:12px}
+/* view-proportional mosaic: every tile is a square, its AREA is that video's
+   share of the 141,851 sample views. 36 views renders at 36 views' worth of ink. */
+.mos{position:relative;width:100%;aspect-ratio:1248.5/571}
+.mtile{position:absolute;left:calc(var(--l)*1%);top:calc(var(--t)*1%);
+width:calc(var(--s)*1%);height:calc(var(--sy)*1%);
+border-radius:10px;overflow:hidden;border-bottom:none;background:var(--plate);display:block}
+.mtile picture,.mtile img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.tvz{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,15,65,.02) 38%,rgba(0,15,65,.86))}
+.mtile img{transition:transform .6s var(--ease)}
+.mtile:hover img{transform:scale(1.05)}
+.mtile:hover{outline:2px solid var(--cobalt);outline-offset:2px}
+.mtile .tv{position:absolute;left:12px;right:10px;bottom:24px;font-size:14px;font-weight:700;
+letter-spacing:-.03em;color:#fff;line-height:1;font-variant-numeric:tabular-nums}
+.mtile .tc{position:absolute;left:12px;bottom:10px;right:10px;font-size:9.5px;font-weight:700;letter-spacing:.07em;
+text-transform:uppercase;color:rgba(255,255,255,.7);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.g1{border-radius:18px}
+.g1 .tv{font-size:clamp(22px,2.7vw,42px);bottom:32px;letter-spacing:-.045em}
+.g1 .tc{font-size:11px;bottom:14px}
+.g2 .tv{font-size:clamp(13px,1.5vw,21px);bottom:26px}
+.g3 .tv{font-size:clamp(11px,1.05vw,15px);bottom:22px}
+.g3 .tc{font-size:9px;bottom:8px}
+.g4 .tv,.g4 .tc{display:none}
+.g4{border-radius:6px}
+.bbar{display:flex;height:56px;border-radius:12px;overflow:hidden;margin-top:12px;background:var(--plate)}
+.seg{width:0;transition:width 1s var(--ease)} .bbar.in .seg{width:var(--w)}
+@media (prefers-reduced-motion:reduce){.seg{width:var(--w);transition:none}}
+.b1{background:var(--cobalt)} .b2{background:var(--navy)} .b3{background:#F2FF82}
+.b4{background:#666666} .b5{background:#EDEDED}
+.bkeys{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin-top:14px}
+.bk i{display:block;width:24px;height:6px;border-radius:3px}
+/* b5 swatch is #EDEDED on a light plate: hairline keeps the key readable */
+.bk i.b5{box-shadow:inset 0 0 0 1px #666666}
+.bk b{display:block;margin-top:10px;font-size:13.5px;font-weight:700}
+.bk span{display:block;margin-top:3px;font-size:12px;color:var(--sup2)}
+details.all{margin-top:34px;border-top:1px solid var(--hair)}
+details.all>summary{cursor:pointer;list-style:none;padding:22px 0 0;font-size:12px;font-weight:700;
+letter-spacing:.12em;text-transform:uppercase;color:var(--cobalt)}
+details.all>summary::-webkit-details-marker{display:none}
+details.all>summary::after{content:" +"} details.all[open]>summary::after{content:" \2212"}
+table{width:100%;border-collapse:collapse;margin-top:20px;font-size:14.5px;table-layout:fixed}
+th{text-align:left;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--sup2);
+font-weight:700;padding:0 12px 10px 0;border-bottom:1px solid var(--hair)}
+td{padding:12px 12px 12px 0;border-bottom:1px solid var(--hair);vertical-align:baseline}
+td a{overflow-wrap:anywhere}
+td.n{font-weight:700;white-space:nowrap} td.ch{color:var(--sup2);font-size:13.5px}
+td.dt{color:var(--sup2);font-size:13px;white-space:nowrap;text-align:right}
+/* ---- 05 roster ---- */
+.picks{display:flex;flex-direction:column}
+.pick{border-top:1px solid var(--hair)}
+.pick:last-child{border-bottom:1px solid var(--hair)}
+.pick>summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:26px;padding:26px 0;
+transition:background .35s var(--ease)}
+.pick>summary::-webkit-details-marker{display:none}
+.pick>summary:hover{background:var(--plate)}
+.pno{font-size:clamp(34px,4vw,58px);font-weight:700;letter-spacing:-.05em;line-height:.8;color:var(--cobalt);flex:0 0 auto}
+.pick img{width:64px;height:64px;border-radius:50%;flex:0 0 auto}
+.pid{flex:0 0 auto;width:min(30vw,250px)}
+.pid b{display:block;font-size:20px;font-weight:700;letter-spacing:-.02em;line-height:1.1;overflow-wrap:anywhere}
+.pid i{display:block;font-style:normal;margin-top:5px;font-size:11.5px;font-weight:700;letter-spacing:.06em;
+text-transform:uppercase;color:var(--sup2)}
+.pstat{display:block;font-style:normal;margin-top:6px;font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--cobalt)}
+.pbig{flex:0 0 auto;width:170px;font-size:clamp(30px,3.6vw,54px);font-weight:700;letter-spacing:-.04em;line-height:.85;text-align:right}
+.pbig-low{color:var(--sup2)}
+.pbig i{display:block;font-style:normal;font-size:10px;font-weight:700;letter-spacing:.08em;
+text-transform:uppercase;color:var(--sup2);margin-top:8px;text-align:right}
+.pline{flex:1;min-width:0;font-size:15px;color:var(--sup);line-height:1.4}
+.pmore{flex:0 0 auto;font-size:12px;font-weight:700;letter-spacing:.1em;color:var(--navy);
+background:var(--lime);border:1px solid var(--lime);border-radius:40px;padding:11px 20px;line-height:1;
+transition:background .3s var(--ease),border-color .3s var(--ease),color .3s var(--ease)}
+.pick[open] .pmore{background:var(--cobalt);border-color:var(--cobalt);color:#fff}
+.pbody{padding:6px 0 34px}
+.pstats{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.pstats>div{background:var(--plate);border-radius:20px;padding:20px 24px}
+.pstats b{display:block;font-size:26px;font-weight:700;letter-spacing:-.03em;line-height:1}
+.pstats span{display:block;margin-top:8px;font-size:10.5px;font-weight:700;letter-spacing:.08em;
+text-transform:uppercase;color:var(--sup2)}
+.pstats>div:last-child{background:none;padding:0}
+/* ---- close ---- */
+.close{background:var(--cobalt);border-radius:35px;margin:14px 0;padding:84px 60px;color:#fff;
+display:flex;gap:60px;align-items:center;flex-wrap:wrap}
+.close .who{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;gap:4px}
+.close .who img{width:236px;height:236px;border-radius:50%;border:6px solid var(--lime);margin-bottom:14px}
+.nm{font-size:15px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.rl{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.65)}
+.pitch{flex:1;min-width:min(100%,340px)}
+.cta-var{display:none}
+body.cta-1 .cta-v1,body.cta-2 .cta-v2,body.cta-3 .cta-v3{display:block}
+.close h2{color:#fff;font-size:clamp(34px,5.4vw,82px);max-width:15ch}
+.close p{margin-top:24px;font-size:19px;line-height:1.45;color:rgba(255,255,255,.92);max-width:46ch}
+.cta-btn{display:inline-block;margin-top:36px;background:var(--lime);color:var(--navy);font-weight:700;
+font-size:16px;letter-spacing:.03em;text-transform:uppercase;padding:28px 48px;border-radius:80px;
+border-bottom:none;transition:background .3s var(--ease),color .3s var(--ease)}
+.cta-btn:hover{background:#fff;color:var(--navy);border-bottom:none}
+.arch{margin-top:34px;font-size:12.5px;color:rgba(255,255,255,.6);max-width:60ch}
+.arch a{color:rgba(255,255,255,.85);border-bottom-color:rgba(255,255,255,.35)}
+/* ---- method + foot ---- */
+.how{margin:14px 0;background:rgba(255,255,255,.06);border-radius:25px;color:rgba(255,255,255,.62);font-size:12.5px}
+.how summary{cursor:pointer;padding:20px 32px;font-size:11px;font-weight:700;letter-spacing:.12em;
+text-transform:uppercase;color:rgba(255,255,255,.85)}
+.how .inner{padding:0 32px 26px}
+.how ul{margin:8px 0 0;padding-left:18px;line-height:1.6;overflow-wrap:anywhere}
+.how li{margin-bottom:8px}
+.how .caveat{margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,.14);color:rgba(255,255,255,.5)}
+.how a{color:#fff}
+.foot{margin:14px 0;padding-bottom:26px}
+/* ---- responsive ---- */
+@media (max-width:1100px){
+ .card{padding:52px 40px}
+ .pid{width:min(34vw,210px)} .pbig{width:130px} .pline{display:none}
+}
+@media (max-width:860px){
+ .card{padding:40px 26px;min-height:0;gap:34px;border-radius:28px}
+ .gapbeat{padding:64px 0 60px}
+ .finds{grid-template-columns:minmax(0,1fr)}
+ .find{display:flex;align-items:baseline;justify-content:space-between;gap:20px;
+  border-left:0;padding:16px 0;border-bottom:1px solid rgba(255,255,255,.18)}
+ .find:first-child{padding-left:0} .find:last-child{border-bottom:0}
+ .find .n{flex:0 0 auto;order:2;font-size:34px}
+ .find .l{margin-top:0;flex:1;max-width:none;line-height:1.35}
+ .tiles{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .gapstats{grid-template-columns:minmax(0,1fr)}
+ .bkeys{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .plotscroll .plot{min-width:700px}
+ /* The studio's own label carries channel handle + best-video + view count on one nowrap line
+    (547px on TrainStation 3). On the 700px mobile plot that sweeps across half the chart and
+    crosses whatever creator labels sit in the way. Wrapping it costs two lines and no meaning. */
+ .ownlab{white-space:normal;max-width:230px;text-align:right;line-height:1.35}
+ .swipe{display:block}
+ .mos{aspect-ratio:322.2/390.4}
+ .mtile{left:calc(var(--ml)*1%);top:calc(var(--mt)*1%);width:calc(var(--ms)*1%);height:calc(var(--msy)*1%)}
+ .g1 .tv{font-size:22px;bottom:26px} .g1 .tc{font-size:9.5px;bottom:10px}
+ .g2 .tv{font-size:12px;bottom:9px} .g2 .tc{display:none}
+ .g3 .tv,.g3 .tc{display:none}
+ /* roster: one grid at 390, the reach multiple never wraps */
+ .pick>summary{display:grid;grid-template-columns:auto 56px minmax(0,1fr);
+  grid-template-areas:"pno pav pid" "pbg pbg pbg";column-gap:14px;row-gap:12px;padding:22px 0;align-items:center}
+ .pno{grid-area:pno} .pick>summary>picture{grid-area:pav;display:block}
+ .pick img{width:56px;height:56px}
+ .pid{grid-area:pid;width:auto}
+ .pbig{grid-area:pbg;width:auto;display:flex;align-items:baseline;gap:12px;text-align:left;
+  border-top:1px solid var(--hair);padding-top:11px}
+ .pbig i{text-align:left;margin-top:0}
+ .pmore{display:none}
+ .taperow{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:4px 12px;padding:14px 0}
+ .taperow .m{grid-column:1/-1;order:-1;text-align:left;white-space:normal;margin-bottom:2px}
+ .taphead .vs{grid-column:1/-1;order:-1;text-align:left}
+ .taphead .side.r{flex-direction:row;text-align:left}
+ .taphead .side img{width:44px;height:44px}
+ .tape{padding:22px 20px}
+ .pstats>div{padding:16px 18px} .pstats b{font-size:20px}
+ .close{padding:48px 26px;gap:34px} .close .who{margin:0 auto}
+ .close .who img{width:168px;height:168px}
+ .mast .grid,.foot .grid{padding:16px 22px;border-radius:24px}
+ .stage{height:clamp(360px,58vh,520px)} .stage-in,.kicker{padding:24px}
+ .kicker{top:24px;left:24px;right:24px}
+ td.ch,td.dt{display:none}
+ .dual{gap:28px}
+}
+@media (max-width:560px){
+ body{font-size:16px} .wrap{padding:0 10px}
+ .card{padding:32px 20px} .how summary{padding:18px 22px} .how .inner{padding:0 22px 22px}
+ .chan{padding:24px 20px} .chan-h{flex-wrap:wrap} .chan-n{text-align:left}
+ .callout{padding:26px 22px} .gapchip{padding:30px 24px;gap:20px}
+ .axl{flex-direction:column;gap:6px}
+}
+</style>
+<noscript><style>.rv{opacity:1;transform:none}.bfill{width:var(--w)}.seg{width:var(--w)}</style></noscript>
+</head>
+<body class="cta-2">
+
+<div class="mast"><div class="wrap"><div class="grid">
+<a class="logo" href="https://arch.agency/"><svg class="wordmark" viewBox="0 0 83 22" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ARCH."><path d="M12.9221 21.6938H16.6558L8.3093 0L0 21.6938H3.75839L4.64875 19.2654L11.9792 19.268L12.9221 21.6938ZM5.78611 16.2115C6.62793 13.7814 7.46899 11.3512 8.31107 8.92062L10.8443 16.218C9.15867 16.2163 7.47251 16.2137 5.78636 16.2112L5.78611 16.2115ZM30.5568 21.6938H34.6761L29.0098 12.544C29.0098 12.544 32.8828 11.7136 33.4664 8.05251C33.4664 8.05251 34.9666 1.00467 26.6508 0.585655H19.6557V4.1403L22.9621 9.37225V9.39451H19.6557V21.6938H23.1532V12.9158H25.1538L25.1555 12.9193H25.1598L30.5568 21.69Z" fill="#000F41"/><path d="M23.1533 12.9154V21.6934H23.1651V12.9187H25.1556L25.1539 12.9154H23.1533ZM53.1342 5.87189L55.6028 3.39297C55.6028 3.39297 52.9616 0.29249 48.2774 0.282122C48.2774 0.282122 42.6322 -0.0516709 39.4643 4.8604C39.4643 4.8604 35.5148 11.0942 39.4643 17.3802C39.4643 17.3802 42.2084 21.9913 48.1074 21.9913C48.1074 21.9913 52.2488 22.315 55.6028 18.926L53.1136 16.4099C53.1136 16.4099 51.3552 18.4597 48.3453 18.4693C48.3453 18.4693 41.6228 18.6736 41.2959 11.3441C41.2959 11.3441 40.8635 3.63598 48.7105 3.84991C48.7098 3.84991 51.1716 3.86964 53.1342 5.87189ZM71.9986 0.585317V9.34764H63.3301V0.585317H59.8293V21.6934H63.3301V12.8717H71.9986V21.6934H75.4861V0.585317H71.9986ZM81.12 21.8909C82.1583 21.8909 83.0001 21.0403 83.0001 19.9906C83.0001 18.9412 82.1583 18.0905 81.12 18.0905C80.0818 18.0905 79.2402 18.9412 79.2402 19.9906C79.2402 21.04 80.0818 21.8909 81.12 21.8909Z" fill="#000F41"/></svg></a>
+<div class="stamp">Prepared for eSIMo &middot; 2 September 2026</div>
+</div></div></div>
+
+<main>
+
+<!-- ======================= HERO ======================= -->
+<section class="beat hero"><div class="wrap">
+<div class="stage rv">
+<picture><source srcset="assets/thumbs/ds4wNrmu7Ds.webp" type="image/webp"><img src="assets/thumbs/ds4wNrmu7Ds.jpg" alt="Away Together w/ Nik and Allie, 7 INCREDIBLE Europe Trips You Can Just Copy (10 Days Each)" width="800" height="450" fetchpriority="high" sizes="100vw" class=""></picture>
+<div class="veil"></div>
+<div class="kicker">eSIMo &middot; YouTube coverage &amp; creator audit</div>
+<div class="stage-in">
+<div class="stamp-num num" data-count="1466380">1,466,380</div>
+<div class="stamp-lab">Views on the 37 long-form videos your competitors paid for, last 180 days</div>
+</div>
+</div>
+<h1 class="rv">37 sponsored videos<br>in travel connectivity and eSIM data plans.<br>eSIMo bought<br>none of the 37.</h1>
+<div class="finds">
+<div class="find rv"><span class="n num" data-count="37">37</span><span class="l">sponsored videos your competitors paid for</span></div>
+<div class="find rv" style="--d:110ms"><span class="n num" data-count="6">6</span><span class="l">of the six brands we checked are buying (5 searched, 1 more checked in what the searches returned)</span></div>
+<div class="find rv" style="--d:220ms"><span class="n num" data-count="70">70</span><span class="l">more creator-code deals across everything we read, affiliate-style, not counted above</span></div>
+</div>
+<p class="hero-src rv">Source: <a href="https://www.youtube.com/watch?v=ds4wNrmu7Ds">Away Together w/ Nik and Allie, 20 Jun 2026</a>.</p>
+</div></section>
+
+<!-- ======================= 01 VOLUME ======================= -->
+<section class="beat" id="volume"><div class="wrap"><div class="card">
+<div class="folio"><span class="fn">01</span><span class="fk">Sponsorship volume</span></div>
+<div class="beat-head"><span class="snum">01</span><h2>How much of it<br>is bought</h2></div>
+<div class="poster">
+<div class="num rv" data-count="37">37</div>
+<div class="unit rv" style="--d:80ms">disclosed long-form sponsorships in 180 days</div>
+<p class="sub rv" style="--d:160ms">Out of 64 videos we sampled across four searches, 11 carry a firm placement for one of the six brands we checked: the platform paid label, or a sponsor sentence. A further 19 carry a creator code only, and one carries the paid label and names none of the six brands we checked, and one names one or more of them with no sponsor sentence, so it is credited to nobody. eSIMo is named in none of them.</p>
+</div>
+<div>
+<div class="tiles">
+<div class="rv"><a href="https://www.youtube.com/results?search_query=Holafly+sponsored&amp;sp=EgIIBA%3D%3D"><b class="num" data-count="8">8</b></a><span>last 30 days</span></div>
+<div class="rv" style="--d:80ms"><a href="https://www.youtube.com/results?search_query=Holafly+sponsored&amp;sp=EgIIBQ%3D%3D"><b class="num" data-count="21">21</b></a><span>last 90 days</span></div>
+<div class="rv" style="--d:160ms"><a href="https://www.youtube.com/results?search_query=Holafly+sponsored&amp;sp=EgIIBQ%3D%3D"><b class="num" data-count="37">37</b></a><span>last 180 days</span></div>
+<div class="rv" style="--d:240ms"><a href="https://www.youtube.com/watch?v=ds4wNrmu7Ds"><b>22</b></a><span>channels that took one</span></div>
+</div>
+<p class="cap" style="margin-top:22px">Sample: <a href="https://www.youtube.com/results?search_query=best+eSIM+for+travel+2026">64 videos, 40 channels, 788,522 views</a>, four queries, read through the YouTube Data API on 2 September 2026. Treat every count as a floor: each search returns at most 50 videos. Of the 65 long-form videos the searches returned inside the window, 1 is excluded (1 off the market language), which leaves the 64 sampled here.</p>
+</div>
+</div></div></section>
+
+<!-- ======================= 02 WHO ======================= -->
+<section class="beat" id="who"><div class="wrap"><div class="card">
+<div class="folio"><span class="fn">02</span><span class="fk">Who covers it today</span><span class="fr">26 channels</span></div>
+<div class="beat-head"><span class="snum">02</span><h2>Who covers<br>it today</h2></div>
+<div>
+<p class="lede" style="margin-top:0">Above the dashed line, a typical upload out-reaches the subscriber count; tap a face for receipts.</p>
+<div class="plotwrap rv">
+<div class="plotscroll"><div class="plot"><span class="gx" style="left:0%"><i>1</i></span><span class="gx" style="left:14.29%"><i>10</i></span><span class="gx" style="left:28.57%"><i>100</i></span><span class="gx" style="left:42.86%"><i>1K</i></span><span class="gx" style="left:57.14%"><i>10K</i></span><span class="gx" style="left:71.43%"><i>100K</i></span><span class="gx" style="left:85.71%"><i>1M</i></span><span class="gx" style="left:100%"><i>10M</i></span><span class="gy" style="bottom:0.00%"><i>1</i></span><span class="gy" style="bottom:18.42%"><i>10</i></span><span class="gy" style="bottom:36.84%"><i>100</i></span><span class="gy" style="bottom:55.26%"><i>1K</i></span><span class="gy" style="bottom:73.68%"><i>10K</i></span><span class="gy" style="bottom:92.10%"><i>100K</i></span><svg class="diag" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="100" x2="77.56" y2="0" stroke="#666666" stroke-width="1" stroke-dasharray="4 5" vector-effect="non-scaling-stroke" opacity=".55"/></svg><button class="dot dot-hot lab-up" style="left:79.56%;bottom:91.00%" type="button" data-ch="away" aria-expanded="false" aria-controls="ch-away"><picture><source srcset="assets/avatars/awaytogether.webp" type="image/webp"><img src="assets/avatars/awaytogether.jpg" alt="Away Together w/ Nik and Allie" width="64" height="64" loading="lazy" decoding="async"></picture><span class="dlab">Away Together w/ Nik and Allie</span></button><button class="dot dot-hot lab-right" style="left:76.91%;bottom:83.11%" type="button" data-ch="jay" aria-expanded="false" aria-controls="ch-jay"><picture><source srcset="assets/avatars/jayandkarolina.webp" type="image/webp"><img src="assets/avatars/jayandkarolina.jpg" alt="Jay and Karolina" width="64" height="64" loading="lazy" decoding="async"></picture><span class="dlab">Jay and Karolina</span></button><button class="dot lab-left" style="left:73.34%;bottom:79.84%" type="button" data-ch="the3" aria-expanded="false" aria-controls="ch-the3"><picture><source srcset="assets/avatars/theoutfit.webp" type="image/webp"><img src="assets/avatars/theoutfit.jpg" alt="The OutFit" width="64" height="64" loading="lazy" decoding="async"></picture><span class="dlab">The OutFit</span></button><button class="dot dot-hot lab-up" style="left:55.85%;bottom:76.52%" type="button" data-ch="luke" aria-expanded="false" aria-controls="ch-luke"><picture><source srcset="assets/avatars/luketweddle.webp" type="image/webp"><img src="assets/avatars/luketweddle.jpg" alt="Luke Tweddle" width="64" height="64" loading="lazy" decoding="async"></picture><span class="dlab">Luke Tweddle</span></button><button class="dot lab-right" style="left:85.84%;bottom:75.92%" type="button" data-ch="history" aria-expanded="false" aria-controls="ch-history"><picture><source srcset="assets/avatars/historyofsimplethings.webp" type="image/webp"><img src="assets/avatars/historyofsimplethings.jpg" alt="History of Simple Things" width="64" height="64" loading="lazy" decoding="async"></picture><span class="dlab">History of Simple Things</span></button><button class="dot dot-hot lab-left" style="left:72.76%;bottom:73.90%" type="button" data-ch="kensho" aria-expanded="false" aria-controls="ch-kensho"><picture><source srcset="assets/avatars/kenshoquest.webp" type="image/webp"><img src="assets/avatars/kenshoquest.jpg" alt="Kensho Quest" width="64" height="64" loading="lazy" decoding="async"></picture><span class="dlab">Kensho Quest</span></button><button class="dot lab-right" style="left:82.58%;bottom:73.02%" type="button" data-ch="daniel" aria-expanded="false" aria-controls="ch-daniel"><picture><source srcset="assets/avatars/daniel-dann.webp" type="image/webp"><img src="assets/avatars/daniel-dann.jpg" alt="Daniel | Tech &amp; Data" width="64" height="64" loading="lazy" decoding="async"></picture><span class="dlab">Daniel | Tech &amp; Data</span></button><button class="dot lab-down" style="left:75.91%;bottom:70.74%" type="button" data-ch="vpnpro" aria-expanded="false" aria-controls="ch-vpnpro"><picture><source srcset="assets/avatars/vpnprochannel.webp" type="image/webp"><img src="assets/avatars/vpnprochannel.jpg" alt="VPNpro" width="64" height="64" loading="lazy" decoding="async"></picture><span class="dlab">VPNpro</span></button><button class="dot lab-down" style="left:70.14%;bottom:70.11%" type="button" data-ch="cara" aria-expanded="false" aria-controls="ch-cara"><picture><source srcset="assets/avatars/caracelestewest.webp" type="image/webp"><img src="assets/avatars/caracelestewest.jpg" alt="Cara Celeste West" width="64" height="64" loading="lazy" decoding="async"></picture><span class="dlab">Cara Celeste West</span></button><button class="dot lab-up" style="left:64.86%;bottom:69.41%" type="button" data-ch="technically" aria-expanded="false" aria-controls="ch-technically"><picture><source srcset="assets/avatars/technically_money.webp" type="image/webp"><img src="assets/avatars/technically_money.jpg" alt="Technically Money" width="64" height="64" loading="lazy" decoding="async"></picture><span class="dlab">Technically Money</span></button><button class="dot lab-left" style="left:60.17%;bottom:65.04%" type="button" data-ch="the" aria-expanded="false" aria-controls="ch-the"><picture><source srcset="assets/avatars/thetechroost.webp" type="image/webp"><img src="assets/avatars/thetechroost.jpg" alt="The Tech Roost" width="64" height="64" loading="lazy" decoding="async"></picture><span class="dlab">The Tech Roost</span></button><button class="dot lab-up" style="left:57.06%;bottom:64.74%" type="button" data-ch="the2" aria-expanded="false" aria-controls="ch-the2"><picture><source srcset="assets/avatars/theoptoutprojectofficial.webp" type="image/webp"><img src="assets/avatars/theoptoutprojectofficial.jpg" alt="The Opt Out Project" width="64" height="64" loading="lazy" decoding="async"></picture><span class="dlab">The Opt Out Project</span></button><button class="dot lab-down" style="left:85.33%;bottom:63.80%" type="button" data-ch="cybernews" aria-expanded="false" aria-controls="ch-cybernews"><picture><source srcset="assets/avatars/cybernews.webp" type="image/webp"><img src="assets/avatars/cybernews.jpg" alt="Cybernews" width="64" height="64" loading="lazy" decoding="async"></picture><span class="dlab">Cybernews</span></button><button class="dot lab-left" style="left:59.10%;bottom:59.24%" type="button" data-ch="cybernews2" aria-expanded="false" aria-controls="ch-cybernews2"><picture><source srcset="assets/avatars/cybernewsreviews.webp" type="image/webp"><img src="assets/avatars/cybernewsreviews.jpg" alt="Cybernews Reviews" width="64" height="64" loading="lazy" decoding="async"></picture><span class="dlab">Cybernews Reviews</span></button><button class="dot lab-right" style="left:65.44%;bottom:57.74%" type="button" data-ch="cooltechzone" aria-expanded="false" aria-controls="ch-cooltechzone"><picture><source srcset="assets/avatars/cooltechzone.webp" type="image/webp"><img src="assets/avatars/cooltechzone.jpg" alt="CoolTechZone" width="64" height="64" loading="lazy" decoding="async"></picture><span class="dlab">CoolTechZone</span></button><button class="dot lab-right" style="left:63.81%;bottom:53.41%" type="button" data-ch="think" aria-expanded="false" aria-controls="ch-think"><picture><source srcset="assets/avatars/thinksecurity9848.webp" type="image/webp"><img src="assets/avatars/thinksecurity9848.jpg" alt="Think Security" width="64" height="64" loading="lazy" decoding="async"></picture><span class="dlab">Think Security</span></button><button class="dot lab-right" style="left:63.24%;bottom:50.39%" type="button" data-ch="steve" aria-expanded="false" aria-controls="ch-steve"><picture><source srcset="assets/avatars/stevemack.webp" type="image/webp"><img src="assets/avatars/stevemack.jpg" alt="Steve Mack Australia" width="64" height="64" loading="lazy" decoding="async"></picture><span class="dlab">Steve Mack Australia</span></button><button class="dot lab-down" style="left:80.33%;bottom:48.75%" type="button" data-ch="checklist" aria-expanded="false" aria-controls="ch-checklist"><picture><source srcset="assets/avatars/checklistreviewguru.webp" type="image/webp"><img src="assets/avatars/checklistreviewguru.jpg" alt="Checklist Review Guru" width="64" height="64" loading="lazy" decoding="async"></picture><span class="dlab">Checklist Review Guru</span></button><button class="dot lab-left" style="left:53.97%;bottom:47.56%" type="button" data-ch="tyke" aria-expanded="false" aria-controls="ch-tyke"><picture><source srcset="assets/avatars/tykeandtinaadventures.webp" type="image/webp"><img src="assets/avatars/tykeandtinaadventures.jpg" alt="Tyke and Tina Adventures in Retirement" width="64" height="64" loading="lazy" decoding="async"></picture><span class="dlab">Tyke and Tina Adventures in Retirement</span></button><button class="dot lab-down" style="left:68.61%;bottom:37.89%" type="button" data-ch="travel" aria-expanded="false" aria-controls="ch-travel"><picture><source srcset="assets/avatars/travelandtourworld.webp" type="image/webp"><img src="assets/avatars/travelandtourworld.jpg" alt="Travel And Tour World" width="64" height="64" loading="lazy" decoding="async"></picture><span class="dlab">Travel And Tour World</span></button><button class="dot lab-left" style="left:61.16%;bottom:37.15%" type="button" data-ch="diy" aria-expanded="false" aria-controls="ch-diy"><picture><source srcset="assets/avatars/diybandit.webp" type="image/webp"><img src="assets/avatars/diybandit.jpg" alt="DIY Bandit" width="64" height="64" loading="lazy" decoding="async"></picture><span class="dlab">DIY Bandit</span></button><button class="dot lab-up" style="left:46.40%;bottom:33.14%" type="button" data-ch="rebaverse" aria-expanded="false" aria-controls="ch-rebaverse"><picture><source srcset="assets/avatars/rebaverse.webp" type="image/webp"><img src="assets/avatars/rebaverse.jpg" alt="RebaVerse" width="64" height="64" loading="lazy" decoding="async"></picture><span class="dlab">RebaVerse</span></button><button class="dot lab-down" style="left:47.46%;bottom:27.72%" type="button" data-ch="travelmaxing" aria-expanded="false" aria-controls="ch-travelmaxing"><picture><source srcset="assets/avatars/travelmaxing.webp" type="image/webp"><img src="assets/avatars/travelmaxing.jpg" alt="Travelmaxing" width="64" height="64" loading="lazy" decoding="async"></picture><span class="dlab">Travelmaxing</span></button><button class="dot lab-right" style="left:48.88%;bottom:27.21%" type="button" data-ch="techzoom" aria-expanded="false" aria-controls="ch-techzoom"><picture><source srcset="assets/avatars/techzoomorg.webp" type="image/webp"><img src="assets/avatars/techzoomorg.jpg" alt="TechZoom: Gadget Reviews &amp; How-To" width="64" height="64" loading="lazy" decoding="async"></picture><span class="dlab">TechZoom: Gadget Reviews &amp; How-To</span></button><button class="dot lab-up" style="left:12.07%;bottom:19.88%" type="button" data-ch="global" aria-expanded="false" aria-controls="ch-global"><picture><source srcset="assets/avatars/global_selects.webp" type="image/webp"><img src="assets/avatars/global_selects.jpg" alt="Global Selects" width="64" height="64" loading="lazy" decoding="async"></picture><span class="dlab">Global Selects</span></button><button class="dot lab-down" style="left:6.82%;bottom:16.63%" type="button" data-ch="esim" aria-expanded="false" aria-controls="ch-esim"><picture><source srcset="assets/avatars/esimwithnina.webp" type="image/webp"><img src="assets/avatars/esimwithnina.jpg" alt="eSIM with Nina" width="64" height="64" loading="lazy" decoding="async"></picture><span class="dlab">eSIM with Nina</span></button><span class="ownmark" style="left:40%;bottom:0%" aria-hidden="true"></span><span class="ownlab" style="left:40%;bottom:0%">eSIMo &middot; no channel read in this sweep &middot; below this chart</span><span class="diaglab">one median view per subscriber</span></div></div>
+<div class="axl"><span>subscribers <svg class="arw" viewBox="0 0 20 12" fill="none" aria-hidden="true"><path d="M0 6h17M12.5 1L18 6l-5.5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="square"/></svg></span><span>vertical: median views, long-form uploads, last 180 days</span></div>
+<p class="swipe">SWIPE THE CHART <svg class="arw" viewBox="0 0 20 12" fill="none" aria-hidden="true"><path d="M0 6h17M12.5 1L18 6l-5.5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="square"/></svg></p>
+<p class="cap" style="margin-top:16px">Source: channel and video pages read through the YouTube Data API. Both axes log. Three tests decide what is plotted: the channel passes this page&rsquo;s English-speaking markets rule, it shows a subscriber count, and it published at least five long-form uploads in the window. 26 channels we read meet all three and every one of them is a dot, so no channel that meets them sits off this chart. Dots ringed in blue are the 4 on the roster; the 22 in navy are held out (Shorts-first, a media brand rather than a creator, publishes a different category, sells a competing product and under the reach floor), and section 05 counts each hold.</p>
+</div>
+<div class="chans" id="chans"><article class="chan chan-hot" id="ch-away">
+<header class="chan-h"><picture><source srcset="assets/avatars/awaytogether.webp" type="image/webp"><img src="assets/avatars/awaytogether.jpg" alt="Away Together w/ Nik and Allie" width="72" height="72" loading="lazy" decoding="async"></picture><div><h3>Away Together w/ Nik and Allie</h3>
+<p class="meta"><a href="https://www.youtube.com/@awaytogether/about">@awaytogether</a> &middot; United States &middot; Tier A</p></div>
+<div class="chan-n">371K<i>subscribers</i></div></header>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=0aIYQXf60E4">5 Channels I Watch Before EVERY Single Europe Trip</a><span class="vnum">86,754<i>22 Aug 2026</i></span></div><div class="vrow"><a href="https://www.youtube.com/watch?v=Zxz5EsDlizE">My Top 20 Travel Gear of the Last 5 Years</a><span class="vnum">148,708<i>1 Aug 2026</i></span></div><p class="chan-line">Its window uploads are titled around travel, instead and trip. Ran <a href="https://www.youtube.com/watch?v=0aIYQXf60E4">Holafly, 22 Aug 2026</a> and eight more inside the window. Median long-form upload 87,176 views, over the last ten in the window.</p><footer><span class="tag ">59,991,415 lifetime views</span><span class="tag tag-paid">paid label on file</span></footer></article><article class="chan" id="ch-jay">
+<header class="chan-h"><picture><source srcset="assets/avatars/jayandkarolina.webp" type="image/webp"><img src="assets/avatars/jayandkarolina.jpg" alt="Jay and Karolina" width="72" height="72" loading="lazy" decoding="async"></picture><div><h3>Jay and Karolina</h3>
+<p class="meta"><a href="https://www.youtube.com/@jayandkarolina/about">@jayandkarolina</a> &middot; United Kingdom &middot; Tier B</p></div>
+<div class="chan-n">242K<i>subscribers</i></div></header>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=HdpH8aExe1g">Best eSIM for Europe Travel | One Plan Across 30+ Countries</a><span class="vnum">2,271<i>4 Jul 2026</i></span></div><div class="vrow"><a href="https://www.youtube.com/watch?v=VbBUZL2ifSw">Boarding Legend of the Seas - World's NEWEST &amp; LARGEST Cruise Ship</a><span class="vnum">102,583<i>11 Jul 2026</i></span></div><p class="chan-line">Its window uploads are titled around knew, wish and expected. Ran <a href="https://www.youtube.com/watch?v=HdpH8aExe1g">Sim Local, 4 Jul 2026</a> inside the window. Median long-form upload 32,529 views, over the last ten in the window.</p><footer><span class="tag ">31,479,097 lifetime views</span><span class="tag tag-paid">paid label on file</span></footer></article><article class="chan" id="ch-the3">
+<header class="chan-h"><picture><source srcset="assets/avatars/theoutfit.webp" type="image/webp"><img src="assets/avatars/theoutfit.jpg" alt="The OutFit" width="72" height="72" loading="lazy" decoding="async"></picture><div><h3>The OutFit</h3>
+<p class="meta"><a href="https://www.youtube.com/@theoutfit/about">@theoutfit</a> &middot; Australia &middot; Tier B</p></div>
+<div class="chan-n">136K<i>subscribers</i></div></header>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=a6OZ-mDXYoc">New TRUCK BUILD Incoming! Turning Our DREAM Into Reality</a><span class="vnum">21,508<i>21 Aug 2026</i></span></div><div class="vrow"><a href="https://www.youtube.com/watch?v=0S2E70PbImg">Iceland Like You&rsquo;ve Never Seen It: A 2000km Solo Highlands Expedition (Iceland E-Book)</a><span class="vnum">215,857<i>7 Jun 2026</i></span></div><p class="chan-line">Its window uploads are titled around power, expedition and iceland. Ran <a href="https://www.youtube.com/watch?v=a6OZ-mDXYoc">Holafly, 21 Aug 2026</a> and one more inside the window. Median long-form upload 21,616 views, over the last ten in the window.</p><footer><span class="tag ">21,255,167 lifetime views</span><span class="tag tag-paid">paid label on file</span><span class="tag ">held out of the roster: publishes a different category</span></footer></article><article class="chan" id="ch-luke">
+<header class="chan-h"><picture><source srcset="assets/avatars/luketweddle.webp" type="image/webp"><img src="assets/avatars/luketweddle.jpg" alt="Luke Tweddle" width="72" height="72" loading="lazy" decoding="async"></picture><div><h3>Luke Tweddle</h3>
+<p class="meta"><a href="https://www.youtube.com/@luketweddle/about">@luketweddle</a> &middot; English audio, no country set &middot; Tier B</p></div>
+<div class="chan-n">8.12K<i>subscribers</i></div></header>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=j9_nQEZTIIE">I Left Australia… And Immediately Missed This</a><span class="vnum">7,576<i>30 Jun 2026</i></span></div><div class="vrow"><a href="https://www.youtube.com/watch?v=_2CZTr4ajuk">Australia Has Rules Nobody Actually Tells You</a><span class="vnum">65,138<i>21 Aug 2026</i></span></div><p class="chan-line">Its window uploads are titled around australia, australian and absolutely. Ran <a href="https://www.youtube.com/watch?v=j9_nQEZTIIE">Airalo, 30 Jun 2026</a> and one more inside the window. Median long-form upload 14,266 views, over the last ten in the window.</p><footer><span class="tag ">5,143,642 lifetime views</span><span class="tag ">sponsor disclosed in description</span></footer></article><article class="chan" id="ch-history">
+<header class="chan-h"><picture><source srcset="assets/avatars/historyofsimplethings.webp" type="image/webp"><img src="assets/avatars/historyofsimplethings.jpg" alt="History of Simple Things" width="72" height="72" loading="lazy" decoding="async"></picture><div><h3>History of Simple Things</h3>
+<p class="meta"><a href="https://www.youtube.com/@historyofsimplethings/about">@historyofsimplethings</a> &middot; United States &middot; Tier B</p></div>
+<div class="chan-n">1.02M<i>subscribers</i></div></header>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=nerZDE0d4_E">Is Induction Actually Better Than a Gas Stove?</a><span class="vnum">27,414<i>1 Sep 2026</i></span></div><p class="chan-line">Its window uploads are titled around bridges, curved and dental. Nothing in the ten long-form uploads in its window carries a paid label or a sponsor disclosure for the six brands we checked. Median long-form upload 13,234 views, over the last ten in the window.</p><footer><span class="tag ">143,772,595 lifetime views</span><span class="tag ">no disclosed sponsorship for the six brands we checked</span><span class="tag ">held out of the roster: publishes a different category</span></footer></article><article class="chan" id="ch-kensho">
+<header class="chan-h"><picture><source srcset="assets/avatars/kenshoquest.webp" type="image/webp"><img src="assets/avatars/kenshoquest.jpg" alt="Kensho Quest" width="72" height="72" loading="lazy" decoding="async"></picture><div><h3>Kensho Quest</h3>
+<p class="meta"><a href="https://www.youtube.com/@kenshoquest/about">@kenshoquest</a> &middot; United States &middot; Tier B</p></div>
+<div class="chan-n">124K<i>subscribers</i></div></header>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=M1KlbhqiNC0">Missing These 12 Japan Apps? Big Mistake!</a><span class="vnum">57,767<i>26 Jun 2026</i></span></div><div class="vrow"><a href="https://www.youtube.com/watch?v=0thX0qmtngo">I Tested Japan&rsquo;s Cooling Gadgets So You Don&rsquo;t Have To</a><span class="vnum">104,593<i>8 Aug 2026</i></span></div><p class="chan-line">Its window uploads are titled around japan, hokkaido and itinerary. Ran <a href="https://www.youtube.com/watch?v=M1KlbhqiNC0">Ubigi, 26 Jun 2026</a> and two more inside the window. Median long-form upload 10,277 views, over the last ten in the window.</p><footer><span class="tag ">16,998,198 lifetime views</span><span class="tag tag-paid">paid label on file</span></footer></article><article class="chan" id="ch-daniel">
+<header class="chan-h"><picture><source srcset="assets/avatars/daniel-dann.webp" type="image/webp"><img src="assets/avatars/daniel-dann.jpg" alt="Daniel | Tech &amp; Data" width="72" height="72" loading="lazy" decoding="async"></picture><div><h3>Daniel | Tech &amp; Data</h3>
+<p class="meta"><a href="https://www.youtube.com/@daniel-dann/about">@daniel-dann</a> &middot; English audio, no country set &middot; Tier C</p></div>
+<div class="chan-n">603K<i>subscribers</i></div></header>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=wNRFK9BQsgE">Holafly eSIM Review – (2026) Best eSIM Card for Travelers on the Market?</a><span class="vnum">30,081<i>15 Aug 2026</i></span></div><div class="vrow"><a href="https://www.youtube.com/watch?v=Bi6F4yf49co">Zawa AI Review (2026): I Created Multiple Product Ads From One Photo</a><span class="vnum">17,791<i>26 Aug 2026</i></span></div><p class="chan-line">Its window uploads are titled around review, tools and audio. Ran <a href="https://www.youtube.com/watch?v=wNRFK9BQsgE">Holafly, 15 Aug 2026</a>, plus five creator-code deals inside the window. Median long-form upload 9,212 views, over the last ten in the window.</p><footer><span class="tag ">29,414,509 lifetime views</span><span class="tag ">sponsor disclosed in description</span><span class="tag ">held out of the roster: publishes a different category</span></footer></article><article class="chan" id="ch-vpnpro">
+<header class="chan-h"><picture><source srcset="assets/avatars/vpnprochannel.webp" type="image/webp"><img src="assets/avatars/vpnprochannel.jpg" alt="VPNpro" width="72" height="72" loading="lazy" decoding="async"></picture><div><h3>VPNpro</h3>
+<p class="meta"><a href="https://www.youtube.com/@vpnprochannel/about">@vpnprochannel</a> &middot; United States &middot; Tier C</p></div>
+<div class="chan-n">206K<i>subscribers</i></div></header>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=NfFSz-dSLd8">Hume Band 2.0 vs WHOOP 5.0 | Which Smart Band Actually Understands Your Body Better?</a><span class="vnum">22,275<i>7 Aug 2026</i></span></div><p class="chan-line">Its window uploads are titled around review, apple and band. Nothing in the ten long-form uploads in its window carries a paid label or a sponsor disclosure for the six brands we checked. Median long-form upload 6,922 views, over the last ten in the window.</p><footer><span class="tag ">17,777,639 lifetime views</span><span class="tag ">no disclosed sponsorship for the six brands we checked</span><span class="tag ">held out of the roster: a media brand rather than a creator and publishes a different category</span></footer></article><article class="chan" id="ch-cara">
+<header class="chan-h"><picture><source srcset="assets/avatars/caracelestewest.webp" type="image/webp"><img src="assets/avatars/caracelestewest.jpg" alt="Cara Celeste West" width="72" height="72" loading="lazy" decoding="async"></picture><div><h3>Cara Celeste West</h3>
+<p class="meta"><a href="https://www.youtube.com/@caracelestewest/about">@caracelestewest</a> &middot; English titles, no country set &middot; Tier C</p></div>
+<div class="chan-n">81.2K<i>subscribers</i></div></header>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=quPgQVhuKFg">Celebrating My Birthday on Greece&rsquo;s Most Underrated Island 🇬🇷 | The BEST Things to Do in Syros</a><span class="vnum">10,053<i>16 Aug 2026</i></span></div><div class="vrow"><a href="https://www.youtube.com/watch?v=RgRGiv2S9-8">Berlin, Germany Food Tour: Is This Europe&rsquo;s Most Underrated Food City?</a><span class="vnum">15,774<i>12 Apr 2026</i></span></div><p class="chan-line">Its window uploads are titled around berlin, germany and greece. Ran <a href="https://www.youtube.com/watch?v=quPgQVhuKFg">Holafly, 16 Aug 2026</a> and two more inside the window. Median long-form upload 6,405 views, over the nine we read inside the window (its 50 reads cover 162 of the 180 days).</p><footer><span class="tag ">26,863,985 lifetime views</span><span class="tag tag-paid">paid label on file</span><span class="tag ">held out of the roster: Shorts-first</span></footer></article><article class="chan" id="ch-technically">
+<header class="chan-h"><picture><source srcset="assets/avatars/technically_money.webp" type="image/webp"><img src="assets/avatars/technically_money.jpg" alt="Technically Money" width="72" height="72" loading="lazy" decoding="async"></picture><div><h3>Technically Money</h3>
+<p class="meta"><a href="https://www.youtube.com/@technically_money/about">@technically_money</a> &middot; English audio, no country set &middot; Tier C</p></div>
+<div class="chan-n">34.7K<i>subscribers</i></div></header>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=J4YQ8uknTgY">Best eSIM for USA Travel 2026 | Setup Guide for iPhone</a><span class="vnum">2,526<i>6 Jun 2026</i></span></div><div class="vrow"><a href="https://www.youtube.com/watch?v=0DX47ZvrvZA">Revolut Is Changing! What's New &amp; How It Affects You</a><span class="vnum">50,307<i>21 Aug 2026</i></span></div><p class="chan-line">Its window uploads are titled around accounts, bank and revolut. Ran <a href="https://www.youtube.com/watch?v=J4YQ8uknTgY">Saily, 6 Jun 2026</a> and one more, plus two creator-code deals inside the window. Median long-form upload 5,866 views, over the last ten in the window.</p><footer><span class="tag ">11,444,588 lifetime views</span><span class="tag tag-paid">paid label on file</span><span class="tag ">held out of the roster: publishes a different category</span></footer></article><article class="chan" id="ch-the">
+<header class="chan-h"><picture><source srcset="assets/avatars/thetechroost.webp" type="image/webp"><img src="assets/avatars/thetechroost.jpg" alt="The Tech Roost" width="72" height="72" loading="lazy" decoding="async"></picture><div><h3>The Tech Roost</h3>
+<p class="meta"><a href="https://www.youtube.com/@thetechroost/about">@thetechroost</a> &middot; United States &middot; Tier C</p></div>
+<div class="chan-n">16.3K<i>subscribers</i></div></header>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=yXVAElLc6n0">Aura vs LifeLock: The Pricing Trick Nobody Talks About</a><span class="vnum">10,496<i>11 Jun 2026</i></span></div><p class="chan-line">Its window uploads are titled around review, aura and lifelock. Nothing in the ten long-form uploads in its window carries a paid label or a sponsor disclosure for the six brands we checked. Median long-form upload 3,397 views, over the last ten in the window.</p><footer><span class="tag ">648,881 lifetime views</span><span class="tag ">no disclosed sponsorship for the six brands we checked</span><span class="tag ">held out of the roster: publishes a different category</span></footer></article><article class="chan" id="ch-the2">
+<header class="chan-h"><picture><source srcset="assets/avatars/theoptoutprojectofficial.webp" type="image/webp"><img src="assets/avatars/theoptoutprojectofficial.jpg" alt="The Opt Out Project" width="72" height="72" loading="lazy" decoding="async"></picture><div><h3>The Opt Out Project</h3>
+<p class="meta"><a href="https://www.youtube.com/@theoptoutprojectofficial/about">@theoptoutprojectofficial</a> &middot; English titles, no country set &middot; Tier C</p></div>
+<div class="chan-n">9.87K<i>subscribers</i></div></header>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=LyK8Cw1_vwI">NordVPN Vs Surfshark: 5 Differences That Actually Matter in 2026</a><span class="vnum">6,235<i>29 Jun 2026</i></span></div><p class="chan-line">Its window uploads are titled around esim, aura and lifelock. Nothing in the ten long-form uploads in its window carries a paid label or a sponsor disclosure for the six brands we checked. Median long-form upload 3,270 views, over the last ten in the window.</p><footer><span class="tag ">828,903 lifetime views</span><span class="tag ">no disclosed sponsorship for the six brands we checked</span><span class="tag ">held out of the roster: publishes a different category</span></footer></article><article class="chan" id="ch-cybernews">
+<header class="chan-h"><picture><source srcset="assets/avatars/cybernews.webp" type="image/webp"><img src="assets/avatars/cybernews.jpg" alt="Cybernews" width="72" height="72" loading="lazy" decoding="async"></picture><div><h3>Cybernews</h3>
+<p class="meta"><a href="https://www.youtube.com/@cybernews/about">@cybernews</a> &middot; United States</p></div>
+<div class="chan-n">940K<i>subscribers</i></div></header>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=JcHCvzX2OF0">How to get rid of fake McAfee virus pop-ups? | The ultimate guide</a><span class="vnum">7,295<i>22 Aug 2026</i></span></div><p class="chan-line">Its window uploads are titled around review, bitdefender and builder. Nothing in the ten long-form uploads in its window carries a paid label or a sponsor disclosure for the six brands we checked. Median long-form upload 2,907 views, over the last ten in the window.</p><footer><span class="tag ">123,129,590 lifetime views</span><span class="tag ">no disclosed sponsorship for the six brands we checked</span><span class="tag ">held out of the roster: Shorts-first, a media brand rather than a creator, publishes a different category and under the reach floor</span></footer></article><article class="chan" id="ch-cybernews2">
+<header class="chan-h"><picture><source srcset="assets/avatars/cybernewsreviews.webp" type="image/webp"><img src="assets/avatars/cybernewsreviews.jpg" alt="Cybernews Reviews" width="72" height="72" loading="lazy" decoding="async"></picture><div><h3>Cybernews Reviews</h3>
+<p class="meta"><a href="https://www.youtube.com/@cybernewsreviews/about">@cybernewsreviews</a> &middot; United States</p></div>
+<div class="chan-n">13.7K<i>subscribers</i></div></header>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=t-u4eysA6EU">Best VPN Comparison 2026 | NordVPN vs Surfshark vs Proton VPN vs Mullvad</a><span class="vnum">13,080<i>11 Jun 2026</i></span></div><p class="chan-line">Its window uploads are titled around nordvpn, proton and tutorial. Nothing in the ten long-form uploads in its window carries a paid label or a sponsor disclosure for the six brands we checked. Median long-form upload 1,644 views, over the last ten in the window.</p><footer><span class="tag ">833,496 lifetime views</span><span class="tag ">no disclosed sponsorship for the six brands we checked</span><span class="tag ">held out of the roster: a media brand rather than a creator, publishes a different category and under the reach floor</span></footer></article><article class="chan" id="ch-cooltechzone">
+<header class="chan-h"><picture><source srcset="assets/avatars/cooltechzone.webp" type="image/webp"><img src="assets/avatars/cooltechzone.jpg" alt="CoolTechZone" width="72" height="72" loading="lazy" decoding="async"></picture><div><h3>CoolTechZone</h3>
+<p class="meta"><a href="https://www.youtube.com/@cooltechzone/about">@cooltechzone</a> &middot; United States</p></div>
+<div class="chan-n">38.1K<i>subscribers</i></div></header>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=LPGwEEBBRbw">Best VPN 2026: NordVPN vs Surfshark vs Proton VPN</a><span class="vnum">6,190<i>24 Jul 2026</i></span></div><p class="chan-line">Its window uploads are titled around review, antivirus and camera. Nothing in the ten long-form uploads in its window carries a paid label or a sponsor disclosure for the six brands we checked. Median long-form upload 1,364 views, over the last ten in the window.</p><footer><span class="tag ">13,280,540 lifetime views</span><span class="tag ">no disclosed sponsorship for the six brands we checked</span><span class="tag ">held out of the roster: a media brand rather than a creator, publishes a different category and under the reach floor</span></footer></article><article class="chan" id="ch-think">
+<header class="chan-h"><picture><source srcset="assets/avatars/thinksecurity9848.webp" type="image/webp"><img src="assets/avatars/thinksecurity9848.jpg" alt="Think Security" width="72" height="72" loading="lazy" decoding="async"></picture><div><h3>Think Security</h3>
+<p class="meta"><a href="https://www.youtube.com/@thinksecurity9848/about">@thinksecurity9848</a> &middot; United States</p></div>
+<div class="chan-n">29.3K<i>subscribers</i></div></header>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=lkiWxbau_RE">Is ExpressVPN Worth It? The Brutally Honest Review After Daily Use</a><span class="vnum">1,168<i>9 Jun 2026</i></span></div><p class="chan-line">Its window uploads are titled around data, esim and incogni. One of the 40 long-form uploads in its window carries YouTube&rsquo;s paid-promotion label, none of them for the six brands we checked. Median long-form upload 794 views, over the last ten in the window.</p><footer><span class="tag ">2,091,628 lifetime views</span><span class="tag ">no disclosed sponsorship for the six brands we checked</span><span class="tag ">held out of the roster: publishes a different category and under the reach floor</span></footer></article><article class="chan" id="ch-steve">
+<header class="chan-h"><picture><source srcset="assets/avatars/stevemack.webp" type="image/webp"><img src="assets/avatars/stevemack.jpg" alt="Steve Mack Australia" width="72" height="72" loading="lazy" decoding="async"></picture><div><h3>Steve Mack Australia</h3>
+<p class="meta"><a href="https://www.youtube.com/@stevemack/about">@stevemack</a> &middot; Australia</p></div>
+<div class="chan-n">26.7K<i>subscribers</i></div></header>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=kSZ9H259yNQ">John Travolta's QANTAS 707 Makes Historic Return to Australia 🇦🇺</a><span class="vnum">73,732<i>10 May 2026</i></span></div><p class="chan-line">Its window uploads are titled around makes, qantas and approved. Nothing in the seven long-form uploads in its window carries a paid label or a sponsor disclosure for the six brands we checked. Median long-form upload 544 views, over the seven it published in the window.</p><footer><span class="tag ">5,770,354 lifetime views</span><span class="tag ">no disclosed sponsorship for the six brands we checked</span><span class="tag ">held out of the roster: Shorts-first, publishes a different category and under the reach floor</span></footer></article><article class="chan" id="ch-checklist">
+<header class="chan-h"><picture><source srcset="assets/avatars/checklistreviewguru.webp" type="image/webp"><img src="assets/avatars/checklistreviewguru.jpg" alt="Checklist Review Guru" width="72" height="72" loading="lazy" decoding="async"></picture><div><h3>Checklist Review Guru</h3>
+<p class="meta"><a href="https://www.youtube.com/@checklistreviewguru/about">@checklistreviewguru</a> &middot; United States</p></div>
+<div class="chan-n">420K<i>subscribers</i></div></header>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=iTUv3ECB6Hs">Airalo eSIM Setup 2026: Avoid $500 Roaming Fees + No-Service Fix</a><span class="vnum">554<i>4 Aug 2026</i></span></div><p class="chan-line">Its window uploads are titled around esim, airalo and holafly. Nothing in the ten long-form uploads in its window carries a paid label or a sponsor disclosure for the six brands we checked. Median long-form upload 443 views, over the last ten in the window.</p><footer><span class="tag ">510,283 lifetime views</span><span class="tag ">no disclosed sponsorship for the six brands we checked</span><span class="tag ">held out of the roster: under the reach floor</span></footer></article><article class="chan" id="ch-tyke">
+<header class="chan-h"><picture><source srcset="assets/avatars/tykeandtinaadventures.webp" type="image/webp"><img src="assets/avatars/tykeandtinaadventures.jpg" alt="Tyke and Tina Adventures in Retirement" width="72" height="72" loading="lazy" decoding="async"></picture><div><h3>Tyke and Tina Adventures in Retirement</h3>
+<p class="meta"><a href="https://www.youtube.com/@tykeandtinaadventures/about">@tykeandtinaadventures</a> &middot; United States</p></div>
+<div class="chan-n">6.00K<i>subscribers</i></div></header>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=9TXTLSf0W5g">They Retired Early With Only $400K—Now They Have More</a><span class="vnum">2,814<i>20 Aug 2026</i></span></div><p class="chan-line">Its window uploads are titled around early, health and trip. Three of the 6 long-form uploads in its window carry YouTube&rsquo;s paid-promotion label, none of them for the six brands we checked. Median long-form upload 382 views, over the six we read inside the window (its 50 reads cover 46 of the 180 days).</p><footer><span class="tag ">432,037 lifetime views</span><span class="tag tag-paid">paid label on file</span><span class="tag ">held out of the roster: Shorts-first and under the reach floor</span></footer></article><article class="chan" id="ch-travel">
+<header class="chan-h"><picture><source srcset="assets/avatars/travelandtourworld.webp" type="image/webp"><img src="assets/avatars/travelandtourworld.jpg" alt="Travel And Tour World" width="72" height="72" loading="lazy" decoding="async"></picture><div><h3>Travel And Tour World</h3>
+<p class="meta"><a href="https://www.youtube.com/@travelandtourworld/about">@travelandtourworld</a> &middot; United States</p></div>
+<div class="chan-n">63.5K<i>subscribers</i></div></header>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=4URU30TIqNo">This City Has Been #1 for 15 Straight Years | Buenos Aires ICCA | IBTM Americas | Alina Gonzales</a><span class="vnum">247<i>27 Aug 2026</i></span></div><p class="chan-line">Its window uploads are titled around vietnam, americas and horecfex. Nothing in the ten long-form uploads in its window carries a paid label or a sponsor disclosure for the six brands we checked. Median long-form upload 114 views, over the last ten in the window.</p><footer><span class="tag ">2,878,641 lifetime views</span><span class="tag ">no disclosed sponsorship for the six brands we checked</span><span class="tag ">held out of the roster: a media brand rather than a creator and under the reach floor</span></footer></article><article class="chan" id="ch-diy">
+<header class="chan-h"><picture><source srcset="assets/avatars/diybandit.webp" type="image/webp"><img src="assets/avatars/diybandit.jpg" alt="DIY Bandit" width="72" height="72" loading="lazy" decoding="async"></picture><div><h3>DIY Bandit</h3>
+<p class="meta"><a href="https://www.youtube.com/@diybandit/about">@diybandit</a> &middot; United States</p></div>
+<div class="chan-n">19.1K<i>subscribers</i></div></header>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=pzoMd7SfBQY">The Trick That Saved My Spray Foam Can | How to Unclog It</a><span class="vnum">470<i>12 Jul 2026</i></span></div><p class="chan-line">Its window uploads are titled around install, light and water. One of the 23 long-form uploads in its window carries YouTube&rsquo;s paid-promotion label, none of them for the six brands we checked. Median long-form upload 104 views, over the last ten in the window.</p><footer><span class="tag ">10,383,361 lifetime views</span><span class="tag tag-paid">paid label on file</span><span class="tag ">held out of the roster: publishes a different category and under the reach floor</span></footer></article><article class="chan" id="ch-rebaverse">
+<header class="chan-h"><picture><source srcset="assets/avatars/rebaverse.webp" type="image/webp"><img src="assets/avatars/rebaverse.jpg" alt="RebaVerse" width="72" height="72" loading="lazy" decoding="async"></picture><div><h3>RebaVerse</h3>
+<p class="meta"><a href="https://www.youtube.com/@rebaverse/about">@rebaverse</a> &middot; United States</p></div>
+<div class="chan-n">1.77K<i>subscribers</i></div></header>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=_ehQZpwlFdQ">Why I Had to Speak Up After That Paraguayan Senator&rsquo;s Comments</a><span class="vnum">146<i>12 Jul 2026</i></span></div><p class="chan-line">Its window uploads are titled around banks, visa and abroad. Nothing in the ten long-form uploads in its window carries a paid label or a sponsor disclosure for the six brands we checked. Median long-form upload 63 views, over the last ten in the window.</p><footer><span class="tag ">144,782 lifetime views</span><span class="tag ">no disclosed sponsorship for the six brands we checked</span><span class="tag ">held out of the roster: under the reach floor</span></footer></article><article class="chan" id="ch-travelmaxing">
+<header class="chan-h"><picture><source srcset="assets/avatars/travelmaxing.webp" type="image/webp"><img src="assets/avatars/travelmaxing.jpg" alt="Travelmaxing" width="72" height="72" loading="lazy" decoding="async"></picture><div><h3>Travelmaxing</h3>
+<p class="meta"><a href="https://www.youtube.com/@travelmaxing/about">@travelmaxing</a> &middot; United States</p></div>
+<div class="chan-n">2.10K<i>subscribers</i></div></header>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=HG_Q6qaPazU">Best ESIM for Malta 2025 - How to Buy and Activate</a><span class="vnum">86<i>26 Aug 2026</i></span></div><p class="chan-line">Its window uploads are titled around esim, activate and austria. Nothing in the ten long-form uploads in its window carries a paid label or a sponsor disclosure for the six brands we checked. Median long-form upload 32 views, over the last ten in the window.</p><footer><span class="tag ">608,299 lifetime views</span><span class="tag ">no disclosed sponsorship for the six brands we checked</span><span class="tag ">held out of the roster: under the reach floor</span></footer></article><article class="chan" id="ch-techzoom">
+<header class="chan-h"><picture><source srcset="assets/avatars/techzoomorg.webp" type="image/webp"><img src="assets/avatars/techzoomorg.jpg" alt="TechZoom: Gadget Reviews &amp; How-To" width="72" height="72" loading="lazy" decoding="async"></picture><div><h3>TechZoom: Gadget Reviews &amp; How-To</h3>
+<p class="meta"><a href="https://www.youtube.com/@techzoomorg/about">@techzoomorg</a> &middot; English audio, no country set</p></div>
+<div class="chan-n">2.64K<i>subscribers</i></div></header>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=pZMm71N3eVY">iCloud &amp; Google Photos Are NOT Backups! (Do This Instead)</a><span class="vnum">57<i>16 Aug 2026</i></span></div><p class="chan-line">Its window uploads are titled around step, guide and getting. Nothing in the ten long-form uploads in its window carries a paid label or a sponsor disclosure for the six brands we checked. Median long-form upload 30 views, over the last ten in the window.</p><footer><span class="tag ">2,050,441 lifetime views</span><span class="tag ">no disclosed sponsorship for the six brands we checked</span><span class="tag ">held out of the roster: publishes a different category and under the reach floor</span></footer></article><article class="chan" id="ch-global">
+<header class="chan-h"><picture><source srcset="assets/avatars/global_selects.webp" type="image/webp"><img src="assets/avatars/global_selects.jpg" alt="Global Selects" width="72" height="72" loading="lazy" decoding="async"></picture><div><h3>Global Selects</h3>
+<p class="meta"><a href="https://www.youtube.com/@global_selects/about">@global_selects</a> &middot; United Kingdom</p></div>
+<div class="chan-n">7<i>subscribers</i></div></header>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=yOBpEkJX1O8">China eSIM Guide 2026: Airalo vs Holafly + Firewall Fix</a><span class="vnum">221<i>15 Jul 2026</i></span></div><p class="chan-line">Its window uploads are titled around esim, airalo and hidden. Nothing in the ten long-form uploads in its window carries a paid label or a sponsor disclosure for the six brands we checked. Median long-form upload 12 views, over the last ten in the window.</p><footer><span class="tag ">2,944 lifetime views</span><span class="tag ">no disclosed sponsorship for the six brands we checked</span><span class="tag ">held out of the roster: under the reach floor</span></footer></article><article class="chan" id="ch-esim">
+<header class="chan-h"><picture><source srcset="assets/avatars/esimwithnina.webp" type="image/webp"><img src="assets/avatars/esimwithnina.jpg" alt="eSIM with Nina" width="72" height="72" loading="lazy" decoding="async"></picture><div><h3>eSIM with Nina</h3>
+<p class="meta"><a href="https://www.youtube.com/@esimwithnina/about">@esimwithnina</a> &middot; English audio, no country set</p></div>
+<div class="chan-n">3<i>subscribers</i></div></header>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=RVi2VRGQ-ak">Best ESIM for Costa Rica 2026</a><span class="vnum">15<i>14 Aug 2026</i></span></div><p class="chan-line">Its window uploads are titled around esim, bahamas and barbados. Nothing in the ten long-form uploads in its window carries a paid label or a sponsor disclosure for the six brands we checked. Median long-form upload 8 views, over the last ten in the window.</p><footer><span class="tag ">1,255 lifetime views</span><span class="tag ">no disclosed sponsorship for the six brands we checked</span><span class="tag ">held out of the roster: sells a competing product and under the reach floor</span></footer></article></div>
+<div class="callout rv"><b>The eleven bought channels whose subscriber count we read sat between 5.56K and 1.45M subscribers.</b>
+<span>One channel took a deal from more than one of them.</span></div>
+</div>
+</div></div></section>
+
+<!-- ======================= 03 GAP ======================= -->
+<section class="beat gapbeat" id="gap"><div class="wrap">
+<div class="folio"><span class="fn">03</span><span class="fk">The gap</span><span class="fr">The competitor sponsorship map</span></div>
+<div class="beat-head"><span class="snum">03</span><h2>Holafly bought<br>23 placements.<br>eSIMo bought none.</h2></div>
+
+<div class="tape rv">
+<div class="taperow taphead">
+<div class="side"><picture><source srcset="assets/avatars/plate-esimo.webp" type="image/webp"><img src="assets/avatars/plate-esimo.jpg" alt="eSIMo" width="54" height="54" loading="lazy" decoding="async"></picture><div><b>eSIMo</b><i>Long-form disclosed deals in the window</i></div></div>
+<div class="vs">VS</div>
+<div class="side r"><picture><source srcset="assets/avatars/plate-holafly.webp" type="image/webp"><img src="assets/avatars/plate-holafly.jpg" alt="Holafly" width="54" height="54" loading="lazy" decoding="async"></picture><div><b>Holafly</b><i>Heaviest buyer in the window</i></div></div>
+</div>
+<div class="taperow"><span class="a">0</span><span class="m">Long-form sponsored videos, 180 days</span><span class="b"><a href="https://www.youtube.com/watch?v=ds4wNrmu7Ds">23</a></span></div>
+<div class="taperow"><span class="a">0</span><span class="m">Channels bought</span><span class="b">12</span></div>
+<div class="taperow"><span class="a">0</span><span class="m">Views on them</span><span class="b"><a href="https://www.youtube.com/watch?v=ds4wNrmu7Ds">1,041,806</a></span></div>
+<div class="taperow"><span class="a">none</span><span class="m">Most recent long-form</span><span class="b"><a href="https://www.youtube.com/watch?v=z6HCFIBApFA">25 Aug 2026</a></span></div>
+</div>
+
+<div class="board">
+<div class="brow rv"><div class="blab"><span>Every disclosed long-form placement in the window &middot; 37 videos &middot; 22 channels</span><span class="bval">1,466,380 views</span></div>
+<div class="btrack"><span class="bfill bfill-w" style="--w:100%"><span class="inbar"><picture><source srcset="assets/thumbs/ds4wNrmu7Ds.webp" type="image/webp"><img src="assets/thumbs/ds4wNrmu7Ds.jpg" alt="7 INCREDIBLE Europe Trips You Can Just Copy (10 Days Each)" width="800" height="450" loading="lazy" decoding="async" class=""></picture></span></span></div></div>
+
+<div class="brow rv"><div class="blab"><span>Holafly &middot; 23 videos &middot; 12 channels</span><span class="bval">1,041,806 views &middot; 71.0%</span></div>
+<div class="btrack"><span class="bfill bfill-img" style="--w:71.00%;--d:180ms"><picture><source srcset="assets/thumbs/ds4wNrmu7Ds.webp" type="image/webp"><img src="assets/thumbs/ds4wNrmu7Ds.jpg" alt="7 INCREDIBLE Europe Trips You Can Just Copy (10 Days Each)" width="800" height="450" loading="lazy" decoding="async" class=""></picture></span></div></div>
+
+<div class="brow rv"><div class="blab"><span>Sim Local &middot; 5 videos &middot; 5 channels</span><span class="bval">5,718 views &middot; 0.4%</span></div>
+<div class="btrack"><span class="bfill bfill-2" style="--w:2.00%;--d:230ms"></span></div></div>
+
+<div class="brow rv"><div class="blab"><span>Ubigi &middot; 3 videos &middot; 1 channel</span><span class="bval">353,904 views &middot; 24.1%</span></div>
+<div class="btrack"><span class="bfill bfill-2" style="--w:24.10%;--d:230ms"></span></div></div>
+
+<div class="brow rv"><div class="blab"><span>Saily &middot; 2 videos &middot; 1 channel</span><span class="bval">40,669 views &middot; 2.8%</span></div>
+<div class="btrack"><span class="bfill bfill-2" style="--w:2.80%;--d:230ms"></span></div></div>
+
+<div class="brow rv"><div class="blab"><span>Airalo &middot; 2 videos &middot; 2 channels</span><span class="bval">22,989 views &middot; 1.6%</span></div>
+<div class="btrack"><span class="bfill bfill-2" style="--w:2.00%;--d:230ms"></span></div></div>
+
+<div class="brow rv"><div class="blab"><span>GigSky &middot; 2 videos &middot; 2 channels</span><span class="bval">1,294 views &middot; 0.1%</span></div>
+<div class="btrack"><span class="bfill bfill-2" style="--w:2.00%;--d:230ms"></span></div></div>
+
+<div class="brow rv"><div class="blab"><span>eSIMo &middot; 0 long-form sponsored videos &middot; <a href="https://www.youtube.com/watch?v=JMxL4YVRKGs">2 creator-code deals on 1 channel</a> (<a href="https://www.youtube.com/watch?v=VlxJN0SoKxI">23 Jul 2026</a> and <a href="https://www.youtube.com/watch?v=JMxL4YVRKGs">13 Aug 2026</a>)</span><span class="bval">0 views &middot; 0.0%</span></div>
+<div class="btrack"><span class="bfill bfill-2" style="--w:0.00%;--d:280ms"></span></div>
+<p class="bnote">Nothing we read in the window carries a paid eSIMo placement of five minutes or longer. 2 discount-code deals do.</p></div>
+</div>
+<p class="cap" style="margin-top:20px">Sources: every one of the 37 placements links to its watch page in the ledger under section 04. Views read through the YouTube Data API on 2 September 2026. The market rule governs the roster, the chart and the sample. Placement counts are read across every channel the searches surfaced, in any country and any language, because a competitor&rsquo;s spend is evidence wherever it sits, and the ledger names a placement&rsquo;s language when it is not this market&rsquo;s. 5 brands searched, 1 more checked in what the searches returned. Placements by brand, every brand we graded and its own count: Airalo 2; Holafly 23; Saily 2; Ubigi 3; GigSky 2 and Sim Local 5 (checked).</p>
+
+<div class="gapchip rv"><span class="n num" data-count="37">37</span>
+<p>sponsored videos in six months carry a competitor&rsquo;s name. None carries eSIMo&rsquo;s.</p></div>
+
+<div class="gapstats">
+<div class="rv"><b>6 of 6</b><span>competitors we checked are buying</span></div>
+<div class="rv" style="--d:100ms"><b><a href="https://www.youtube.com/watch?v=ds4wNrmu7Ds">22</a></b><span>channels took one</span></div>
+<div class="rv" style="--d:200ms"><b>124K</b><span>median subscribers across the eleven bought channels we read</span></div>
+</div>
+</div></section>
+
+<!-- ======================= 04 SENTIMENT ======================= -->
+<section class="beat" id="sentiment"><div class="wrap"><div class="card">
+<div class="folio"><span class="fn">04</span><span class="fk">What a deal looks like</span><span class="fr">5 March 2026 to 1 September 2026</span></div>
+<div class="beat-head"><span class="snum">04</span><h2>37 placements.<br>22 channels.<br>four formats.</h2></div>
+<div class="dual">
+<div class="rv"><div class="num" data-count="46.9" data-dec="1" data-suffix="%">46.9%</div><div class="l">of the sample carries a disclosed deal</div></div>
+<div class="rv" style="--d:120ms"><div class="num" data-count="97.3" data-dec="1" data-suffix="%">97.3%</div><div class="l">of the placements carry the paid label</div></div>
+<p class="lede" style="margin-top:0;flex:1">70 more are creator-code deals with no sponsor sentence. 45 flagged videos in the window name none of the six brands we checked and are credited to nobody; two name more than one with no sponsor sentence and are credited to nobody.</p>
+</div>
+<div class="mos">
+<a class="mtile g1 rv" style="--l:0.000;--t:0.000;--s:20.779;--sy:45.434;--ml:0.000;--mt:0.000;--ms:36.671;--msy:30.265" href="https://www.youtube.com/watch?v=ds4wNrmu7Ds"><picture><source srcset="assets/thumbs/ds4wNrmu7Ds.webp" type="image/webp"><img src="assets/thumbs/ds4wNrmu7Ds.jpg" alt="7 INCREDIBLE Europe Trips You Can Just Copy (10 Days Each)" width="800" height="450" loading="lazy" decoding="async"></picture><span class="tvz"></span><span class="tv">175,534</span><span class="tc">Away Together w/ Nik and Allie</span></a>
+<a class="mtile g2 rv" style="--l:21.579;--t:0.000;--s:20.199;--sy:44.165;--ml:37.471;--mt:0.000;--ms:35.647;--msy:29.420" href="https://www.youtube.com/watch?v=IByxUKJeN1M"><picture><source srcset="assets/thumbs/IByxUKJeN1M.webp" type="image/webp"><img src="assets/thumbs/IByxUKJeN1M.jpg" alt="Japan Packing Done Right! What to Bring, Skip &amp; Buy" width="800" height="450" loading="lazy" decoding="async"></picture><span class="tvz"></span><span class="tv">165,868</span><span class="tc">Kensho Quest</span></a>
+<a class="mtile g2 rv" style="--l:42.578;--t:0.000;--s:19.641;--sy:42.946;--ml:37.471;--mt:30.080;--ms:34.663;--msy:28.607" href="https://www.youtube.com/watch?v=ef1OHs0cSh8"><picture><source srcset="assets/thumbs/ef1OHs0cSh8.webp" type="image/webp"><img src="assets/thumbs/ef1OHs0cSh8.jpg" alt="I Spent 24 Hours in Europe's CHEAPEST City" width="800" height="450" loading="lazy" decoding="async"></picture><span class="tvz"></span><span class="tv">156,833</span><span class="tc">Ed Chapman</span></a>
+<a class="mtile g2 rv" style="--l:63.019;--t:0.000;--s:17.901;--sy:39.140;--ml:0.000;--mt:30.925;--ms:31.591;--msy:26.072" href="https://www.youtube.com/watch?v=G5MwO9GoD4w"><picture><source srcset="assets/thumbs/G5MwO9GoD4w.webp" type="image/webp"><img src="assets/thumbs/G5MwO9GoD4w.jpg" alt="Don't Do This in Japan: 10 Money Mistakes Tourists Make" width="800" height="450" loading="lazy" decoding="async"></picture><span class="tvz"></span><span class="tv">130,269</span><span class="tc">Kensho Quest</span></a>
+<a class="mtile g3 rv" style="--l:81.720;--t:0.000;--s:14.779;--sy:32.315;--ml:73.918;--mt:0.000;--ms:26.082;--msy:21.526" href="https://www.youtube.com/watch?v=NSBf-w5M938"><picture><source srcset="assets/thumbs/NSBf-w5M938.webp" type="image/webp"><img src="assets/thumbs/NSBf-w5M938.jpg" alt="I Rebuilt My $4,000 One-Bag Travel Setup for $400" width="800" height="450" loading="lazy" decoding="async"></picture><span class="tvz"></span><span class="tv">88,798</span><span class="tc">Away Together w/ Nik and Allie</span></a>
+<a class="mtile g3 rv" style="--l:81.720;--t:34.064;--s:14.771;--sy:32.297;--ml:73.918;--mt:22.186;--ms:26.068;--msy:21.514" href="https://www.youtube.com/watch?v=mcG1Np0VIu4"><picture><source srcset="assets/thumbs/mcG1Np0VIu4.webp" type="image/webp"><img src="assets/thumbs/mcG1Np0VIu4.jpg" alt="Before You Pack Your Tech Kit, Watch This" width="800" height="450" loading="lazy" decoding="async"></picture><span class="tvz"></span><span class="tv">88,703</span><span class="tc">Away Together w/ Nik and Allie</span></a>
+<a class="mtile g3 rv" style="--l:63.019;--t:40.889;--s:14.608;--sy:31.941;--ml:72.934;--mt:44.361;--ms:25.780;--msy:21.277" href="https://www.youtube.com/watch?v=0aIYQXf60E4"><picture><source srcset="assets/thumbs/0aIYQXf60E4.webp" type="image/webp"><img src="assets/thumbs/0aIYQXf60E4.jpg" alt="5 Channels I Watch Before EVERY Single Europe Trip" width="800" height="450" loading="lazy" decoding="async"></picture><span class="tvz"></span><span class="tv">86,754</span><span class="tc">Away Together w/ Nik and Allie</span></a>
+<a class="mtile g3 rv" style="--l:42.578;--t:44.695;--s:13.139;--sy:28.729;--ml:0.000;--mt:57.658;--ms:23.188;--msy:19.137" href="https://www.youtube.com/watch?v=KszMQ8iHEfw"><picture><source srcset="assets/thumbs/KszMQ8iHEfw.webp" type="image/webp"><img src="assets/thumbs/KszMQ8iHEfw.jpg" alt="How to Use Your Phone Abroad (And Not Get SCREWED)" width="800" height="450" loading="lazy" decoding="async"></picture><span class="tvz"></span><span class="tv">70,183</span><span class="tc">Away Together w/ Nik and Allie</span></a>
+<a class="mtile g3 rv" style="--l:21.579;--t:45.914;--s:12.922;--sy:28.254;--ml:23.988;--mt:59.347;--ms:22.805;--msy:18.821" href="https://www.youtube.com/watch?v=meSYBegxHys"><picture><source srcset="assets/thumbs/meSYBegxHys.webp" type="image/webp"><img src="assets/thumbs/meSYBegxHys.jpg" alt="The BEST Checked Luggage for 2026 (Tested Head to Head)" width="800" height="450" loading="lazy" decoding="async"></picture><span class="tvz"></span><span class="tv">67,884</span><span class="tc">Away Together w/ Nik and Allie</span></a>
+<a class="mtile g3 rv" style="--l:0.000;--t:47.183;--s:12.353;--sy:27.010;--ml:47.592;--mt:59.347;--ms:21.800;--msy:17.992" href="https://www.youtube.com/watch?v=ObuSONuJ5Yg"><picture><source srcset="assets/thumbs/ObuSONuJ5Yg.webp" type="image/webp"><img src="assets/thumbs/ObuSONuJ5Yg.jpg" alt="Aer's SMALLEST Backpack Might Just Be Their Best" width="800" height="450" loading="lazy" decoding="async"></picture><span class="tvz"></span><span class="tv">62,035</span><span class="tc">Away Together w/ Nik and Allie</span></a>
+<a class="mtile g3 rv" style="--l:78.427;--t:68.111;--s:11.920;--sy:26.064;--ml:70.193;--mt:66.297;--ms:21.037;--msy:17.362" href="https://www.youtube.com/watch?v=M1KlbhqiNC0"><picture><source srcset="assets/thumbs/M1KlbhqiNC0.webp" type="image/webp"><img src="assets/thumbs/M1KlbhqiNC0.jpg" alt="Missing These 12 Japan Apps? Big Mistake!" width="800" height="450" loading="lazy" decoding="async"></picture><span class="tvz"></span><span class="tv">57,767</span><span class="tc">Kensho Quest</span></a>
+<a class="mtile g3 rv" style="--l:56.517;--t:74.579;--s:11.408;--sy:24.945;--ml:0.000;--mt:77.455;--ms:20.133;--msy:16.616" href="https://www.youtube.com/watch?v=aeg2k8A2R-M"><picture><source srcset="assets/thumbs/aeg2k8A2R-M.webp" type="image/webp"><img src="assets/thumbs/aeg2k8A2R-M.jpg" alt="I Tried TikTok&rsquo;s Most Hyped Travel Gear" width="800" height="450" loading="lazy" decoding="async"></picture><span class="tvz"></span><span class="tv">52,912</span><span class="tc">Away Together w/ Nik and Allie</span></a>
+<a class="mtile g3 rv" style="--l:35.301;--t:75.173;--s:11.355;--sy:24.827;--ml:47.592;--mt:78.000;--ms:20.039;--msy:16.538" href="https://www.youtube.com/watch?v=-RQkLbcBy_o"><picture><source srcset="assets/thumbs/-RQkLbcBy_o.webp" type="image/webp"><img src="assets/thumbs/-RQkLbcBy_o.jpg" alt="Best Travel eSIM? Holafly vs Airalo Speed Test (Real World Test)" width="800" height="450" loading="lazy" decoding="async"></picture><span class="tvz"></span><span class="tv">52,416</span><span class="tc">Tech TRX</span></a>
+<a class="mtile g4 rv" style="--l:13.153;--t:47.183;--s:6.941;--sy:15.178;--ml:20.933;--mt:78.829;--ms:12.250;--msy:10.110" href="https://www.youtube.com/watch?v=7NVUx2p8bB4"><picture><source srcset="assets/thumbs/7NVUx2p8bB4.webp" type="image/webp"><img src="assets/thumbs/7NVUx2p8bB4.jpg" alt="Bellroy Transit Check-In Luggage: ACTUALLY Worth Your Money?" width="800" height="450" loading="lazy" decoding="async"></picture><span class="tvz"></span><span class="tv">19,589</span><span class="tc">Away Together w/ Nik and Allie</span></a>
+</div>
+<p class="cap" style="margin-top:16px">Squares sized by share of the 1,275,545 views on fourteen placements on channels in this category, largest first. Every tile is a square; its area is that video&rsquo;s share. The smallest square here holds 19,589.</p>
+<div>
+<div class="bbar rv"><span class="seg b5" style="--w:74.00%"></span><span class="seg b3" style="--w:11.00%"></span><span class="seg b1" style="--w:10.00%"></span><span class="seg b2" style="--w:5.00%"></span></div><div class="bkeys"><div class="bk"><i class="b5"></i><b>Integrated read</b><span>17 videos &middot; 1,085,250 views</span></div><div class="bk"><i class="b3"></i><b>Roundup or list</b><span>7 videos &middot; 161,288 views</span></div><div class="bk"><i class="b1"></i><b>Dedicated review</b><span>10 videos &middot; 146,975 views</span></div><div class="bk"><i class="b2"></i><b>Tutorial with the app</b><span>3 videos &middot; 72,867 views</span></div></div>
+<p class="cap" style="margin-top:18px">All 37 placements, classified by title. Every token is matched as a whole word, case-insensitively, on the title alone. Dedicated review if the title contains &lsquo;review&rsquo;, &lsquo;honest&rsquo;, &lsquo;worth it&rsquo; or &lsquo;vs&rsquo;; tutorial if it contains &lsquo;how to&rsquo;, &lsquo;guide&rsquo;, &lsquo;tutorial&rsquo;, &lsquo;tips&rsquo; or &lsquo;learn&rsquo;; roundup if it contains &lsquo;best&rsquo;, &lsquo;top&rsquo;, &lsquo;ranked&rsquo; or &lsquo;alternative&rsquo;; Short under 60 seconds; integrated read otherwise. Rules apply in that order.</p>
+<details class="all"><summary>See all 37</summary>
+<table><colgroup><col style="width:14%"><col style="width:49%"><col style="width:23%"><col style="width:14%"></colgroup><thead><tr><th>Views</th><th>Video</th><th>Channel</th><th>Posted</th></tr></thead><tbody><tr><td class="n">175,534</td><td><a href="https://www.youtube.com/watch?v=ds4wNrmu7Ds">7 INCREDIBLE Europe Trips You Can Just Copy (10 Days Each)</a></td><td class="ch">Away Together w/ Nik and Allie &middot; Holafly</td><td class="dt">20 Jun 2026</td></tr><tr><td class="n">165,868</td><td><a href="https://www.youtube.com/watch?v=IByxUKJeN1M">Japan Packing Done Right! What to Bring, Skip &amp; Buy</a></td><td class="ch">Kensho Quest &middot; Ubigi</td><td class="dt">21 Mar 2026</td></tr><tr><td class="n">156,833</td><td><a href="https://www.youtube.com/watch?v=ef1OHs0cSh8">I Spent 24 Hours in Europe's CHEAPEST City</a></td><td class="ch">Ed Chapman &middot; Holafly</td><td class="dt">25 Mar 2026</td></tr><tr><td class="n">130,269</td><td><a href="https://www.youtube.com/watch?v=G5MwO9GoD4w">Don't Do This in Japan: 10 Money Mistakes Tourists Make</a></td><td class="ch">Kensho Quest &middot; Ubigi</td><td class="dt">18 Apr 2026</td></tr><tr><td class="n">88,798</td><td><a href="https://www.youtube.com/watch?v=NSBf-w5M938">I Rebuilt My $4,000 One-Bag Travel Setup for $400</a></td><td class="ch">Away Together w/ Nik and Allie &middot; Holafly</td><td class="dt">30 Jul 2026</td></tr><tr><td class="n">88,703</td><td><a href="https://www.youtube.com/watch?v=mcG1Np0VIu4">Before You Pack Your Tech Kit, Watch This</a></td><td class="ch">Away Together w/ Nik and Allie &middot; Holafly</td><td class="dt">3 Jun 2026</td></tr><tr><td class="n">86,754</td><td><a href="https://www.youtube.com/watch?v=0aIYQXf60E4">5 Channels I Watch Before EVERY Single Europe Trip</a></td><td class="ch">Away Together w/ Nik and Allie &middot; Holafly</td><td class="dt">22 Aug 2026</td></tr><tr><td class="n">70,183</td><td><a href="https://www.youtube.com/watch?v=KszMQ8iHEfw">How to Use Your Phone Abroad (And Not Get SCREWED)</a></td><td class="ch">Away Together w/ Nik and Allie &middot; Holafly</td><td class="dt">13 May 2026</td></tr><tr><td class="n">67,884</td><td><a href="https://www.youtube.com/watch?v=meSYBegxHys">The BEST Checked Luggage for 2026 (Tested Head to Head)</a></td><td class="ch">Away Together w/ Nik and Allie &middot; Holafly</td><td class="dt">25 Jul 2026</td></tr><tr><td class="n">62,035</td><td><a href="https://www.youtube.com/watch?v=ObuSONuJ5Yg">Aer's SMALLEST Backpack Might Just Be Their Best</a></td><td class="ch">Away Together w/ Nik and Allie &middot; Holafly</td><td class="dt">1 Jul 2026</td></tr><tr><td class="n">57,767</td><td><a href="https://www.youtube.com/watch?v=M1KlbhqiNC0">Missing These 12 Japan Apps? Big Mistake!</a></td><td class="ch">Kensho Quest &middot; Ubigi</td><td class="dt">26 Jun 2026</td></tr><tr><td class="n">52,912</td><td><a href="https://www.youtube.com/watch?v=aeg2k8A2R-M">I Tried TikTok&rsquo;s Most Hyped Travel Gear</a></td><td class="ch">Away Together w/ Nik and Allie &middot; Holafly</td><td class="dt">16 May 2026</td></tr><tr><td class="n">52,416</td><td><a href="https://www.youtube.com/watch?v=-RQkLbcBy_o">Best Travel eSIM? Holafly vs Airalo Speed Test (Real World Test)</a></td><td class="ch">Tech TRX &middot; Holafly</td><td class="dt">8 May 2026</td></tr><tr><td class="n">38,143</td><td><a href="https://www.youtube.com/watch?v=EfwDxDE9hlw">The Best eSIM for Japan in 2026? Saily vs Ubigi vs Airalo!</a></td><td class="ch">Technically Money &middot; Saily</td><td class="dt">27 Apr 2026</td></tr><tr><td class="n">30,081</td><td><a href="https://www.youtube.com/watch?v=wNRFK9BQsgE">Holafly eSIM Review – (2026) Best eSIM Card for Travelers on the Market?</a></td><td class="ch">Daniel | Tech &amp; Data &middot; Holafly</td><td class="dt">15 Aug 2026</td></tr><tr><td class="n">21,508</td><td><a href="https://www.youtube.com/watch?v=a6OZ-mDXYoc">New TRUCK BUILD Incoming! Turning Our DREAM Into Reality</a></td><td class="ch">The OutFit &middot; Holafly</td><td class="dt">21 Aug 2026</td></tr><tr><td class="n">19,589</td><td><a href="https://www.youtube.com/watch?v=7NVUx2p8bB4">Bellroy Transit Check-In Luggage: ACTUALLY Worth Your Money?</a></td><td class="ch">Away Together w/ Nik and Allie &middot; Holafly</td><td class="dt">12 Aug 2026</td></tr><tr><td class="n">16,507</td><td><a href="https://www.youtube.com/watch?v=kJRb95CekFk">STRESS FREE arrival in CHINA! (Best eSIM for China 2026)</a></td><td class="ch">JetLag Warriors &middot; Holafly</td><td class="dt">7 May 2026</td></tr><tr><td class="n">15,413</td><td><a href="https://www.youtube.com/watch?v=lgX5MEP8MXU">Airalo eSIM Setup and Review + London Spring Vlog!!</a></td><td class="ch">Malini Angelica &middot; Airalo</td><td class="dt">25 Mar 2026</td></tr><tr><td class="n">12,942</td><td><a href="https://www.youtube.com/watch?v=vSoSYSSCdo8">The Ultimate Travel Hack When Entering China 🇨🇳 (Holafly eSIM)</a></td><td class="ch">Travelwithchris &middot; Holafly</td><td class="dt">10 May 2026</td></tr><tr><td class="n">11,150</td><td><a href="https://www.youtube.com/watch?v=T0onSJ_5t-A">The Cheapest Time to Visit Greece + When to Avoid the Crowds</a></td><td class="ch">Cara Celeste West &middot; Holafly</td><td class="dt">24 May 2026</td></tr><tr><td class="n">10,053</td><td><a href="https://www.youtube.com/watch?v=quPgQVhuKFg">Celebrating My Birthday on Greece&rsquo;s Most Underrated Island 🇬🇷 | The BEST Things to Do in Syros</a></td><td class="ch">Cara Celeste West &middot; Holafly</td><td class="dt">16 Aug 2026</td></tr><tr><td class="n">7,576</td><td><a href="https://www.youtube.com/watch?v=j9_nQEZTIIE">I Left Australia… And Immediately Missed This</a></td><td class="ch">Luke Tweddle &middot; Airalo</td><td class="dt">30 Jun 2026</td></tr><tr><td class="n">6,405</td><td><a href="https://www.youtube.com/watch?v=c5JGVoBxV9k">Berlin Might Be Europe&rsquo;s Most Underrated Family City 🇩🇪 | What To Do, See, &amp; Eat</a></td><td class="ch">Cara Celeste West &middot; Holafly</td><td class="dt">19 Apr 2026</td></tr><tr><td class="n">3,535</td><td><a href="https://www.youtube.com/watch?v=z6HCFIBApFA">How I Get Unlimited Data Abroad (Holafly eSIM Review)</a></td><td class="ch">Josh Slavin &middot; Holafly</td><td class="dt">25 Aug 2026</td></tr><tr><td class="n">2,586</td><td><a href="https://www.youtube.com/watch?v=a1lSRZUpy1A">10 cosas que NADIE te dice antes de comprar una eSIM de Holafly</a></td><td class="ch">Europa acompañada (Spanish) &middot; Holafly</td><td class="dt">24 Apr 2026</td></tr><tr><td class="n">2,526</td><td><a href="https://www.youtube.com/watch?v=J4YQ8uknTgY">Best eSIM for USA Travel 2026 | Setup Guide for iPhone</a></td><td class="ch">Technically Money &middot; Saily</td><td class="dt">6 Jun 2026</td></tr><tr><td class="n">2,271</td><td><a href="https://www.youtube.com/watch?v=HdpH8aExe1g">Best eSIM for Europe Travel | One Plan Across 30+ Countries</a></td><td class="ch">Jay and Karolina &middot; Sim Local</td><td class="dt">4 Jul 2026</td></tr><tr><td class="n">2,250</td><td><a href="https://www.youtube.com/watch?v=e3Olkoy6xZk">The BEST eSIM for Travel in 2026? (Holafly eSIM Review)</a></td><td class="ch">George Redfern Travels &middot; Holafly</td><td class="dt">16 Mar 2026</td></tr><tr><td class="n">1,981</td><td><a href="https://www.youtube.com/watch?v=Y_aqG7jN5uQ">Don't Travel Overseas Without THIS (The Best eSIM in 2026)</a></td><td class="ch">The OutFit &middot; Holafly</td><td class="dt">12 Jul 2026</td></tr><tr><td class="n">1,663</td><td><a href="https://www.youtube.com/watch?v=G0VwOXBBMxE">Which eSIM Is The Best For Travel in 2026? (SIM Local vs Holafly vs Airalo)</a></td><td class="ch">Brent Coleman &middot; Sim Local</td><td class="dt">7 Aug 2026</td></tr><tr><td class="n">1,238</td><td><a href="https://www.youtube.com/watch?v=Rd-Ao66BXRM">GigSky eSIM Review 🚢 How To Stay Connected On A Cruise</a></td><td class="ch">Travels With Dani And Paul &middot; GigSky</td><td class="dt">1 Jul 2026</td></tr><tr><td class="n">1,167</td><td><a href="https://www.youtube.com/watch?v=jCKyjBHtNCY">Holafly eSim: Too Good to Be True? Full Review</a></td><td class="ch">Take Time To Travel &middot; Holafly</td><td class="dt">4 Jul 2026</td></tr><tr><td class="n">1,069</td><td><a href="https://www.youtube.com/watch?v=aFT4anJ20_8">I Compared The BEST Unlimited eSIM for Japan in 2026 | SimLocal vs Airalo vs Holafly</a></td><td class="ch">Raymond La &middot; Sim Local</td><td class="dt">30 Jun 2026</td></tr><tr><td class="n">557</td><td><a href="https://www.youtube.com/watch?v=yepuxSkN0zA">Australia Travel eSIM 2026 – The Best Data Plan for Tourists</a></td><td class="ch">Luke Tweddle &middot; Sim Local</td><td class="dt">8 Mar 2026</td></tr><tr><td class="n">158</td><td><a href="https://www.youtube.com/watch?v=J6QI1N6J9mw">Moving Abroad? Do This BEFORE You Fly (eSIM Guide 2026). Don't make this MISTAKE!!</a></td><td class="ch">Grow With Deepali &middot; Sim Local</td><td class="dt">12 Aug 2026</td></tr><tr><td class="n">56</td><td><a href="https://www.youtube.com/watch?v=hEoPbA0wE6w">Cruise Internet Trap We Got Caught in This Setup Mistake #ncl #nclluna #cruisetips</a></td><td class="ch">Kat and Matt &middot; GigSky</td><td class="dt">15 May 2026</td></tr></tbody></table>
+<p class="cap" style="margin-top:16px">Every one of the 37 placements in the 180-day window, 1,466,380 views between them, largest first. The channel column reads creator &middot; sponsor.</p>
+</details>
+</div>
+</div></div></section>
+
+<!-- ======================= 05 ROSTER ======================= -->
+<section class="beat" id="roster"><div class="wrap"><div class="card">
+<div class="folio"><span class="fn">05</span><span class="fk">The roster</span><span class="fr">Four picks, in order</span></div>
+<div class="beat-head"><span class="snum">05</span><h2>The roster</h2></div>
+<p class="lede" style="margin-top:0">In approach order. Reach multiple is the channel&rsquo;s best upload among its last ten long-form uploads inside the 180-day window, divided by the median of those ten.</p>
+<div class="picks"><details class="pick rv"><summary>
+<span class="pno">01</span><picture><source srcset="assets/avatars/jayandkarolina.webp" type="image/webp"><img src="assets/avatars/jayandkarolina.jpg" alt="Jay and Karolina" width="64" height="64" loading="lazy" decoding="async"></picture>
+<span class="pid"><b>Jay and Karolina</b><i>United Kingdom &middot; Tier B</i><em class="pstat">SPONSORED BY SIM LOCAL, JUL 2026</em></span>
+<span class="pbig">3.2x<i>reach multiple</i></span>
+<span class="pline">Already sells the slot you want, to Sim Local.</span><span class="pmore" aria-hidden="true">RECEIPTS</span></summary>
+<div class="pbody"><div class="pstats"><div><b>242K</b><span>subscribers</span></div>
+<div><b>31,479,097</b><span>lifetime channel views</span></div>
+<div><a class="tag tag-acc" href="https://www.youtube.com/watch?v=HdpH8aExe1g">sponsored by Sim Local, 4 Jul 2026</a></div></div>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=HdpH8aExe1g">Best eSIM for Europe Travel | One Plan Across 30+ Countries</a><span class="vnum">2,271<i>4 Jul 2026</i></span></div><div class="vrow"><a href="https://www.youtube.com/watch?v=VbBUZL2ifSw">Boarding Legend of the Seas - World's NEWEST &amp; LARGEST Cruise Ship</a><span class="vnum">102,583<i>11 Jul 2026</i></span></div><p class="chan-line">Its window uploads are titled around knew, wish and expected. Ran <a href="https://www.youtube.com/watch?v=HdpH8aExe1g">Sim Local, 4 Jul 2026</a> inside the window. Median long-form upload 32,529 views, over the last ten in the window.</p></div></details><details class="pick rv"><summary>
+<span class="pno">02</span><picture><source srcset="assets/avatars/luketweddle.webp" type="image/webp"><img src="assets/avatars/luketweddle.jpg" alt="Luke Tweddle" width="64" height="64" loading="lazy" decoding="async"></picture>
+<span class="pid"><b>Luke Tweddle</b><i>English audio, no country set &middot; Tier B</i><em class="pstat">SPONSORED BY AIRALO, JUN 2026</em></span>
+<span class="pbig">4.6x<i>reach multiple</i></span>
+<span class="pline">Already sells the slot you want, to Airalo and Sim Local.</span><span class="pmore" aria-hidden="true">RECEIPTS</span></summary>
+<div class="pbody"><div class="pstats"><div><b>8.12K</b><span>subscribers</span></div>
+<div><b>5,143,642</b><span>lifetime channel views</span></div>
+<div><a class="tag tag-acc" href="https://www.youtube.com/watch?v=j9_nQEZTIIE">sponsored by Airalo, 30 Jun 2026</a></div></div>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=j9_nQEZTIIE">I Left Australia… And Immediately Missed This</a><span class="vnum">7,576<i>30 Jun 2026</i></span></div><div class="vrow"><a href="https://www.youtube.com/watch?v=_2CZTr4ajuk">Australia Has Rules Nobody Actually Tells You</a><span class="vnum">65,138<i>21 Aug 2026</i></span></div><p class="chan-line">Its window uploads are titled around australia, australian and absolutely. Ran <a href="https://www.youtube.com/watch?v=j9_nQEZTIIE">Airalo, 30 Jun 2026</a> and one more inside the window. Median long-form upload 14,266 views, over the last ten in the window.</p></div></details><details class="pick rv"><summary>
+<span class="pno">03</span><picture><source srcset="assets/avatars/kenshoquest.webp" type="image/webp"><img src="assets/avatars/kenshoquest.jpg" alt="Kensho Quest" width="64" height="64" loading="lazy" decoding="async"></picture>
+<span class="pid"><b>Kensho Quest</b><i>United States &middot; Tier B</i><em class="pstat">SPONSORED BY UBIGI, JUN 2026</em></span>
+<span class="pbig">10.2x<i>reach multiple</i></span>
+<span class="pline">Already sells the slot you want, to Ubigi. Carries affiliate links to Saily and links to Airalo, Japan Wireless, Mobal, Ninja WiFi and Sakura Mobile in the uploads we read.</span><span class="pmore" aria-hidden="true">RECEIPTS</span></summary>
+<div class="pbody"><div class="pstats"><div><b>124K</b><span>subscribers</span></div>
+<div><b>16,998,198</b><span>lifetime channel views</span></div>
+<div><a class="tag tag-acc" href="https://www.youtube.com/watch?v=M1KlbhqiNC0">sponsored by Ubigi, 26 Jun 2026</a></div></div>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=M1KlbhqiNC0">Missing These 12 Japan Apps? Big Mistake!</a><span class="vnum">57,767<i>26 Jun 2026</i></span></div><div class="vrow"><a href="https://www.youtube.com/watch?v=0thX0qmtngo">I Tested Japan&rsquo;s Cooling Gadgets So You Don&rsquo;t Have To</a><span class="vnum">104,593<i>8 Aug 2026</i></span></div><p class="chan-line">Its window uploads are titled around japan, hokkaido and itinerary. Ran <a href="https://www.youtube.com/watch?v=M1KlbhqiNC0">Ubigi, 26 Jun 2026</a> and two more inside the window. Median long-form upload 10,277 views, over the last ten in the window.</p></div></details><details class="pick rv"><summary>
+<span class="pno">04</span><picture><source srcset="assets/avatars/awaytogether.webp" type="image/webp"><img src="assets/avatars/awaytogether.jpg" alt="Away Together w/ Nik and Allie" width="64" height="64" loading="lazy" decoding="async"></picture>
+<span class="pid"><b>Away Together w/ Nik and Allie</b><i>United States &middot; Tier A</i><em class="pstat">UNDER A LIVE PLACEMENT</em></span>
+<span class="pbig">1.7x<i>reach multiple</i></span>
+<span class="pline">Already sells the slot you want, to Holafly.</span><span class="pmore" aria-hidden="true">RECEIPTS</span></summary>
+<div class="pbody"><div class="pstats"><div><b>371K</b><span>subscribers</span></div>
+<div><b>59,991,415</b><span>lifetime channel views</span></div>
+<div><a class="tag tag-acc" href="https://www.youtube.com/watch?v=0aIYQXf60E4">sponsored by Holafly, 22 Aug 2026</a></div></div>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=0aIYQXf60E4">5 Channels I Watch Before EVERY Single Europe Trip</a><span class="vnum">86,754<i>22 Aug 2026</i></span></div><div class="vrow"><a href="https://www.youtube.com/watch?v=Zxz5EsDlizE">My Top 20 Travel Gear of the Last 5 Years</a><span class="vnum">148,708<i>1 Aug 2026</i></span></div><p class="chan-line">Its window uploads are titled around travel, instead and trip. Ran <a href="https://www.youtube.com/watch?v=0aIYQXf60E4">Holafly, 22 Aug 2026</a> and eight more inside the window. Median long-form upload 87,176 views, over the last ten in the window.</p></div></details></div>
+<p class="cap">Sources: linked inside each creator&rsquo;s row. 34 channels published more Shorts than long-form inside the 180-day window (we read each channel&rsquo;s 50 most recent uploads, so a channel&rsquo;s reads may not cover the full window); every one is held out of the roster. Four of them appear on the chart, marked held out. That count is over every channel we read. The counts that follow are over the channels this page prints. Six channels on this page are excluded by name, each with a written receipt: a channel selling a competing product and a media brand rather than a creator. Fourteen channels are held out because they publish a different category: fewer than half of the ten window titles behind their median name this one.</p>
+</div></div></section>
+
+<!-- ======================= CLOSE ======================= -->
+<section class="beat"><div class="wrap"><div class="close rv">
+<div class="who">
+<img src="data:image/jpeg;base64,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" alt="Davorin Smit" width="236" height="236" loading="lazy" decoding="async">
+<div class="nm">Davorin Smit</div><div class="rl">ARCH</div>
+</div>
+<div class="pitch">
+<div class="cta-var cta-v1"><h2>Let&rsquo;s get eSIMo into this category.</h2>
+<p></p></div>
+<div class="cta-var cta-v2"><h2>37 placements in the videos we read. Let&rsquo;s make the next one yours.</h2>
+<p>Four creators are listed above, in the order we would approach them.</p></div>
+<div class="cta-var cta-v3"><h2>The roster is right there.</h2>
+<p>Four creators, in order. Davorin walks you through the brief.</p></div>
+<a class="cta-btn" href="https://meetings-eu1.hubspot.com/davorin-smit">Book 30 minutes with Davorin</a>
+<p class="arch">ARCH has rolled with over 5,000 influencers across both Americas, Europe, MENA and Australia. <a href="https://arch.agency/">arch.agency</a></p>
+</div>
+</div></div></section>
+
+</main>
+
+<footer><div class="wrap">
+<details class="how"><summary>How this page was built</summary><div class="inner">
+<ul>
+<li>Everything on this page came from the YouTube Data API v3 (search.list, videos.list, channels.list), over a window of 5 March 2026 to 1 September 2026 and read on 2 September 2026. No scraping, no paid tool, no logged-in session, no third-party estimate.</li>
+<li>The sample is four category searches, page one of each. A search returns at most 50 videos, so every count here is a floor, never a market size: 64 distinct videos across 40 channels, published in the 180 days to 1 September 2026. The four category searches returned 180 videos inside the window, 65 of them long-form. 1 of them is excluded from the sample: 1 did not pass the market-language test, because a search language preference is a bias and not a filter. YouTube&rsquo;s own total-results figure is never printed.</li>
+<li>A placement is a window video, long-form and five minutes or longer, where a researched brand won a disclosure phrase within 250 characters of its own name. Every competitor count on this page carries that five-minute floor, and the 03 map counts your own deals without it, so a shorter sponsored video of yours is named rather than dropped. The platform paid label on its own attributes to nobody, and a phrase that names its party inline is spent on that party. A firm placement carries the paid label or a sponsor sentence; a creator-code-only disclosure is counted separately as a code deal. A brand named with no attributable disclosure is a mention, never a placement: 235 mentions were discarded on that rule.</li>
+<li>Before any of that, each channel&rsquo;s standing description text is blanked out: any line or 80-character run appearing in at least half of its stored descriptions, once it has five of them. An evergreen affiliate link is standing text, not a deal, so a brand that survives only inside it is recorded and never counted: 48 window videos landed there.</li>
+<li>We read each channel&rsquo;s 50 most recent uploads, so every per-channel count is a floor as well. A channel&rsquo;s median is the views of the last 10 long-form uploads it published inside the window, where long-form means at least 300 seconds and not a livestream, and on an even count the median is the mean of the two middle values. Fewer than 5 leaves no median and no tier: 38 read channels sit there, unmeasured rather than under the floor. Shorts under 60 seconds are counted once, separately, and sit in no median: 51 in the window sample. A channel publishing more Shorts than long-form inside the window is held out of the roster; four of them still plot on the chart, marked held out. A roster row needs a median of at least 3,000 and a long-form upload inside 90 days, an owner path we can point at (a channel description, a link or an email in the descriptions we read, or a custom handle), at least half of those ten window titles naming this category, and no more than half of them naming the neighbouring category this page holds out by rule. The sample obeys those same category floors, video by video.</li>
+<li>English-speaking markets means a channel whose country is US, GB, CA, AU, IE, or a channel with no country set, and in both cases the language floor: at least 70 per cent of the window uploads that carry an audio-language field are in English, over at least three of them, or, below three, at least 70 per cent of the window titles classify as English on a fixed stopword list. If a channel tags an audio language at all and not one of those tags is English, it fails outright and the title test is never reached. A country on its own is never enough. The market is the receipted market: the product is listed and sold in each of the five countries the label names (esimo.com plus per-country App Store listings for US, GB, CA, AU and IE, read 1 September 2026). The market rule governs the roster and the chart; the sample is held to the market language only, so 4 of its videos sit on channels outside the region set. The placement counts are read across every channel the searches surfaced, in any country and any language, because a competitor&rsquo;s spend is evidence wherever it sits.</li>
+<li>What this deliberately does not contain: audience geography, CPMs, rate cards, install or revenue figures, results claims, eSIMo&rsquo;s own spend, contact details, or sentiment scored by a model.</li>
+</ul>
+<p class="caveat">View counts drift upward. The numbers on this page are a snapshot, and every one of them is a few hundred views behind by the time you read it. Nothing here is a forecast and nothing here is a result: it is a read of what is already public. The full claim-to-id list ships alongside this page as <em>claims.json</em>.</p>
+</div></details>
+<div class="foot"><div class="grid">
+<svg class="wordmark" viewBox="0 0 83 22" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ARCH."><path d="M12.9221 21.6938H16.6558L8.3093 0L0 21.6938H3.75839L4.64875 19.2654L11.9792 19.268L12.9221 21.6938ZM5.78611 16.2115C6.62793 13.7814 7.46899 11.3512 8.31107 8.92062L10.8443 16.218C9.15867 16.2163 7.47251 16.2137 5.78636 16.2112L5.78611 16.2115ZM30.5568 21.6938H34.6761L29.0098 12.544C29.0098 12.544 32.8828 11.7136 33.4664 8.05251C33.4664 8.05251 34.9666 1.00467 26.6508 0.585655H19.6557V4.1403L22.9621 9.37225V9.39451H19.6557V21.6938H23.1532V12.9158H25.1538L25.1555 12.9193H25.1598L30.5568 21.69Z" fill="#000F41"/><path d="M23.1533 12.9154V21.6934H23.1651V12.9187H25.1556L25.1539 12.9154H23.1533ZM53.1342 5.87189L55.6028 3.39297C55.6028 3.39297 52.9616 0.29249 48.2774 0.282122C48.2774 0.282122 42.6322 -0.0516709 39.4643 4.8604C39.4643 4.8604 35.5148 11.0942 39.4643 17.3802C39.4643 17.3802 42.2084 21.9913 48.1074 21.9913C48.1074 21.9913 52.2488 22.315 55.6028 18.926L53.1136 16.4099C53.1136 16.4099 51.3552 18.4597 48.3453 18.4693C48.3453 18.4693 41.6228 18.6736 41.2959 11.3441C41.2959 11.3441 40.8635 3.63598 48.7105 3.84991C48.7098 3.84991 51.1716 3.86964 53.1342 5.87189ZM71.9986 0.585317V9.34764H63.3301V0.585317H59.8293V21.6934H63.3301V12.8717H71.9986V21.6934H75.4861V0.585317H71.9986ZM81.12 21.8909C82.1583 21.8909 83.0001 21.0403 83.0001 19.9906C83.0001 18.9412 82.1583 18.0905 81.12 18.0905C80.0818 18.0905 79.2402 18.9412 79.2402 19.9906C79.2402 21.04 80.0818 21.8909 81.12 21.8909Z" fill="#000F41"/></svg>
+<span>eSIMo &middot; English-speaking markets &middot; 2 September 2026</span>
+</div></div>
+</div></footer>
+
+<script>
+(function(){
+var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* reveal on scroll + bar growth + count-ups */
+var io = new IntersectionObserver(function(es){
+  es.forEach(function(e){
+    if(!e.isIntersecting) return;
+    e.target.classList.add('in');
+    io.unobserve(e.target);
+    var ns = e.target.matches('[data-count]') ? [e.target] : e.target.querySelectorAll('[data-count]');
+    for(var i=0;i<ns.length;i++) count(ns[i]);
+  });
+}, {rootMargin:'0px 0px -12% 0px', threshold:0.15});
+
+document.querySelectorAll('.rv, .brow, .bbar, [data-count]').forEach(function(n){ io.observe(n); });
+
+function count(el){
+  if(reduce || el.dataset.done) return;
+  el.dataset.done = '1';
+  var end = parseFloat(el.dataset.count), dec = parseInt(el.dataset.dec || '0', 10);
+  var suf = el.dataset.suffix || '', dur = 1100, t0 = null;
+  function fmt(v){ return v.toLocaleString('en-US', {minimumFractionDigits:dec, maximumFractionDigits:dec}) + suf; }
+  function step(ts){
+    if(t0 === null) t0 = ts;
+    var p = Math.min(1, (ts - t0) / dur);
+    var e = 1 - Math.pow(1 - p, 3);
+    el.textContent = fmt(end * e);
+    if(p < 1) requestAnimationFrame(step); else el.textContent = fmt(end);
+  }
+  el.textContent = fmt(0);
+  requestAnimationFrame(step);
+}
+
+/* 02 scatter: click a face, open that channel card */
+var cards = document.querySelectorAll('#chans .chan');
+var dots  = document.querySelectorAll('.dot');
+if(cards.length && dots.length){
+  document.documentElement.classList.add('js-chan');
+  var open = null;
+  function show(key){
+    dots.forEach(function(d){ d.setAttribute('aria-expanded', String(d.dataset.ch === key)); });
+    cards.forEach(function(c){ c.classList.toggle('open', c.id === 'ch-' + key); });
+    open = key;
+  }
+  dots.forEach(function(d){
+    d.addEventListener('click', function(){
+      if(open === d.dataset.ch){ show(''); return; }
+      show(d.dataset.ch);
+      var c = document.getElementById('ch-' + d.dataset.ch);
+      if(c) c.classList.add('in');
+    });
+  });
+  show('away');
+}
+})();
+</script>
+<style>.js-chan .chan{display:none}.js-chan .chan.open{display:block}</style>
+</body></html>
