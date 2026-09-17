@@ -166,3 +166,55 @@ footer{padding:22px 20px;align-items:flex-start}
 #print-report p{white-space:pre-wrap}
 #print-report tr{break-inside:avoid}
 @page{size:A4;margin:14mm}}
+
+/* ===== v3 2026-09-17: arch.agency card system (navy ground, 35px cards, blue + yellow surfaces) ===== */
+body{background:var(--navy)}
+.mast{border-bottom:0;color:#fff;padding-top:28px}
+main{max-width:1240px;padding:0 24px}
+.hero{color:#fff;padding:48px 24px 64px;grid-template-columns:1.05fr 1fr;gap:56px;align-items:start}
+.hero .eyebrow{color:var(--yellow)}
+h1{font-weight:800;line-height:.84;letter-spacing:-.04em;font-size:clamp(46px,6.2vw,86px)}
+h1 em{color:var(--yellow)}
+.intro{max-width:520px}
+.hero .button{background:var(--yellow);color:var(--navy);border-color:var(--yellow)}
+.hero .secondary{background:transparent;color:#fff;border-color:#fff}
+.contents{border-top-color:var(--blue)}
+.contents li{border-bottom-color:var(--blue)}
+.contents a:hover,.contents b{color:var(--yellow)}
+.check{background:#fff;color:var(--navy);border-radius:35px;padding:34px 34px 30px;scroll-margin-top:24px}
+.check .eyebrow{color:var(--navy);margin-bottom:18px}
+.check-fields{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.check-fields .wide{grid-column:1/-1}
+.opt{font-weight:400;color:var(--gray);font-size:12px;margin-left:6px}
+.check-result{background:var(--blue);color:#fff;border-radius:22px;padding:24px 26px;margin:22px 0 18px;min-height:150px}
+.chk-big{font-size:clamp(56px,7vw,84px);font-weight:800;line-height:.9;letter-spacing:-.04em;color:var(--yellow)}
+.chk-mid{font-size:34px;font-weight:800;letter-spacing:-.03em;line-height:1;color:var(--yellow);margin:4px 0 6px}
+.chk-label{font-size:12px;font-weight:600;letter-spacing:.08em;margin:8px 0 6px}
+.chk-sub,.chk-note{font-size:14px;margin:0}
+.chk-second{border-top:1px solid #fff;margin-top:18px;padding-top:14px}
+.check .secondary{width:100%;background:#fff;color:var(--navy);border-color:var(--navy)}
+.check .fine{display:block;font-size:12px;color:var(--gray);margin-top:14px;line-height:1.45}
+.guide,.workspace,.notes{background:#fff;border-top:0;border-radius:35px;padding:44px 48px 52px;margin-bottom:24px}
+.notes{padding:18px 48px 26px}
+.notes details:first-child{border-top:0}
+.diagram,.cards,.qgrid,fieldset{border-radius:22px}
+.cards,.qgrid{overflow:hidden}
+.step figure{border-radius:18px}
+.card .ask,#mode-note,#form-warning{border-radius:12px}
+input,textarea,select{border-radius:10px}
+.report-card{border-radius:22px}
+.report-grid.single{grid-template-columns:minmax(0,1fr)}
+.second{border:1px solid var(--navy);border-radius:22px;padding:0 24px;align-self:start}
+.second[open]{padding:0 0 0 0;border:0}
+.second>summary{list-style-position:inside}
+.second[open]>summary{padding-left:4px}
+.optional{border-top:1px solid var(--line);border-bottom:0;margin-top:28px;padding-top:10px}
+.consult{background:var(--blue);color:#fff;border-top:0;border-radius:22px;padding:30px 32px;margin-top:42px}
+.consult .button{background:var(--yellow);color:var(--navy);border-color:var(--yellow)}
+footer{border-top:0;color:#fff;max-width:1240px;margin:0 auto;padding:18px 48px 40px}
+@media(max-width:980px){.hero{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:760px){main{padding:0 12px}.hero{grid-template-columns:minmax(0,1fr);padding:28px 8px 40px;gap:30px}.hero h1{font-size:clamp(44px,12.5vw,68px)}
+.hero .contents{display:none}.check{border-radius:22px;padding:24px 20px}.check-fields{grid-template-columns:1fr}
+.guide,.workspace{border-radius:22px;padding:28px 20px 34px;margin-bottom:12px}.notes{border-radius:22px;padding:10px 20px 16px;margin-bottom:12px}
+.second{padding:0 20px}.consult{padding:24px 20px}footer{padding:14px 20px 30px}}
+@media print{body{background:#fff}}
