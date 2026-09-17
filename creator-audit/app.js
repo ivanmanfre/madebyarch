@@ -15,7 +15,7 @@ form.addEventListener('submit',async e=>{
     const j=await r.json().catch(()=>({}));
     if(!r.ok||!j.received){if(j.code==='work_email'||j.code==='email')mark('f-email',true);if(j.code==='product_url')mark('f-url',true);throw new Error(MSG[j.code]||'')}
     if(j.already){document.getElementById('done-title').textContent='We already have your company.';document.getElementById('done-text').textContent='Someone at your company asked for an audit. We run one per company, and it goes to the first address that asked.'}
-    else if(j.waitlist){document.getElementById('done-title').textContent='You are on next week’s list.';document.getElementById('done-text').textContent='This week’s 20 audits are taken. Yours runs next week and arrives by email from Davorin.'}
+    else if(j.waitlist){document.getElementById('done-title').textContent='You are on next week’s list.';document.getElementById('done-text').textContent='This week’s 30 audits are taken. Yours runs next week and arrives by email from Davorin.'}
     form.hidden=true;done.hidden=false;done.focus();
   }catch(err){statusEl.textContent=err.message||'We could not save your request. Please try again.'}
   finally{btn.disabled=false;btn.textContent='REQUEST MY AUDIT →'}
