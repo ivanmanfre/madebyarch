@@ -18,5 +18,5 @@ form.addEventListener('submit',async e=>{
     else if(j.waitlist){document.getElementById('done-title').textContent='You are on next week’s list.';document.getElementById('done-text').textContent='This week’s 30 audits are taken. Yours runs next week and arrives by email from Davorin.'}
     form.hidden=true;done.hidden=false;done.focus();
   }catch(err){statusEl.textContent=err.message||'We could not save your request. Please try again.'}
-  finally{btn.disabled=false;btn.textContent='REQUEST MY AUDIT →'}
+  finally{btn.disabled=false;btn.textContent='RUN MY CREATOR RADAR →'}
 });
