@@ -242,6 +242,7 @@ display:flex;align-items:center;gap:40px;flex-wrap:wrap}
 .gapchip p{flex:1;min-width:min(100%,280px);font-size:clamp(18px,2vw,28px);font-weight:600;
 letter-spacing:-.02em;line-height:1.05;text-transform:uppercase}
 .gapchip a{border-bottom-color:rgba(0,15,65,.35)}
+.coverage-only #gap .tape,.coverage-only #gap .gapstats,.no-gap-chip #gap .gapchip{display:none}
 .gapstats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:12px}
 .gapstats div{background:rgba(255,255,255,.12);border-radius:25px;padding:26px}
 .gapstats b{display:block;font-size:clamp(24px,2.6vw,38px);font-weight:700;letter-spacing:-.04em;line-height:1}
@@ -363,7 +364,7 @@ text-transform:uppercase;color:rgba(255,255,255,.85)}
 /* ---- responsive ---- */
 @media (max-width:1100px){
  .card{padding:52px 40px}
- .pid{width:min(34vw,210px)} .pbig{width:130px} .pline{display:none}
+ .pid{width:min(34vw,210px)} .pbig{width:130px} .pick>summary{flex-wrap:wrap} .pline{flex-basis:100%}
 }
 @media (max-width:860px){
  .card{padding:40px 26px;min-height:0;gap:34px;border-radius:28px}
@@ -390,14 +391,14 @@ text-transform:uppercase;color:rgba(255,255,255,.85)}
  .g3 .tv,.g3 .tc{display:none}
  /* roster: one grid at 390, the reach multiple never wraps */
  .pick>summary{display:grid;grid-template-columns:auto 56px minmax(0,1fr);
-  grid-template-areas:"pno pav pid" "pbg pbg pbg";column-gap:14px;row-gap:12px;padding:22px 0;align-items:center}
+  grid-template-areas:"pno pav pid" "pln pln pln" "pbg pbg pbg" "pmr pmr pmr";column-gap:14px;row-gap:12px;padding:22px 0;align-items:center}
  .pno{grid-area:pno} .pick>summary>picture{grid-area:pav;display:block}
  .pick img{width:56px;height:56px}
  .pid{grid-area:pid;width:auto}
  .pbig{grid-area:pbg;width:auto;display:flex;align-items:baseline;gap:12px;text-align:left;
   border-top:1px solid var(--hair);padding-top:11px}
  .pbig i{text-align:left;margin-top:0}
- .pmore{display:none}
+ .pline{grid-area:pln;display:block;font-size:15px} .pmore{grid-area:pmr;display:block;justify-self:start}
  .taperow{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:4px 12px;padding:14px 0}
  .taperow .m{grid-column:1/-1;order:-1;text-align:left;white-space:normal;margin-bottom:2px}
  .taphead .vs{grid-column:1/-1;order:-1;text-align:left}
@@ -423,7 +424,7 @@ text-transform:uppercase;color:rgba(255,255,255,.85)}
 </style>
 <noscript><style>.rv{opacity:1;transform:none}.bfill{width:var(--w)}.seg{width:var(--w)}</style></noscript>
 </head>
-<body class="cta-1">
+<body class="cta-1 coverage-only">
 
 <div class="mast"><div class="wrap"><div class="grid">
 <a class="logo" href="https://arch.agency/"><svg class="wordmark" viewBox="0 0 83 22" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ARCH."><path d="M12.9221 21.6938H16.6558L8.3093 0L0 21.6938H3.75839L4.64875 19.2654L11.9792 19.268L12.9221 21.6938ZM5.78611 16.2115C6.62793 13.7814 7.46899 11.3512 8.31107 8.92062L10.8443 16.218C9.15867 16.2163 7.47251 16.2137 5.78636 16.2112L5.78611 16.2115ZM30.5568 21.6938H34.6761L29.0098 12.544C29.0098 12.544 32.8828 11.7136 33.4664 8.05251C33.4664 8.05251 34.9666 1.00467 26.6508 0.585655H19.6557V4.1403L22.9621 9.37225V9.39451H19.6557V21.6938H23.1532V12.9158H25.1538L25.1555 12.9193H25.1598L30.5568 21.69Z" fill="#000F41"/><path d="M23.1533 12.9154V21.6934H23.1651V12.9187H25.1556L25.1539 12.9154H23.1533ZM53.1342 5.87189L55.6028 3.39297C55.6028 3.39297 52.9616 0.29249 48.2774 0.282122C48.2774 0.282122 42.6322 -0.0516709 39.4643 4.8604C39.4643 4.8604 35.5148 11.0942 39.4643 17.3802C39.4643 17.3802 42.2084 21.9913 48.1074 21.9913C48.1074 21.9913 52.2488 22.315 55.6028 18.926L53.1136 16.4099C53.1136 16.4099 51.3552 18.4597 48.3453 18.4693C48.3453 18.4693 41.6228 18.6736 41.2959 11.3441C41.2959 11.3441 40.8635 3.63598 48.7105 3.84991C48.7098 3.84991 51.1716 3.86964 53.1342 5.87189ZM71.9986 0.585317V9.34764H63.3301V0.585317H59.8293V21.6934H63.3301V12.8717H71.9986V21.6934H75.4861V0.585317H71.9986ZM81.12 21.8909C82.1583 21.8909 83.0001 21.0403 83.0001 19.9906C83.0001 18.9412 82.1583 18.0905 81.12 18.0905C80.0818 18.0905 79.2402 18.9412 79.2402 19.9906C79.2402 21.04 80.0818 21.8909 81.12 21.8909Z" fill="#000F41"/></svg></a>
@@ -443,14 +444,14 @@ text-transform:uppercase;color:rgba(255,255,255,.85)}
 <div class="stamp-lab">videos in the recorded target-game sample</div>
 </div>
 </div>
-<h1 class="rv">One channel holds most of the sampled views</h1>
+<h1 class="rv">One channel carries most of the coverage</h1>
 <div class="finds">
 <div class="find rv"><span class="n num" data-count="40">40</span><span class="l">sampled target-game videos</span></div>
 <div class="find rv"><span class="n num" data-count="8">8</span><span class="l">channels in the sample</span></div>
 <div class="find rv"><span class="n num" data-count="1">1</span><span class="l">adjacent candidate</span></div>
 </div>
 <p class="hero-src rv"><a href="#sentiment">40 sampled videos</a> across 8 channels, 4 Sep 2026 to 4 Oct 2026. A bounded search sample, not a census.</p>
-<nav class="hero-actions" aria-label="Scan next steps"><a class="cta-btn" href="https://meetings-eu1.hubspot.com/davorin-smit/30-minute-sales-call">Review the shortlist with Davorin</a><a href="#roster">See the creators &darr;</a></nav>
+<nav class="hero-actions" aria-label="Scan next steps"><a class="cta-btn" href="https://meetings-eu1.hubspot.com/davorin-smit/30-minute-sales-call">Review the creator plan with Davorin</a><a href="#roster">See the creator plan &darr;</a></nav>
 </div></section>
 
 <!-- ======================= 01 VOLUME ======================= -->
@@ -518,14 +519,14 @@ text-transform:uppercase;color:rgba(255,255,255,.85)}
 <p class="meta"><a href="https://www.youtube.com/channel/UCTtcPEGxChlZCMVTR6lr00w"><bdi data-verbatim>@carloskey92</bdi></a></p></div>
 <div class="chan-n">1.25K<i>subscribers</i></div></header>
 <div class="vrow"><a href="https://www.youtube.com/watch?v=Wfsz3UG9law"><bdi data-verbatim>+1064 ⛏️ ¡La Mina Más Épica en Gold and Goblins! 💰👹</bdi></a><span class="vnum">2<i>13 Sep 2026</i></span></div><p class="chan-line">1 sampled video with 2 recorded views.</p><footer><span class="tag">231,136 lifetime channel views</span></footer></article></div>
-<div class="callout rv"><b>Mr Pin Gameplay made most of the sampled videos and drew almost all of the sampled views.</b>
-<span>By title, its uploads are one numbered ads-review series posted near-daily. The other channels are small, and many of their titles point to mine-level progress clips. Coverage in this sample rests on that one series.</span></div>
+<div class="callout rv"><b>Most sampled videos and views come from one channel&#x27;s numbered ad-review series.</b>
+<span>Mr Pin Gameplay posts a numbered Gold and Goblins series titled as ad reviews. Metadata cannot confirm what the footage shows or whether the play is original. The other sampled channels have small view totals.</span></div>
 </div>
 </div></div></section>
 
 <!-- ======================= 03 GAP ======================= -->
 <section class="beat gapbeat" id="gap"><div class="wrap">
-<div class="folio"><span class="fn">03</span><span class="fk">The gap</span><span class="fr">Official and creator evidence</span></div>
+<div class="folio"><span class="fn">03</span><span class="fk">The gap</span><span class="fr">Recorded sample concentration</span></div>
 <div class="beat-head"><span class="snum">03</span><h2>Where attention<br>is concentrated</h2></div>
 
 <div class="tape rv">
@@ -534,8 +535,7 @@ text-transform:uppercase;color:rgba(255,255,255,.85)}
 <div class="vs">VS</div>
 <div class="side r"><picture><source srcset="assets/avatars/puzzlegameplay.webp" type="image/webp"><img src="assets/avatars/puzzlegameplay.jpg" alt="Mr Pin Gameplay" width="54" height="54" loading="lazy" decoding="async"></picture><div><b><bdi data-verbatim>Mr Pin Gameplay</bdi></b><i>Largest sampled creator view total</i></div></div>
 </div>
-<div class="taperow"><span class="a">Unavailable</span><span class="m">Subscribers</span><span class="b"><a href="https://www.youtube.com/channel/UCCNvU7LlyUiwHL0yQSejVBQ">444K</a></span></div>
-<div class="taperow"><span class="a">Unavailable</span><span class="m">Lifetime channel views</span><span class="b"><a href="https://www.youtube.com/channel/UCCNvU7LlyUiwHL0yQSejVBQ">820,278,721</a></span></div>
+
 </div>
 
 <div class="board">
@@ -548,14 +548,13 @@ text-transform:uppercase;color:rgba(255,255,255,.85)}
 <div class="brow rv"><div class="blab"><span>Other sampled channels</span><span class="bval">642 views</span></div>
 <div class="btrack"><span class="bfill bfill-w" data-exact-share="true" style="--w:0.1%"></span></div></div>
 </div>
-<p class="cap" style="margin-top:20px">Subscriber and lifetime figures describe the whole channel. Sampled views describe only the target-game records in this scan.</p>
+<p class="cap" style="margin-top:20px">These bars compare sampled target-game views by channel. They describe the recorded search sample; they do not estimate all YouTube coverage.</p>
 
-<div class="gapchip rv"><span class="n num" >Unavailable</span>
-<p>An official all-time comparison cannot be computed from the recorded facts.</p></div>
+<div class="gapchip rv"><span class="n num" data-count="99.9" data-dec="1" data-suffix="%">99.9%</span>
+<p>of sampled views belong to <a href="https://www.youtube.com/channel/UCCNvU7LlyUiwHL0yQSejVBQ"><bdi data-verbatim>Mr Pin Gameplay</bdi></a>. Test another relevant creator to learn whether interest extends beyond this channel.</p></div>
 
 <div class="gapstats">
-<div class="rv"><b>Unavailable</b><span>Official sampled views</span></div>
-<div class="rv"><b><a href="https://www.youtube.com/channel/UCCNvU7LlyUiwHL0yQSejVBQ">1,063,179</a></b><span>Leading creator sampled views</span></div>
+
 </div>
 </div></section>
 
@@ -597,18 +596,18 @@ text-transform:uppercase;color:rgba(255,255,255,.85)}
 
 <!-- ======================= 05 ROSTER ======================= -->
 <section class="beat" id="roster"><div class="wrap"><div class="card">
-<div class="folio"><span class="fn">05</span><span class="fk">The roster</span><span class="fr">Candidates to discuss</span></div>
-<div class="beat-head"><span class="snum">05</span><h2>A shortlist for<br>the next brief</h2></div>
-<p class="lede" style="margin-top:0">One adjacent creator who plays idle and incremental games. A separate discovery search found this channel. Its linked receipts come from that search and carry their own dates, printed below beside the target sample period.</p>
+<div class="folio"><span class="fn">05</span><span class="fk">The roster</span><span class="fr">A candidate to test</span></div>
+<div class="beat-head"><span class="snum">05</span><h2>One creator.<br>A focused test.</h2></div>
+<p class="lede" style="margin-top:0">One creator, one proposed test. MOREQUIS already plays idle mining tycoon games in long progression videos. ARCH would measure whether viewers click a tracked store link in that format and install on mobile, from a channel built mostly on PC uploads.</p>
 <div class="picks"><details class="pick rv"><summary>
 <span class="pno">01</span><picture><source srcset="assets/avatars/morequis.webp" type="image/webp"><img src="assets/avatars/morequis.jpg" alt="MOREQUIS" width="64" height="64" loading="lazy" decoding="async"></picture>
 <span class="pid"><b><bdi data-verbatim>MOREQUIS</bdi></b><i>Adjacent-game creator</i><em class="pstat">NOT OBSERVED IN OUR TARGET SAMPLE</em></span>
 <span class="pbig">10.0x<i>observed ratio</i></span>
-<span class="pline">MOREQUIS: a conceptual idle-game progression video, played on mobile.</span><span class="pmore" aria-hidden="true">RECEIPTS</span></summary>
+<span class="pline">Conceptual idle-tycoon progression run of Gold and Goblins, played on mobile, in the channel&#x27;s usual format</span><span class="pmore" aria-hidden="true">RECEIPTS</span></summary>
 <div class="pbody"><div class="pstats"><div><b>61.8K</b><span>subscribers</span></div>
 <div><b>14,824,289</b><span>lifetime channel views</span></div>
 <div><a class="tag tag-acc" href="https://www.youtube.com/channel/UCID1_VPX1TWjRYU0PaMqZgA/about">not observed in the target sample</a></div></div>
-<div class="vrow"><a href="https://www.youtube.com/watch?v=qXaqYftPYHk"><bdi data-verbatim>Turning $0 into $374,400,000,000,000,000 per Second</bdi></a><span class="vnum">616,918<i>2 Sep 2026</i></span></div><div class="vrow"><a href="https://www.youtube.com/watch?v=t4T_3myB2W4"><bdi data-verbatim>How I Made $3,370,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000</bdi></a><span class="vnum">113,020<i>11 Sep 2026</i></span></div><p class="chan-line">MOREQUIS posts long incremental and idle-game progression plays with money-climb titles; recent uploads include mobile idle titles. The concept is a dedicated progression video built only on two store claims, merging lower-level goblins into stronger teams and upgrading the mine to manage resources. Most recorded uploads are PC/Steam. Capture device, mobile audience share, willingness and rates are unknown.</p></div></details></div>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=qXaqYftPYHk"><bdi data-verbatim>Turning $0 into $374,400,000,000,000,000 per Second</bdi></a><span class="vnum">616,918<i>2 Sep 2026</i></span></div><div class="vrow"><a href="https://www.youtube.com/watch?v=t4T_3myB2W4"><bdi data-verbatim>How I Made $3,370,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000</bdi></a><span class="vnum">113,020<i>11 Sep 2026</i></span></div><p class="chan-line">Recent uploads include full plays of Idle Miner Tycoon, an iOS idle mining game, and the Gold and Goblins listing invites players to &#x27;Upgrade your mine and manage resources like a true idle tycoon&#x27;. The brief is one dedicated progression video played on mobile, using only that line and &#x27;Merge lower-level goblins to build stronger teams&#x27;, with a tracked store link in the existing &#x27;Play the Game:&#x27; slot. ARCH would measure whether viewers click that link and install. Most uploads are PC/Steam, the capture device is not shown and the mobile audience share is unknown, so ARCH should confirm device and country split, willingness and rate first.</p></div></details></div>
 <p class="cap">The linked adjacent receipts are dated 2 Sep 2026 to 11 Sep 2026; the target-game sample covers 4 Sep 2026 to 4 Oct 2026. Each ratio divides the first linked adjacent video’s observed views by public subscribers. That receipt is the largest recorded adjacent video for the creator in the discovery window, not a forecast. Adjacent-game evidence is excluded from every target-game total above. Rates, availability, willingness and audience transfer require confirmation. Footage ownership was not independently verified.</p>
 </div></div></section>
 
@@ -620,8 +619,8 @@ text-transform:uppercase;color:rgba(255,255,255,.85)}
 </div>
 <div class="pitch">
 <div class="cta-var cta-v1"><h2>Choose a first<br>creator brief.</h2>
-<p>Review the candidates and their proposed formats with Davorin.</p></div>
-<div class="cta-var cta-v2"><h2>A shortlist for<br>your next brief.</h2>
+<p>Review this creator and the proposed test with Davorin.</p></div>
+<div class="cta-var cta-v2"><h2>A creator for<br>your next test.</h2>
 <p>Discuss the evidence, limitations and the first approach.</p></div>
 <div class="cta-var cta-v3"><h2>Start with<br>the right brief.</h2>
 <p>ARCH can make the approach and run the campaign.</p></div>
@@ -637,7 +636,7 @@ text-transform:uppercase;color:rgba(255,255,255,.85)}
 <ul>
 <li>Public YouTube API metadata, read 4 October 2026. Counts are a snapshot and may change.</li>
 <li>Search results are bounded by the recorded queries and dates; no all-time volume estimate is available.</li>
-<li>Paid-promotion status reflects the uploader-declared API flag where available. The watch-page overlay was not independently checked. Missing flags are unknown; an undeclared placement may still be paid.</li>
+<li>Paid-promotion status reflects the API flag declared by the uploader where available. The watch-page overlay was not independently checked. Missing flags are unknown; an undeclared placement may still be paid.</li>
 <li>Off-topic matches are excluded from target-game sample counts. Official lifetime facts and adjacent-game evidence remain separate.</li>
 <li>1 video from 1 channel was left out of every count, chart and table on this page. A review of each sampled channel and its titles placed that channel as distributing modified game files or cheat tools, or as re-posting material with no contribution of its own.</li>
 <li>Search queries: gold and goblins, gold and goblins game, gold and goblins idle merge, gold and goblins miner games, gold and goblins guide, gold and goblins tips, gold and goblins gameplay, gold and goblins review, gold and goblins update, gold &amp; goblins mine.</li>
