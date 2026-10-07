@@ -218,3 +218,14 @@ footer{border-top:0;color:#fff;max-width:1240px;margin:0 auto;padding:18px 48px 
 .guide,.workspace{border-radius:22px;padding:28px 20px 34px;margin-bottom:12px}.notes{border-radius:22px;padding:10px 20px 16px;margin-bottom:12px}
 .second{padding:0 20px}.consult{padding:24px 20px}footer{padding:14px 20px 30px}}
 @media print{body{background:#fff}}
+
+/* 2026-10-07: anatomy diagram as a list on phones; header matches Creator Radar */
+.diagram-list{display:none;list-style:none;margin:0;padding:0}
+.diagram-list li{border:1.5px solid var(--navy);border-radius:10px;padding:12px 14px;margin:0 0 10px;font-size:14px;line-height:1.45;color:var(--gray)}
+.diagram-list li b{display:block;color:var(--navy);font-size:14px;letter-spacing:.02em;text-transform:uppercase}
+.diagram-list li.hl{background:#F2FF82}.diagram-list li.hl{color:var(--navy)}
+.diagram-list li.muted{background:#EDEDED}
+@media(max-width:760px){.diagram{overflow-x:visible}.diagram svg{display:none}.diagram-list{display:block}}
+.mast{justify-content:space-between}
+.mast span{flex:0 1 auto;letter-spacing:.08em;text-align:center}
+.mast>a:last-child{text-decoration:none;border:1px solid rgba(255,255,255,.4);border-radius:40px;padding:9px 16px;min-height:0;font-size:12px;font-weight:600;letter-spacing:.04em}
