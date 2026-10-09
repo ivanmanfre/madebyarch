@@ -769,4 +769,15 @@ if(cards.length && dots.length){
 })();
 </script>
 <style>.js-chan .chan{display:none}.js-chan .chan.open{display:block}</style>
+<script>/* arch-open-beacon: one open per tab -> scan-open edge fn -> scan_opens (company_slug arch-<folder>). ?me=1 mutes this browser. */
+(function(){try{var q=new URLSearchParams(location.search);if(q.get('me')==='1')localStorage.setItem('arch_me','1');
+var f=location.pathname.split('/').filter(Boolean)[0]||'';if(!/-audit$/.test(f))return;
+var k='arch_po_'+f;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');
+var r='';try{r=document.referrer?new URL(document.referrer).hostname:''}catch(e){}
+var w=window.innerWidth||0,K='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJqYnZxdnpiemN6amJhdGdtY2NiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjgzMDUwODAsImV4cCI6MjA4Mzg4MTA4MH0.yqghcn-Rw5dIFadLhvUASIeUARPvu_CyPOGayI8KyTI';
+fetch('https://bjbvqvzbzczjbatgmccb.supabase.co/functions/v1/scan-open',{method:'POST',keepalive:true,
+headers:{'content-type':'application/json','apikey':K,'authorization':'Bearer '+K},
+body:JSON.stringify({company_slug:('arch-'+f.toLowerCase()).slice(0,80),owner_flag:localStorage.getItem('arch_me')==='1',
+device_type:w<768?'mobile':w<1024?'tablet':'desktop',referrer_host:r,user_agent:navigator.userAgent})}).catch(function(){})}catch(e){}})();
+</script>
 </body></html>
