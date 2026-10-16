@@ -382,7 +382,10 @@ text-transform:uppercase;color:rgba(255,255,255,.85)}
  /* The studio's own label carries channel handle + best-video + view count on one nowrap line
     (547px on TrainStation 3). On the 700px mobile plot that sweeps across half the chart and
     crosses whatever creator labels sit in the way. Wrapping it costs two lines and no meaning. */
- .ownlab{white-space:normal;max-width:230px;text-align:right;line-height:1.35}
+ /* 2026-10-16: width:max-content keeps the wrap at the 230px box wherever the marker sits. Without it an
+    absolutely placed label shrinks to the room RIGHT of its left offset, so a marker at 84-93% wrapped a
+    34-character label to 3-4 lines (Picsart, Lingokids, TRAINSWEATEAT) and failed the 2-line budget. */
+ .ownlab{white-space:normal;width:max-content;max-width:230px;text-align:right;line-height:1.35}
  .swipe{display:block}
  .mos{aspect-ratio:322.2/390.4}
  .mtile{left:calc(var(--ml)*1%);top:calc(var(--mt)*1%);width:calc(var(--ms)*1%);height:calc(var(--msy)*1%)}
@@ -444,7 +447,7 @@ text-transform:uppercase;color:rgba(255,255,255,.85)}
 <div class="stamp-lab">videos in the recorded target-game sample</div>
 </div>
 </div>
-<h1 class="rv">Test Sky with a mobile discovery audience</h1>
+<h1 class="rv">Test Sky in a mobile open-world roundup</h1>
 <div class="finds">
 <div class="find rv"><span class="n num" data-count="230">230</span><span class="l">sampled target-game videos</span></div>
 <div class="find rv"><span class="n num" data-count="101">101</span><span class="l">channels in the sample</span></div>
@@ -527,8 +530,8 @@ text-transform:uppercase;color:rgba(255,255,255,.85)}
 <p class="meta"><a href="https://www.youtube.com/channel/UCBNzAQALELreJcc1BFAdRUg"><bdi data-verbatim>@thatyellowskid</bdi></a></p></div>
 <div class="chan-n">485<i>subscribers</i></div></header>
 <div class="vrow"><a href="https://www.youtube.com/watch?v=VibAPQKKkwM"><bdi data-verbatim>Sky Cotl but it’s just me buying stuff #6</bdi></a><span class="vnum">4,487<i>27 Sep 2026</i></span></div><p class="chan-line">1 sampled video with 4,487 recorded views.</p><footer><span class="tag">77,644 lifetime channel views</span></footer></article></div>
-<div class="callout rv"><b>Noob Mode holds the largest share of sampled views, led by early beta preview uploads.</b>
-<span>By label, update and announcement uploads lead on views and guides lead on video count. Titles suggest these mostly serve existing players following events and dailies, so a new-player test points to a creator outside this group.</span></div>
+<div class="callout rv"><b>Noob Mode leads sampled views; update and announcement videos drew the largest view share.</b>
+<span>Guides were the most common upload type, while update and spending videos drew most sampled views. The titles mostly follow seasons, events and dailies for existing players, so reach with new players is untested here.</span></div>
 </div>
 </div></div></section>
 
@@ -608,17 +611,17 @@ text-transform:uppercase;color:rgba(255,255,255,.85)}
 <section class="beat" id="roster"><div class="wrap"><div class="card">
 <div class="folio"><span class="fn">05</span><span class="fk">The roster</span><span class="fr">A candidate to test</span></div>
 <div class="beat-head"><span class="snum">05</span><h2>One creator.<br>A focused test.</h2></div>
-<p class="lede" style="margin-top:0">This scan proposes one creator for one test. Tekkan makes mobile discovery lists, and a Sky segment in one of them would show whether list viewers click a tracked App Store link and install. The result is a campaign measurement to collect, and this page does not predict it.</p>
+<p class="lede" style="margin-top:0">One creator means one proposed test. Tekkan makes ranked mobile game lists for Android and iOS viewers looking for something new to install. The test is whether a Sky segment in one of those lists brings clicks on a tracked App Store link and installs.</p>
 <div class="picks"><details class="pick rv"><summary>
 <span class="pno">01</span><picture><source srcset="assets/avatars/tekkanmobile.webp" type="image/webp"><img src="assets/avatars/tekkanmobile.jpg" alt="Tekkan" width="64" height="64" loading="lazy" decoding="async"></picture>
-<span class="pid"><b><bdi data-verbatim>Tekkan</bdi></b><i>Adjacent-game creator · median 91,825 views, latest 20 uploads</i><em class="pstat">NOT OBSERVED IN OUR TARGET SAMPLE</em></span>
+<span class="pid"><b><bdi data-verbatim>Tekkan</bdi></b><i>Adjacent-game creator · median 86,874 views, latest 20 uploads</i><em class="pstat">NOT OBSERVED IN OUR TARGET SAMPLE</em></span>
 <span class="pbig pbig-low">0.5x<i>observed ratio</i></span>
-<span class="pline">A sponsored Sky first look inside a cozy mobile games roundup, with the App Store link in the description</span><span class="pmore" aria-hidden="true">RECEIPTS</span></summary>
+<span class="pline">Conceptual: a Sky segment in Tekkan&#x27;s next open-world or monthly mobile games roundup</span><span class="pmore" aria-hidden="true">RECEIPTS</span></summary>
 <div class="pbody"><div class="pstats"><div><b>181K</b><span>subscribers</span></div>
-<div><b>50,570,349</b><span>lifetime channel views</span></div>
+<div><b>50,634,055</b><span>lifetime channel views</span></div>
 <div><a class="tag tag-acc" href="https://www.youtube.com/channel/UCbrGRGEXEBbQnoIND1AvddQ/about">not observed in the target sample</a></div></div>
-<div class="vrow"><a href="https://www.youtube.com/watch?v=R1LA-WRLggw"><bdi data-verbatim>15 BEST Open World Games for Android/iOS 2026 (Offline/Online)</bdi></a><span class="vnum">363,917<i>4 Sep 2026</i></span></div><div class="vrow"><a href="https://www.youtube.com/watch?v=YwuYrTx53q0"><bdi data-verbatim>15 BEST Survival Games for Android/iOS in 2026 (Offline/Online)</bdi></a><span class="vnum">79,252<i>18 Sep 2026</i></span></div><p class="chan-line">Tekkan posts mobile list videos for Android and iOS, including a cozy roundup that already listed Sky and a monthly new-releases list for viewers picking games to install. Brief: a conceptual first-look segment in a cozy list, with footage the creator captures and claims limited to Sky being a thatgamecompany game, listed under Roleplaying and available from the App Store. Track clicks and installs on an App Store link; installs through other stores fall outside that count. Sky was already featured once and many lists are shooter or survival, so transfer is uncertain. Confirm audience location, willingness and rates.</p></div></details></div>
-<p class="cap">The linked adjacent receipts are dated 4 Sep 2026 to 18 Sep 2026; the target-game sample covers 14 Sep 2026 to 14 Oct 2026. Creators are listed by the median views of their latest recorded uploads, the typical audience of one more video. Each ratio divides that median by public subscribers. Both are observed figures and no forecast; the linked videos are the largest recorded adjacent receipts. Adjacent-game evidence is excluded from every target-game total above. Rates, availability, willingness and audience transfer require confirmation. Footage ownership was not independently verified.</p>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=R1LA-WRLggw"><bdi data-verbatim>15 BEST Open World Games for Android/iOS 2026 (Offline/Online)</bdi></a><span class="vnum">366,307<i>4 Sep 2026</i></span></div><p class="chan-line">Tekkan posts ranked Android and iOS game lists, including open-world roundups, for viewers looking for their next install. The brief quotes only the verified store text, an open-world adventure where players &quot;Explore magical realms, restore lost light, and form wordless bonds with players worldwide,&quot; free with in-app purchases. Proposed measurement: clicks and installs on a tracked App Store link, which counts iOS installs only. Sky would be one entry in a list that leans to action titles. Confirm audience location, iOS share, willingness, rates and footage source before committing.</p></div></details></div>
+<p class="cap">The linked adjacent receipts are dated 4 Sep 2026; the target-game sample covers 14 Sep 2026 to 14 Oct 2026. Creators are listed by the median views of their latest recorded uploads, the typical audience of one more video. Each ratio divides that median by public subscribers. Both are observed figures and no forecast; the linked videos are the largest recorded adjacent receipts. Adjacent-game evidence is excluded from every target-game total above. Creator rates, schedules, willingness and audience transfer require confirmation. Footage ownership was not independently verified.</p>
 </div></div></section>
 
 <!-- ======================= CLOSE ======================= -->
@@ -644,7 +647,7 @@ text-transform:uppercase;color:rgba(255,255,255,.85)}
 <footer><div class="wrap">
 <details class="how"><summary>How this page was built</summary><div class="inner">
 <ul>
-<li>Public YouTube API metadata, read 14 October 2026. Counts are a snapshot and may change.</li>
+<li>Public YouTube API metadata: the target-game sample, its channel figures and receipts read 14 October 2026; creator shortlist channel figures, receipts and recent uploads read 16 October 2026. Counts are a snapshot and may change.</li>
 <li>Video search ran through a third-party YouTube search service with the same queries and date windows; view, channel and paid-promotion figures come from the YouTube Data API.</li>
 <li>Search results are bounded by the recorded queries and dates; no all-time volume estimate is available.</li>
 <li>Paid-promotion status reflects the API flag declared by the uploader where available. The watch-page overlay was not independently checked. Missing flags are unknown; an undeclared placement may still be paid.</li>
