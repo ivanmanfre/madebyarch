@@ -382,7 +382,10 @@ text-transform:uppercase;color:rgba(255,255,255,.85)}
  /* The studio's own label carries channel handle + best-video + view count on one nowrap line
     (547px on TrainStation 3). On the 700px mobile plot that sweeps across half the chart and
     crosses whatever creator labels sit in the way. Wrapping it costs two lines and no meaning. */
- .ownlab{white-space:normal;max-width:230px;text-align:right;line-height:1.35}
+ /* 2026-10-16: width:max-content keeps the wrap at the 230px box wherever the marker sits. Without it an
+    absolutely placed label shrinks to the room RIGHT of its left offset, so a marker at 84-93% wrapped a
+    34-character label to 3-4 lines (Picsart, Lingokids, TRAINSWEATEAT) and failed the 2-line budget. */
+ .ownlab{white-space:normal;width:max-content;max-width:230px;text-align:right;line-height:1.35}
  .swipe{display:block}
  .mos{aspect-ratio:322.2/390.4}
  .mtile{left:calc(var(--ml)*1%);top:calc(var(--mt)*1%);width:calc(var(--ms)*1%);height:calc(var(--msy)*1%)}
@@ -444,11 +447,11 @@ text-transform:uppercase;color:rgba(255,255,255,.85)}
 <div class="stamp-lab">videos in the recorded target-game sample</div>
 </div>
 </div>
-<h1 class="rv">Test boomer-shooter fans on a cartoon FPS</h1>
+<h1 class="rv">Test a shooter creator with a tracked link</h1>
 <div class="finds">
 <div class="find rv"><span class="n num" data-count="346">346</span><span class="l">sampled target-game videos</span></div>
 <div class="find rv"><span class="n num" data-count="178">178</span><span class="l">channels in the sample</span></div>
-<div class="find rv"><span class="n num" data-count="5">5</span><span class="l">adjacent candidates</span></div>
+<div class="find rv"><span class="n num" data-count="3">3</span><span class="l">adjacent candidates</span></div>
 </div>
 <p class="hero-src rv"><a href="#sentiment">346 sampled videos</a> across 178 channels, 15 Sep 2026 to 15 Oct 2026. This is a search sample, so it misses some videos.</p>
 <nav class="hero-actions" aria-label="Scan next steps"><a class="cta-btn" href="https://meetings-eu1.hubspot.com/davorin-smit/30-minute-sales-call">Review the creator plan with Davorin</a><a href="#roster">See the creator plan &darr;</a></nav>
@@ -527,8 +530,8 @@ text-transform:uppercase;color:rgba(255,255,255,.85)}
 <p class="meta"><a href="https://www.youtube.com/channel/UCaauVV39f1suOfI2uGBMj7g"><bdi data-verbatim>@ludens_8</bdi></a></p></div>
 <div class="chan-n">4<i>subscribers</i></div></header>
 <div class="vrow"><a href="https://www.youtube.com/watch?v=AGIReAU_b7E"><bdi data-verbatim>MOUSE: P.I. For Hire - świetny pomysł na grę</bdi></a><span class="vnum">2,166<i>7 Oct 2026</i></span></div><p class="chan-line">1 sampled video with 2,166 recorded views.</p><footer><span class="tag">3,611 lifetime channel views</span></footer></article></div>
-<div class="callout rv"><b>Most sampled videos are labelled gameplay from small channels, and one review leads on views.</b>
-<span>Coverage spreads across many small channels posting playthroughs, boss fights and Shorts. Several uploaders link the Steam listing. One sampled video has the paid-promotion flag, and what it promotes is unconfirmed.</span></div>
+<div class="callout rv"><b>Most sampled videos are gameplay footage, and a handful of uploads hold the largest share of views.</b>
+<span>Playthrough parts, boss clips and shorts make up most titles, and one review upload holds the largest single view total. Open the channel cards to check each source video.</span></div>
 </div>
 </div></div></section>
 
@@ -608,49 +611,33 @@ text-transform:uppercase;color:rgba(255,255,255,.85)}
 <section class="beat" id="roster"><div class="wrap"><div class="card">
 <div class="folio"><span class="fn">05</span><span class="fk">The roster</span><span class="fr">Candidates to discuss</span></div>
 <div class="beat-head"><span class="snum">05</span><h2>A shortlist for<br>the next brief</h2></div>
-<p class="lede" style="margin-top:0">Each creator below is one proposed test. Brief a single video, track the Steam link in its description, and measure whether viewers click through and install. Willingness, rates and audience location stay unconfirmed until ARCH asks each creator.</p>
+<p class="lede" style="margin-top:0">Each creator below is a separate proposed paid test. Brief a dedicated video, put a tracked Steam link in the description, and measure whether viewers click through and buy. Their linked videos show genre fit for the brief and sit outside the target sample.</p>
 <div class="picks"><details class="pick rv"><summary>
 <span class="pno">01</span><picture><source srcset="assets/avatars/3fs.webp" type="image/webp"><img src="assets/avatars/3fs.jpg" alt="3FS" width="64" height="64" loading="lazy" decoding="async"></picture>
-<span class="pid"><b><bdi data-verbatim>3FS</bdi></b><i>Adjacent-game creator · median 688,640 views, latest 20 uploads</i><em class="pstat">NOT OBSERVED IN OUR TARGET SAMPLE</em></span>
+<span class="pid"><b><bdi data-verbatim>3FS</bdi></b><i>Adjacent-game creator · median 693,304 views, latest 20 uploads</i><em class="pstat">NOT OBSERVED IN OUR TARGET SAMPLE</em></span>
 <span class="pbig pbig-low">0.4x<i>observed ratio</i></span>
-<span class="pline">Comedic first playthrough as a variety crew meets a cartoon-styled shooter</span><span class="pmore" aria-hidden="true">RECEIPTS</span></summary>
+<span class="pline">Comedy first playthrough of a classic-cartoon shooter, long-form, with a tracked Steam link.</span><span class="pmore" aria-hidden="true">RECEIPTS</span></summary>
 <div class="pbody"><div class="pstats"><div><b>1.60M</b><span>subscribers</span></div>
-<div><b>303,323,705</b><span>lifetime channel views</span></div>
+<div><b>303,909,535</b><span>lifetime channel views</span></div>
 <div><a class="tag tag-acc" href="https://www.youtube.com/channel/UCF2T5SJP8fKB7eubgvwEDxg/about">not observed in the target sample</a></div></div>
-<div class="vrow"><a href="https://www.youtube.com/watch?v=ju1SZaIbu1g"><bdi data-verbatim>never playing ultrakill ever again after this...</bdi></a><span class="vnum">567,460<i>24 Aug 2026</i></span></div><p class="chan-line">3FS viewers watch comedy and horror variety play, and a recent ULTRAKILL episode drew a large audience into a fast shooter. Brief: a dedicated first playthrough framed around the game&#x27;s classic-cartoon look and guns-blazing tone, with no specific mechanics scripted. Proposed measurement: track the Steam link in the description and see whether viewers click and install. The channel&#x27;s play platform is unverified and a Steam link will miss console purchases. Shooters are rare here, so FPS buyer interest is uncertain, and willingness to take sponsors is unknown.</p></div></details><details class="pick rv"><summary>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=ju1SZaIbu1g"><bdi data-verbatim>never playing ultrakill ever again after this...</bdi></a><span class="vnum">571,422<i>24 Aug 2026</i></span></div><p class="chan-line">3FS makes comedy-led first playthroughs of indie games, mostly horror and odd titles, and a recent ULTRAKILL video shows a fast shooter already ran on the channel. MOUSE: P.I. For Hire is verified on Steam as an action-packed first-person shooter inspired by classic cartoons, which suits the comedy tone. Brief: a dedicated long-form first playthrough built on that pitch, with no promised mechanics. Proposed measurement: clicks and purchases through a tracked Steam link in the description. Genre overlap is partial, willingness is unknown, and the capture platform is unconfirmed, so agree PC footage to match the tracked link.</p></div></details><details class="pick rv"><summary>
 <span class="pno">02</span><picture><source srcset="assets/avatars/vinnnywinnny.webp" type="image/webp"><img src="assets/avatars/vinnnywinnny.jpg" alt="VinnyWinny" width="64" height="64" loading="lazy" decoding="async"></picture>
-<span class="pid"><b><bdi data-verbatim>VinnyWinny</bdi></b><i>Adjacent-game creator · median 50,094 views, latest 20 uploads</i><em class="pstat">NOT OBSERVED IN OUR TARGET SAMPLE</em></span>
+<span class="pid"><b><bdi data-verbatim>VinnyWinny</bdi></b><i>Adjacent-game creator · median 50,247 views, latest 20 uploads</i><em class="pstat">NOT OBSERVED IN OUR TARGET SAMPLE</em></span>
 <span class="pbig">1.5x<i>observed ratio</i></span>
-<span class="pline">Challenge-style first run of MOUSE: P.I. For Hire for an ULTRAKILL skill audience</span><span class="pmore" aria-hidden="true">RECEIPTS</span></summary>
-<div class="pbody"><div class="pstats"><div><b>34.1K</b><span>subscribers</span></div>
-<div><b>4,822,980</b><span>lifetime channel views</span></div>
+<span class="pline">Long-form challenge or first-look run of MOUSE: P.I. For Hire with a tracked Steam link.</span><span class="pmore" aria-hidden="true">RECEIPTS</span></summary>
+<div class="pbody"><div class="pstats"><div><b>34.2K</b><span>subscribers</span></div>
+<div><b>4,844,514</b><span>lifetime channel views</span></div>
 <div><a class="tag tag-acc" href="https://www.youtube.com/channel/UC0g2qpJyuR1ttXCDs1Gjg9g/about">not observed in the target sample</a></div></div>
-<div class="vrow"><a href="https://www.youtube.com/watch?v=CCK8BSo1Rgk"><bdi data-verbatim>Can you Beat ULTRAKILL With Only a Shield?</bdi></a><span class="vnum">110,137<i>28 Jul 2026</i></span></div><p class="chan-line">VinnyWinny&#x27;s recent uploads are ULTRAKILL challenge runs and a PvP indie shooter episode, so these viewers already move between fast FPS games. Brief: the creator&#x27;s first full run, pitched as an action-packed shooter drawn from classic cartoons, with any challenge framing agreed after the creator has played it. Proposed measurement: track the Steam link and count clicks and installs, which will miss console purchases. Uploads are irregular, the channel centres on one game and channel country is unset, so confirm audience location and willingness first.</p></div></details><details class="pick rv"><summary>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=CCK8BSo1Rgk"><bdi data-verbatim>Can you Beat ULTRAKILL With Only a Shield?</bdi></a><span class="vnum">111,606<i>28 Jul 2026</i></span></div><div class="vrow"><a href="https://www.youtube.com/watch?v=FiYUI8_B_NE"><bdi data-verbatim>ULTRAKILL, But Every Enemy Is MINOS PRIME</bdi></a><span class="vnum">19,254<i>16 Oct 2026</i></span></div><p class="chan-line">VinnyWinny posts long ULTRAKILL challenge runs plus other indie shooters such as KILLNETIC, so viewers already watch skilled first-person shooter play. That is the closest genre bridge here, since MOUSE is verified as an action-packed first-person shooter. Brief: a dedicated first-look or challenge-style video at the usual length, with challenge rules set together because no mechanics are verified. Proposed measurement: clicks and purchases on a tracked Steam link. Views vary per video, the KILLNETIC upload drew fewer than the ULTRAKILL runs, and willingness is unknown. Confirm audience location and PC capture to match the link.</p></div></details><details class="pick rv"><summary>
 <span class="pno">03</span><picture><source srcset="assets/avatars/truesquareface.webp" type="image/webp"><img src="assets/avatars/truesquareface.jpg" alt="Square Face" width="64" height="64" loading="lazy" decoding="async"></picture>
-<span class="pid"><b><bdi data-verbatim>Square Face</bdi></b><i>Adjacent-game creator · median 48,727 views, latest 20 uploads</i><em class="pstat">NOT OBSERVED IN OUR TARGET SAMPLE</em></span>
+<span class="pid"><b><bdi data-verbatim>Square Face</bdi></b><i>Adjacent-game creator · median 48,874 views, latest 20 uploads</i><em class="pstat">NOT OBSERVED IN OUR TARGET SAMPLE</em></span>
 <span class="pbig">1.5x<i>observed ratio</i></span>
-<span class="pline">A Refund-or-Not episode: first-time playthrough of MOUSE ending in the creator&#x27;s verdict</span><span class="pmore" aria-hidden="true">RECEIPTS</span></summary>
-<div class="pbody"><div class="pstats"><div><b>31.7K</b><span>subscribers</span></div>
-<div><b>5,151,459</b><span>lifetime channel views</span></div>
+<span class="pline">Refund-or-Not episode: a first playthrough of MOUSE, then a candid keep-or-refund verdict.</span><span class="pmore" aria-hidden="true">RECEIPTS</span></summary>
+<div class="pbody"><div class="pstats"><div><b>31.9K</b><span>subscribers</span></div>
+<div><b>5,199,110</b><span>lifetime channel views</span></div>
 <div><a class="tag tag-acc" href="https://www.youtube.com/channel/UCIA_CKJAbMz8fgK9oIXFLwg/about">not observed in the target sample</a></div></div>
-<div class="vrow"><a href="https://www.youtube.com/watch?v=Y5ja1wZTP1k"><bdi data-verbatim>Ultrakill – An FPS Hater’s First Playthrough</bdi></a><span class="vnum">184,140<i>30 Jul 2026</i></span></div><p class="chan-line">Square Face&#x27;s Refund-or-Not series gives first-time verdicts on indie games, and its ULTRAKILL first playthrough covered a peer shooter. Brief: one episode playing MOUSE: P.I. For Hire for the first time, introduced as a first-person shooter inspired by classic cartoons, with the verdict left to the creator. Proposed measurement: track the Steam link in the description and count clicks and installs, which will miss console purchases. The studio cannot steer a refund verdict, the persona leans away from FPS games, and channel country is unset, so confirm audience location.</p></div></details><details class="pick rv"><summary>
-<span class="pno">04</span><picture><source srcset="assets/avatars/catastrophicmeltdown.webp" type="image/webp"><img src="assets/avatars/catastrophicmeltdown.jpg" alt="CATastrophe" width="64" height="64" loading="lazy" decoding="async"></picture>
-<span class="pid"><b><bdi data-verbatim>CATastrophe</bdi></b><i>Adjacent-game creator · median 20,836 views, latest 40 uploads</i><em class="pstat">NOT OBSERVED IN OUR TARGET SAMPLE</em></span>
-<span class="pbig">2.8x<i>observed ratio</i></span>
-<span class="pline">A spotlight Short in the Dusk is cool style presenting MOUSE as a classic-cartoon FPS</span><span class="pmore" aria-hidden="true">RECEIPTS</span></summary>
-<div class="pbody"><div class="pstats"><div><b>7.32K</b><span>subscribers</span></div>
-<div><b>13,859,567</b><span>lifetime channel views</span></div>
-<div><a class="tag tag-acc" href="https://www.youtube.com/channel/UCEbPKUiVvd8MIgWtAqrF1xQ/about">not observed in the target sample</a></div></div>
-<div class="vrow"><a href="https://www.youtube.com/watch?v=HSCyrOspU_Q"><bdi data-verbatim>The Song of Fear</bdi></a><span class="vnum">49,962<i>11 Oct 2026</i></span></div><div class="vrow"><a href="https://www.youtube.com/watch?v=w5hIcFVfo78"><bdi data-verbatim>Dusk is cool</bdi></a><span class="vnum">16,827<i>11 Sep 2026</i></span></div><div class="vrow"><a href="https://www.youtube.com/watch?v=Dq_l3HOZNao"><bdi data-verbatim>Statower</bdi></a><span class="vnum">15,719<i>14 Oct 2026</i></span></div><p class="chan-line">CATastrophe posts daily Shorts on ULTRAKILL and a spotlight on DUSK, peer retro shooters whose fans are a plausible fit for a cartoon-styled FPS. Brief: one spotlight Short in the same love-letter format, describing the game only through its verified pitch as an action-packed shooter drawn from classic cartoons. Proposed measurement: track the Steam link in the description and check clicks and installs, which will miss console purchases. The placement is short-form only, and the channel says topics outside ULTRAKILL lose views, so this Short may land below its typical figure.</p></div></details><details class="pick rv"><summary>
-<span class="pno">05</span><picture><source srcset="assets/avatars/tondaryzd.webp" type="image/webp"><img src="assets/avatars/tondaryzd.jpg" alt="TondarYZD" width="64" height="64" loading="lazy" decoding="async"></picture>
-<span class="pid"><b><bdi data-verbatim>TondarYZD</bdi></b><i>Adjacent-game creator · median 15,322 views, latest 20 uploads</i><em class="pstat">NOT OBSERVED IN OUR TARGET SAMPLE</em></span>
-<span class="pbig pbig-low">0.3x<i>observed ratio</i></span>
-<span class="pline">Indie first-look video on MOUSE in the channel&#x27;s coolest-new-game spotlight style</span><span class="pmore" aria-hidden="true">RECEIPTS</span></summary>
-<div class="pbody"><div class="pstats"><div><b>53.4K</b><span>subscribers</span></div>
-<div><b>16,030,946</b><span>lifetime channel views</span></div>
-<div><a class="tag tag-acc" href="https://www.youtube.com/channel/UC9lEaKLbWcpj7flPowtcnFA/about">not observed in the target sample</a></div></div>
-<div class="vrow"><a href="https://www.youtube.com/watch?v=llfWh1zuifQ"><bdi data-verbatim>The ULTRAVOICE Mod Lets V1 SPEAK TOO Now (ULTRAKILL)</bdi></a><span class="vnum">74,624<i>25 Jul 2026</i></span></div><div class="vrow"><a href="https://www.youtube.com/watch?v=vMt3I0xcn40"><bdi data-verbatim>How Much Can You Make Ultrakill Play Itself?</bdi></a><span class="vnum">28,382<i>3 Oct 2026</i></span></div><div class="vrow"><a href="https://www.youtube.com/watch?v=Mq-9nb0Og7w"><bdi data-verbatim>SUPERHOT in ULTRAKILL is really cool and funny #ultrakill #superhot #gameplay</bdi></a><span class="vnum">23,066<i>12 Aug 2026</i></span></div><p class="chan-line">TondarYZD&#x27;s viewers watch ULTRAKILL weapon analysis, mods and custom levels, the same fast-FPS genre as MOUSE. Brief: one first-look video in the style of the channel&#x27;s recent indie spotlight, presenting the game as a guns-blazing shooter inspired by classic cartoons, with no mechanics scripted beyond that. Proposed measurement: track the Steam link and see whether viewers click and install; console purchases will not show there. Reach is the weakest of these picks, and the recent first look outside ULTRAKILL drew well below the channel&#x27;s typical views, so treat this as a smaller probe.</p></div></details></div>
-<p class="cap">The linked adjacent receipts are dated 25 Jul 2026 to 14 Oct 2026; the target-game sample covers 15 Sep 2026 to 15 Oct 2026. Creators are listed by the median views of their latest recorded uploads, the typical audience of one more video. Each ratio divides that median by public subscribers. Both are observed figures and no forecast; the linked videos are the largest recorded adjacent receipts. Adjacent-game evidence is excluded from every target-game total above. Rates, availability, willingness and audience transfer require confirmation. Footage ownership was not independently verified.</p>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=Y5ja1wZTP1k"><bdi data-verbatim>Ultrakill – An FPS Hater’s First Playthrough</bdi></a><span class="vnum">186,451<i>30 Jul 2026</i></span></div><p class="chan-line">Square Face runs a weekly series where the creator tries a new indie game and decides whether to refund it. The ULTRAKILL first playthrough, framed as an FPS hater&#x27;s first try, shows the format already handles a fast shooter. MOUSE fits as a verified first-person shooter inspired by classic cartoons with a Steam listing. Brief: a Refund-or-Not episode with a free verdict, and the studio accepts the conclusion may be negative. Proposed measurement: clicks and purchases on the tracked Steam link. Confirm audience location and PC capture to match that link; willingness is unknown and original footage is unverified.</p></div></details></div>
+<p class="cap">The linked adjacent receipts are dated 28 Jul 2026 to 16 Oct 2026; the target-game sample covers 15 Sep 2026 to 15 Oct 2026. Creators are listed by the median views of their latest recorded uploads, the typical audience of one more video. Each ratio divides that median by public subscribers. Both are observed figures and no forecast; the linked videos are the largest recorded adjacent receipts. Adjacent-game evidence is excluded from every target-game total above. Creator rates, schedules, willingness and audience transfer require confirmation. Footage ownership was not independently verified.</p>
 </div></div></section>
 
 <!-- ======================= CLOSE ======================= -->
@@ -676,7 +663,7 @@ text-transform:uppercase;color:rgba(255,255,255,.85)}
 <footer><div class="wrap">
 <details class="how"><summary>How this page was built</summary><div class="inner">
 <ul>
-<li>Public YouTube API metadata, read 15 October 2026. Counts are a snapshot and may change.</li>
+<li>Public YouTube API metadata: the target-game sample, its channel figures and receipts read 15 October 2026; creator shortlist channel figures, receipts and recent uploads read 17 October 2026. Counts are a snapshot and may change.</li>
 <li>Video search ran through a third-party YouTube search service with the same queries and date windows; view, channel and paid-promotion figures come from the YouTube Data API.</li>
 <li>Search results are bounded by the recorded queries and dates; no all-time volume estimate is available.</li>
 <li>Paid-promotion status reflects the API flag declared by the uploader where available. The watch-page overlay was not independently checked. Missing flags are unknown; an undeclared placement may still be paid.</li>
