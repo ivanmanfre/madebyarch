@@ -382,7 +382,10 @@ text-transform:uppercase;color:rgba(255,255,255,.85)}
  /* The studio's own label carries channel handle + best-video + view count on one nowrap line
     (547px on TrainStation 3). On the 700px mobile plot that sweeps across half the chart and
     crosses whatever creator labels sit in the way. Wrapping it costs two lines and no meaning. */
- .ownlab{white-space:normal;max-width:230px;text-align:right;line-height:1.35}
+ /* 2026-10-16: width:max-content keeps the wrap at the 230px box wherever the marker sits. Without it an
+    absolutely placed label shrinks to the room RIGHT of its left offset, so a marker at 84-93% wrapped a
+    34-character label to 3-4 lines (Picsart, Lingokids, TRAINSWEATEAT) and failed the 2-line budget. */
+ .ownlab{white-space:normal;width:max-content;max-width:230px;text-align:right;line-height:1.35}
  .swipe{display:block}
  .mos{aspect-ratio:322.2/390.4}
  .mtile{left:calc(var(--ml)*1%);top:calc(var(--mt)*1%);width:calc(var(--ms)*1%);height:calc(var(--msy)*1%)}
@@ -444,11 +447,11 @@ text-transform:uppercase;color:rgba(255,255,255,.85)}
 <div class="stamp-lab">videos in the recorded target-game sample</div>
 </div>
 </div>
-<h1 class="rv">Test HITMAN fans on a tracked Steam link</h1>
+<h1 class="rv">Test 007 First Light on stealth-game viewers</h1>
 <div class="finds">
 <div class="find rv"><span class="n num" data-count="364">364</span><span class="l">sampled target-game videos</span></div>
 <div class="find rv"><span class="n num" data-count="282">282</span><span class="l">channels in the sample</span></div>
-<div class="find rv"><span class="n num" data-count="2">2</span><span class="l">adjacent candidates</span></div>
+<div class="find rv"><span class="n num" data-count="3">3</span><span class="l">adjacent candidates</span></div>
 </div>
 <p class="hero-src rv"><a href="#sentiment">364 sampled videos</a> across 282 channels, 15 Sep 2026 to 15 Oct 2026. This is a search sample, so it misses some videos.</p>
 <nav class="hero-actions" aria-label="Scan next steps"><a class="cta-btn" href="https://meetings-eu1.hubspot.com/davorin-smit/30-minute-sales-call">Review the creator plan with Davorin</a><a href="#roster">See the creator plan &darr;</a></nav>
@@ -527,8 +530,8 @@ text-transform:uppercase;color:rgba(255,255,255,.85)}
 <p class="meta"><a href="https://www.youtube.com/channel/UCUzjKyS5r72bfvPkA6GxpRg"><bdi data-verbatim>@randomgaminginhd</bdi></a></p></div>
 <div class="chan-n">558K<i>subscribers</i></div></header>
 <div class="vrow"><a href="https://www.youtube.com/watch?v=7NJ5fjt2uy8"><bdi data-verbatim>I Forced The 007 Path Tracing Update on an 8GB GPU (RIP)</bdi></a><span class="vnum">58,858<i>17 Sep 2026</i></span></div><p class="chan-line">1 sampled video with 58,858 recorded views.</p><footer><span class="tag">227,310,375 lifetime channel views</span></footer></article></div>
-<div class="callout rv"><b>Gameplay uploads lead by video count, and patch and update videos lead by views.</b>
-<span>Titles point to the path tracing update and the free Extended Operations content as topics behind several of the biggest uploads. Walkthrough and gameplay titles make up much of the volume. Open the channel cards to check each source video.</span></div>
+<div class="callout rv"><b>Update coverage drew the largest share of views; gameplay videos made up most uploads.</b>
+<span>Free DLC, path tracing and patch videos drew most of the views, and walkthrough uploads mostly drew small view counts. Publisher and platform channels are left out of these counts, and the official comparison is shown separately.</span></div>
 </div>
 </div></div></section>
 
@@ -608,25 +611,33 @@ text-transform:uppercase;color:rgba(255,255,255,.85)}
 <section class="beat" id="roster"><div class="wrap"><div class="card">
 <div class="folio"><span class="fn">05</span><span class="fk">The roster</span><span class="fr">Candidates to discuss</span></div>
 <div class="beat-head"><span class="snum">05</span><h2>A shortlist for<br>the next brief</h2></div>
-<p class="lede" style="margin-top:0">Each creator below is one proposed test with one tracked Steam link. The test asks whether people who watch HITMAN and stealth videos click through and install a narrative espionage action-adventure. Clicks and installs from that link are the measure. No result is forecast.</p>
+<p class="lede" style="margin-top:0">Each creator below covers IOI&#x27;s Hitman or a neighbouring stealth-action game, and each is one separate proposed test. Run one sponsored video with a tracked Steam link and measure whether viewers click through and buy. Willingness, rates and audience transfer are still unknown.</p>
 <div class="picks"><details class="pick rv"><summary>
 <span class="pno">01</span><picture><source srcset="assets/avatars/aspecticor.webp" type="image/webp"><img src="assets/avatars/aspecticor.jpg" alt="Aspecticor" width="64" height="64" loading="lazy" decoding="async"></picture>
-<span class="pid"><b><bdi data-verbatim>Aspecticor</bdi></b><i>Adjacent-game creator · median 969,456 views, latest 20 uploads</i><em class="pstat">NOT OBSERVED IN OUR TARGET SAMPLE</em></span>
-<span class="pbig">5.3x<i>observed ratio</i></span>
-<span class="pline">A storytelling short on 007 First Light, built like the channel&#x27;s HITMAN kill stories</span><span class="pmore" aria-hidden="true">RECEIPTS</span></summary>
-<div class="pbody"><div class="pstats"><div><b>184K</b><span>subscribers</span></div>
-<div><b>278,569,038</b><span>lifetime channel views</span></div>
+<span class="pid"><b><bdi data-verbatim>Aspecticor</bdi></b><i>Adjacent-game creator · median 537,026 views, latest 20 uploads</i><em class="pstat">NOT OBSERVED IN OUR TARGET SAMPLE</em></span>
+<span class="pbig">2.9x<i>observed ratio</i></span>
+<span class="pline">A sponsored story-led Short framing a first look at 007 First Light as a spy case file.</span><span class="pmore" aria-hidden="true">RECEIPTS</span></summary>
+<div class="pbody"><div class="pstats"><div><b>185K</b><span>subscribers</span></div>
+<div><b>279,984,953</b><span>lifetime channel views</span></div>
 <div><a class="tag tag-acc" href="https://www.youtube.com/channel/UCICiZl0IRinmgAG3cB3psbQ/about">not observed in the target sample</a></div></div>
-<div class="vrow"><a href="https://www.youtube.com/watch?v=HavnUnln2rE"><bdi data-verbatim>The PERFECT unsolvable Hitman Kill? #hitman3 #aspecticor #shorts #gaming #gamingstorytelling #crime</bdi></a><span class="vnum">3,372,298<i>8 Sep 2026</i></span></div><p class="chan-line">Aspecticor posts storytelling and speedrun shorts about creative kills in HITMAN, also an IO Interactive game. That links the studio&#x27;s assassination audience to its narrative espionage action-adventure. The channel also posted 007 First Light shorts before the sample period. Brief: story-format shorts that describe the game only as the official pages do, with no specific mechanics. Proposed measure: clicks on a tracked Steam link and the installs that follow. Caveats: few recent uploads, all shorts, and short views may not lead to installs. Capture platform is unstated, so fit rests on the HITMAN overlap. Confirm audience location, willingness, rates.</p></div></details><details class="pick rv"><summary>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=HavnUnln2rE"><bdi data-verbatim>The PERFECT unsolvable Hitman Kill? #hitman3 #aspecticor #shorts #gaming #gamingstorytelling #crime</bdi></a><span class="vnum">3,539,137<i>8 Sep 2026</i></span></div><p class="chan-line">Aspecticor&#x27;s recent uploads are Hitman &#x27;unsolvable kill&#x27; Shorts tagged as gaming storytelling, so the bridge is IOI&#x27;s own Hitman viewers meeting a spy game from the same studio. Aspecticor also posted 007 First Light Shorts before this sample period; whether those were paid is unknown. Brief: one conceptual story-led Short on what IOI calls a narrative action-adventure, with no promised mechanics. Measure clicks on a tracked Steam link and the purchases that follow. The metadata does not state the capture platform, and recent output is almost all Shorts, so a long-form ask is unsupported. Confirm audience location, rates and willingness.</p></div></details><details class="pick rv"><summary>
 <span class="pno">02</span><picture><source srcset="assets/avatars/slorgs.webp" type="image/webp"><img src="assets/avatars/slorgs.jpg" alt="slorgs" width="64" height="64" loading="lazy" decoding="async"></picture>
-<span class="pid"><b><bdi data-verbatim>slorgs</bdi></b><i>Adjacent-game creator · median 348,322 views, latest 20 uploads</i><em class="pstat">NOT OBSERVED IN OUR TARGET SAMPLE</em></span>
-<span class="pbig">1.2x<i>observed ratio</i></span>
-<span class="pline">A long chaptered first play session of 007 First Light, in the style of the channel&#x27;s long HITMAN upload</span><span class="pmore" aria-hidden="true">RECEIPTS</span></summary>
-<div class="pbody"><div class="pstats"><div><b>291K</b><span>subscribers</span></div>
-<div><b>49,861,197</b><span>lifetime channel views</span></div>
+<span class="pid"><b><bdi data-verbatim>slorgs</bdi></b><i>Adjacent-game creator · median 298,013 views, latest 20 uploads</i><em class="pstat">NOT OBSERVED IN OUR TARGET SAMPLE</em></span>
+<span class="pbig">1.0x<i>observed ratio</i></span>
+<span class="pline">A sponsored long-form first look at 007 First Light under a stealth rule slorgs sets on camera.</span><span class="pmore" aria-hidden="true">RECEIPTS</span></summary>
+<div class="pbody"><div class="pstats"><div><b>292K</b><span>subscribers</span></div>
+<div><b>50,567,502</b><span>lifetime channel views</span></div>
 <div><a class="tag tag-acc" href="https://www.youtube.com/channel/UCFSsOq5orFuGfl4iFueksaA/about">not observed in the target sample</a></div></div>
-<div class="vrow"><a href="https://www.youtube.com/watch?v=hsfhOQaAV_w"><bdi data-verbatim>Now is an Incredible Time to Hunt Sniper Players</bdi></a><span class="vnum">880,501<i>3 Sep 2026</i></span></div><div class="vrow"><a href="https://www.youtube.com/watch?v=rxOdjvfQ6lc"><bdi data-verbatim>Terrorizing Sniper Players in Their Own Campaigns</bdi></a><span class="vnum">660,902<i>12 Sep 2026</i></span></div><p class="chan-line">slorgs posts long Sniper Elite Resistance sessions and a long HITMAN session, and HITMAN is IO Interactive&#x27;s own series. That links this English-language stealth audience to the studio&#x27;s narrative espionage action-adventure. Brief: a chaptered first-look session using only the official positioning, with no named mechanics. Proposed measure: clicks on a tracked Steam link and the installs that follow. Caveats: capture platform is unstated, so fit rests on the peer-game overlap. Descriptions carry a Sniper Elite creator code, some uploads are variety titles, and the sample showed no 007 First Light coverage. Willingness and rates are unknown.</p></div></details></div>
-<p class="cap">The linked adjacent receipts are dated 3 Sep 2026 to 12 Sep 2026; the target-game sample covers 15 Sep 2026 to 15 Oct 2026. Creators are listed by the median views of their latest recorded uploads, the typical audience of one more video. Each ratio divides that median by public subscribers. Both are observed figures and no forecast; the linked videos are the largest recorded adjacent receipts. Adjacent-game evidence is excluded from every target-game total above. Rates, availability, willingness and audience transfer require confirmation. Footage ownership was not independently verified.</p>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=hsfhOQaAV_w"><bdi data-verbatim>Now is an Incredible Time to Hunt Sniper Players</bdi></a><span class="vnum">893,206<i>3 Sep 2026</i></span></div><div class="vrow"><a href="https://www.youtube.com/watch?v=rxOdjvfQ6lc"><bdi data-verbatim>Terrorizing Sniper Players in Their Own Campaigns</bdi></a><span class="vnum">705,297<i>12 Sep 2026</i></span></div><p class="chan-line">slorgs posts long stealth and sniping sessions in Sniper Elite Resistance plus first looks at new shooters, so the bridge is viewers who sit through third-person stealth play. Brief: one conceptual long-form session where slorgs sets a stealth challenge on camera, with no promised mechanics beyond the espionage action-adventure IOI describes. Measure clicks on a tracked Steam link in the description and the purchases that follow. The metadata does not show which platform slorgs records on. Much recent content is about invading other players, a format the target is not verified to offer, so transfer is uncertain. Willingness and rates are unknown.</p></div></details><details class="pick rv"><summary>
+<span class="pno">03</span><picture><source srcset="assets/avatars/fallen-on-yt.webp" type="image/webp"><img src="assets/avatars/fallen-on-yt.jpg" alt="Fallen Z" width="64" height="64" loading="lazy" decoding="async"></picture>
+<span class="pid"><b><bdi data-verbatim>Fallen Z</bdi></b><i>Adjacent-game creator · median 54,089 views, latest 20 uploads</i><em class="pstat">NOT OBSERVED IN OUR TARGET SAMPLE</em></span>
+<span class="pbig">1.4x<i>observed ratio</i></span>
+<span class="pline">A sponsored Short of one punchline-titled 007 First Light moment, in Fallen Z&#x27;s current format.</span><span class="pmore" aria-hidden="true">RECEIPTS</span></summary>
+<div class="pbody"><div class="pstats"><div><b>38.1K</b><span>subscribers</span></div>
+<div><b>120,016,611</b><span>lifetime channel views</span></div>
+<div><a class="tag tag-acc" href="https://www.youtube.com/channel/UCoRRzMkoYP5LkQZNh8DcHPw/about">not observed in the target sample</a></div></div>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=17tUo6e5S2w"><bdi data-verbatim>Most Brutal Ways To Kill The Clones In The Splitter | Hitman World of Assassination</bdi></a><span class="vnum">60,637<i>11 Sep 2026</i></span></div><p class="chan-line">Fallen Z posts short Cyberpunk and Hitman World of Assassination moments with punchline titles, so the bridge is stealth-action viewers who already watch IOI&#x27;s assassination series. Brief: one conceptual Short built on a single 007 First Light moment, with no promised mechanics beyond the espionage action-adventure IOI describes. Measure clicks on a tracked Steam link in the description and the purchases that follow. Mod titles hint at a PC setup, but the capture platform is unconfirmed. Reach sits in Shorts; the long-form mod videos draw few viewers. Descriptions are mostly empty, so confirm audience location, willingness and rates first.</p></div></details></div>
+<p class="cap">The linked adjacent receipts are dated 3 Sep 2026 to 12 Sep 2026; the target-game sample covers 15 Sep 2026 to 15 Oct 2026. Creators are listed by the median views of their latest recorded uploads, the typical audience of one more video. Each ratio divides that median by public subscribers. Both are observed figures and no forecast; the linked videos are the largest recorded adjacent receipts. Adjacent-game evidence is excluded from every target-game total above. Creator rates, schedules, willingness and audience transfer require confirmation. Footage ownership was not independently verified.</p>
 </div></div></section>
 
 <!-- ======================= CLOSE ======================= -->
@@ -652,7 +663,7 @@ text-transform:uppercase;color:rgba(255,255,255,.85)}
 <footer><div class="wrap">
 <details class="how"><summary>How this page was built</summary><div class="inner">
 <ul>
-<li>Public YouTube API metadata, read 15 October 2026. Counts are a snapshot and may change.</li>
+<li>Public YouTube API metadata: the target-game sample, its channel figures and receipts read 15 October 2026; creator shortlist channel figures, receipts and recent uploads read 27 October 2026. Counts are a snapshot and may change.</li>
 <li>Video search ran through a third-party YouTube search service with the same queries and date windows; view, channel and paid-promotion figures come from the YouTube Data API.</li>
 <li>Search results are bounded by the recorded queries and dates; no all-time volume estimate is available.</li>
 <li>Paid-promotion status reflects the API flag declared by the uploader where available. The watch-page overlay was not independently checked. Missing flags are unknown; an undeclared placement may still be paid.</li>
