@@ -483,12 +483,48 @@ summary:focus-visible,a:focus-visible{outline:3px solid #446bff;outline-offset:3
 @media(max-width:750px){#roster .picks{grid-template-columns:1fr}#roster .pick>summary{display:grid;grid-template-columns:52px 1fr 30px;grid-template-areas:"face name rank" "brief brief brief" "metric metric metric" "more more more";padding:16px;gap:9px 12px}#roster .pick .pno{position:static;font-size:22px}#roster .pick>summary img{width:46px;height:46px}#roster .pick .pline{min-height:0}#roster .pick .pbig{border:0;padding:0}}
 @media(max-width:540px){.reach-atlas{padding:17px 12px;border-radius:16px}.atlas-frame{padding:16px 9px 24px 31px}.atlas-field{height:282px}.atlas-face{--size:31px}.atlas-face.shortlisted{--size:41px}.atlas-key{font-size:12px}.atlas-selection{flex-wrap:wrap}.atlas-selection div{flex:1;min-width:140px}.atlas-selection a{margin-left:52px}.sample-dots{gap:2px}.sample-dots i{height:13px}}
 @media(prefers-reduced-motion:no-preference){.entered .atlas-face img{animation:atlas-pop .46s cubic-bezier(.2,.74,.32,1.2) var(--delay) backwards}.atlas-face:hover img{scale:1.08;transition:scale .16s}.picks.entered .pick{animation:pick-in .5s ease-out backwards}.picks.entered .pick:nth-child(2){animation-delay:.09s}.picks.entered .pick:nth-child(3){animation-delay:.18s}.view-share.entered i,.sample-dots.entered i{transform-origin:left;animation:data-fill .7s ease-out both}@keyframes atlas-pop{from{scale:.56;opacity:.4}to{scale:1;opacity:1}}@keyframes pick-in{from{transform:translateY(9px);opacity:.65}to{transform:none;opacity:1}}@keyframes data-fill{from{transform:scaleX(0)}to{transform:scaleX(1)}}}
+</style><style>/* The ARCH audit palette and display type come from the Whiteout shell. */
+@supports (overflow:clip){html,body{overflow-x:clip}}
+html{scroll-padding-top:82px}
+.mast{position:sticky;top:0;z-index:12;padding-block:7px;pointer-events:none}
+.mast .grid{pointer-events:auto;display:flex;flex-wrap:nowrap;gap:16px;border-radius:100px;background:var(--lime);box-shadow:0 4px 18px rgba(0,15,65,.1);padding:9px clamp(16px,3vw,36px)}
+.scan-nav{display:flex;align-items:center;margin-inline:auto;gap:4px}.scan-nav a{display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:0 13px;border:0;border-radius:100px;font-size:14px;font-weight:650;color:var(--navy)}
+.scan-nav a:where(:hover,:focus-visible){background:var(--white);color:var(--navy)}.scan-nav a[aria-current]{background:var(--navy);color:var(--lime)}
+.mast .stamp{color:var(--navy)}
+.hero .stage{background:var(--navy);border:1px solid rgba(255,255,255,.23);position:relative;isolation:isolate}
+.hero .stage:before{content:"";z-index:-1;position:absolute;width:57%;height:220%;right:-24%;top:-65%;transform:rotate(31deg);background:var(--cobalt);border-radius:42%;pointer-events:none}
+.hero .stage img{box-shadow:0 12px 30px rgba(0,15,65,.22)}
+.hero .stage h1{font-weight:700;letter-spacing:-.06em}.hero .stamp-lab{color:var(--lime)}
+.beat .card,.close,.hero .stage{border-radius:clamp(24px,3vw,35px)}
+.beat .beat-head h2,.close h2{text-transform:uppercase;line-height:.98;font-weight:650;letter-spacing:-.052em}
+#roster .pick,#roster .pick:last-child{background:var(--plate);color:var(--navy);border-color:transparent}
+#roster .pick:first-child{background:var(--lime);border-color:transparent}
+#roster .pick .pno{color:var(--cobalt);font-weight:700;font-size:clamp(28px,3vw,44px)}
+#roster .pick .pmore{color:var(--navy);background:var(--white);border-color:var(--hair);font-weight:700}
+#roster .pick[open]{grid-column:auto}
+#roster .pick[open] .pmore{color:var(--white);background:var(--navy)}
+#roster .pick .pbig{font-variant-numeric:tabular-nums}
+#volume .card{background:var(--cobalt);color:var(--white)}#volume .section-intro,#volume details,#volume details summary,#volume .finding-pair a{color:var(--white)}#volume details.all,#volume .finding-pair>div{border-color:rgba(255,255,255,.45)}
+#volume .finding-pair strong{color:var(--lime);font-size:clamp(46px,6vw,82px);letter-spacing:-.07em}#volume .sample-dots{max-width:none}#volume .sample-dots i{background:#fff8}#volume .sample-dots i:first-child{background:var(--lime)}
+.reach-atlas{background:var(--navy)}.atlas-face.shortlisted{border-color:var(--lime)}.atlas-selection a{color:var(--lime)}
+.view-share{background:var(--plate)}.view-share i{background:var(--cobalt)}
+.close{background:var(--navy);border:1px solid rgba(242,255,130,.52)}.close .who img{border-color:var(--lime)}
+.cta-btn:focus-visible,.scan-nav a:focus-visible{outline:3px solid var(--cobalt);outline-offset:2px}
+@media(min-width:751px){#roster .picks{align-items:stretch}#roster .pick>summary{height:100%}#roster .pick[open]>summary{height:auto}#roster .pick .pmore{margin-top:auto;align-self:start}}
+@media(max-width:650px){.mast .grid{gap:4px;padding:4px 10px}.mast .stamp{display:none}.mast .wordmark{width:57px}.scan-nav{gap:0;margin:0 0 0 auto}.scan-nav a{font-size:12px;min-height:42px;padding:0 clamp(6px,1.9vw,12px)}html{scroll-padding-top:63px}.hero .stage:before{width:35%;right:-26%}#volume .finding-pair strong{font-size:42px}}
+@media(prefers-reduced-motion:no-preference){
+html{scroll-behavior:smooth}.scan-nav a,.pmore{transition:color .2s,background-color .2s}.cta-btn{transition:transform .25s var(--ease),background .2s}.cta-btn:hover{transform:translateY(-2px)}
+#roster .pick>summary img{transition:transform .35s var(--ease)}#roster .pick summary:hover img{transform:scale(1.07) rotate(-2deg)}
+#volume .sample-dots.entered i{animation:arch-sample-tick .35s var(--ease) backwards;animation-delay:var(--tick-delay,0ms)}
+@keyframes arch-sample-tick{from{opacity:.35;transform:scaleY(.23)}to{opacity:1;transform:scaleY(1)}}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important}}
 </style></head>
 <body class="cta-1">
 
 <div class="mast"><div class="wrap"><div class="grid">
 <a class="logo" href="https://arch.agency/"><svg class="wordmark" viewBox="0 0 83 22" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ARCH."><path d="M12.9221 21.6938H16.6558L8.3093 0L0 21.6938H3.75839L4.64875 19.2654L11.9792 19.268L12.9221 21.6938ZM5.78611 16.2115C6.62793 13.7814 7.46899 11.3512 8.31107 8.92062L10.8443 16.218C9.15867 16.2163 7.47251 16.2137 5.78636 16.2112L5.78611 16.2115ZM30.5568 21.6938H34.6761L29.0098 12.544C29.0098 12.544 32.8828 11.7136 33.4664 8.05251C33.4664 8.05251 34.9666 1.00467 26.6508 0.585655H19.6557V4.1403L22.9621 9.37225V9.39451H19.6557V21.6938H23.1532V12.9158H25.1538L25.1555 12.9193H25.1598L30.5568 21.69Z" fill="#000F41"/><path d="M23.1533 12.9154V21.6934H23.1651V12.9187H25.1556L25.1539 12.9154H23.1533ZM53.1342 5.87189L55.6028 3.39297C55.6028 3.39297 52.9616 0.29249 48.2774 0.282122C48.2774 0.282122 42.6322 -0.0516709 39.4643 4.8604C39.4643 4.8604 35.5148 11.0942 39.4643 17.3802C39.4643 17.3802 42.2084 21.9913 48.1074 21.9913C48.1074 21.9913 52.2488 22.315 55.6028 18.926L53.1136 16.4099C53.1136 16.4099 51.3552 18.4597 48.3453 18.4693C48.3453 18.4693 41.6228 18.6736 41.2959 11.3441C41.2959 11.3441 40.8635 3.63598 48.7105 3.84991C48.7098 3.84991 51.1716 3.86964 53.1342 5.87189ZM71.9986 0.585317V9.34764H63.3301V0.585317H59.8293V21.6934H63.3301V12.8717H71.9986V21.6934H75.4861V0.585317H71.9986ZM81.12 21.8909C82.1583 21.8909 83.0001 21.0403 83.0001 19.9906C83.0001 18.9412 82.1583 18.0905 81.12 18.0905C80.0818 18.0905 79.2402 18.9412 79.2402 19.9906C79.2402 21.04 80.0818 21.8909 81.12 21.8909Z" fill="#000F41"/></svg></a>
-<div class="stamp">18 November 2026</div>
+<nav class="scan-nav" aria-label="Scan sections"><a href="#roster">Creators</a><a href="#volume">Sponsors</a><a href="#who">Reach</a><a href="#sentiment">Videos</a></nav><div class="stamp">18 November 2026</div>
 </div></div></div>
 
 <main>
@@ -508,7 +544,7 @@ summary:focus-visible,a:focus-visible{outline:3px solid #446bff;outline-offset:3
 <section class="beat" id="roster"><div class="wrap"><div class="card"><div class="beat-head"><h2>Recommended outreach order</h2></div><div class="picks"><details class="pick rv"><summary>
 <span class="pno">01</span><picture><source srcset="assets/avatars/drdrayzday.webp" type="image/webp"><img src="assets/avatars/drdrayzday.jpg" alt="Dr Dray" width="64" height="64" loading="lazy" decoding="async"></picture>
 <span class="pid"><b>Dr Dray</b><i>Dermatology</i></span>
-<span class="pbig">43,779<i>median views</i></span>
+<span class="pbig"><span data-count="43779">43,779</span><i>median views</i></span>
 <span class="pline">Pitch a short segment in a skincare review on what to ask a primary care doctor before booking a specialist.</span><span class="pmore" aria-hidden="true">Video &amp; details</span></summary>
 <div class="pbody"><div class="pstats"><div><b>2.70M</b><span>subscribers</span></div>
 <div><b>820,426,023</b><span>lifetime channel views</span></div>
@@ -516,7 +552,7 @@ summary:focus-visible,a:focus-visible{outline:3px solid #446bff;outline-offset:3
 <div class="vrow"><a href="https://www.youtube.com/watch?v=lSwctTrpBRQ"><bdi data-verbatim>Top Amazon Skincare Favorites of 2026 | Dermatologist Reviews</bdi></a><span class="vnum">99,574<i>9 Nov 2026</i></span></div><p class="chan-line">Two of the 25 long-form uploads we reviewed carry YouTube&rsquo;s paid-promotion label, none of them for the two true competitors we searched. Median long-form upload 43,779 views, over the last ten in the window.</p></div></details><details class="pick rv"><summary>
 <span class="pno">02</span><picture><source srcset="assets/avatars/doctoreyehealth.webp" type="image/webp"><img src="assets/avatars/doctoreyehealth.jpg" alt="Doctor Eye Health" width="64" height="64" loading="lazy" decoding="async"></picture>
 <span class="pid"><b>Doctor Eye Health</b><i>Eye care</i></span>
-<span class="pbig">42,215<i>median views</i></span>
+<span class="pbig"><span data-count="42215">42,215</span><i>median views</i></span>
 <span class="pline">Pitch a follow-up to the contact lens guide on which questions to take to an eye doctor and which to take to primary care.</span><span class="pmore" aria-hidden="true">Video &amp; details</span></summary>
 <div class="pbody"><div class="pstats"><div><b>1.42M</b><span>subscribers</span></div>
 <div><b>211,339,122</b><span>lifetime channel views</span></div>
@@ -524,7 +560,7 @@ summary:focus-visible,a:focus-visible{outline:3px solid #446bff;outline-offset:3
 <div class="vrow"><a href="https://www.youtube.com/watch?v=RPRijRdkwH4"><bdi data-verbatim>The REAL Reason You Should Try Multifocal Contact Lenses (PLUS my Top 3 Brands)</bdi></a><span class="vnum">438,243<i>15 Sep 2026</i></span></div><p class="chan-line">Five of the 24 long-form uploads we reviewed carry YouTube&rsquo;s paid-promotion label, none of them for the two true competitors we searched. Median long-form upload 42,215 views, over the last ten in the window.</p></div></details><details class="pick rv"><summary>
 <span class="pno">03</span><picture><source srcset="assets/avatars/anshulguptamd.webp" type="image/webp"><img src="assets/avatars/anshulguptamd.jpg" alt="Anshul Gupta MD" width="64" height="64" loading="lazy" decoding="async"></picture>
 <span class="pid"><b>Anshul Gupta MD</b><i>Nutrition and metabolic health</i></span>
-<span class="pbig">45,570<i>median views</i></span>
+<span class="pbig"><span data-count="45570">45,570</span><i>median views</i></span>
 <span class="pline">Pitch a companion to the blood sugar video on preparing questions for a first primary care visit.</span><span class="pmore" aria-hidden="true">Video &amp; details</span></summary>
 <div class="pbody"><div class="pstats"><div><b>891K</b><span>subscribers</span></div>
 <div><b>151,267,609</b><span>lifetime channel views</span></div>
@@ -742,6 +778,39 @@ function layout(){
 atlas.hidden=false;choose(data.findIndex(d=>d.name==='Dr Dray'));layout();new ResizeObserver(layout).observe(field);
 const observer=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('entered');observer.unobserve(e.target)}}),{threshold:.1});
 document.querySelectorAll('.reach-atlas,.sample-dots,.view-share,.picks').forEach(e=>observer.observe(e));
+})();
+</script><script>(()=>{
+ const links=[...document.querySelectorAll('.scan-nav a')],mast=document.querySelector('.mast');
+ const sections=links.map(a=>document.querySelector(a.hash));
+ let queued=false;
+ function setCurrent(){
+   queued=false;
+   const edge=mast.getBoundingClientRect().bottom+Math.min(innerHeight*.27,180);
+   const at=sections.filter(s=>s.getBoundingClientRect().top<=edge).pop();
+   for(const [i,a] of links.entries()){if(at===sections[i])a.setAttribute('aria-current','location');else a.removeAttribute('aria-current')}
+ }
+ function update(){if(!queued){queued=true;requestAnimationFrame(setCurrent)}}
+ addEventListener('scroll',update,{passive:true});addEventListener('resize',update);update();
+ document.querySelectorAll('.sample-dots i').forEach((el,i)=>el.style.setProperty('--tick-delay',i*11+'ms'));
+ const motion=matchMedia('(prefers-reduced-motion: reduce)');
+ function arrive(el,frames,duration,delay=0){
+   if(motion.matches||!el||!el.animate)return;
+   return el.animate(frames,{duration,delay,easing:'cubic-bezier(.2,.7,.23,1)',fill:'backwards'});
+ }
+ const rise=[{opacity:.45,transform:'translateY(16px)'},{opacity:1,transform:'translateY(0)'}];
+ document.querySelectorAll('.hero .stamp-lab,.hero h1,.hero-dek,.hero .cta-btn').forEach((el,i)=>arrive(el,rise,540,i*70));
+ const seen=new IntersectionObserver(entries=>entries.forEach(({isIntersecting,target})=>{
+   if(!isIntersecting)return;seen.unobserve(target);
+   arrive(target,rise,650);
+ }),{threshold:.18});
+ document.querySelectorAll('.beat-head,.finding-pair,.lead-video,.close .pitch').forEach(el=>seen.observe(el));
+ const facePanel=document.querySelector('.atlas-selection');
+ document.querySelector('.atlas-field')?.addEventListener('click',e=>{
+   if(e.target.closest('.atlas-face'))arrive(facePanel,[{opacity:.45,transform:'translateX(8px)'},{opacity:1,transform:'translateX(0)'}],280);
+ });
+ document.querySelectorAll('details').forEach(el=>el.addEventListener('toggle',()=>{
+   if(el.open)arrive(el.querySelector(':scope > summary + *'),rise,300);
+ }));
 })();
 </script><script>/* arch-open-beacon: one open per tab -> scan-open edge fn -> scan_opens (company_slug arch-<folder>). ?me=1 mutes this browser. */
 (function(){try{var q=new URLSearchParams(location.search);if(q.get('me')==='1')localStorage.setItem('arch_me','1');
