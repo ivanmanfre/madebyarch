@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>POSTAL: Brain Damaged on YouTube: a coverage and creator audit</title>
+<meta name="description" content="Coverage and creator opportunities for POSTAL: Brain Damaged, from public YouTube evidence."/>
+<meta name="robots" content="noindex, nofollow"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#000F41;--cobalt:#3562FF;--lime:#F2FF82;--white:#FFFFFF;--plate:#EDEDED;
+--ink:#000F41;--sup:#666666;--sup2:#666666;--hair:rgba(0,15,65,.14);--ease:cubic-bezier(.58,.21,.25,1)}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;max-width:100%;overflow-x:hidden}
+body{background:var(--navy);color:var(--ink);font-family:"DM Sans",Arial,Helvetica,sans-serif;
+font-size:17px;line-height:1.5;font-weight:500;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1400px;margin:0 auto;padding:0 14px}
+a{color:inherit;text-decoration:none;border-bottom:1px solid rgba(0,15,65,.28)}
+a:hover{color:var(--cobalt);border-bottom-color:var(--cobalt)}
+img{display:block;max-width:100%;height:auto}
+h1,h2,h3{margin:0;text-transform:uppercase;font-weight:600;letter-spacing:-.04em;line-height:.8}
+p{margin:0}
+button,summary{font:inherit;color:inherit}
+.num{font-weight:700;letter-spacing:-.05em;line-height:.76;font-feature-settings:"tnum" 1;font-variant-numeric:tabular-nums}
+.arw{width:1em;height:.62em;flex:0 0 auto;vertical-align:baseline;display:inline-block}
+/* ---- reveal ---- */
+.rv{opacity:0;transform:translateY(30px);transition:opacity .75s var(--ease) var(--d,0ms),transform .75s var(--ease) var(--d,0ms)}
+.rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}}
+/* ---- mast / foot pills ---- */
+.mast{padding-top:14px}
+.mast .grid,.foot .grid{display:flex;align-items:center;justify-content:space-between;gap:16px;
+background:var(--lime);border-radius:35px;padding:21px 40px;flex-wrap:wrap}
+.logo{border-bottom:none;display:block} .wordmark{width:92px;height:auto;display:block}
+.stamp,.foot span{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--navy)}
+/* ---- beats ---- */
+.beat{padding:0}
+.card{background:var(--white);border-radius:35px;margin:14px 0;padding:64px 60px;
+min-height:min(92vh,1000px);display:flex;flex-direction:column;justify-content:space-between;gap:40px}
+.beat-head{display:flex;align-items:flex-start;gap:22px;flex-wrap:wrap}
+.snum{font-size:12px;font-weight:700;letter-spacing:.14em;color:var(--cobalt);padding-top:.5em}
+.beat-head h2{font-size:clamp(38px,6vw,90px);font-weight:600;line-height:.8;letter-spacing:-.04em;flex:1;min-width:min(100%,280px)}
+.lede{font-size:19px;color:var(--sup);max-width:56ch;margin-top:18px}
+/* ---- folio (running head) + FIG caption register: 12px w700 caps ---- */
+.folio{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;
+border-top:1px solid var(--hair);padding-top:13px;margin-bottom:34px;
+font-size:12px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;line-height:1}
+.folio .fn{color:var(--cobalt)}
+.folio .fk{color:var(--ink)}
+.folio .fr{margin-left:auto;color:var(--sup2);text-align:right}
+.gapbeat .folio{border-top-color:rgba(255,255,255,.34)}
+.gapbeat .folio .fn{color:var(--lime)}
+.gapbeat .folio .fk{color:#fff}
+.gapbeat .folio .fr{color:rgba(255,255,255,.66)}
+.cap{font-size:12.5px;color:var(--sup2);max-width:88ch;line-height:1.5}
+.cap a{border-bottom-color:rgba(0,15,65,.2)}
+.fig{display:inline-block;margin-right:9px;font-size:11px;font-weight:700;letter-spacing:.13em;
+text-transform:uppercase;color:var(--cobalt)}
+.gapbeat .cap{color:rgba(255,255,255,.72);max-width:78ch}
+.gapbeat .cap a{color:#fff;border-bottom-color:rgba(255,255,255,.4)}
+.gapbeat .cap a:hover{color:var(--lime);border-bottom-color:var(--lime)}
+.gapbeat .fig{color:var(--lime)}
+/* ---- hero ---- */
+.hero{margin:14px 0 0;color:#fff}
+.stage{position:relative;border-radius:35px;overflow:hidden;background:#000F41;
+height:clamp(320px,40vh,540px);display:flex;align-items:flex-end}
+.stage picture,.stage img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.stage img{filter:saturate(.9);object-position:50% 26%}
+.veil{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,15,65,.74) 0%,rgba(0,15,65,.24) 30%,rgba(0,15,65,.58) 62%,rgba(0,15,65,.95) 100%)}
+.stage-in{position:relative;padding:40px;width:100%}
+.kicker{position:absolute;top:40px;left:40px;right:40px;font-size:12px;font-weight:700;
+letter-spacing:.14em;text-transform:uppercase;color:var(--lime)}
+.stamp-num{font-size:clamp(58px,11.4vw,172px);color:var(--lime)}
+.stamp-lab{font-size:clamp(12px,1.1vw,15px);font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+color:#fff;margin-top:10px;max-width:44ch}
+h1{font-size:clamp(38px,6.6vw,96px);color:#fff;margin:28px 0 0}
+.hero-dek{margin-top:24px;font-size:19px;color:rgba(255,255,255,.74);max-width:52ch}
+.hero-src{margin-top:12px;font-size:12.5px;color:rgba(255,255,255,.55);max-width:70ch}
+.hero-src a{color:rgba(255,255,255,.8);border-bottom-color:rgba(255,255,255,.3)}
+.hero-src a:hover{color:var(--lime);border-bottom-color:var(--lime)}
+.hero-actions{display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin-top:24px}
+.hero-actions .cta-btn{margin-top:0}
+.hero-actions>a:last-child{color:#fff;font-size:14px}
+/* hero stat ledger: three findings, plain-language labels, on screen one */
+.finds{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin:24px 0 0;
+border-top:1px solid rgba(255,255,255,.32)}
+.find{padding:20px 30px 0 0;border-left:1px solid rgba(255,255,255,.18);padding-left:30px}
+.find:first-child{border-left:0;padding-left:0}
+.find .n{display:block;font-size:clamp(34px,3.9vw,56px);color:#fff}
+.find:first-child .n{color:var(--lime)}
+.find .l{display:block;margin-top:12px;font-size:12px;font-weight:700;letter-spacing:.08em;
+text-transform:uppercase;color:rgba(255,255,255,.72);line-height:1.4;max-width:26ch}
+/* ---- 01 volume ---- */
+.poster{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;padding:20px 0}
+.poster .num{font-size:clamp(110px,25vw,380px)}
+.poster .unit{font-size:clamp(26px,4.4vw,74px);font-weight:600;letter-spacing:-.04em;text-transform:uppercase;line-height:.9;margin-top:6px}
+.poster .sub{margin-top:26px;font-size:18px;color:var(--sup);max-width:52ch}
+.tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.tiles>div{background:var(--plate);border-radius:25px;padding:28px 26px}
+.tiles b{display:block;font-size:clamp(28px,3.2vw,48px);font-weight:700;letter-spacing:-.04em;line-height:1}
+.tiles span{display:block;margin-top:12px;font-size:11px;font-weight:700;letter-spacing:.08em;
+text-transform:uppercase;color:var(--sup2);line-height:1.5}
+.tiles a{border-bottom:none} .tiles a:hover b{color:var(--cobalt)}
+/* ---- 02 scatter ---- */
+.plotwrap{position:relative}
+/* Label gutters. A creator name is arbitrarily long ("KATIETHETRAINSTATIONFANGAMER105")
+   and .dlab is nowrap, so a dot near either edge pushes its label past the scroll box and
+   gets sliced ("NATHAN TIBBS" shipped as "IATHAN TIBBS" on the live TrainStation 3 page).
+   The box scrolls horizontally, so wider side padding costs nothing but scroll length.
+   Bottom padding grows too, to seat the x-axis ticks below the dot-label band (see .gx i). */
+.plotscroll{overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;scrollbar-width:thin;padding:6px 96px 78px 118px}
+.plot{position:relative;height:clamp(380px,42vw,540px);background:var(--plate);border-radius:25px;
+margin:6px 0 0;padding:0}
+.gx{position:absolute;top:0;bottom:0;width:1px;background:rgba(0,15,65,.09)}
+.gx i,.gy i{position:absolute;font-style:normal;font-size:11px;font-weight:700;letter-spacing:.06em;color:var(--sup2)}
+/* -46px clears a .lab-down dot label sitting at the plot floor; at the old -24px the axis
+   ticks landed inside that band ("JUSTIN MCGOVERN" over "1", "MATRIARCOS G" over "100"). */
+.gx i{bottom:-66px;left:0;transform:translateX(-50%)}
+.gy{position:absolute;left:0;right:0;height:1px;background:rgba(0,15,65,.09)}
+/* -62px, not -14px: a dot sitting at the chart origin (left:0%) centres a nowrap label that
+   reaches ~53px left of the plot edge, straight through the y-axis tick gutter. Seating the
+   ticks beyond that reach clears it for any creator who lands on the axis. */
+.gy i{left:-62px;top:-7px;transform:translateX(-100%)}
+/* Plate-coloured halo on every chart annotation. Dot positions come from the data, so no
+   amount of hand-placing guarantees a clear spot on the NEXT game — the halo keeps ticks and
+   the diagonal legible wherever a creator happens to land. Cheap, and data-independent. */
+.gx i,.gy i,.diaglab,.ownlab{text-shadow:0 0 4px var(--plate),0 0 4px var(--plate),0 0 4px var(--plate),0 0 8px var(--plate)}
+.gx i,.gy i{z-index:1}
+.diag{position:absolute;inset:0;width:100%;height:100%}
+/* Opaque chip, not just a halo. This is a reference-line label sitting at a fixed % on a plot
+   whose dots are placed by data: on TrainStation 3 the old 46/47 spot ran through the studio
+   mark, and moving it to 58/59 cleared that game while landing in Hello Neighbor's and Melon
+   Sandbox's clusters. No fixed coordinate is safe for every game, so instead of chasing one,
+   the label carries its own background and always reads on top of whatever it crosses. */
+.diaglab{position:absolute;left:58%;bottom:59%;font-size:11px;font-weight:700;letter-spacing:.04em;
+color:var(--sup2);transform:rotate(-34deg);transform-origin:left center;white-space:nowrap;
+background:var(--plate);padding:2px 7px;border-radius:20px;z-index:3}
+.dot{position:absolute;transform:translate(-50%,50%);background:none;border:0;padding:0;cursor:pointer;
+width:56px;height:56px;border-radius:50%;transition:transform .4s var(--ease)}
+.dot img{width:56px;height:56px;border-radius:50%;border:3px solid var(--navy);background:#fff}
+.dot-hot img{border-color:var(--cobalt);box-shadow:0 0 0 6px rgba(53,98,255,.18)}
+.dot:hover,.dot:focus-visible{transform:translate(-50%,50%) scale(1.12);outline:none;z-index:6}
+.dot[aria-expanded="true"] img{border-color:var(--cobalt)}
+.dot[aria-expanded="true"]{z-index:7}
+.dlab{position:absolute;left:50%;transform:translateX(-50%);white-space:nowrap;font-size:10.5px;
+font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--sup);pointer-events:none}
+.lab-down .dlab{top:60px} .lab-up .dlab{bottom:60px}
+.lab-left .dlab{right:62px;left:auto;transform:none;top:20px}
+.lab-right .dlab{left:62px;transform:none;top:20px}
+.dot:hover .dlab,.dot[aria-expanded="true"] .dlab{color:var(--cobalt)}
+.ownmark{position:absolute;width:22px;height:22px;transform:translate(-50%,50%);border:3px solid var(--navy);background:#fff}
+.ownlab{position:absolute;transform:translate(-100%,50%);padding-right:20px;white-space:nowrap;font-size:10.5px;
+font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--sup);z-index:2}
+/* Axis ticks sit above dot labels when they must share space (Kingshot: "1K" under the studio
+   label). The tick is the one that has to stay readable - a label you can read but cannot
+   scale against is worse than a slightly covered name. */
+.gx i,.gy i{z-index:4;background:var(--plate);padding:1px 4px;border-radius:20px}
+.axl{display:flex;justify-content:space-between;gap:20px;margin-top:34px;font-size:11px;font-weight:700;
+letter-spacing:.08em;text-transform:uppercase;color:var(--sup2)}
+/* 2026-09-18 (Oh BiBi read). The y-axis caption shared a row with the x caption, so it sat at the
+   bottom right, under the x axis, and read as a second x label. It now sits at the top left of the
+   plot, above the y ticks it names. .axl lives inside .plotwrap, which is the positioning parent. */
+.plotwrap{padding-top:46px}
+.axl span:last-child{position:absolute;top:16px;left:0}
+.axl .arw-up{transform:rotate(-90deg)}
+.swipe{display:none;font-size:11px;font-weight:700;letter-spacing:.1em;color:var(--sup2);margin-top:10px}
+.chans{margin-top:8px}
+.chan{background:var(--plate);border-radius:25px;padding:30px 32px;margin-top:12px}
+.chan-hot{background:#EDEDED;outline:2px solid var(--cobalt);outline-offset:-2px}
+.chan-h{display:flex;gap:16px;align-items:center}
+.chan-h img{width:64px;height:64px;border-radius:50%}
+.chan-h>div:nth-child(2){flex:1;min-width:0}
+.chan h3{font-size:22px;font-weight:700;letter-spacing:-.02em;line-height:1.05;text-transform:none;overflow-wrap:anywhere}
+.meta{margin-top:5px;font-size:12.5px;color:var(--sup2);text-transform:none;font-weight:500}
+.chan-n{text-align:right;font-size:24px;font-weight:700;letter-spacing:-.03em;white-space:nowrap;line-height:1}
+.chan-n i{display:block;font-style:normal;font-size:10px;font-weight:700;letter-spacing:.06em;
+text-transform:uppercase;color:var(--sup2);margin-top:6px}
+.vrow{display:flex;gap:16px;justify-content:space-between;align-items:baseline;padding:12px 0;
+border-top:1px solid var(--hair);font-size:14.5px;margin-top:14px}
+.vrow+.vrow{margin-top:0}
+.vrow a{flex:1;min-width:0;overflow-wrap:anywhere;border-bottom:none;text-decoration:underline;text-decoration-color:rgba(0,15,65,.22);text-underline-offset:4px}
+.vrow a:hover{text-decoration-color:var(--cobalt)}
+.vnum{white-space:nowrap;font-weight:700;text-align:right}
+.vnum i{display:block;font-style:normal;font-size:11px;font-weight:500;color:var(--sup2);margin-top:3px}
+.chan-line{margin-top:16px;font-size:15px;line-height:1.5;color:var(--sup)}
+.chan footer{margin-top:18px;display:flex;flex-wrap:wrap;gap:8px}
+.tag{font-size:10.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--navy);
+background:var(--white);border:1px solid var(--hair);padding:9px 15px;border-radius:40px;white-space:nowrap}
+.tag-paid{background:var(--lime);border-color:var(--lime)}
+a.tag-acc{background:var(--cobalt);border-color:var(--cobalt);color:#fff;border-bottom:1px solid var(--cobalt)}
+a.tag-acc:hover{background:var(--navy);border-color:var(--navy);color:var(--lime)}
+.callout{background:var(--cobalt);color:#fff;border-radius:25px;padding:34px 36px;margin-top:12px}
+.callout b{display:block;font-size:clamp(20px,2.4vw,34px);font-weight:600;letter-spacing:-.03em;
+line-height:.95;text-transform:uppercase;max-width:24ch}
+.callout span{display:block;margin-top:14px;font-size:13px;color:rgba(255,255,255,.82);max-width:70ch}
+/* ---- 03 gap (full bleed cobalt) ---- */
+.gapbeat{background:var(--cobalt);color:#fff;margin:14px 0;padding:96px 0 88px}
+.gapbeat h2,.gapbeat h3{color:#fff}
+.gapbeat .snum{color:var(--lime)}
+/* head-to-head ledger, staged inside the cobalt scoreboard */
+.tape{margin-top:44px;background:rgba(255,255,255,.12);border-radius:25px;padding:28px 34px}
+.taperow{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,auto) minmax(0,1fr);gap:18px;
+align-items:center;padding:16px 0;border-bottom:1px solid rgba(255,255,255,.22)}
+.taperow:last-child{border-bottom:0;padding-bottom:0}
+.taphead{padding-top:2px}
+.taphead .side{display:flex;gap:14px;align-items:center;min-width:0}
+.taphead .side img{width:54px;height:54px;border-radius:50%;flex:0 0 auto;border:2px solid rgba(255,255,255,.55)}
+.taphead .side.r{flex-direction:row-reverse;text-align:right}
+.taphead b{display:block;font-size:16px;font-weight:700;letter-spacing:-.01em;text-transform:uppercase;
+line-height:1.05;overflow-wrap:anywhere}
+.taphead i{display:block;font-style:normal;margin-top:5px;font-size:10.5px;font-weight:700;
+letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.72)}
+.vs{font-size:12px;font-weight:700;letter-spacing:.16em;color:var(--lime);text-align:center}
+.taperow .a,.taperow .b{font-size:clamp(20px,2.5vw,34px);font-weight:700;letter-spacing:-.04em;line-height:.95;
+font-variant-numeric:tabular-nums}
+.taperow .b{text-align:right}
+.taperow .m{font-size:10.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+color:rgba(255,255,255,.8);text-align:center;white-space:nowrap}
+.tape a{color:#fff;border-bottom-color:rgba(255,255,255,.32)}
+.tape a:hover{color:var(--lime);border-bottom-color:var(--lime)}
+.board{margin-top:48px;display:flex;flex-direction:column;gap:26px}
+.brow{display:block}
+.blab{display:flex;justify-content:space-between;gap:20px;align-items:baseline;
+font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.78)}
+.bval{white-space:nowrap;color:#fff}
+.btrack{margin-top:12px;height:clamp(64px,7.6vw,108px);background:rgba(255,255,255,.14);border-radius:6px;
+display:flex;overflow:hidden}
+.bfill{width:0;transition:width 1.15s var(--ease) var(--d,0ms);position:relative;overflow:hidden;flex:0 0 auto}
+.in .bfill,.brow.in .bfill{width:var(--w)}
+@media (prefers-reduced-motion:reduce){.bfill{width:var(--w);transition:none}}
+.bfill-w{background:#fff}
+.inbar{position:absolute;left:0;top:0;bottom:0;width:auto;aspect-ratio:16/9;overflow:hidden;border-right:3px solid var(--lime)}
+.inbar picture,.inbar img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.bfill picture,.bfill img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.bfill-img{outline:2px solid var(--lime);outline-offset:-2px}
+.bfill-2{opacity:.82}
+.bnote{margin-top:10px;font-size:13px;color:rgba(255,255,255,.7);max-width:78ch}
+.bnote a{color:#fff;border-bottom-color:rgba(255,255,255,.4)}
+.bnote a:hover{color:var(--lime);border-bottom-color:var(--lime)}
+.gapchip{margin-top:52px;background:var(--lime);color:var(--navy);border-radius:35px;padding:44px 48px;
+display:flex;align-items:center;gap:40px;flex-wrap:wrap}
+.gapchip .n{font-size:clamp(58px,9vw,140px)}
+.gapchip p{flex:1;min-width:min(100%,280px);font-size:clamp(18px,2vw,28px);font-weight:600;
+letter-spacing:-.02em;line-height:1.05;text-transform:uppercase}
+.gapchip a{border-bottom-color:rgba(0,15,65,.35)}
+.coverage-only #gap .tape,.coverage-only #gap .gapstats,.no-gap-chip #gap .gapchip{display:none}
+.gapstats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:12px}
+.gapstats div{background:rgba(255,255,255,.12);border-radius:25px;padding:26px}
+.gapstats b{display:block;font-size:clamp(24px,2.6vw,38px);font-weight:700;letter-spacing:-.04em;line-height:1}
+.gapstats span{display:block;margin-top:10px;font-size:11px;font-weight:700;letter-spacing:.08em;
+text-transform:uppercase;color:rgba(255,255,255,.7);line-height:1.5}
+.gapstats a{color:#fff;border-bottom-color:rgba(255,255,255,.4)}
+/* ---- 04 mosaic ---- */
+.split{display:flex;gap:48px;align-items:flex-start;flex-wrap:wrap}
+.split .poster{flex:0 0 auto;min-width:min(100%,360px)}
+.dual{display:flex;gap:56px;flex-wrap:wrap;align-items:flex-end}
+.dual>div{min-width:min(100%,240px)}
+.dual .num{font-size:clamp(66px,11vw,168px)}
+.dual .l{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--sup2);margin-top:12px}
+/* view-proportional mosaic: every tile is a square, its AREA is that video's
+   share of the 141,851 sample views. 36 views renders at 36 views' worth of ink. */
+.mos{position:relative;width:100%;aspect-ratio:1248.5/571}
+.mtile{position:absolute;left:calc(var(--l)*1%);top:calc(var(--t)*1%);
+width:calc(var(--s)*1%);height:calc(var(--sy)*1%);
+border-radius:10px;overflow:hidden;border-bottom:none;background:var(--plate);display:block}
+.mtile picture,.mtile img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.tvz{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,15,65,.02) 38%,rgba(0,15,65,.86))}
+.mtile img{transition:transform .6s var(--ease)}
+.mtile:hover img{transform:scale(1.05)}
+.mtile:hover{outline:2px solid var(--cobalt);outline-offset:2px}
+.mtile .tv{position:absolute;left:12px;right:10px;bottom:24px;font-size:14px;font-weight:700;
+letter-spacing:-.03em;color:#fff;line-height:1;font-variant-numeric:tabular-nums}
+.mtile .tc{position:absolute;left:12px;bottom:10px;right:10px;font-size:9.5px;font-weight:700;letter-spacing:.07em;
+text-transform:uppercase;color:rgba(255,255,255,.7);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.g1{border-radius:18px}
+.g1 .tv{font-size:clamp(22px,2.7vw,42px);bottom:32px;letter-spacing:-.045em}
+.g1 .tc{font-size:11px;bottom:14px}
+.g2 .tv{font-size:clamp(13px,1.5vw,21px);bottom:26px}
+.g3 .tv{font-size:clamp(11px,1.05vw,15px);bottom:22px}
+.g3 .tc{font-size:9px;bottom:8px}
+.g4 .tv,.g4 .tc{display:none}
+.g4{border-radius:6px}
+.bbar{display:flex;height:56px;border-radius:12px;overflow:hidden;margin-top:12px;background:var(--plate)}
+.seg{width:0;transition:width 1s var(--ease)} .bbar.in .seg{width:var(--w)}
+@media (prefers-reduced-motion:reduce){.seg{width:var(--w);transition:none}}
+.b1{background:var(--cobalt)} .b2{background:var(--navy)} .b3{background:#F2FF82}
+.b4{background:#666666} .b5{background:#EDEDED}
+.bkeys{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin-top:14px}
+.bk i{display:block;width:24px;height:6px;border-radius:3px}
+/* b5 swatch is #EDEDED on a light plate: hairline keeps the key readable */
+.bk i.b5{box-shadow:inset 0 0 0 1px #666666}
+.bk b{display:block;margin-top:10px;font-size:13.5px;font-weight:700}
+.bk span{display:block;margin-top:3px;font-size:12px;color:var(--sup2)}
+details.all{margin-top:34px;border-top:1px solid var(--hair)}
+details.all>summary{cursor:pointer;list-style:none;padding:22px 0 0;font-size:12px;font-weight:700;
+letter-spacing:.12em;text-transform:uppercase;color:var(--cobalt)}
+details.all>summary::-webkit-details-marker{display:none}
+details.all>summary::after{content:" +"} details.all[open]>summary::after{content:" \2212"}
+table{width:100%;border-collapse:collapse;margin-top:20px;font-size:14.5px;table-layout:fixed}
+th{text-align:left;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--sup2);
+font-weight:700;padding:0 12px 10px 0;border-bottom:1px solid var(--hair)}
+td{padding:12px 12px 12px 0;border-bottom:1px solid var(--hair);vertical-align:baseline}
+td a{overflow-wrap:anywhere}
+td.n{font-weight:700;white-space:nowrap} td.ch{color:var(--sup2);font-size:13.5px}
+td.dt{color:var(--sup2);font-size:13px;white-space:nowrap;text-align:right}
+/* ---- 05 roster ---- */
+.picks{display:flex;flex-direction:column}
+.pick{border-top:1px solid var(--hair)}
+.pick:last-child{border-bottom:1px solid var(--hair)}
+.pick>summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:26px;padding:26px 0;
+transition:background .35s var(--ease)}
+.pick>summary::-webkit-details-marker{display:none}
+.pick>summary:hover{background:var(--plate)}
+.pno{font-size:clamp(34px,4vw,58px);font-weight:700;letter-spacing:-.05em;line-height:.8;color:var(--cobalt);flex:0 0 auto}
+.pick img{width:64px;height:64px;border-radius:50%;flex:0 0 auto}
+.pid{flex:0 0 auto;width:min(30vw,250px)}
+.pid b{display:block;font-size:20px;font-weight:700;letter-spacing:-.02em;line-height:1.1;overflow-wrap:anywhere}
+.pid i{display:block;font-style:normal;margin-top:5px;font-size:11.5px;font-weight:700;letter-spacing:.06em;
+text-transform:uppercase;color:var(--sup2)}
+.pstat{display:block;font-style:normal;margin-top:6px;font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--cobalt)}
+.pbig{flex:0 0 auto;width:170px;font-size:clamp(30px,3.6vw,54px);font-weight:700;letter-spacing:-.04em;line-height:.85;text-align:right}
+.pbig-low{color:var(--sup2)}
+.pbig i{display:block;font-style:normal;font-size:10px;font-weight:700;letter-spacing:.08em;
+text-transform:uppercase;color:var(--sup2);margin-top:8px;text-align:right}
+.pline{flex:1;min-width:0;font-size:15px;color:var(--sup);line-height:1.4}
+.pmore{flex:0 0 auto;font-size:12px;font-weight:700;letter-spacing:.1em;color:var(--navy);
+background:var(--lime);border:1px solid var(--lime);border-radius:40px;padding:11px 20px;line-height:1;
+transition:background .3s var(--ease),border-color .3s var(--ease),color .3s var(--ease)}
+.pick[open] .pmore{background:var(--cobalt);border-color:var(--cobalt);color:#fff}
+.pbody{padding:6px 0 34px}
+.pstats{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.pstats>div{background:var(--plate);border-radius:20px;padding:20px 24px}
+.pstats b{display:block;font-size:26px;font-weight:700;letter-spacing:-.03em;line-height:1}
+.pstats span{display:block;margin-top:8px;font-size:10.5px;font-weight:700;letter-spacing:.08em;
+text-transform:uppercase;color:var(--sup2)}
+.pstats>div:last-child{background:none;padding:0}
+/* ---- close ---- */
+.close{background:var(--cobalt);border-radius:35px;margin:14px 0;padding:84px 60px;color:#fff;
+display:flex;gap:60px;align-items:center;flex-wrap:wrap}
+.close .who{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;gap:4px}
+.close .who img{width:236px;height:236px;border-radius:50%;border:6px solid var(--lime);margin-bottom:14px}
+.nm{font-size:15px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.rl{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.65)}
+.pitch{flex:1;min-width:min(100%,340px)}
+.cta-var{display:none}
+body.cta-1 .cta-v1,body.cta-2 .cta-v2,body.cta-3 .cta-v3{display:block}
+.close h2{color:#fff;font-size:clamp(34px,5.4vw,82px);max-width:15ch}
+.close p{margin-top:24px;font-size:19px;line-height:1.45;color:rgba(255,255,255,.92);max-width:46ch}
+.cta-btn{display:inline-block;margin-top:36px;background:var(--lime);color:var(--navy);font-weight:700;
+font-size:16px;letter-spacing:.03em;text-transform:uppercase;padding:28px 48px;border-radius:80px;
+border-bottom:none;transition:background .3s var(--ease),color .3s var(--ease)}
+.cta-btn:hover{background:#fff;color:var(--navy);border-bottom:none}
+.arch{margin-top:34px;font-size:12.5px;color:rgba(255,255,255,.6);max-width:60ch}
+.arch a{color:rgba(255,255,255,.85);border-bottom-color:rgba(255,255,255,.35)}
+/* ---- method + foot ---- */
+.how{margin:14px 0;background:rgba(255,255,255,.06);border-radius:25px;color:rgba(255,255,255,.62);font-size:12.5px}
+.how summary{cursor:pointer;padding:20px 32px;font-size:11px;font-weight:700;letter-spacing:.12em;
+text-transform:uppercase;color:rgba(255,255,255,.85)}
+.how .inner{padding:0 32px 26px}
+.how ul{margin:8px 0 0;padding-left:18px;line-height:1.6;overflow-wrap:anywhere}
+.how li{margin-bottom:8px}
+.how .caveat{margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,.14);color:rgba(255,255,255,.5)}
+.how a{color:#fff}
+.foot{margin:14px 0;padding-bottom:26px}
+/* ---- responsive ---- */
+@media (max-width:1100px){
+ .card{padding:52px 40px}
+ .pid{width:min(34vw,210px)} .pbig{width:130px} .pick>summary{flex-wrap:wrap} .pline{flex-basis:100%}
+}
+@media (max-width:860px){
+ .card{padding:40px 26px;min-height:0;gap:34px;border-radius:28px}
+ .gapbeat{padding:64px 0 60px}
+ .finds{grid-template-columns:minmax(0,1fr)}
+ .find{display:flex;align-items:baseline;justify-content:space-between;gap:20px;
+  border-left:0;padding:16px 0;border-bottom:1px solid rgba(255,255,255,.18)}
+ .find:first-child{padding-left:0} .find:last-child{border-bottom:0}
+ .find .n{flex:0 0 auto;order:2;font-size:34px}
+ .find .l{margin-top:0;flex:1;max-width:none;line-height:1.35}
+ .tiles{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .gapstats{grid-template-columns:minmax(0,1fr)}
+ .bkeys{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .plotscroll .plot{min-width:700px}
+ /* The studio's own label carries channel handle + best-video + view count on one nowrap line
+    (547px on TrainStation 3). On the 700px mobile plot that sweeps across half the chart and
+    crosses whatever creator labels sit in the way. Wrapping it costs two lines and no meaning. */
+ /* 2026-10-16: width:max-content keeps the wrap at the 230px box wherever the marker sits. Without it an
+    absolutely placed label shrinks to the room RIGHT of its left offset, so a marker at 84-93% wrapped a
+    34-character label to 3-4 lines (Picsart, Lingokids, TRAINSWEATEAT) and failed the 2-line budget. */
+ .ownlab{white-space:normal;width:max-content;max-width:230px;text-align:right;line-height:1.35}
+ .swipe{display:block}
+ .mos{aspect-ratio:322.2/390.4}
+ .mtile{left:calc(var(--ml)*1%);top:calc(var(--mt)*1%);width:calc(var(--ms)*1%);height:calc(var(--msy)*1%)}
+ .g1 .tv{font-size:22px;bottom:26px} .g1 .tc{font-size:9.5px;bottom:10px}
+ .g2 .tv{font-size:12px;bottom:9px} .g2 .tc{display:none}
+ .g3 .tv,.g3 .tc{display:none}
+ /* roster: one grid at 390, the reach multiple never wraps */
+ .pick>summary{display:grid;grid-template-columns:auto 56px minmax(0,1fr);
+  grid-template-areas:"pno pav pid" "pln pln pln" "pbg pbg pbg" "pmr pmr pmr";column-gap:14px;row-gap:12px;padding:22px 0;align-items:center}
+ .pno{grid-area:pno} .pick>summary>picture{grid-area:pav;display:block}
+ .pick img{width:56px;height:56px}
+ .pid{grid-area:pid;width:auto}
+ .pbig{grid-area:pbg;width:auto;display:flex;align-items:baseline;gap:12px;text-align:left;
+  border-top:1px solid var(--hair);padding-top:11px}
+ .pbig i{text-align:left;margin-top:0}
+ .pline{grid-area:pln;display:block;font-size:15px} .pmore{grid-area:pmr;display:block;justify-self:start}
+ .taperow{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:4px 12px;padding:14px 0}
+ .taperow .m{grid-column:1/-1;order:-1;text-align:left;white-space:normal;margin-bottom:2px}
+ .taphead .vs{grid-column:1/-1;order:-1;text-align:left}
+ .taphead .side.r{flex-direction:row;text-align:left}
+ .taphead .side img{width:44px;height:44px}
+ .tape{padding:22px 20px}
+ .pstats>div{padding:16px 18px} .pstats b{font-size:20px}
+ .close{padding:48px 26px;gap:34px} .close .who{margin:0 auto}
+ .close .who img{width:168px;height:168px}
+ .mast .grid,.foot .grid{padding:16px 22px;border-radius:24px}
+ .stage{height:clamp(360px,58vh,520px)} .stage-in,.kicker{padding:24px}
+ .kicker{top:24px;left:24px;right:24px}
+ td.ch,td.dt{display:none}
+ .dual{gap:28px}
+}
+@media (max-width:560px){
+ body{font-size:16px} .wrap{padding:0 10px}
+ .card{padding:32px 20px} .how summary{padding:18px 22px} .how .inner{padding:0 22px 22px}
+ .chan{padding:24px 20px} .chan-h{flex-wrap:wrap} .chan-n{text-align:left}
+ .callout{padding:26px 22px} .gapchip{padding:30px 24px;gap:20px}
+ .axl{flex-direction:column;gap:6px}
+}
+/* The reading width and brand palette are shared by both scan lanes. */
+:root{--scan-radius:clamp(24px,3vw,35px);--on-dark:rgba(255,255,255,.84)}
+html{scroll-padding-top:76px}
+@supports(overflow:clip){html,body{overflow-x:clip}}
+.wrap{max-width:1160px}
+.mast{position:sticky;top:0;z-index:20;pointer-events:none;padding:7px 0}
+.mast .grid{pointer-events:auto;flex-wrap:nowrap;gap:12px;border-radius:100px;padding:6px clamp(12px,3vw,32px);box-shadow:0 4px 18px rgba(0,15,65,.12)}
+.mast .wordmark{width:76px}.mast .stamp{font-size:11px;letter-spacing:.045em;text-align:right}
+.scan-nav{display:flex;align-items:center;justify-content:center;gap:3px;margin-inline:auto}
+.scan-nav a{display:grid;place-items:center;min-height:40px;padding:0 13px;border:0;border-radius:100px;color:var(--navy);font-size:14px;font-weight:700}
+.scan-nav a:hover,.scan-nav a:focus-visible{background:var(--white)}
+.scan-nav a[aria-current]{background:var(--navy);color:var(--lime)}
+a:focus-visible,summary:focus-visible,select:focus-visible{outline:3px solid var(--cobalt);outline-offset:3px}
+.beat .card,.close{min-height:0;justify-content:flex-start;border-radius:var(--scan-radius);padding:clamp(23px,4vw,54px);gap:22px}
+.beat-head h2,.close h2{font-size:clamp(30px,3.7vw,54px);line-height:.98;letter-spacing:-.052em;font-weight:700}
+.folio{margin:0;border:0;padding:0;line-height:1.3;gap:8px}.folio .fn,.beat-head .snum{display:none}
+.folio .fr{letter-spacing:.04em}
+.lede{max-width:72ch;font-size:17px}.cap{font-size:13px}
+.hero{margin:5px 0 0}.hero .stage{position:relative;isolation:isolate;display:grid;align-items:center;justify-items:start;height:auto;min-height:230px;gap:14px;
+grid-template-columns:minmax(0,1.65fr) minmax(130px,.65fr);column-gap:clamp(20px,4vw,55px);padding:clamp(24px,4vw,50px);border-radius:var(--scan-radius);background:var(--navy);border:1px solid rgba(255,255,255,.25)}
+.hero .stage:before{content:"";z-index:-1;position:absolute;right:-18%;top:-90%;width:46%;height:330%;border-radius:42%;background:var(--cobalt);transform:rotate(29deg)}
+.hero .stage>picture,.hero .stage>.product-brand{position:static;grid-area:1/2/span 4/3;align-self:center;justify-self:center;width:100%;height:auto;max-width:280px}
+.hero .stage>picture img{position:static;height:auto;width:100%;aspect-ratio:16/10;object-fit:cover;border-radius:15px;filter:none;box-shadow:0 12px 32px rgba(0,0,0,.22)}
+.hero .stage[data-product-hero] picture img{object-fit:contain;max-height:205px;background:var(--navy)}
+.hero .stage>.kicker,.hero .stage>h1,.hero .stage>.hero-src,.hero .stage>.hero-actions{grid-column:1}
+.hero .kicker{position:static;padding:0;color:var(--lime);letter-spacing:.12em}
+.hero .stage h1{margin:0;text-transform:none;font-weight:700;font-size:clamp(34px,4.3vw,62px);letter-spacing:-.055em;line-height:.97;overflow-wrap:anywhere}
+.hero .hero-src:empty,#roster :is(.lede,.cap):empty{display:none}
+.hero .hero-src{margin:0;color:var(--on-dark);font-size:clamp(16px,1.5vw,19px);line-height:1.48}
+.hero-actions{margin:3px 0 0}.hero-actions .cta-btn,.close .cta-btn{font-size:15px;text-transform:none;letter-spacing:0;padding:12px 20px}
+.hero-actions>a:last-child{font-size:15px;color:var(--navy)}.hero-actions .evidence-jump{display:none}
+body:not(:has(#roster .pick)) .hero-actions .creator-jump{display:none}
+body:not(:has(#roster .pick)) .hero-actions .evidence-jump{display:inline-block}
+.hero-product-credit{grid-column:2;grid-row:5;justify-self:center}
+#roster .picks{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,max(235px,29%)),1fr));gap:12px;align-items:start}
+#roster .pick{position:relative;min-width:0;background:var(--plate);border:0;border-radius:20px;color:var(--navy)}
+#roster .pick:first-child{background:var(--lime)}
+@media(min-width:751px){#roster .picks:not(:has(.pick[open])){align-items:stretch}#roster .pick:not([open])>summary{height:100%;grid-template-rows:auto auto 1fr auto auto}}
+#roster .pick>summary{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"face rank" "name name" "brief brief" "metric metric" "more more";align-items:start;gap:10px 16px;padding:20px}
+#roster .pick>summary:hover{background:none}
+#roster .pick>summary picture{grid-area:face}
+#roster .pick>summary img{width:58px;height:58px;object-fit:cover;box-shadow:0 0 0 3px var(--white)}
+#roster .pno{grid-area:rank;font-size:clamp(25px,3vw,40px);line-height:1}
+#roster .pid{grid-area:name;width:auto;min-width:0}
+#roster .pid b{overflow-wrap:anywhere;word-break:normal}
+#roster .pline{grid-area:brief;font-size:15px;line-height:1.45}
+#roster .pbig{grid-area:metric;display:flex;align-items:baseline;flex-wrap:wrap;gap:5px 8px;width:auto;font-size:clamp(23px,2.5vw,32px);line-height:1;font-variant-numeric:tabular-nums;border:0;padding:0;text-align:left}
+#roster .pbig i{margin:0;font-size:11px;letter-spacing:.025em;text-align:left}
+#roster .pmore{grid-area:more;justify-self:start;background:var(--white);border-color:var(--hair);font-size:13px;letter-spacing:0;padding:10px 15px}
+#roster .pick[open] .pmore{background:var(--navy);color:var(--white)}
+#roster .pbody{padding:0 18px 20px;overflow-wrap:anywhere}
+#roster .pstats{gap:8px}#roster .pstats>div{max-width:100%;padding:8px 0;background:transparent}
+#roster .pstats b{font-size:20px}
+#roster .vrow{flex-wrap:wrap}#roster .tag{max-width:100%;white-space:normal}
+#volume .card{background:var(--cobalt);color:var(--white)}
+#volume .folio *,#volume .poster .sub,#volume .cap{color:var(--white)}
+#volume .poster{gap:5px;padding:0}#volume .poster .num{font-size:clamp(56px,8vw,112px);line-height:.93;color:var(--lime)}
+#volume .poster .unit{font-size:clamp(20px,2.5vw,32px);line-height:1.05}
+#volume .poster .sub{margin:8px 0 0;font-size:16px}
+#volume .tiles>div{border-radius:16px;padding:17px;color:var(--navy);background:var(--white)}
+#volume .tiles b{font-size:clamp(24px,2.8vw,40px)}
+.sample-detail{margin-top:16px;border-top:1px solid rgba(255,255,255,.4)}
+.sample-detail>summary{cursor:pointer;font-size:14px;padding:12px 0}.sample-detail .stamp-num{font-size:30px;line-height:1}.sample-detail .stamp-lab{max-width:none}
+.sample-detail .finds{margin-top:14px}.sample-detail .find .n{font-size:28px}
+.gapbeat{padding:clamp(35px,6vw,82px) 0}.gapbeat .wrap{padding-inline:clamp(24px,4vw,54px)}.gapbeat .beat-head{margin-top:12px}
+.close{border:1px solid rgba(255,255,255,.3);background:var(--navy);flex-wrap:nowrap;align-items:center}
+.close .who img{width:76px;height:76px;border-width:3px;margin:0}.close .who{margin:0}.close .rl{display:none}.close .nm{font-size:11px}
+.close .pitch{min-width:0}.close .pitch h2{max-width:22ch}.close p{font-size:16px;margin-top:10px}.close .cta-btn{margin-top:15px}.close p.arch{font-size:13px}
+/* Thin samples keep their linked channel evidence and omit the empty chart. */
+.plotwrap:where(:not(:has(.dot))) :is(.plotscroll,.axl,.plot-legend){display:none}
+.plotwrap:not(:has(.dot)){padding:0;background:transparent;color:var(--ink)}
+.plotwrap:has(.dot){padding:42px 18px 18px;border-radius:20px;background:var(--navy);color:var(--white)}
+.plotwrap .plotscroll{overflow:visible;padding:12px 15px 20px 32px}
+.plotscroll .plot{min-width:0;height:max(clamp(245px,30vw,350px),var(--portrait-height,0px));border-radius:0;background:transparent}
+.plot .gx,.plot .gy{background:rgba(255,255,255,.16)}
+.plot .gx i,.plot .gy i{font-size:10px;font-weight:500;color:var(--on-dark);background:transparent;text-shadow:none;padding:0;letter-spacing:0}
+.plot .gx i{bottom:-18px}.plot .gy i{left:-6px}
+.plot .diag line{stroke:var(--white);opacity:.55}
+.plot .dot{width:var(--face-size,46px);height:var(--face-size,46px);padding:0;translate:var(--dx,0px) var(--dy,0px);touch-action:manipulation}
+.plot .dot img{display:block;width:100%;height:100%;object-fit:cover;border:2px solid var(--white);box-shadow:0 2px 8px rgba(0,0,0,.3)}
+.plot .dot picture{display:block;width:100%;height:100%}
+.plot .dot:where([data-shortlisted]) img{border:3px solid var(--lime)}
+.shortlist-key{display:none}.plotwrap:has(.dot[data-shortlisted]) .shortlist-key{display:inline-flex;align-items:center;gap:5px;font-size:12px;color:var(--on-dark)}
+.shortlist-key::before{content:"";width:9px;height:9px;border:2px solid var(--lime);border-radius:50%}
+.plot .dot[aria-expanded=true]{outline:2px solid var(--white);outline-offset:2px}
+.plot .dot:focus-visible{outline:3px dashed var(--lime);outline-offset:2px}
+.plot .dot .dlab{display:none}
+.plot .ownmark{width:10px;height:10px;background:var(--lime);border:1px solid var(--navy);z-index:1;pointer-events:none}
+.portrait-leaders{position:absolute;z-index:3;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
+.portrait-leaders line{stroke:var(--white);opacity:.65}
+.portrait-leaders circle{fill:var(--white);stroke:var(--navy);stroke-width:.9}
+.anchor-key{display:none}.plotwrap:has(.portrait-leaders circle) .anchor-key{display:inline-flex;align-items:center;gap:5px;color:var(--on-dark);font-size:12px}.anchor-key::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--white)}
+.plot .dot{z-index:2}
+.plotwrap .axl{display:block;margin:0 8px 0 0;text-align:right;font-size:11px;color:var(--on-dark)}
+.plotwrap .axl span:last-child{top:15px;left:18px;right:10px;text-align:left;line-height:1.25}
+.plot-legend{display:flex;flex-wrap:wrap;align-items:center;gap:6px 15px;margin-top:12px}
+.plot-legend .ownlab,.plot-legend .diaglab{position:static;width:auto;max-width:100%;white-space:normal;transform:none;padding:0;text-align:left;color:var(--on-dark);background:none;text-shadow:none;font-size:11px}
+.plot-legend .diaglab:not(:empty)::before{content:"";display:inline-block;vertical-align:middle;width:21px;margin-right:5px;border-top:1px dashed currentColor}
+.plot-legend .ownlab:not(:empty)::before{content:"";display:inline-block;width:8px;height:8px;margin-right:5px;background:var(--lime)}
+.plotwrap:has(.dot) .cap{color:var(--on-dark)}
+.plotwrap:has(.dot) .cap a{color:var(--white);border-color:currentColor}
+.channel-selector{margin:16px 0 0;display:flex;align-items:center;gap:12px;flex-wrap:wrap;font-size:14px;font-weight:700}
+.channel-selector[hidden]{display:none}
+.channel-selector select{max-width:100%;min-height:44px;padding:8px 30px 8px 12px;font:inherit;font-weight:500;color:var(--navy);background:var(--white);border:1px solid var(--sup2);border-radius:8px;text-overflow:ellipsis}
+#chans .chan-h>div{min-width:0}#chans .chan-h h3{overflow-wrap:anywhere;word-break:normal}
+@media(max-width:750px){
+ .mast .grid{padding:4px 9px;gap:3px}.mast .stamp{display:none}.mast .wordmark{width:55px}
+ .scan-nav{margin:0 0 0 auto;gap:0}.scan-nav a{min-height:42px;font-size:12px;padding:0 clamp(6px,1.9vw,12px)}
+ html{scroll-padding-top:65px}
+ #roster .picks{grid-template-columns:1fr}
+ #roster .pick>summary{grid-template-columns:46px minmax(0,1fr) auto;grid-template-areas:"face name rank" "brief brief brief" "metric metric metric" "more more more";gap:10px 12px;padding:16px}
+ #roster .pick>summary img{width:46px;height:46px}
+ .plot .dot{--face-size:32px}.plotwrap .axl{margin-top:5px}
+ .close .who{align-self:flex-start;order:2}.close .who img{width:48px;height:48px}.close .nm{max-width:60px;text-align:center}
+}
+@media(max-width:560px){
+ .beat .card{padding:23px 17px;gap:17px}
+ .hero .stage{grid-template-columns:minmax(0,1fr) 80px;gap:12px 10px;padding:22px 18px}
+ .hero .stage>picture,.hero .stage>.product-brand{grid-area:4/2/5/3}
+ .hero .stage>.kicker,.hero .stage>h1,.hero .stage>.hero-src{grid-column:1/-1}
+ .hero .stage>picture img{border-radius:8px;max-height:70px}
+ .hero .stage:before{right:-41%;width:54%}
+ .hero .stage h1{font-size:clamp(29px,7.4vw,38px)}
+ .hero .hero-src{font-size:16px}.hero .cta-btn{font-size:14px;padding:11px 15px}
+ .plotwrap:has(.dot){padding:55px 8px 15px}.plotwrap .plotscroll{padding:8px 10px 19px 27px}
+ .plot .gx i,.plot .gy i{font-size:9px}
+ .channel-selector select{width:100%}
+ .close{gap:14px;padding:24px 16px}
+}
+@media(prefers-reduced-motion:no-preference){
+ html{scroll-behavior:smooth}
+ .scan-nav a,.pmore{transition:color .2s,background-color .2s}
+ #roster summary img,.cta-btn{transition:transform .24s var(--ease)}
+ #roster summary:hover img{transform:scale(1.06) rotate(-2deg)}.cta-btn:hover{transform:translateY(-2px)}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important}}
+
+</style>
+<noscript><style>.rv{opacity:1;transform:none}.bfill{width:var(--w)}.seg{width:var(--w)}</style></noscript>
+</head>
+<body class="cta-1 coverage-only">
+
+<div class="mast"><div class="wrap"><div class="grid">
+<a class="logo" href="https://arch.agency/"><svg class="wordmark" viewBox="0 0 83 22" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ARCH."><path d="M12.9221 21.6938H16.6558L8.3093 0L0 21.6938H3.75839L4.64875 19.2654L11.9792 19.268L12.9221 21.6938ZM5.78611 16.2115C6.62793 13.7814 7.46899 11.3512 8.31107 8.92062L10.8443 16.218C9.15867 16.2163 7.47251 16.2137 5.78636 16.2112L5.78611 16.2115ZM30.5568 21.6938H34.6761L29.0098 12.544C29.0098 12.544 32.8828 11.7136 33.4664 8.05251C33.4664 8.05251 34.9666 1.00467 26.6508 0.585655H19.6557V4.1403L22.9621 9.37225V9.39451H19.6557V21.6938H23.1532V12.9158H25.1538L25.1555 12.9193H25.1598L30.5568 21.69Z" fill="#000F41"/><path d="M23.1533 12.9154V21.6934H23.1651V12.9187H25.1556L25.1539 12.9154H23.1533ZM53.1342 5.87189L55.6028 3.39297C55.6028 3.39297 52.9616 0.29249 48.2774 0.282122C48.2774 0.282122 42.6322 -0.0516709 39.4643 4.8604C39.4643 4.8604 35.5148 11.0942 39.4643 17.3802C39.4643 17.3802 42.2084 21.9913 48.1074 21.9913C48.1074 21.9913 52.2488 22.315 55.6028 18.926L53.1136 16.4099C53.1136 16.4099 51.3552 18.4597 48.3453 18.4693C48.3453 18.4693 41.6228 18.6736 41.2959 11.3441C41.2959 11.3441 40.8635 3.63598 48.7105 3.84991C48.7098 3.84991 51.1716 3.86964 53.1342 5.87189ZM71.9986 0.585317V9.34764H63.3301V0.585317H59.8293V21.6934H63.3301V12.8717H71.9986V21.6934H75.4861V0.585317H71.9986ZM81.12 21.8909C82.1583 21.8909 83.0001 21.0403 83.0001 19.9906C83.0001 18.9412 82.1583 18.0905 81.12 18.0905C80.0818 18.0905 79.2402 18.9412 79.2402 19.9906C79.2402 21.04 80.0818 21.8909 81.12 21.8909Z" fill="#000F41"/></svg></a>
+<nav class="scan-nav" aria-label="Scan sections"><a href="#roster">Creators</a><a href="#volume">Sample</a><a href="#who">Reach</a><a href="#sentiment">Videos</a></nav>
+<div class="stamp">Prepared for Running With Scissors &middot; 28 November 2026</div>
+</div></div></div>
+
+<main>
+
+<!-- ======================= HERO ======================= -->
+<section class="beat hero"><div class="wrap">
+<div class="stage rv">
+<picture><source srcset="assets/thumbs/XPq8sczUo-M.webp" type="image/webp"><img src="assets/thumbs/XPq8sczUo-M.jpg" alt="You Can Play POSTAL: Brain Damaged in VR!" width="800" height="450" fetchpriority="high" sizes="100vw" class=""></picture>
+<div class="kicker">POSTAL: Brain Damaged &middot; YouTube coverage &amp; creator audit</div>
+<h1 class="rv">Sampled coverage is thin; test FPS creators</h1>
+<p class="hero-src rv"><a href="#sentiment">45 sampled videos</a> across 27 channels, 29 Oct 2026 to 28 Nov 2026. This is a search sample, so it misses some videos.</p>
+<nav class="hero-actions" aria-label="Scan next steps"><a class="cta-btn creator-jump" href="#roster">See the creator plan &darr;</a><a class="cta-btn evidence-jump" href="#volume">See the sample &darr;</a></nav>
+</div>
+</div></section>
+
+<!-- ======================= 05 ROSTER ======================= -->
+<section class="beat" id="roster"><div class="wrap"><div class="card">
+<div class="beat-head"><span class="snum">05</span><h2>A shortlist for<br>the next brief</h2></div>
+<p class="lede" style="margin-top:0">Each creator below is a separate proposed test on a PC channel whose recent uploads include ULTRAKILL. Track the Steam link in each video to learn whether viewers click through and install, then compare formats before committing more budget.</p>
+<div class="picks"><details class="pick rv"><summary>
+<span class="pno">01</span><picture><source srcset="assets/avatars/ritley.webp" type="image/webp"><img src="assets/avatars/ritley.jpg" alt="Ritley" width="64" height="64" loading="lazy" decoding="async"></picture>
+<span class="pid"><b><bdi data-verbatim>Ritley</bdi></b><i>Adjacent-game creator · median 57,146 views, latest 10 uploads</i><em class="pstat">NOT OBSERVED IN OUR TARGET SAMPLE</em></span>
+<span class="pbig">3.8x<i>observed ratio</i></span>
+<span class="pline">Sponsored segment in an indie FPS essay or roundup, framing an action-oriented take on POSTAL</span><span class="pmore" aria-hidden="true">Video &amp; details</span></summary>
+<div class="pbody"><div class="pstats"><div><b>15.0K</b><span>subscribers</span></div>
+<div><b>1,846,028</b><span>lifetime channel views</span></div>
+<div><a class="tag tag-acc" href="https://www.youtube.com/channel/UCqcjK495VKg-Ur7fOLuK1IA/about">not observed in the target sample</a></div></div>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=SuC7hOEFiUE"><bdi data-verbatim>ULTRAKILL - An FPS Made For Insane People</bdi></a><span class="vnum">390,952<i>31 Oct 2026</i></span></div><p class="chan-line">Ritley&#x27;s recent essays cover ULTRAKILL, game soundtracks and cancelled games for viewers who come for unusual indie games. Brief: a segment in an indie FPS essay or roundup presenting POSTAL: Brain Damaged as a new, action-oriented take on the Running With Scissors series, with no mechanics beyond what the studio verifies. Proposed measurement: whether viewers click a tracked Steam link and install. Steam links in past descriptions suggest a PC audience, though platform share is unmeasured and a segment shows less footage than a playthrough. Uploads are infrequent, so confirm audience location, timing and willingness first.</p></div></details><details class="pick rv"><summary>
+<span class="pno">02</span><picture><source srcset="assets/avatars/vinnnywinnny.webp" type="image/webp"><img src="assets/avatars/vinnnywinnny.jpg" alt="VinnyWinny" width="64" height="64" loading="lazy" decoding="async"></picture>
+<span class="pid"><b><bdi data-verbatim>VinnyWinny</bdi></b><i>Adjacent-game creator · median 36,120 views, latest 20 uploads</i><em class="pstat">NOT OBSERVED IN OUR TARGET SAMPLE</em></span>
+<span class="pbig">1.0x<i>observed ratio</i></span>
+<span class="pline">Long-form first-look in the creator&#x27;s challenge-run style, set in POSTAL: Brain Damaged</span><span class="pmore" aria-hidden="true">Video &amp; details</span></summary>
+<div class="pbody"><div class="pstats"><div><b>35.9K</b><span>subscribers</span></div>
+<div><b>5,612,935</b><span>lifetime channel views</span></div>
+<div><a class="tag tag-acc" href="https://www.youtube.com/channel/UC0g2qpJyuR1ttXCDs1Gjg9g/about">not observed in the target sample</a></div></div>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=oxRu9PDWyzo"><bdi data-verbatim>ULTRAKILL, But I Have No Parry Cooldown</bdi></a><span class="vnum">189,648<i>2 Oct 2026</i></span></div><div class="vrow"><a href="https://www.youtube.com/watch?v=BD1P7Ygr5hM"><bdi data-verbatim>SISYPHUS PRIME Cracked Me In the Intro???</bdi></a><span class="vnum">184,041<i>19 Nov 2026</i></span></div><div class="vrow"><a href="https://www.youtube.com/watch?v=FiYUI8_B_NE"><bdi data-verbatim>ULTRAKILL, But Every Enemy Is MINOS PRIME</bdi></a><span class="vnum">117,542<i>16 Oct 2026</i></span></div><p class="chan-line">VinnyWinny&#x27;s viewers watch ULTRAKILL challenge runs, and the DUSK upload shows some follow the channel into other retro shooters. Brief: a dedicated first playthrough titled like the channel&#x27;s challenge videos, presenting the game only as an action-oriented take on the Running With Scissors series until the studio supplies verified details. Proposed measurement: clicks and installs from the tracked Steam link in the description. PC footage matches the verified Steam listing; viewer platform share is unmeasured. The DUSK video drew far fewer views than the ULTRAKILL runs, so transfer to a new game is the open question. Rates and willingness are unknown.</p></div></details><details class="pick rv"><summary>
+<span class="pno">03</span><picture><source srcset="assets/avatars/thundyty.webp" type="image/webp"><img src="assets/avatars/thundyty.jpg" alt="thundyty" width="64" height="64" loading="lazy" decoding="async"></picture>
+<span class="pid"><b><bdi data-verbatim>thundyty</bdi></b><i>Adjacent-game creator · median 20,987 views, latest 20 uploads</i><em class="pstat">NOT OBSERVED IN OUR TARGET SAMPLE</em></span>
+<span class="pbig pbig-low">0.8x<i>observed ratio</i></span>
+<span class="pline">Fun-facts style short announcing POSTAL: Brain Damaged to an ULTRAKILL shorts audience</span><span class="pmore" aria-hidden="true">Video &amp; details</span></summary>
+<div class="pbody"><div class="pstats"><div><b>26.4K</b><span>subscribers</span></div>
+<div><b>28,225,591</b><span>lifetime channel views</span></div>
+<div><a class="tag tag-acc" href="https://www.youtube.com/channel/UC0P512fWJF2ge7oTJvcVM3Q/about">not observed in the target sample</a></div></div>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=1NBnH8R1iFQ"><bdi data-verbatim>Streamer tries to beat ULTRAKILL in TEN seconds.</bdi></a><span class="vnum">71,171<i>23 Oct 2026</i></span></div><p class="chan-line">thundyty posts quick ULTRAKILL facts and news-question shorts in English to viewers of that game, a close peer audience for the target. Brief: a single short introducing POSTAL: Brain Damaged as a new, action-oriented take on the Running With Scissors series, with the Steam link in the description as the tracked link. Proposed measurement: whether short-form viewers click and install. The ULTRAKILL shorts cover a PC game, though viewer platform share is unmeasured. Shorts leave little room for depth and short-form views are a weaker attention signal, so judge it on store clicks, and confirm audience location given mixed audio tags.</p></div></details><details class="pick rv"><summary>
+<span class="pno">04</span><picture><source srcset="assets/avatars/tondaryzd.webp" type="image/webp"><img src="assets/avatars/tondaryzd.jpg" alt="TondarYZD" width="64" height="64" loading="lazy" decoding="async"></picture>
+<span class="pid"><b><bdi data-verbatim>TondarYZD</bdi></b><i>Adjacent-game creator · median 19,279 views, latest 20 uploads</i><em class="pstat">NOT OBSERVED IN OUR TARGET SAMPLE</em></span>
+<span class="pbig pbig-low">0.4x<i>observed ratio</i></span>
+<span class="pline">Comedic first-time-playing video of POSTAL: Brain Damaged in the channel&#x27;s gameplay style</span><span class="pmore" aria-hidden="true">Video &amp; details</span></summary>
+<div class="pbody"><div class="pstats"><div><b>54.7K</b><span>subscribers</span></div>
+<div><b>16,952,645</b><span>lifetime channel views</span></div>
+<div><a class="tag tag-acc" href="https://www.youtube.com/channel/UC9lEaKLbWcpj7flPowtcnFA/about">not observed in the target sample</a></div></div>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=iFWkSw8dUWc"><bdi data-verbatim>This MIGHT actually be the best custom level update of all time (Ultrakill)</bdi></a><span class="vnum">17,447<i>8 Nov 2026</i></span></div><div class="vrow"><a href="https://www.youtube.com/watch?v=T6bexgjmrzA"><bdi data-verbatim>ULTRAKILL But it&#x27;s actually UNDERTALE</bdi></a><span class="vnum">14,994<i>22 Nov 2026</i></span></div><div class="vrow"><a href="https://www.youtube.com/watch?v=YCr1ZANlbjY"><bdi data-verbatim>How well can every Ultrakill enemy survive five nights at freddy&#x27;s?</bdi></a><span class="vnum">9,617<i>12 Nov 2026</i></span></div><p class="chan-line">TondarYZD&#x27;s viewers watch ULTRAKILL custom levels and comedic mod runs, and crossover videos suggest some follow the channel into other action games. Brief: a full-length first-time-playing video describing the game only as an action-oriented take on the Running With Scissors series, keeping mechanics to what the studio verifies. Proposed measurement: clicks and installs from a tracked Steam link. PC footage matches the verified Steam listing; viewer platform share is unmeasured. Recent content is almost all ULTRAKILL, so transfer is uncertain, and the studio should review third-party mod links in past descriptions. Willingness is unknown.</p></div></details></div>
+<p class="cap">The linked adjacent receipts are dated 2 Oct 2026 to 22 Nov 2026; the target-game sample covers 29 Oct 2026 to 28 Nov 2026. Creators are listed by the median views of their latest recorded uploads, the typical audience of one more video. Each ratio divides that median by public subscribers. Both are observed figures and no forecast; the linked videos are the largest recorded adjacent receipts. Adjacent-game evidence is excluded from every target-game total above. Creator rates, schedules, willingness and audience transfer require confirmation. Footage ownership was not independently verified.</p>
+<div class="folio"><span class="fn">05</span><span class="fk">The roster</span><span class="fr">Candidates to discuss</span></div>
+</div></div></section>
+
+<!-- ======================= 01 VOLUME ======================= -->
+<section class="beat" id="volume"><div class="wrap"><div class="card">
+<div class="folio"><span class="fn">01</span><span class="fk">Volume</span></div>
+<div class="beat-head"><span class="snum">01</span><h2>How much<br>coverage there is</h2></div>
+<div class="poster">
+<div class="num rv" data-count="45">45</div>
+<div class="unit rv" style="--d:80ms">target-game videos in the recorded sample</div>
+<p class="sub rv" style="--d:160ms">Search matches are reviewed for relevance before this count is calculated.</p>
+</div>
+<div>
+<div class="tiles">
+<div class="rv"><a href="#sentiment"><b class="num" data-count="45">45</b></a><span>videos in the sample</span></div>
+<div class="rv"><a href="#sentiment"><b class="num" data-count="27">27</b></a><span>sampled channels</span></div>
+<div class="rv"><a href="#sentiment"><b class="num" data-count="4685">4,685</b></a><span>sampled views</span></div>
+<div class="rv"><a href="#sentiment"><b class="num" data-count="0">0</b></a><span>sampled videos with a paid-promotion flag</span></div>
+</div>
+<p class="cap" style="margin-top:22px"><a href="#sentiment">4,685 sampled views</a> across 45 videos and 27 channels. Adjacent-game videos are separate.</p>
+<details class="sample-detail"><summary>Sample figures and scope</summary>
+<div class="stamp-num num" data-count="45">45</div>
+<div class="stamp-lab">videos in the recorded target-game sample</div>
+<div class="finds">
+<div class="find rv"><span class="n num" data-count="45">45</span><span class="l">sampled target-game videos</span></div>
+<div class="find rv"><span class="n num" data-count="27">27</span><span class="l">channels in the sample</span></div>
+<div class="find rv"><span class="n num" data-count="4">4</span><span class="l">adjacent candidates</span></div>
+</div>
+</details>
+</div>
+</div></div></section>
+
+<!-- ======================= 02 WHO ======================= -->
+<section class="beat" id="who"><div class="wrap"><div class="card">
+<div class="folio"><span class="fn">02</span><span class="fk">Current coverage</span><span class="fr">Recorded creator channels</span></div>
+<div class="beat-head"><span class="snum">02</span><h2>Who covers<br>the game today</h2></div>
+<div>
+<p class="lede" style="margin-top:0">Each plotted face links to actual target-game video receipts. The axes show subscribers and the largest recorded sample video.</p>
+<div class="plotwrap rv">
+<div class="plotscroll"><div class="plot"><span class="gx" style="left:6.000%"><i>1</i></span><span class="gx" style="left:28.000%"><i>10</i></span><span class="gx" style="left:50.000%"><i>100</i></span><span class="gx" style="left:72.000%"><i>1K</i></span><span class="gx" style="left:94.000%"><i>10K</i></span><span class="gy" style="bottom:6.000%"><i>1</i></span><span class="gy" style="bottom:28.000%"><i>10</i></span><span class="gy" style="bottom:50.000%"><i>100</i></span><span class="gy" style="bottom:72.000%"><i>1K</i></span><span class="gy" style="bottom:94.000%"><i>10K</i></span><svg class="diag" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="100" x2="100" y2="0" stroke="#666666" stroke-width="1" stroke-dasharray="4 5" vector-effect="non-scaling-stroke" opacity=".55"/></svg><button class="dot dot-hot lab-up" style="left:69.315%;bottom:72.876%" type="button" data-ch="c0" aria-label="9 Letter Studios (‪JC)" aria-expanded="false" aria-controls="ch-c0"><picture><source srcset="assets/avatars/9letterstudios.webp" type="image/webp"><img src="assets/avatars/9letterstudios.jpg" alt="9 Letter Studios (‪JC)" width="64" height="64" loading="lazy" decoding="async"></picture><span class="dlab"><bdi data-verbatim>9 Letter Studios (</bdi></span></button><button class="dot lab-up" style="left:90.674%;bottom:59.347%" type="button" data-ch="c1" aria-label="Mar Sol" aria-expanded="false" aria-controls="ch-c1"><picture><source srcset="assets/avatars/mar_solx.webp" type="image/webp"><img src="assets/avatars/mar_solx.jpg" alt="Mar Sol" width="64" height="64" loading="lazy" decoding="async"></picture><span class="dlab"><bdi data-verbatim>Mar Sol</bdi></span></button><button class="dot lab-up" style="left:32.491%;bottom:55.292%" type="button" data-ch="c2" aria-label="Straycast" aria-expanded="false" aria-controls="ch-c2"><picture><source srcset="assets/avatars/stray_castgaming.webp" type="image/webp"><img src="assets/avatars/stray_castgaming.jpg" alt="Straycast" width="64" height="64" loading="lazy" decoding="async"></picture><span class="dlab"></span></button><button class="dot lab-down" style="left:62.526%;bottom:52.580%" type="button" data-ch="c3" aria-label="Mrakskairkroe" aria-expanded="false" aria-controls="ch-c3"><picture><source srcset="assets/avatars/mrakskairkroe.webp" type="image/webp"><img src="assets/avatars/mrakskairkroe.jpg" alt="Mrakskairkroe" width="64" height="64" loading="lazy" decoding="async"></picture><span class="dlab"></span></button><button class="dot lab-up" style="left:57.314%;bottom:57.043%" type="button" data-ch="c4" aria-label="EmaRema228" aria-expanded="false" aria-controls="ch-c4"><picture><source srcset="assets/avatars/cupat.webp" type="image/webp"><img src="assets/avatars/cupat.jpg" alt="EmaRema228" width="64" height="64" loading="lazy" decoding="async"></picture><span class="dlab"><bdi data-verbatim>EmaRema228</bdi></span></button><button class="dot lab-down" style="left:32.491%;bottom:55.126%" type="button" data-ch="c5" aria-label="СЕНЯ ХЕЙМЕР" aria-expanded="false" aria-controls="ch-c5"><picture><source srcset="assets/avatars/senyahaymer.webp" type="image/webp"><img src="assets/avatars/senyahaymer.jpg" alt="СЕНЯ ХЕЙМЕР" width="64" height="64" loading="lazy" decoding="async"></picture><span class="dlab"></span></button><button class="dot lab-up" style="left:78.183%;bottom:45.277%" type="button" data-ch="c6" aria-label="EB" aria-expanded="false" aria-controls="ch-c6"><picture><source srcset="assets/avatars/eb_artz.webp" type="image/webp"><img src="assets/avatars/eb_artz.jpg" alt="EB" width="64" height="64" loading="lazy" decoding="async"></picture><span class="dlab"><bdi data-verbatim>EB</bdi></span></button><button class="dot lab-left" style="left:25.868%;bottom:41.481%" type="button" data-ch="c7" aria-label="Lambimia Games" aria-expanded="false" aria-controls="ch-c7"><picture><source srcset="assets/avatars/lambimiagames.webp" type="image/webp"><img src="assets/avatars/lambimiagames.jpg" alt="Lambimia Games" width="64" height="64" loading="lazy" decoding="async"></picture><span class="dlab"><bdi data-verbatim>Lambimia Games</bdi></span></button><button class="dot lab-down" style="left:25.868%;bottom:40.239%" type="button" data-ch="c8" aria-label="V0id" aria-expanded="false" aria-controls="ch-c8"><picture><source srcset="assets/avatars/v0idens3.webp" type="image/webp"><img src="assets/avatars/v0idens3.jpg" alt="V0id" width="64" height="64" loading="lazy" decoding="async"></picture><span class="dlab"></span></button><button class="dot lab-up" style="left:70.231%;bottom:37.129%" type="button" data-ch="c9" aria-label="Oreo k9" aria-expanded="false" aria-controls="ch-c9"><picture><source srcset="assets/avatars/oreok9.webp" type="image/webp"><img src="assets/avatars/oreok9.jpg" alt="Oreo k9" width="64" height="64" loading="lazy" decoding="async"></picture><span class="dlab"><bdi data-verbatim>Oreo k9</bdi></span></button><span class="ownmark" style="left:0;display:none;--unused:0%;bottom:0%" aria-hidden="true"></span><svg class="portrait-leaders" aria-hidden="true"></svg></div></div>
+<div class="axl"><span>subscribers <svg class="arw" viewBox="0 0 20 12" fill="none" aria-hidden="true"><path d="M0 6h17M12.5 1L18 6l-5.5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="square"/></svg></span><span><svg class="arw arw-up" viewBox="0 0 20 12" fill="none" aria-hidden="true"><path d="M0 6h17M12.5 1L18 6l-5.5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="square"/></svg> best sampled target-game video, views</span></div>
+<div class="plot-legend"><span class="shortlist-key">Shortlisted</span><span class="anchor-key">Measured position</span><span class="ownlab" style="left:0;display:none;--unused:0%;bottom:0%"></span><span class="diaglab" style="left:7.0%;bottom:8.0%">one view per subscriber</span></div>
+<p class="cap" style="margin-top:16px">The plot shows up to ten leading creator channels by sampled views. Both axes use the same logarithmic scale. Creators without positive public subscriber and view counts are not plotted; their videos remain in the full sample table. Select a portrait to see the channel and its videos. Channels speaking to audiences outside the markets this report covers are in the full table only.</p>
+</div>
+<label class="channel-selector" hidden>Explore a channel<select aria-controls="chans"></select></label>
+<div class="chans" id="chans" aria-live="polite"><article class="chan chan-hot" id="ch-c0">
+<header class="chan-h"><picture><source srcset="assets/avatars/9letterstudios.webp" type="image/webp"><img src="assets/avatars/9letterstudios.jpg" alt="9 Letter Studios (‪JC)" width="72" height="72" loading="lazy" decoding="async"></picture><div><h3><bdi data-verbatim>9 Letter Studios (‪JC)</bdi></h3>
+<p class="meta"><a href="https://www.youtube.com/channel/UCnCONus77iRARE6_162SZ0A"><bdi data-verbatim>@9letterstudios</bdi></a></p></div>
+<div class="chan-n">755<i>subscribers</i></div></header>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=XPq8sczUo-M"><bdi data-verbatim>You Can Play POSTAL: Brain Damaged in VR!</bdi></a><span class="vnum">1,096<i>24 Nov 2026</i></span></div><p class="chan-line">1 sampled video with 1,096 recorded views.</p><footer><span class="tag">581,928 lifetime channel views</span></footer></article><article class="chan" id="ch-c1">
+<header class="chan-h"><picture><source srcset="assets/avatars/mar_solx.webp" type="image/webp"><img src="assets/avatars/mar_solx.jpg" alt="Mar Sol" width="72" height="72" loading="lazy" decoding="async"></picture><div><h3><bdi data-verbatim>Mar Sol</bdi></h3>
+<p class="meta"><a href="https://www.youtube.com/channel/UCMd6uicQKdBUhb5J0E6SHOw"><bdi data-verbatim>@mar_solx</bdi></a></p></div>
+<div class="chan-n">7.06K<i>subscribers</i></div></header>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=jumNzoeDoNc"><bdi data-verbatim>ultrakill and postal had a baby / POSTAL: Brain Damaged</bdi></a><span class="vnum">266<i>15 Nov 2026</i></span></div><p class="chan-line">1 sampled video with 266 recorded views.</p><footer><span class="tag">324,013 lifetime channel views</span></footer></article><article class="chan" id="ch-c2">
+<header class="chan-h"><picture><source srcset="assets/avatars/stray_castgaming.webp" type="image/webp"><img src="assets/avatars/stray_castgaming.jpg" alt="Straycast" width="72" height="72" loading="lazy" decoding="async"></picture><div><h3><bdi data-verbatim>Straycast</bdi></h3>
+<p class="meta"><a href="https://www.youtube.com/channel/UCEBQ0WTyJcYxcP5XNWnpbzQ"><bdi data-verbatim>@stray_castgaming</bdi></a></p></div>
+<div class="chan-n">16<i>subscribers</i></div></header>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=cm5QtN7vL8s"><bdi data-verbatim>she&#x27;s dead 🪾 #fyp #postal #postalbraindamaged #fps #letsplay #gaming</bdi></a><span class="vnum">174<i>29 Oct 2026</i></span></div><div class="vrow"><a href="https://www.youtube.com/watch?v=HbS0U33gg7k"><bdi data-verbatim>Lets Play: POSTAL Brain Damage [4]</bdi></a><span class="vnum">45<i>29 Oct 2026</i></span></div><p class="chan-line">5 sampled videos with 253 recorded views.</p><footer><span class="tag">46,351 lifetime channel views</span></footer></article><article class="chan" id="ch-c3">
+<header class="chan-h"><picture><source srcset="assets/avatars/mrakskairkroe.webp" type="image/webp"><img src="assets/avatars/mrakskairkroe.jpg" alt="Mrakskairkroe" width="72" height="72" loading="lazy" decoding="async"></picture><div><h3><bdi data-verbatim>Mrakskairkroe</bdi></h3>
+<p class="meta"><a href="https://www.youtube.com/channel/UCRYjk_WtvBfLz7zAqdqbqcA"><bdi data-verbatim>@mrakskairkroe</bdi></a></p></div>
+<div class="chan-n">371<i>subscribers</i></div></header>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=85irYWCZIXs"><bdi data-verbatim>This game just keeps getting better | Postal: Brain Damaged</bdi></a><span class="vnum">131<i>5 Nov 2026</i></span></div><div class="vrow"><a href="https://www.youtube.com/watch?v=i9umu1mRTQA"><bdi data-verbatim>Definitions Of Insanity | Postal: Brain Damaged</bdi></a><span class="vnum">23<i>7 Nov 2026</i></span></div><p class="chan-line">12 sampled videos with 247 recorded views.</p><footer><span class="tag">159,754 lifetime channel views</span></footer></article><article class="chan" id="ch-c4">
+<header class="chan-h"><picture><source srcset="assets/avatars/cupat.webp" type="image/webp"><img src="assets/avatars/cupat.jpg" alt="EmaRema228" width="72" height="72" loading="lazy" decoding="async"></picture><div><h3><bdi data-verbatim>EmaRema228</bdi></h3>
+<p class="meta"><a href="https://www.youtube.com/channel/UC_MiBxPhGjxLgr23v4kC_og"><bdi data-verbatim>@cupat</bdi></a></p></div>
+<div class="chan-n">215<i>subscribers</i></div></header>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=02ajTXH9VUQ"><bdi data-verbatim>Cruel Dude Thesis in 02:50.109 Hard 100%</bdi></a><span class="vnum">209<i>17 Nov 2026</i></span></div><p class="chan-line">1 sampled video with 209 recorded views.</p><footer><span class="tag">71,922 lifetime channel views</span></footer></article><article class="chan" id="ch-c5">
+<header class="chan-h"><picture><source srcset="assets/avatars/senyahaymer.webp" type="image/webp"><img src="assets/avatars/senyahaymer.jpg" alt="СЕНЯ ХЕЙМЕР" width="72" height="72" loading="lazy" decoding="async"></picture><div><h3><bdi data-verbatim>СЕНЯ ХЕЙМЕР</bdi></h3>
+<p class="meta"><a href="https://www.youtube.com/channel/UCRpkA8ya49DSfexWjZHmCbg"><bdi data-verbatim>@senyahaymer</bdi></a></p></div>
+<div class="chan-n">16<i>subscribers</i></div></header>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=kyvmsms9zt4"><bdi data-verbatim>НА ПРЕВЬЮ УЖЕ ВСЁ НАПИСАНО // POSTAL: BRAIN DAMAGED</bdi></a><span class="vnum">171<i>26 Nov 2026</i></span></div><p class="chan-line">1 sampled video with 171 recorded views.</p><footer><span class="tag">1,080 lifetime channel views</span></footer></article><article class="chan" id="ch-c6">
+<header class="chan-h"><picture><source srcset="assets/avatars/eb_artz.webp" type="image/webp"><img src="assets/avatars/eb_artz.jpg" alt="EB" width="72" height="72" loading="lazy" decoding="async"></picture><div><h3><bdi data-verbatim>EB</bdi></h3>
+<p class="meta"><a href="https://www.youtube.com/channel/UC-3Q5grmwLLWu_xtpckp_lw"><bdi data-verbatim>@eb_artz</bdi></a></p></div>
+<div class="chan-n">1.91K<i>subscribers</i></div></header>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=G-p9PZPv_Q8"><bdi data-verbatim>PLAYING POSTAL: BRAIN DAMAGED</bdi></a><span class="vnum">61<i>7 Nov 2026</i></span></div><p class="chan-line">1 sampled video with 61 recorded views.</p><footer><span class="tag">487,346 lifetime channel views</span></footer></article><article class="chan" id="ch-c7">
+<header class="chan-h"><picture><source srcset="assets/avatars/lambimiagames.webp" type="image/webp"><img src="assets/avatars/lambimiagames.jpg" alt="Lambimia Games" width="72" height="72" loading="lazy" decoding="async"></picture><div><h3><bdi data-verbatim>Lambimia Games</bdi></h3>
+<p class="meta"><a href="https://www.youtube.com/channel/UCsGAW_3DmYMrtxs-jmC28Mw"><bdi data-verbatim>@lambimiagames</bdi></a></p></div>
+<div class="chan-n">8<i>subscribers</i></div></header>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=PiL2c0Y6byk"><bdi data-verbatim>TENTANDO gostar de POSTAL</bdi></a><span class="vnum">41<i>7 Nov 2026</i></span></div><p class="chan-line">1 sampled video with 41 recorded views.</p><footer><span class="tag">1,293 lifetime channel views</span></footer></article><article class="chan" id="ch-c8">
+<header class="chan-h"><picture><source srcset="assets/avatars/v0idens3.webp" type="image/webp"><img src="assets/avatars/v0idens3.jpg" alt="V0id" width="72" height="72" loading="lazy" decoding="async"></picture><div><h3><bdi data-verbatim>V0id</bdi></h3>
+<p class="meta"><a href="https://www.youtube.com/channel/UCkkeXZIMYHsV9o39gdaq8dw"><bdi data-verbatim>@v0idens3</bdi></a></p></div>
+<div class="chan-n">8<i>subscribers</i></div></header>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=6NBzX5Qh_Aw"><bdi data-verbatim>Posta Brain Damaged: Bareback redemption speedrun in 03:04.315</bdi></a><span class="vnum">36<i>8 Nov 2026</i></span></div><p class="chan-line">1 sampled video with 36 recorded views.</p><footer><span class="tag">6,134 lifetime channel views</span></footer></article><article class="chan" id="ch-c9">
+<header class="chan-h"><picture><source srcset="assets/avatars/oreok9.webp" type="image/webp"><img src="assets/avatars/oreok9.jpg" alt="Oreo k9" width="72" height="72" loading="lazy" decoding="async"></picture><div><h3><bdi data-verbatim>Oreo k9</bdi></h3>
+<p class="meta"><a href="https://www.youtube.com/channel/UC25RNmnBshtr97hA29jH3sw"><bdi data-verbatim>@oreok9</bdi></a></p></div>
+<div class="chan-n">831<i>subscribers</i></div></header>
+<div class="vrow"><a href="https://www.youtube.com/watch?v=51qy5De9-zA"><bdi data-verbatim>WE&#x27;RE ALMOST DONE | Postal Brain Damaged -PART 5</bdi></a><span class="vnum">26<i>22 Nov 2026</i></span></div><p class="chan-line">1 sampled video with 26 recorded views.</p><footer><span class="tag">40,013 lifetime channel views</span></footer></article></div>
+<div class="callout rv"><b>Most sampled videos are gameplay uploads, while a few other videos carry most views.</b>
+<span>Sampled coverage comes from many small channels posting playthroughs, speedruns and shorts. No sampled video carries the paid-promotion flag. A comparison with an official channel was not made in this report.</span></div>
+</div>
+</div></div></section>
+
+<!-- ======================= 03 GAP ======================= -->
+<section class="beat gapbeat" id="gap"><div class="wrap">
+<div class="folio"><span class="fn">03</span><span class="fk">The gap</span><span class="fr">Recorded sample concentration</span></div>
+<div class="beat-head"><span class="snum">03</span><h2>Where attention<br>is concentrated</h2></div>
+
+<div class="tape rv">
+<div class="taperow taphead">
+<div class="side"><picture><source srcset="assets/avatars/unavailable.webp" type="image/webp"><img src="assets/avatars/unavailable.jpg" alt="Official comparison not made" width="54" height="54" loading="lazy" decoding="async"></picture><div><b>Official channel</b><i>Official comparison not made in this report</i></div></div>
+<div class="vs">VS</div>
+<div class="side r"><picture><source srcset="assets/avatars/9letterstudios.webp" type="image/webp"><img src="assets/avatars/9letterstudios.jpg" alt="9 Letter Studios (‪JC)" width="54" height="54" loading="lazy" decoding="async"></picture><div><b><bdi data-verbatim>9 Letter Studios (‪JC)</bdi></b><i>Largest in-market creator view total</i></div></div>
+</div>
+
+</div>
+
+<div class="board">
+<div class="brow rv"><div class="blab"><span>Whole recorded sample</span><span class="bval">4,685 views</span></div>
+<div class="btrack"><span class="bfill bfill-w" data-exact-share="true" style="--w:100.0%"></span></div></div>
+
+<div class="brow rv"><div class="blab"><span>Top two sampled channels</span><span class="bval">3,278 views</span></div>
+<div class="btrack"><span class="bfill bfill-w" data-exact-share="true" style="--w:70.0%"></span></div></div>
+
+<div class="brow rv"><div class="blab"><span>Other sampled channels</span><span class="bval">1,407 views</span></div>
+<div class="btrack"><span class="bfill bfill-w" data-exact-share="true" style="--w:30.0%"></span></div></div>
+</div>
+<p class="cap" style="margin-top:20px">These bars compare sampled target-game views by channel. They describe the recorded search sample; they do not estimate all YouTube coverage.</p>
+
+<div class="gapchip rv"><span class="n num" data-count="23.4" data-dec="1" data-suffix="%">23.4%</span>
+<p>of sampled views belong to <a href="https://www.youtube.com/channel/UCnCONus77iRARE6_162SZ0A"><bdi data-verbatim>9 Letter Studios (‪JC)</bdi></a>. Test another relevant creator to learn whether interest extends beyond this channel.</p></div>
+
+<div class="gapstats">
+
+</div>
+</div></section>
+
+<!-- ======================= 04 SENTIMENT ======================= -->
+<section class="beat" id="sentiment"><div class="wrap"><div class="card">
+<div class="folio"><span class="fn">04</span><span class="fk">What they are making</span><span class="fr">29 Oct 2026 to 28 Nov 2026</span></div>
+<div class="beat-head"><span class="snum">04</span><h2>What the<br>videos contain</h2></div>
+<div class="dual">
+<div class="rv"><div class="num" data-count="70.0" data-dec="1" data-suffix="%">70.0%</div><div class="l">Other · share of sampled views</div></div>
+<div class="rv"><div class="num" data-count="30.0" data-dec="1" data-suffix="%">30.0%</div><div class="l">Gameplay · share of sampled views</div></div>
+<p class="lede" style="margin-top:0;flex:1">The labels come from what each title and channel shows. Nobody watched every video to score sentiment.</p>
+</div>
+<div class="mos">
+<a class="mtile g1 rv" style="--l:0.000;--t:0.000;--s:41.991;--sy:91.813;--ml:0.000;--mt:0.000;--ms:70.936;--msy:58.544" href="https://www.youtube.com/watch?v=XPq8sczUo-M"><picture><source srcset="assets/thumbs/XPq8sczUo-M.webp" type="image/webp"><img src="assets/thumbs/XPq8sczUo-M.jpg" alt="You Can Play POSTAL: Brain Damaged in VR!" width="800" height="450" loading="lazy" decoding="async"></picture><span class="tvz"></span><span class="tv">1,096</span><span class="tc"><bdi data-verbatim>9 Letter Studios (‪JC)</bdi></span></a>
+<a class="mtile g2 rv" style="--l:42.791;--t:0.000;--s:20.687;--sy:45.231;--ml:0.000;--mt:59.204;--ms:34.946;--msy:28.841" href="https://www.youtube.com/watch?v=jumNzoeDoNc"><picture><source srcset="assets/thumbs/jumNzoeDoNc.webp" type="image/webp"><img src="assets/thumbs/jumNzoeDoNc.jpg" alt="ultrakill and postal had a baby / POSTAL: Brain Damaged" width="800" height="450" loading="lazy" decoding="async"></picture><span class="tvz"></span><span class="tv">266</span><span class="tc"><bdi data-verbatim>Mar Sol</bdi></span></a>
+<a class="mtile g2 rv" style="--l:64.277;--t:0.000;--s:18.337;--sy:40.093;--ml:35.746;--mt:59.204;--ms:30.977;--msy:25.565" href="https://www.youtube.com/watch?v=02ajTXH9VUQ"><picture><source srcset="assets/thumbs/02ajTXH9VUQ.webp" type="image/webp"><img src="assets/thumbs/02ajTXH9VUQ.jpg" alt="Cruel Dude Thesis in 02:50.109 Hard 100%" width="800" height="450" loading="lazy" decoding="async"></picture><span class="tvz"></span><span class="tv">209</span><span class="tc"><bdi data-verbatim>EmaRema228</bdi></span></a>
+<a class="mtile g2 rv" style="--l:64.277;--t:41.843;--s:16.731;--sy:36.583;--ml:71.736;--mt:0.000;--ms:28.264;--msy:23.327" href="https://www.youtube.com/watch?v=cm5QtN7vL8s"><picture><source srcset="assets/thumbs/cm5QtN7vL8s.webp" type="image/webp"><img src="assets/thumbs/cm5QtN7vL8s.jpg" alt="she&#x27;s dead 🪾 #fyp #postal #postalbraindamaged #fps #letsplay #gaming" width="800" height="450" loading="lazy" decoding="async"></picture><span class="tvz"></span><span class="tv">174</span><span class="tc"><bdi data-verbatim>Straycast</bdi></span></a>
+<a class="mtile g2 rv" style="--l:83.414;--t:0.000;--s:16.586;--sy:36.266;--ml:71.736;--mt:23.987;--ms:28.019;--msy:23.125" href="https://www.youtube.com/watch?v=kyvmsms9zt4"><picture><source srcset="assets/thumbs/kyvmsms9zt4.webp" type="image/webp"><img src="assets/thumbs/kyvmsms9zt4.jpg" alt="НА ПРЕВЬЮ УЖЕ ВСЁ НАПИСАНО // POSTAL: BRAIN DAMAGED" width="800" height="450" loading="lazy" decoding="async"></picture><span class="tvz"></span><span class="tv">171</span><span class="tc"><bdi data-verbatim>СЕНЯ ХЕЙМЕР</bdi></span></a>
+<a class="mtile g3 rv" style="--l:83.414;--t:38.015;--s:14.517;--sy:31.742;--ml:71.736;--mt:47.772;--ms:24.524;--msy:20.240" href="https://www.youtube.com/watch?v=85irYWCZIXs"><picture><source srcset="assets/thumbs/85irYWCZIXs.webp" type="image/webp"><img src="assets/thumbs/85irYWCZIXs.jpg" alt="This game just keeps getting better | Postal: Brain Damaged" width="800" height="450" loading="lazy" decoding="async"></picture><span class="tvz"></span><span class="tv">131</span><span class="tc"><bdi data-verbatim>Mrakskairkroe</bdi></span></a>
+<a class="mtile g3 rv" style="--l:42.791;--t:46.981;--s:9.906;--sy:21.660;--ml:67.523;--mt:68.672;--ms:16.735;--msy:13.812" href="https://www.youtube.com/watch?v=G-p9PZPv_Q8"><picture><source srcset="assets/thumbs/G-p9PZPv_Q8.webp" type="image/webp"><img src="assets/thumbs/G-p9PZPv_Q8.jpg" alt="PLAYING POSTAL: BRAIN DAMAGED" width="800" height="450" loading="lazy" decoding="async"></picture><span class="tvz"></span><span class="tv">61</span><span class="tc"><bdi data-verbatim>EB</bdi></span></a>
+<a class="mtile g4 rv" style="--l:53.497;--t:46.981;--s:8.509;--sy:18.604;--ml:85.058;--mt:68.672;--ms:14.374;--msy:11.863" href="https://www.youtube.com/watch?v=HbS0U33gg7k"><picture><source srcset="assets/thumbs/HbS0U33gg7k.webp" type="image/webp"><img src="assets/thumbs/HbS0U33gg7k.jpg" alt="Lets Play: POSTAL Brain Damage [4]" width="800" height="450" loading="lazy" decoding="async"></picture><span class="tvz"></span><span class="tv">45</span><span class="tc"><bdi data-verbatim>Straycast</bdi></span></a>
+<a class="mtile g4 rv" style="--l:53.497;--t:67.334;--s:8.122;--sy:17.758;--ml:85.058;--mt:81.195;--ms:13.720;--msy:11.323" href="https://www.youtube.com/watch?v=PiL2c0Y6byk"><picture><source srcset="assets/thumbs/PiL2c0Y6byk.webp" type="image/webp"><img src="assets/thumbs/PiL2c0Y6byk.jpg" alt="TENTANDO gostar de POSTAL" width="800" height="450" loading="lazy" decoding="async"></picture><span class="tvz"></span><span class="tv">41</span><span class="tc"><bdi data-verbatim>Lambimia Games</bdi></span></a>
+<a class="mtile g4 rv" style="--l:42.791;--t:70.390;--s:7.610;--sy:16.640;--ml:67.523;--mt:83.144;--ms:12.856;--msy:10.610" href="https://www.youtube.com/watch?v=6NBzX5Qh_Aw"><picture><source srcset="assets/thumbs/6NBzX5Qh_Aw.webp" type="image/webp"><img src="assets/thumbs/6NBzX5Qh_Aw.jpg" alt="Posta Brain Damaged: Bareback redemption speedrun in 03:04.315" width="800" height="450" loading="lazy" decoding="async"></picture><span class="tvz"></span><span class="tv">36</span><span class="tc"><bdi data-verbatim>V0id</bdi></span></a>
+<a class="mtile g4 rv" style="--l:81.808;--t:71.506;--s:6.467;--sy:14.141;--ml:35.746;--mt:85.430;--ms:10.926;--msy:9.017" href="https://www.youtube.com/watch?v=51qy5De9-zA"><picture><source srcset="assets/thumbs/51qy5De9-zA.webp" type="image/webp"><img src="assets/thumbs/51qy5De9-zA.jpg" alt="WE&#x27;RE ALMOST DONE | Postal Brain Damaged -PART 5" width="800" height="450" loading="lazy" decoding="async"></picture><span class="tvz"></span><span class="tv">26</span><span class="tc"><bdi data-verbatim>Oreo k9</bdi></span></a>
+<a class="mtile g4 rv" style="--l:89.076;--t:71.506;--s:6.083;--sy:13.300;--ml:47.472;--mt:85.430;--ms:10.276;--msy:8.481" href="https://www.youtube.com/watch?v=i9umu1mRTQA"><picture><source srcset="assets/thumbs/i9umu1mRTQA.webp" type="image/webp"><img src="assets/thumbs/i9umu1mRTQA.jpg" alt="Definitions Of Insanity | Postal: Brain Damaged" width="800" height="450" loading="lazy" decoding="async"></picture><span class="tvz"></span><span class="tv">23</span><span class="tc"><bdi data-verbatim>Mrakskairkroe</bdi></span></a>
+<a class="mtile g4 rv" style="--l:62.419;--t:80.174;--s:5.672;--sy:12.403;--ml:0.000;--mt:88.706;--ms:9.582;--msy:7.908" href="https://www.youtube.com/watch?v=LRIl4d8kR2w"><picture><source srcset="assets/thumbs/LRIl4d8kR2w.webp" type="image/webp"><img src="assets/thumbs/LRIl4d8kR2w.jpg" alt="All Are Mad Here, Dude | Postal: Brain Damaged" width="800" height="450" loading="lazy" decoding="async"></picture><span class="tvz"></span><span class="tv">20</span><span class="tc"><bdi data-verbatim>Mrakskairkroe</bdi></span></a>
+<a class="mtile g4 rv" style="--l:68.891;--t:80.174;--s:5.381;--sy:11.766;--ml:10.382;--mt:88.706;--ms:9.091;--msy:7.503" href="https://www.youtube.com/watch?v=VhU92o8rhVM"><picture><source srcset="assets/thumbs/VhU92o8rhVM.webp" type="image/webp"><img src="assets/thumbs/VhU92o8rhVM.jpg" alt="POSTAL: Brain Damaged | Weird Weapons and Even Weirder Humor" width="800" height="450" loading="lazy" decoding="async"></picture><span class="tvz"></span><span class="tv">18</span><span class="tc"><bdi data-verbatim>SelinaGoth_AI</bdi></span></a>
+</div>
+<p class="cap" style="margin-top:16px">The largest 14 sampled videos from channels in the markets this report covers, holding 2,317 views. Square areas are proportional to views within this displayed set; the full sample stays in the table.</p>
+<div>
+<div class="bbar rv"><span class="seg b1" style="--w:70.0%"></span><span class="seg b2" style="--w:30.0%"></span></div><div class="bkeys"><div class="bk"><i class="b1"></i><b>Other</b><span>3 videos &middot; 3,280 views</span></div><div class="bk"><i class="b2"></i><b>Gameplay</b><span>42 videos &middot; 1,405 views</span></div></div>
+<p class="cap" style="margin-top:18px">Classification of the complete relevant sample from title and channel evidence. It does not measure viewer sentiment.</p>
+<details class="all"><summary>See all 45</summary>
+<table><colgroup><col style="width:14%"><col style="width:49%"><col style="width:23%"><col style="width:14%"></colgroup><thead><tr><th>Views</th><th>Video</th><th>Channel</th><th>Posted</th></tr></thead><tbody><tr><td class="n">2,182</td><td><a href="https://www.youtube.com/watch?v=tE1byhuKyAs"><bdi data-verbatim>25 Blood-Soaked Modern Arcade Games That Push Violence to the Limit!</bdi></a></td><td class="ch"><bdi data-verbatim>Retro Pocket</bdi></td><td class="dt">23 Nov 2026</td></tr><tr><td class="n">1,096</td><td><a href="https://www.youtube.com/watch?v=XPq8sczUo-M"><bdi data-verbatim>You Can Play POSTAL: Brain Damaged in VR!</bdi></a></td><td class="ch"><bdi data-verbatim>9 Letter Studios (‪JC)</bdi></td><td class="dt">24 Nov 2026</td></tr><tr><td class="n">266</td><td><a href="https://www.youtube.com/watch?v=jumNzoeDoNc"><bdi data-verbatim>ultrakill and postal had a baby / POSTAL: Brain Damaged</bdi></a></td><td class="ch"><bdi data-verbatim>Mar Sol</bdi></td><td class="dt">15 Nov 2026</td></tr><tr><td class="n">209</td><td><a href="https://www.youtube.com/watch?v=02ajTXH9VUQ"><bdi data-verbatim>Cruel Dude Thesis in 02:50.109 Hard 100%</bdi></a></td><td class="ch"><bdi data-verbatim>EmaRema228</bdi></td><td class="dt">17 Nov 2026</td></tr><tr><td class="n">174</td><td><a href="https://www.youtube.com/watch?v=cm5QtN7vL8s"><bdi data-verbatim>she&#x27;s dead 🪾 #fyp #postal #postalbraindamaged #fps #letsplay #gaming</bdi></a></td><td class="ch"><bdi data-verbatim>Straycast</bdi></td><td class="dt">29 Oct 2026</td></tr><tr><td class="n">171</td><td><a href="https://www.youtube.com/watch?v=kyvmsms9zt4"><bdi data-verbatim>НА ПРЕВЬЮ УЖЕ ВСЁ НАПИСАНО // POSTAL: BRAIN DAMAGED</bdi></a></td><td class="ch"><bdi data-verbatim>СЕНЯ ХЕЙМЕР</bdi></td><td class="dt">26 Nov 2026</td></tr><tr><td class="n">131</td><td><a href="https://www.youtube.com/watch?v=85irYWCZIXs"><bdi data-verbatim>This game just keeps getting better | Postal: Brain Damaged</bdi></a></td><td class="ch"><bdi data-verbatim>Mrakskairkroe</bdi></td><td class="dt">5 Nov 2026</td></tr><tr><td class="n">61</td><td><a href="https://www.youtube.com/watch?v=G-p9PZPv_Q8"><bdi data-verbatim>PLAYING POSTAL: BRAIN DAMAGED</bdi></a></td><td class="ch"><bdi data-verbatim>EB</bdi></td><td class="dt">7 Nov 2026</td></tr><tr><td class="n">45</td><td><a href="https://www.youtube.com/watch?v=HbS0U33gg7k"><bdi data-verbatim>Lets Play: POSTAL Brain Damage [4]</bdi></a></td><td class="ch"><bdi data-verbatim>Straycast</bdi></td><td class="dt">29 Oct 2026</td></tr><tr><td class="n">41</td><td><a href="https://www.youtube.com/watch?v=PiL2c0Y6byk"><bdi data-verbatim>TENTANDO gostar de POSTAL</bdi></a></td><td class="ch"><bdi data-verbatim>Lambimia Games</bdi></td><td class="dt">7 Nov 2026</td></tr><tr><td class="n">36</td><td><a href="https://www.youtube.com/watch?v=6NBzX5Qh_Aw"><bdi data-verbatim>Posta Brain Damaged: Bareback redemption speedrun in 03:04.315</bdi></a></td><td class="ch"><bdi data-verbatim>V0id</bdi></td><td class="dt">8 Nov 2026</td></tr><tr><td class="n">26</td><td><a href="https://www.youtube.com/watch?v=51qy5De9-zA"><bdi data-verbatim>WE&#x27;RE ALMOST DONE | Postal Brain Damaged -PART 5</bdi></a></td><td class="ch"><bdi data-verbatim>Oreo k9</bdi></td><td class="dt">22 Nov 2026</td></tr><tr><td class="n">23</td><td><a href="https://www.youtube.com/watch?v=i9umu1mRTQA"><bdi data-verbatim>Definitions Of Insanity | Postal: Brain Damaged</bdi></a></td><td class="ch"><bdi data-verbatim>Mrakskairkroe</bdi></td><td class="dt">7 Nov 2026</td></tr><tr><td class="n">20</td><td><a href="https://www.youtube.com/watch?v=LRIl4d8kR2w"><bdi data-verbatim>All Are Mad Here, Dude | Postal: Brain Damaged</bdi></a></td><td class="ch"><bdi data-verbatim>Mrakskairkroe</bdi></td><td class="dt">6 Nov 2026</td></tr><tr><td class="n">18</td><td><a href="https://www.youtube.com/watch?v=VhU92o8rhVM"><bdi data-verbatim>POSTAL: Brain Damaged | Weird Weapons and Even Weirder Humor</bdi></a></td><td class="ch"><bdi data-verbatim>SelinaGoth_AI</bdi></td><td class="dt">27 Nov 2026</td></tr><tr><td class="n">17</td><td><a href="https://www.youtube.com/watch?v=tI2bv8Zj62I"><bdi data-verbatim>big alien balls #postal #postalbraindamaged #fps #fyp #letsplay #gaming</bdi></a></td><td class="ch"><bdi data-verbatim>Straycast</bdi></td><td class="dt">29 Oct 2026</td></tr><tr><td class="n">16</td><td><a href="https://www.youtube.com/watch?v=6CWRIVmJ-Wg"><bdi data-verbatim>POSTAL BRAIN DAMAGE: el juego que te da la experiencia de como es tener un sueño con fiebre, parte 1</bdi></a></td><td class="ch"><bdi data-verbatim>El Cosmonauta Errante</bdi></td><td class="dt">5 Nov 2026</td></tr><tr><td class="n">15</td><td><a href="https://www.youtube.com/watch?v=k24N8OyRV3Q"><bdi data-verbatim>Bigger On The Inside | Postal: Brain Damaged</bdi></a></td><td class="ch"><bdi data-verbatim>Mrakskairkroe</bdi></td><td class="dt">31 Oct 2026</td></tr><tr><td class="n">14</td><td><a href="https://www.youtube.com/watch?v=3Ox7vTHfEvw"><bdi data-verbatim>S.I.P. | Postal: Brain Damaged</bdi></a></td><td class="ch"><bdi data-verbatim>Mrakskairkroe</bdi></td><td class="dt">11 Nov 2026</td></tr><tr><td class="n">14</td><td><a href="https://www.youtube.com/watch?v=KEvV78TEQI0"><bdi data-verbatim>Black Friday Showdown | Postal: Brain Damaged</bdi></a></td><td class="ch"><bdi data-verbatim>Mrakskairkroe</bdi></td><td class="dt">5 Nov 2026</td></tr><tr><td class="n">13</td><td><a href="https://www.youtube.com/watch?v=Be2ndVktOOU"><bdi data-verbatim>Search For The Cure | Postal: Brain Damaged</bdi></a></td><td class="ch"><bdi data-verbatim>Mrakskairkroe</bdi></td><td class="dt">9 Nov 2026</td></tr><tr><td class="n">12</td><td><a href="https://www.youtube.com/watch?v=P7AHG7RvflM"><bdi data-verbatim>POSTAL Brain Damaged</bdi></a></td><td class="ch"><bdi data-verbatim>Nullclutch yt</bdi></td><td class="dt">8 Nov 2026</td></tr><tr><td class="n">12</td><td><a href="https://www.youtube.com/watch?v=v0zMghVz-DI"><bdi data-verbatim>Lets Play: POSTAL Brain Damage [5]</bdi></a></td><td class="ch"><bdi data-verbatim>Straycast</bdi></td><td class="dt">30 Oct 2026</td></tr><tr><td class="n">11</td><td><a href="https://www.youtube.com/watch?v=LLm02LBoKjE"><bdi data-verbatim>POSTAL: Brain Damaged 1</bdi></a></td><td class="ch"><bdi data-verbatim>postal dude </bdi></td><td class="dt">8 Nov 2026</td></tr><tr><td class="n">10</td><td><a href="https://www.youtube.com/watch?v=nlmOQAeWNrI"><bdi data-verbatim>Area 69 | Postal: Brain Damaged</bdi></a></td><td class="ch"><bdi data-verbatim>Mrakskairkroe</bdi></td><td class="dt">10 Nov 2026</td></tr><tr><td class="n">7</td><td><a href="https://www.youtube.com/watch?v=2c8Ou_ukzfk"><bdi data-verbatim>POSTAL: Brain Damaged | 2 Player | Gameplay</bdi></a></td><td class="ch"><bdi data-verbatim>Salkulan Na</bdi></td><td class="dt">20 Nov 2026</td></tr><tr><td class="n">7</td><td><a href="https://www.youtube.com/watch?v=Sckln_BB1xc"><bdi data-verbatim>Semmit sem bánok</bdi></a></td><td class="ch"><bdi data-verbatim>misztersenki</bdi></td><td class="dt">3 Nov 2026</td></tr><tr><td class="n">6</td><td><a href="https://www.youtube.com/watch?v=3qA_vM6muHw"><bdi data-verbatim>POSTAL BRAIN DAMAGE: el final de una pesadilla llena de referencias, parte 2 y final, gameplay</bdi></a></td><td class="ch"><bdi data-verbatim>El Cosmonauta Errante</bdi></td><td class="dt">5 Nov 2026</td></tr><tr><td class="n">5</td><td><a href="https://www.youtube.com/watch?v=tNvhPhjezMo"><bdi data-verbatim>Lets Play: POSTAL Brain Damage [6] Happy Halloween</bdi></a></td><td class="ch"><bdi data-verbatim>Straycast</bdi></td><td class="dt">1 Nov 2026</td></tr><tr><td class="n">4</td><td><a href="https://www.youtube.com/watch?v=gkvC1S1fz00"><bdi data-verbatim>Cruel Dude Thesis - Main Story END | Postal: Brain Damaged</bdi></a></td><td class="ch"><bdi data-verbatim>Mrakskairkroe</bdi></td><td class="dt">22 Nov 2026</td></tr><tr><td class="n">3</td><td><a href="https://www.youtube.com/watch?v=YdhsLCSV67k"><bdi data-verbatim>POSTAL: Brain Damaged_20261115232539</bdi></a></td><td class="ch"><bdi data-verbatim>THaBaDGuY</bdi></td><td class="dt">16 Nov 2026</td></tr><tr><td class="n">3</td><td><a href="https://www.youtube.com/watch?v=Zx7NM9Mwk6Y"><bdi data-verbatim>POSTAL: Brain Damaged_20261105010608</bdi></a></td><td class="ch"><bdi data-verbatim>Hola</bdi></td><td class="dt">5 Nov 2026</td></tr><tr><td class="n">2</td><td><a href="https://www.youtube.com/watch?v=0kgn3exLj7A"><bdi data-verbatim>OS 10 FPS MAIS BIZARROS QUE EXISTEM!</bdi></a></td><td class="ch"><bdi data-verbatim>DanzZ</bdi></td><td class="dt">27 Nov 2026</td></tr><tr><td class="n">2</td><td><a href="https://www.youtube.com/watch?v=AML2d0RCv3g"><bdi data-verbatim>POSTAL Brain Damaged Introducción</bdi></a></td><td class="ch"><bdi data-verbatim>García de España</bdi></td><td class="dt">23 Nov 2026</td></tr><tr><td class="n">2</td><td><a href="https://www.youtube.com/watch?v=F1yslfJP23I"><bdi data-verbatim>Sniffing The VIP Area | Postal: Brain Damaged</bdi></a></td><td class="ch"><bdi data-verbatim>Mrakskairkroe</bdi></td><td class="dt">17 Nov 2026</td></tr><tr><td class="n">2</td><td><a href="https://www.youtube.com/watch?v=QagC_UXYqZY"><bdi data-verbatim>Sniper Elite 4 | Postal Brain Damaged | Little Nightmare 2 random bullshit</bdi></a></td><td class="ch"><bdi data-verbatim>Tort</bdi></td><td class="dt">19 Nov 2026</td></tr><tr><td class="n">2</td><td><a href="https://www.youtube.com/watch?v=nph_vDmoOA8"><bdi data-verbatim>Postal brain damage</bdi></a></td><td class="ch"><bdi data-verbatim>K!llSWXTCH</bdi></td><td class="dt">25 Nov 2026</td></tr><tr><td class="n">2</td><td><a href="https://www.youtube.com/watch?v=pZF1YzzGelY"><bdi data-verbatim>POSTAL: Brain Damaged_20261115231609</bdi></a></td><td class="ch"><bdi data-verbatim>THaBaDGuY</bdi></td><td class="dt">16 Nov 2026</td></tr><tr><td class="n">2</td><td><a href="https://www.youtube.com/watch?v=w-t2oFLMP-k"><bdi data-verbatim>Postal brain damage</bdi></a></td><td class="ch"><bdi data-verbatim>K!llSWXTCH</bdi></td><td class="dt">25 Nov 2026</td></tr><tr><td class="n">1</td><td><a href="https://www.youtube.com/watch?v=MyZOUk3ww54"><bdi data-verbatim>Postal Brain Damage - 35 mil. Speed clip. LOL !</bdi></a></td><td class="ch"><bdi data-verbatim>CIGAR GOD GAMING </bdi></td><td class="dt">4 Nov 2026</td></tr><tr><td class="n">1</td><td><a href="https://www.youtube.com/watch?v=S_rRKzsXqEg"><bdi data-verbatim>Bozo&#x27;s Race Into Space | Postal: Brain Damaged</bdi></a></td><td class="ch"><bdi data-verbatim>Mrakskairkroe</bdi></td><td class="dt">18 Nov 2026</td></tr><tr><td class="n">1</td><td><a href="https://www.youtube.com/watch?v=_dVQNIwlnK8"><bdi data-verbatim>СПИДРАН POSTAL: BRAIN DAMAGE ЗА СЛАБАКА (пацифиста)</bdi></a></td><td class="ch"><bdi data-verbatim>люти</bdi></td><td class="dt">20 Nov 2026</td></tr><tr><td class="n">0</td><td><a href="https://www.youtube.com/watch?v=ZqvMr42BzFM"><bdi data-verbatim>POSTAL: Brain Damaged │ Xbox Ally #live #gaming</bdi></a></td><td class="ch"><bdi data-verbatim>Sidney Rosen</bdi></td><td class="dt">23 Nov 2026</td></tr><tr><td class="n">0</td><td><a href="https://www.youtube.com/watch?v=hkPHvypnRwM"><bdi data-verbatim>Duskstar | Postal: Brain Damaged</bdi></a></td><td class="ch"><bdi data-verbatim>Mrakskairkroe</bdi></td><td class="dt">20 Nov 2026</td></tr><tr><td class="n">0</td><td><a href="https://www.youtube.com/watch?v=x3Si3twiSSc"><bdi data-verbatim>POSTAL: Brain Damaged_20251022194740</bdi></a></td><td class="ch"><bdi data-verbatim>SenseiWahoo</bdi></td><td class="dt">15 Nov 2026</td></tr></tbody></table>
+<p class="cap" style="margin-top:16px">45 sampled videos; 4,685 recorded views. 0 carry an uploader-declared paid-promotion flag, for whatever product the video promotes; 0 have unknown flag status. A missing declaration does not prove no payment.</p>
+</details>
+</div>
+</div></div></section>
+
+<!-- evidence-sections-end -->
+
+<!-- ======================= CLOSE ======================= -->
+<section class="beat"><div class="wrap"><div class="close rv">
+<div class="who">
+<img src="data:image/jpeg;base64,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" alt="Davorin Smit" width="236" height="236" loading="lazy" decoding="async">
+<div class="nm">Davorin Smit</div><div class="rl">ARCH</div>
+</div>
+<div class="pitch">
+<div class="cta-var cta-v1"><h2>Choose a first<br>creator brief.</h2>
+<p>Review the candidates and their proposed formats with Davorin.</p></div>
+<div class="cta-var cta-v2"><h2>A shortlist for<br>your next brief.</h2>
+<p>Discuss the evidence, limitations and the first approach.</p></div>
+<div class="cta-var cta-v3"><h2>Start with<br>the right brief.</h2>
+<p>ARCH can make the approach and run the campaign.</p></div>
+<a class="cta-btn" href="https://meetings-eu1.hubspot.com/davorin-smit/30-minute-sales-call">Book 30 minutes with Davorin</a>
+<p class="arch">ARCH handles creator selection, outreach and campaign delivery. <a href="https://arch.agency/">arch.agency</a></p>
+</div>
+</div></div></section>
+
+</main>
+
+<footer><div class="wrap">
+<details class="how"><summary>How this page was built</summary><div class="inner">
+<ul>
+<li>Public YouTube API metadata, read 28 November 2026. Counts are a snapshot and may change.</li>
+<li>Search results are bounded by the recorded queries and dates; no all-time volume estimate is available.</li>
+<li>Paid-promotion status reflects the API flag declared by the uploader where available. The watch-page overlay was not independently checked. Missing flags are unknown; an undeclared placement may still be paid.</li>
+<li>Off-topic matches are excluded from target-game sample counts. Adjacent-game evidence remains separate.</li>
+<li>2 videos from 2 channels were left out of every count, chart and table on this page. A review of each sampled channel and its titles placed those channels as re-posted footage, spam, or giveaway and scam bait with no contribution of its own.</li>
+<li>2 sampled channels with 2 videos speak to audiences outside the markets this report covers, as placed by the same channel review. Those videos stay in every count and in the full table; the channels are not drawn on the chart, in the hero or mosaic, or as creator cards.</li>
+<li>Search queries: POSTAL: Brain Damaged, postal brain damaged, postal brain damaged gameplay, postal brain damaged review, postal brain damaged walkthrough, postal brain damaged boss, postal brain damaged ending, postal brain damaged update, postal brain damaged speedrun, postal brain damaged dlc.</li>
+<li>Content labels were assigned from title and channel evidence. A second independent pass re-checked a sample of the records. Adjacent creators have separate search and recent-upload evidence; they do not enter target-game totals.</li>
+</ul>
+<p class="caveat">This scan does not estimate audience demographics, watch time, creator fees or campaign results. Public metadata does not independently verify footage ownership. Absence from a recorded sample does not establish absence of all past coverage.</p>
+</div></details>
+<div class="foot"><div class="grid">
+<svg class="wordmark" viewBox="0 0 83 22" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ARCH."><path d="M12.9221 21.6938H16.6558L8.3093 0L0 21.6938H3.75839L4.64875 19.2654L11.9792 19.268L12.9221 21.6938ZM5.78611 16.2115C6.62793 13.7814 7.46899 11.3512 8.31107 8.92062L10.8443 16.218C9.15867 16.2163 7.47251 16.2137 5.78636 16.2112L5.78611 16.2115ZM30.5568 21.6938H34.6761L29.0098 12.544C29.0098 12.544 32.8828 11.7136 33.4664 8.05251C33.4664 8.05251 34.9666 1.00467 26.6508 0.585655H19.6557V4.1403L22.9621 9.37225V9.39451H19.6557V21.6938H23.1532V12.9158H25.1538L25.1555 12.9193H25.1598L30.5568 21.69Z" fill="#000F41"/><path d="M23.1533 12.9154V21.6934H23.1651V12.9187H25.1556L25.1539 12.9154H23.1533ZM53.1342 5.87189L55.6028 3.39297C55.6028 3.39297 52.9616 0.29249 48.2774 0.282122C48.2774 0.282122 42.6322 -0.0516709 39.4643 4.8604C39.4643 4.8604 35.5148 11.0942 39.4643 17.3802C39.4643 17.3802 42.2084 21.9913 48.1074 21.9913C48.1074 21.9913 52.2488 22.315 55.6028 18.926L53.1136 16.4099C53.1136 16.4099 51.3552 18.4597 48.3453 18.4693C48.3453 18.4693 41.6228 18.6736 41.2959 11.3441C41.2959 11.3441 40.8635 3.63598 48.7105 3.84991C48.7098 3.84991 51.1716 3.86964 53.1342 5.87189ZM71.9986 0.585317V9.34764H63.3301V0.585317H59.8293V21.6934H63.3301V12.8717H71.9986V21.6934H75.4861V0.585317H71.9986ZM81.12 21.8909C82.1583 21.8909 83.0001 21.0403 83.0001 19.9906C83.0001 18.9412 82.1583 18.0905 81.12 18.0905C80.0818 18.0905 79.2402 18.9412 79.2402 19.9906C79.2402 21.04 80.0818 21.8909 81.12 21.8909Z" fill="#000F41"/></svg>
+<span>POSTAL: Brain Damaged &middot; Running With Scissors &middot; 28 November 2026</span>
+</div></div>
+</div></footer>
+
+<script>
+(function(){
+var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* reveal on scroll + bar growth + count-ups */
+var io = new IntersectionObserver(function(es){
+  es.forEach(function(e){
+    if(!e.isIntersecting) return;
+    e.target.classList.add('in');
+    io.unobserve(e.target);
+    var ns = e.target.matches('[data-count]') ? [e.target] : e.target.querySelectorAll('[data-count]');
+    for(var i=0;i<ns.length;i++) count(ns[i]);
+  });
+}, {rootMargin:'0px 0px -12% 0px', threshold:0.15});
+
+document.querySelectorAll('.rv, .brow, .bbar, [data-count]').forEach(function(n){ io.observe(n); });
+
+function count(el){
+  if(reduce || el.dataset.done) return;
+  el.dataset.done = '1';
+  var end = parseFloat(el.dataset.count), dec = parseInt(el.dataset.dec || '0', 10);
+  var suf = el.dataset.suffix || '', dur = 1100, t0 = null;
+  function fmt(v){ return v.toLocaleString('en-US', {minimumFractionDigits:dec, maximumFractionDigits:dec}) + suf; }
+  function step(ts){
+    if(t0 === null) t0 = ts;
+    var p = Math.min(1, (ts - t0) / dur);
+    var e = 1 - Math.pow(1 - p, 3);
+    el.textContent = fmt(end * e);
+    if(p < 1) requestAnimationFrame(step); else el.textContent = fmt(end);
+  }
+  el.textContent = fmt(0);
+  requestAnimationFrame(step);
+}
+
+/* Keep every named channel accessible, including channels with no plotted metric. */
+const cards = [...document.querySelectorAll('#chans .chan')];
+const dots = [...document.querySelectorAll('.plot .dot')];
+const picker = document.querySelector('.channel-selector select');
+if (dots.length && cards.length) {
+  const byKey = new Map(cards.map(card => [card.id.slice(3), card]));
+  const portraitKey = img => JSON.stringify([img.getAttribute('src'), img.alt]);
+  const picks = new Set([...document.querySelectorAll('#roster .pick picture img')].map(portraitKey));
+  cards.forEach(card => picker.add(new Option(card.querySelector('h3').textContent, card.id.slice(3))));
+  function show(key) {
+    if (!byKey.has(key)) return;
+    picker.value = key;
+    cards.forEach(card => card.classList.toggle('open', card === byKey.get(key)));
+    dots.forEach(dot => dot.setAttribute('aria-expanded', String(dot.dataset.ch === key)));
+  }
+  dots.forEach(dot => {
+    dot.toggleAttribute('data-shortlisted', picks.has(portraitKey(dot.querySelector('img'))));
+    dot.addEventListener('click', () => show(dot.dataset.ch));
+  });
+  picker.addEventListener('change', () => show(picker.value));
+  picker.parentElement.hidden = false;
+  document.documentElement.classList.add('js-chan');
+  const preferred = 'c0';
+  show(byKey.has(preferred) ? preferred : cards[0].id.slice(3));
+
+  const plot = document.querySelector('.plot');
+  const leaders = plot.querySelector('.portrait-leaders');
+  const own = plot.querySelector('.ownmark');
+  const positions = dots.map(dot => ({
+    dot, x: parseFloat(dot.style.left) / 100, y: 1 - parseFloat(dot.style.bottom) / 100
+  })).sort((a,b) => Number(b.dot.hasAttribute('data-shortlisted')) - Number(a.dot.hasAttribute('data-shortlisted')));
+  function layoutPortraits() {
+    const width = plot.clientWidth;
+    if (!width) return;
+    const size = dots[0].offsetWidth;
+    const pitch = size + 7;
+    const columns = Math.max(1, Math.floor(width / pitch));
+    // A narrow chart with many faces needs enough separate seats for all of them.
+    plot.style.setProperty('--portrait-height', (Math.ceil((dots.length + 1) / columns) + 1) * pitch + 'px');
+    const height = plot.clientHeight;
+    const half = size / 2 + 2;
+    const placed = [];
+    if (own.offsetWidth) placed.push({x:parseFloat(own.style.left) * width / 100, y:height * (1 - parseFloat(own.style.bottom) / 100), clearance:half + 6});
+    leaders.replaceChildren();
+    function mark(tag, attributes) {
+      const el = document.createElementNS(leaders.namespaceURI, tag);
+      Object.entries(attributes).forEach(([key,value]) => el.setAttribute(key, value));
+      leaders.append(el);
+    }
+    for (const {dot,x,y} of positions) {
+      const ax = x * width, ay = y * height;
+      let sx = Math.max(half,Math.min(width-half,ax)), sy = Math.max(half,Math.min(height-half,ay));
+      const clear = (cx,cy) => placed.every(p => Math.hypot(p.x-cx,p.y-cy) >= p.clearance);
+      if (!clear(sx,sy)) {
+        let best = Infinity;
+        for (let cy=half;cy<=height-half;cy+=pitch/2) {
+          for (let cx=half;cx<=width-half;cx+=pitch/2) {
+            const distance = (cx-ax)**2 + (cy-ay)**2;
+            if (distance < best && clear(cx,cy)) { sx=cx;sy=cy;best=distance; }
+          }
+        }
+      }
+      placed.push({x:sx,y:sy,clearance:pitch});
+      dot.style.setProperty('--dx', (sx-ax) + 'px');
+      dot.style.setProperty('--dy', (sy-ay) + 'px');
+      const distance = Math.hypot(sx-ax,sy-ay);
+      if (distance > size/2) {
+        const edge = (size/2) / distance;
+        mark('line',{x1:ax,y1:ay,x2:sx+(ax-sx)*edge,y2:sy+(ay-sy)*edge});
+      }
+      if (distance > .5) mark('circle',{cx:ax,cy:ay,r:2.5});
+    }
+  }
+  layoutPortraits();
+  if ('ResizeObserver' in window) new ResizeObserver(layoutPortraits).observe(plot);
+  else addEventListener('resize',layoutPortraits);
+}
+
+const nav = [...document.querySelectorAll('.scan-nav a')];
+const sections = [...document.querySelectorAll('main > section')];
+const mast = document.querySelector('.mast');
+let scheduled = false;
+function updateNav() {
+  scheduled = false;
+  const edge = mast.getBoundingClientRect().bottom + Math.min(innerHeight * .20,140);
+  const current = sections.filter(section => section.getBoundingClientRect().top <= edge).pop();
+  nav.forEach(link => {
+    if (current && current.id && link.hash.slice(1) === current.id) link.setAttribute('aria-current','location');
+    else link.removeAttribute('aria-current');
+  });
+}
+function scheduleNav() {
+  if (!scheduled) { scheduled=true;requestAnimationFrame(updateNav); }
+}
+addEventListener('scroll',scheduleNav,{passive:true});
+addEventListener('resize',scheduleNav);
+updateNav();
+
+const motion = matchMedia('(prefers-reduced-motion: reduce)');
+function arrive(el, delay=0) {
+  if (!el || motion.matches || !el.animate) return;
+  el.animate([{opacity:.55,transform:'translateY(10px)'},{opacity:1,transform:'translateY(0)'}],
+    {duration:440,delay,easing:'cubic-bezier(.2,.7,.23,1)',fill:'backwards'});
+}
+document.querySelectorAll('.hero .kicker,.hero h1,.hero-src,.hero-actions').forEach((el,i) => arrive(el,i*60));
+const entrance = new IntersectionObserver(entries => entries.forEach(entry => {
+  if (!entry.isIntersecting) return;
+  entrance.unobserve(entry.target);
+  if (entry.target.matches('.picks,.plot')) {
+    entry.target.querySelectorAll('details>summary,.dot img').forEach((el,i) => arrive(el,Math.min(i,8)*35));
+  } else arrive(entry.target);
+}),{threshold:.05});
+document.querySelectorAll('.beat-head,.picks,.plot,.close .pitch').forEach(el => entrance.observe(el));
+document.querySelectorAll('details').forEach(el => el.addEventListener('toggle', () => {
+  if (el.open) arrive(el.querySelector(':scope > summary + *'));
+}));
+
+})();
+</script>
+<style>.js-chan .chan{display:none}.js-chan .chan.open{display:block}</style>
+<script>/* arch-open-beacon: one open per tab -> scan-open edge fn -> scan_opens (company_slug arch-<folder>). ?me=1 mutes this browser. */
+(function(){try{var q=new URLSearchParams(location.search);if(q.get('me')==='1')localStorage.setItem('arch_me','1');
+var f=location.pathname.split('/').filter(Boolean)[0]||'';if(!/-audit$/.test(f))return;
+var k='arch_po_'+f;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');
+var r='';try{r=document.referrer?new URL(document.referrer).hostname:''}catch(e){}
+var w=window.innerWidth||0,K='sb_publishable_Q-kfisfhqxXV5xiIhCduMQ_QSIflf4h';
+fetch('https://bjbvqvzbzczjbatgmccb.supabase.co/functions/v1/scan-open',{method:'POST',keepalive:true,
+headers:{'content-type':'application/json','apikey':K,'authorization':'Bearer '+K},
+body:JSON.stringify({company_slug:('arch-'+f.toLowerCase()).slice(0,80),owner_flag:localStorage.getItem('arch_me')==='1',
+device_type:w<768?'mobile':w<1024?'tablet':'desktop',referrer_host:r,user_agent:navigator.userAgent})}).catch(function(){})}catch(e){}})();
+</script>
+</body></html>
